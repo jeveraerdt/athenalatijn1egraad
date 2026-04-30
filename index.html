@@ -28,9 +28,10 @@
   body {
     font-family: var(--fv);
     color: var(--tekst);
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     background:
       radial-gradient(ellipse at 10% 0%, rgba(19,66,127,0.07) 0%, transparent 60%),
       radial-gradient(ellipse at 90% 10%, rgba(230,0,126,0.05) 0%, transparent 50%),
@@ -41,7 +42,7 @@
   .site-header {
     display: flex;
     justify-content: center;
-    padding: 1.6rem 1.5rem 0.5rem;
+    padding: 1.6rem 1.5rem 0.4rem;
     flex-shrink: 0;
   }
 
@@ -58,7 +59,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0.8rem 1.5rem 1rem;
+    padding: 0.6rem 1.5rem 0.8rem;
+    min-height: 0;
   }
 
   .keuze-titel {
@@ -75,7 +77,7 @@
     color: var(--tekst-zacht);
     font-family: var(--fo);
     text-align: center;
-    margin-bottom: 1.8rem;
+    margin-bottom: 1.6rem;
   }
 
   /* ── KAARTEN ── */
@@ -91,7 +93,7 @@
     background: rgba(255,255,255,0.92);
     border: 0.5px solid var(--rand);
     border-radius: var(--radius);
-    padding: 1.5rem 1.25rem;
+    padding: 1.4rem 1.25rem;
     text-decoration: none;
     color: inherit;
     display: flex;
@@ -129,33 +131,37 @@
   .taal-kaart.tweede-jaar:hover .taal-pijl { color: var(--roze); }
 
   /* ── HERO ── */
+  /* De afbeelding is 1280×400px (verhouding 3.2:1).
+     We geven de wrap exact die verhouding mee via padding-bottom,
+     zodat de volledige breedte altijd getoond wordt zonder bijsnijden. */
   .hero-wrap {
     position: relative;
     width: 100%;
     flex-shrink: 0;
-    line-height: 0;
-    /* Vaste hoogte gebaseerd op beeldverhouding 1280:400 = 31.25vw,
-       maar begrensd zodat de rest ook past */
-    height: clamp(80px, 22vw, 200px);
+    /* hoogte = breedte / 3.2  →  padding-bottom-truc */
+    padding-bottom: clamp(80px, 31.25%, 220px);
     overflow: hidden;
   }
 
   .hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: block;
     object-fit: cover;
-    object-position: center center;
+    object-position: left center;
   }
 
   .hero-credit {
     position: absolute;
-    bottom: 8px;
-    right: 14px;
+    bottom: 10px;
+    right: 16px;
     font-family: var(--fo);
-    font-size: 9px;
-    color: rgba(255,255,255,0.32);
-    letter-spacing: 0.3px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.4px;
     user-select: none;
     pointer-events: none;
   }
