@@ -10,7 +10,6 @@
 <style>
   :root {
     --blauw: #13427f;
-    --blauw-licht: #1a5499;
     --roze: #E6007E;
     --fv: 'Lufga', Arial, sans-serif;
     --fo: 'Aptos', Arial, sans-serif;
@@ -22,7 +21,6 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* Subtiele gradiënt-achtergrond in schoolkleuren */
   body {
     font-family: var(--fv);
     color: var(--tekst);
@@ -35,7 +33,7 @@
       linear-gradient(160deg, #f4f6fb 0%, #f9f0f6 50%, #f3f7fc 100%);
   }
 
-  /* ── HEADER / LOGO ── */
+  /* ── HEADER ── */
   .site-header {
     width: 100%;
     display: flex;
@@ -49,7 +47,7 @@
     display: block;
   }
 
-  /* ── MAIN CONTENT ── */
+  /* ── MAIN ── */
   main {
     flex: 1;
     display: flex;
@@ -126,14 +124,14 @@
   .taal-kaart.eerste-jaar:hover .taal-pijl { color: var(--blauw); }
   .taal-kaart.tweede-jaar:hover .taal-pijl { color: var(--roze); }
 
-  /* ── HERO FOOTER ── */
+  /* ── HERO ── */
   .hero-wrap {
     position: relative;
     width: 100%;
-    line-height: 0; /* verwijder witruimte onder img */
+    line-height: 0;
   }
 
-  .hero-wrap img.hero-img {
+  .hero-img {
     width: 100%;
     height: auto;
     display: block;
@@ -155,12 +153,10 @@
 </head>
 <body>
 
-  <!-- Logo bovenaan -->
   <header class="site-header">
-    <img class="school-logo" src="logo_athena_baseline.png" alt="athena secundair onderwijs" />
+    <img class="school-logo" src="images/nav/logo_athena_baseline.png" alt="athena secundair onderwijs" />
   </header>
 
-  <!-- Kaarten -->
   <main>
     <h1 class="keuze-titel">Klassieke talen</h1>
     <p class="keuze-subtitel">Kies je jaar om verder te gaan.</p>
@@ -171,23 +167,22 @@
         <div class="taal-icoon"><img src="images/cards/tegel_1ejaar.svg" alt="1e jaar" /></div>
         <div class="taal-naam">1e jaar</div>
         <div class="taal-omschrijving">Grammatica, teksten, vocabularium en oefeningen.</div>
-        <div class="taal-pijl">›</div>
+        <div class="taal-pijl">&#x203A;</div>
       </a>
 
       <a class="taal-kaart tweede-jaar" href="athenalatijn1egraad/2ejaar/index.html">
         <div class="taal-icoon"><img src="images/cards/tegel_2ejaar.svg" alt="2e jaar" /></div>
         <div class="taal-naam">2e jaar</div>
         <div class="taal-omschrijving">Grammatica, vocabularium en oefeningen.</div>
-        <div class="taal-pijl">›</div>
+        <div class="taal-pijl">&#x203A;</div>
       </a>
 
     </div>
   </main>
 
-  <!-- Hero onderaan, paginavullend -->
   <div class="hero-wrap">
-    <img class="hero-img" src="hero_athena_horizontaal.png" alt="" />
-    <span class="hero-credit">© 2025 J. Everaerdt</span>
+    <img class="hero-img" src="images/heroes/hero_athena_horizontaal.png" alt="" />
+    <span class="hero-credit">&copy; 2025 J. Everaerdt</span>
   </div>
 
 </body>
