@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klassieke talen — athena campus Pottelberg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blauw: #13427f; --roze: #E6007E;
+    --fv: 'Lufga', Arial, sans-serif; --fo: 'Aptos', Arial, sans-serif;
+    --achtergrond: #f7f8fa; --kaart: #ffffff; --rand: #e2e6ed;
+    --tekst: #1a1a1a; --tekst-zacht: #6b7280;
+    --radius: 12px; --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--fv); background: var(--achtergrond); color: var(--tekst); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem 1rem; }
+
+  .logo-wrap { margin-bottom: 1.75rem; text-align: center; }
+  .school-logo { width: 56px; height: auto; display: block; margin: 0 auto 0.75rem; }
+  .site-titel { font-size: 13px; color: var(--tekst-zacht); font-family: var(--fo); letter-spacing: 0.3px; }
+
+  .keuze-titel { font-size: 28px; font-weight: 600; color: var(--blauw); text-align: center; margin-bottom: 0.4rem; letter-spacing: -0.5px; }
+  .keuze-subtitel { font-size: 14px; color: var(--tekst-zacht); font-family: var(--fo); text-align: center; margin-bottom: 2.5rem; }
+
+  .taal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; width: 100%; max-width: 580px; margin-bottom: 2rem; }
+
+  .taal-kaart { background: var(--kaart); border: 0.5px solid var(--rand); border-radius: var(--radius); padding: 2rem 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; transition: border-color 0.15s, transform 0.15s; }
+  .taal-kaart.eerste-jaar:hover { border-color: var(--blauw); transform: translateY(-3px); }
+  .taal-kaart.tweede-jaar:hover { border-color: var(--roze); transform: translateY(-3px); }
+
+  .taal-icoon { width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; }
+  .taal-icoon img { width: 72px; height: auto; }
+
+  .taal-naam { font-size: 20px; font-weight: 600; }
+  .taal-kaart.eerste-jaar .taal-naam { color: var(--blauw); }
+  .taal-kaart.tweede-jaar .taal-naam { color: var(--roze); }
+  .taal-omschrijving { font-family: var(--fo); font-size: 13px; color: var(--tekst-zacht); line-height: 1.5; }
+  .taal-pijl { font-size: 20px; color: var(--rand); transition: color 0.15s; }
+  .taal-kaart.eerste-jaar:hover .taal-pijl { color: var(--blauw); }
+  .taal-kaart.tweede-jaar:hover .taal-pijl { color: var(--roze); }
+
+  .voet { font-family: var(--fo); font-size: 12px; color: #c0c8d4; text-align: center; }
+</style>
+</head>
+<body>
+
+  <div class="logo-wrap">
+    <img class="school-logo" src="images/nav/logo.png" alt="athena" />
+    <p class="site-titel">athena campus Pottelberg</p>
+  </div>
+
+  <h1 class="keuze-titel">Klassieke talen</h1>
+  <p class="keuze-subtitel">Kies je jaar om verder te gaan.</p>
+
+  <div class="taal-grid">
+
+    <a class="taal-kaart eerste-jaar" href="athenalatijn1egraad/1ejaar/index.html">
+      <div class="taal-icoon"><img src="images/cards/tegel_1ejaar.svg" alt="1e jaar" /></div>
+      <div class="taal-naam">1e jaar</div>
+      <div class="taal-omschrijving">Grammatica, teksten, vocabularium en oefeningen.</div>
+      <div class="taal-pijl">›</div>
+    </a>
+
+    <a class="taal-kaart tweede-jaar" href="athenalatijn1egraad/2ejaar/index.html">
+      <div class="taal-icoon"><img src="images/cards/tegel_2ejaar.svg" alt="2e jaar" /></div>
+      <div class="taal-naam">2e jaar</div>
+      <div class="taal-omschrijving">Grammatica, vocabularium en oefeningen.</div>
+      <div class="taal-pijl">›</div>
+    </a>
+
+  </div>
+
+  <p class="voet">J. Everaerdt &mdash; athena campus Pottelberg</p>
+
+</body>
+</html>
