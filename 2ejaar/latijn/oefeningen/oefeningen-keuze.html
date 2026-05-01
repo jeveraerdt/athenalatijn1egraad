@@ -118,28 +118,29 @@
   }
   .back-btn svg { width: 14px; height: 14px; }
 
-  /* ── KAARTEN: zelfde rustiger cardbeeld als latijn.html ── */
+  /* ── KAARTEN: exact dezelfde maatvoering als latijn.html ── */
   .nav-wrap {
     flex: 1;
     width: 100%;
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: clamp(6.5rem, 12vh, 10rem) 2rem 3.5rem;
     display: flex;
-    align-items: flex-start;
     justify-content: center;
+    align-items: center;
   }
 
   .nav-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 245px);
     gap: 1.25rem;
     justify-content: center;
-    width: 100%;
-    max-width: 680px;
+    width: auto;
+    max-width: 510px;
   }
 
   .nav-tegel {
+    width: 245px;
     min-height: 255px;
     background: var(--kaart);
     border: 0.5px solid var(--rand);
@@ -150,33 +151,37 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
     gap: 14px;
-    transition: border-color .15s, transform .15s, box-shadow .15s;
+    text-align: center;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
   }
   .nav-tegel:hover {
     border-color: var(--blauw);
     transform: translateY(-3px);
-    box-shadow: 0 10px 28px rgba(19,66,127,.10);
+    box-shadow: 0 10px 24px rgba(19,66,127,.06);
   }
 
   .nav-tegel-icoon {
     width: 72px;
     height: 72px;
+    border-radius: 0;
+    background: transparent !important;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+    margin-bottom: .15rem;
     color: var(--blauw);
   }
   .nav-tegel-icoon svg {
     width: 58px;
     height: 58px;
     stroke: currentColor;
+    stroke-width: 1.8;
   }
 
   .nav-tegel-naam {
-    font-family: var(--fv);
+    font-family: 'Lufga', Arial, sans-serif;
     font-size: 20px;
     font-weight: 600;
     color: var(--roze);
@@ -196,7 +201,7 @@
     margin-top: auto;
     font-size: 20px;
     color: var(--rand);
-    transition: color .15s, transform .15s;
+    transition: color 0.15s, transform 0.15s;
   }
   .nav-tegel:hover .nav-tegel-pijl {
     color: var(--blauw);
@@ -216,9 +221,9 @@
     .site-header h1 { font-size: 1.05rem; }
     .site-header .school-naam { display: none; }
     .site-toolbar { padding: .55rem 1rem; }
-    .nav-wrap { padding: 2.25rem 1rem 3rem; }
-    .nav-grid { grid-template-columns: minmax(0, 1fr); }
-    .nav-tegel { min-height: 230px; }
+    .nav-wrap { padding: 3.5rem 1rem 2.5rem; }
+    .nav-grid { grid-template-columns: minmax(0, 245px); max-width: 245px; }
+    .nav-tegel { width: 245px; min-height: 230px; }
   }
 </style>
 </head>
@@ -226,7 +231,7 @@
 
 <!-- MERKLINT laag 1 -->
 <header class="site-header">
-  <img class="logo" src="../../../images/nav/logo_wit.png" alt="athena">
+  <img class="logo" src="/athenalatijn1egraad/images/nav/logo_wit.png" alt="athena" onerror="this.onerror=null;this.src='../../../images/nav/logo_wit.png';">
   <h1>Oefeningen</h1>
   <span class="school-naam">athena Campus Pottelberg</span>
 </header>
