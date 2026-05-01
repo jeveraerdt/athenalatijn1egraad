@@ -67,28 +67,96 @@
     color: #13427f;
   }
 
-  .nav-wrap { flex: 1; padding: 1.5rem 2rem 3rem; max-width: 1100px; width: 100%; margin: 0 auto; }
-  .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-  .nav-tegel { background: var(--kaart); border: 0.5px solid var(--rand); border-radius: var(--radius); padding: 1.5rem 1.25rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.15s, transform 0.15s; }
-  .nav-tegel:hover { border-color: var(--blauw); transform: translateY(-2px); }
-  .nav-tegel-icoon { width: 42px; height: 42px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .nav-tegel-icoon svg { width: 22px; height: 22px; }
-  .icoon-blauw { background: #e6f0fb; }
-  .icoon-roze  { background: #fce8f3; }
-  .icoon-groen { background: #e8f5e9; }
-  .icoon-amber { background: #fff8e1; }
-  .icoon-paars { background: #ede7f6; }
-  .nav-tegel-naam { font-size: 15px; font-weight: 600; color: var(--blauw); }
-  .nav-tegel-omschrijving { font-family: var(--fo); font-size: 13px; color: var(--tekst-zacht); line-height: 1.5; }
-  .nav-tegel-pijl { margin-top: auto; font-size: 18px; color: var(--rand); transition: color 0.15s; }
-  .nav-tegel:hover .nav-tegel-pijl { color: var(--blauw); }
+  /* ── KAARTENLAY-OUT afgestemd op 2dejaarsindex ─────────────── */
+  .nav-wrap {
+    flex: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(6.5rem, 12vh, 10rem) 2rem 3.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 1040px;
+  }
+  .nav-tegel {
+    min-height: 255px;
+    background: var(--kaart);
+    border: 0.5px solid var(--rand);
+    border-radius: var(--radius);
+    padding: 2rem 1.35rem 1.65rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  .nav-tegel:hover {
+    border-color: var(--blauw);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(19,66,127,.06);
+  }
+  .nav-tegel-icoon {
+    width: 72px;
+    height: 72px;
+    border-radius: 0;
+    background: transparent !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: .15rem;
+  }
+  .nav-tegel-icoon svg {
+    width: 58px;
+    height: 58px;
+    stroke: var(--blauw);
+    stroke-width: 1.8;
+  }
+  .nav-tegel-naam {
+    font-family: 'Lufga', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--roze);
+  }
+  .nav-tegel-omschrijving {
+    font-family: var(--fo);
+    font-size: 13px;
+    color: var(--tekst-zacht);
+    line-height: 1.55;
+    max-width: 210px;
+  }
+  .nav-tegel-pijl {
+    margin-top: auto;
+    font-size: 20px;
+    color: var(--rand);
+    transition: color 0.15s, transform 0.15s;
+  }
+  .nav-tegel:hover .nav-tegel-pijl { color: var(--blauw); transform: translateX(2px); }
   .voet { text-align: center; padding: 1rem; font-family: var(--fo); font-size: 12px; color: #c0c8d4; }
+
+
+  @media (max-width: 980px) {
+    .nav-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 680px; }
+    .nav-wrap { padding-top: 5rem; }
+  }
 
   @media (max-width: 640px) {
     .site-header { align-items: flex-start; gap: .75rem; }
     .site-header h1 { white-space: normal; line-height: 1.2; }
     .site-header .school { display: none; }
-    .nav-wrap { padding: 1.25rem 1rem 2.5rem; }
+    .nav-wrap { padding: 3.5rem 1rem 2.5rem; }
+    .nav-grid { grid-template-columns: 1fr; max-width: 360px; }
+    .nav-tegel { min-height: 230px; }
   }
 </style>
 </head>
@@ -121,7 +189,7 @@
 
     <a class="nav-tegel" href="cultuur/cultuur.html">
       <div class="nav-tegel-icoon icoon-paars">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#13427f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       </div>
       <div class="nav-tegel-naam">Cultuur</div>
       <div class="nav-tegel-omschrijving">Hier komen de cultuurpagina's uit onze cursus.</div>
@@ -130,7 +198,7 @@
 
     <a class="nav-tegel" href="teksten/teksten.html">
       <div class="nav-tegel-icoon icoon-amber">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#13427f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
       </div>
       <div class="nav-tegel-naam">Teksten</div>
       <div class="nav-tegel-omschrijving">De Latijnse teksten die we in de klas lezen, met vertaalhulp.</div>
@@ -139,7 +207,7 @@
 
     <a class="nav-tegel" href="oefeningen/oefeningen-keuze.html">
       <div class="nav-tegel-icoon icoon-roze">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#E6007E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#13427f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
       </div>
       <div class="nav-tegel-naam">Oefeningen</div>
       <div class="nav-tegel-omschrijving">Interactieve oefeningen per grammaticaonderwerp. Voortgang wordt bijgehouden.</div>
