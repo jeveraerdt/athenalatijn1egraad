@@ -39,7 +39,7 @@
     color: #fff;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 14px;
     padding: .85rem 1.5rem;
     box-shadow: 0 2px 8px rgba(0,0,0,.1);
     position: relative;
@@ -101,7 +101,7 @@
     font-weight: 500;
     color: var(--blauw);
     background: transparent;
-    border: 1px solid var(--rand);
+    border: 0.5px solid var(--rand);
     border-radius: 20px;
     padding: .32rem .85rem;
     cursor: pointer;
@@ -124,7 +124,7 @@
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    padding: clamp(4rem, 9vh, 7rem) 2rem 4rem;
+    padding: clamp(6.5rem, 12vh, 10rem) 2rem 3.5rem;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -132,25 +132,26 @@
 
   .nav-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(260px, 320px));
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
     justify-content: center;
     width: 100%;
+    max-width: 680px;
   }
 
   .nav-tegel {
-    min-height: 260px;
+    min-height: 255px;
     background: var(--kaart);
-    border: 1px solid var(--rand);
+    border: 0.5px solid var(--rand);
     border-radius: var(--radius);
-    padding: 2.25rem 1.75rem 2rem;
+    padding: 2rem 1.35rem 1.65rem;
     text-decoration: none;
     color: inherit;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 1rem;
+    gap: 14px;
     transition: border-color .15s, transform .15s, box-shadow .15s;
   }
   .nav-tegel:hover {
@@ -176,24 +177,24 @@
 
   .nav-tegel-naam {
     font-family: var(--fv);
-    font-size: 1.25rem;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 600;
     color: var(--roze);
     line-height: 1.2;
   }
 
   .nav-tegel-omschrijving {
     font-family: var(--fv);
-    font-size: .9rem;
+    font-size: 13px;
     font-weight: 400;
     color: var(--tekst-zacht);
     line-height: 1.55;
-    max-width: 260px;
+    max-width: 210px;
   }
 
   .nav-tegel-pijl {
     margin-top: auto;
-    font-size: 1.45rem;
+    font-size: 20px;
     color: var(--rand);
     transition: color .15s, transform .15s;
   }
@@ -217,7 +218,7 @@
     .site-toolbar { padding: .55rem 1rem; }
     .nav-wrap { padding: 2.25rem 1rem 3rem; }
     .nav-grid { grid-template-columns: minmax(0, 1fr); }
-    .nav-tegel { min-height: 220px; }
+    .nav-tegel { min-height: 230px; }
   }
 </style>
 </head>
