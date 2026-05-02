@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Woordjestrainer — 1GR-LAT — athena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lufga:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blauw: #13427f; --roze: #E6007E;
+    --groen: #16a34a; --groen-licht: #dcfce7; --groen-rand: #86efac;
+    --rood: #dc2626; --rood-licht: #fee2e2; --rood-rand: #fca5a5;
+    --fv: 'Lufga', Arial, sans-serif; --fo: 'Lufga', Arial, sans-serif;
+    --achtergrond: #f7f8fa; --kaart: #ffffff; --rand: #e2e6ed;
+    --tekst: #1a1a1a; --tekst-zacht: #6b7280;
+    --radius: 12px; --radius-sm: 8px; --radius-lg: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--fv); background: var(--achtergrond); color: var(--tekst); min-height: 100vh; }
+
+  /* ── MERKLINT (athena stijl) ────────────────────────── */
+  .merklint {
+    background: var(--blauw); color: #fff;
+    display: flex; align-items: center; gap: 1rem;
+    padding: .85rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    position: relative;
+  }
+  .merklint::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--roze);
+  }
+  .merklint-logo { height: 30px; width: auto; display: block; flex-shrink: 0; }
+  .merklint-titel { font-family: var(--fv); font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .merklint-sub { font-family: var(--fv); font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .8; margin-left: auto; color: #fff; white-space: nowrap; }
+
+  /* ── SUBBALK ────────────────────────────────────────── */
+  .subbalk {
+    background: var(--achtergrond); border-bottom: 1px solid var(--rand);
+    padding: .5rem 1.5rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+  }
+  .subbalk-link {
+    font-family: var(--fo); font-size: .8rem; color: var(--tekst);
+    background: transparent; border: 1px solid var(--rand); border-radius: 20px;
+    padding: .28rem .75rem; text-decoration: none;
+    display: inline-flex; align-items: center; gap: .3rem; transition: all .15s; cursor: pointer;
+  }
+  .subbalk-link:hover { background: var(--blauw); color: #fff; border-color: var(--blauw); }
+  .subbalk-sep { width: 1px; height: 20px; background: var(--rand); margin: 0 .2rem; }
+
+  /* ── SCHERMEN ─────────────────────────── */
+  .scherm { display: none; }
+  .scherm.actief { display: flex; flex-direction: column; min-height: 100vh; }
+
+  /* ── SELECTIE SCHERM ─────────────────── */
+  #s-selectie .inhoud { max-width: 960px; margin: 0 auto; width: 100%; padding: 2rem; flex: 1; }
+
+
+  /* Naam-invoer blok */
+  .naam-blok {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem;
+    background: var(--kaart); border: 1px solid var(--rand); border-radius: var(--radius);
+    padding: .85rem 1rem; flex-wrap: wrap;
+  }
+
+  /* Zoekbalk */
+  .thema-zoek-wrap { position: relative; margin-bottom: 1.25rem; }
+  .thema-zoek {
+    width: 100%; font-family: var(--fo); font-size: 14px;
+    padding: 11px 16px 11px 40px;
+    border: 1px solid var(--rand); border-radius: var(--radius);
+    background: var(--kaart); color: var(--tekst); outline: none;
+    transition: border-color .15s;
+  }
+  .thema-zoek:focus { border-color: var(--blauw); box-shadow: 0 0 0 2px rgba(19,66,127,.1); }
+  .thema-zoek-icoon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--tekst-zacht); pointer-events: none; }
+
+  /* Ludus-kaarten grid */
+  .thema-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
+  .thema-kaart {
+    background: var(--kaart); border: 1.5px solid var(--rand);
+    border-radius: var(--radius-lg); padding: 1rem 1rem .9rem;
+    cursor: pointer; transition: border-color .15s, transform .12s, box-shadow .15s;
+    display: flex; flex-direction: column; gap: 6px; position: relative;
+    user-select: none;
+  }
+  .thema-kaart:hover { border-color: var(--blauw); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(19,66,127,.12); }
+  .thema-kaart.actief { border-color: var(--blauw); background: rgba(19,66,127,.05); box-shadow: 0 0 0 3px rgba(19,66,127,.12); }
+  .thema-kaart-nummer { font-size: 11px; font-weight: 700; color: var(--roze); text-transform: uppercase; letter-spacing: .8px; }
+  .thema-kaart-naam { font-family: var(--fv); font-size: 13px; font-weight: 600; color: var(--blauw); line-height: 1.2; }
+  .thema-kaart-meta { font-family: var(--fo); font-size: 11px; color: var(--tekst-zacht); }
+  .thema-kaart-check {
+    position: absolute; top: 8px; right: 8px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--blauw); display: none; align-items: center; justify-content: center;
+  }
+  .thema-kaart.actief .thema-kaart-check { display: flex; }
+  .thema-kaart-check::after { content: ''; width: 4px; height: 7px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg) translateY(-1px); }
+
+  /* Voortgangsbalkje per kaart */
+  .thema-voortgang { height: 4px; border-radius: 99px; background: rgba(19,66,127,.1); overflow: hidden; margin-top: 2px; }
+  .thema-voortgang-inner { height: 100%; border-radius: 99px; background: var(--roze); transition: width .3s ease; }
+
+  /* Tekst-pills */
+  .tekst-nav-wrap { margin-bottom: 1rem; display: none; }
+  .tekst-nav { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .tekst-nav-label { font-family: var(--fv); font-size: 11px; color: var(--tekst-zacht); font-weight: 600; text-transform: uppercase; letter-spacing: .8px; }
+  .tekst-pill {
+    font-family: var(--fv); font-size: 12px; font-weight: 600;
+    padding: 6px 13px; border-radius: 99px;
+    border: 1.5px solid var(--rand); background: var(--kaart);
+    color: var(--tekst-zacht); cursor: pointer; transition: all .12s;
+    white-space: nowrap;
+  }
+  .tekst-pill:hover { border-color: var(--blauw); color: var(--blauw); }
+  .tekst-pill.actief { border-color: var(--blauw); background: var(--blauw); color: #fff; }
+
+  /* Filter basis-toggle */
+  .basis-toggle { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--tekst-zacht); cursor: pointer; user-select: none; }
+  .basis-toggle input { cursor: pointer; accent-color: var(--blauw); width: 15px; height: 15px; }
+
+  /* Actiebalk */
+  .actie-balk { display: flex; align-items: center; gap: 10px; margin-bottom: .75rem; flex-wrap: wrap; }
+  .selecteer-alle-btn { font-family: var(--fv); font-size: 13px; color: var(--blauw); background: none; border: none; cursor: pointer; text-decoration: underline; padding: 0; }
+  .geselecteerd-teller { font-family: var(--fv); font-size: 13px; color: var(--tekst-zacht); margin-left: auto; }
+  .bereik-rij { display: flex; align-items: center; gap: 6px; }
+  .bereik-input { width: 60px; font-family: var(--fv); font-size: 13px; padding: 7px 8px; border-radius: var(--radius-sm); border: 1px solid var(--rand); background: var(--kaart); color: var(--tekst); outline: none; text-align: center; transition: border-color .15s; }
+  .bereik-input:focus { border-color: var(--blauw); }
+  .bereik-sep { font-size: 13px; color: var(--tekst-zacht); }
+  .bereik-btn { font-family: var(--fv); font-size: 12px; font-weight: 600; padding: 7px 13px; border-radius: 99px; white-space: nowrap; border: 1px solid var(--blauw); background: transparent; color: var(--blauw); cursor: pointer; transition: background .12s, color .12s; }
+  .bereik-btn:hover { background: var(--blauw); color: #fff; }
+
+  /* Woordenlijst */
+  .selectie-lijst { background: var(--kaart); border: 0.5px solid var(--rand); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
+  .selectie-item { display: flex; align-items: center; gap: 14px; padding: 11px 16px; border-bottom: 0.5px solid var(--rand); cursor: pointer; transition: background 0.1s; user-select: none; }
+  .selectie-item:last-child { border-bottom: none; }
+  .selectie-item:hover { background: #f7f9fc; }
+  .selectie-item.geselecteerd { background: #eef4ff; }
+  .selectie-num { font-family: var(--fo); font-size: 12px; color: var(--tekst-zacht); width: 28px; flex-shrink: 0; text-align: right; }
+  .selectie-check { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--rand); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: border-color 0.12s, background 0.12s; }
+  .selectie-item.geselecteerd .selectie-check { background: var(--blauw); border-color: var(--blauw); }
+  .selectie-check::after { content: ''; width: 5px; height: 8px; border: 2px solid transparent; border-top: none; border-left: none; transform: rotate(45deg) translateY(-1px); }
+  .selectie-item.geselecteerd .selectie-check::after { border-color: #fff; }
+  .selectie-latijn { font-family: var(--fv); font-size: 14px; font-weight: 600; flex: 1; }
+  .selectie-latijn.basis-woord { color: var(--roze); }
+  .selectie-aanv { font-family: var(--fo); font-size: 12px; color: var(--tekst-zacht); flex: 1; }
+  .selectie-nl { font-family: var(--fo); font-size: 13px; color: var(--tekst); flex: 1.2; }
+  .ster-knop { background: none; border: none; cursor: pointer; padding: 2px 4px; font-size: 15px; line-height: 1; flex-shrink: 0; color: #cdd5e0; transition: color .15s, transform .1s; }
+  .ster-knop:hover { color: #f59e0b; transform: scale(1.2); }
+  .ster-knop.moeilijk { color: #f59e0b; }
+  .moeilijk-teller { font-size: 13px; color: #f59e0b; display: flex; align-items: center; gap: 5px; cursor: pointer; background: none; border: none; padding: 0; font-family: var(--fv); }
+  .voeg-moeilijk-btn { font-size: 12px; font-weight: 500; padding: 5px 10px; border-radius: 99px; cursor: pointer; border: 1px solid #f59e0b; background: transparent; color: #f59e0b; transition: background .12s, color .12s; white-space: nowrap; flex-shrink: 0; font-family: var(--fv); }
+  .voeg-moeilijk-btn:hover { background: #f59e0b; color: #fff; }
+  .voeg-moeilijk-btn.toegevoegd { background: #f59e0b; color: #fff; opacity: .7; cursor: default; }
+  .geen-woorden { text-align: center; padding: 3rem; font-size: 14px; color: var(--tekst-zacht); }
+
+  /* Start-balk */
+  .start-balk { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .modus-knop {
+    font-family: var(--fv); font-size: 14px; font-weight: 500;
+    padding: 11px 20px; border-radius: 99px; cursor: pointer;
+    border: 1.5px solid var(--rand); background: var(--kaart);
+    color: var(--tekst-zacht); transition: border-color 0.12s, color 0.12s, background 0.12s;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .modus-knop:hover { border-color: var(--blauw); color: var(--blauw); }
+  .modus-knop.actief { border-color: var(--blauw); background: var(--blauw); color: #fff; }
+  .oefen-btn {
+    font-family: var(--fv); font-size: 15px; font-weight: 700;
+    padding: 12px 28px; border-radius: 99px; cursor: pointer;
+    border: none; background: var(--roze); color: #fff;
+    transition: opacity 0.15s, transform 0.1s;
+    display: flex; align-items: center; gap: 8px; margin-left: auto;
+  }
+  .oefen-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .oefen-btn:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+  /* ══ SCHERM 2: TRAINER ══════════════════ */
+  #s-trainer { background: var(--achtergrond); }
+  .trainer-header {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 24px; background: var(--kaart);
+    border-bottom: 0.5px solid var(--rand); position: sticky; top: 0; z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  }
+  .trainer-terug { background: none; border: none; cursor: pointer; color: var(--tekst-zacht); font-size: 20px; padding: 4px; line-height: 1; transition: color .12s; }
+  .trainer-terug:hover { color: var(--blauw); }
+  .voortgang-balk-wrap { flex: 1; height: 8px; background: #e9edf2; border-radius: 99px; overflow: hidden; }
+  .voortgang-balk-inner { height: 100%; background: linear-gradient(90deg, var(--blauw), var(--roze)); border-radius: 99px; transition: width 0.4s ease; position: relative; overflow: hidden; }
+  .voortgang-balk-inner::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.38), transparent); transform: translateX(-100%); animation: progressShine 1.6s ease-in-out infinite; }
+  @keyframes progressShine { 0% { transform: translateX(-100%); } 70%,100% { transform: translateX(100%); } }
+  .te-gaan-badge { font-size: 12px; color: var(--tekst-zacht); white-space: nowrap; font-family: var(--fv); }
+  .goed-badge { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; color: var(--groen); }
+  .fout-badge { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; color: var(--rood); }
+  .streak-badge { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 700; color: var(--roze); white-space: nowrap; }
+  .streak-badge.pulse { animation: streakPulse .28s ease; }
+  .score-pill { font-family: var(--fo); font-size: 12px; color: var(--tekst-zacht); border: 1px solid var(--rand); background: var(--kaart); padding: 6px 10px; border-radius: 99px; white-space: nowrap; }
+  @keyframes streakPulse { 0%{transform:scale(1)} 50%{transform:scale(1.12)} 100%{transform:scale(1)} }
+
+  /* Trainer stage */
+  .trainer-stage { flex: 1; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+  .trainer-kaart { background: var(--kaart); border-radius: var(--radius-lg); width: 100%; max-width: 720px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); border: 1px solid rgba(19,66,127,.1); animation: cardIn 0.24s ease both; position: relative; }
+  .trainer-kaart::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--blauw), var(--roze)); }
+  @keyframes cardIn { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+  /* Modus-startscherm */
+  .modus-start { background: var(--kaart); border-radius: var(--radius-lg); width: 100%; max-width: 520px; padding: 3rem 2rem 2.5rem; text-align: center; box-shadow: 0 4px 20px rgba(19,66,127,.1); }
+  .modus-start-illustratie { width: 110px; height: 110px; margin: 0 auto 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .modus-start-titel { font-size: 24px; font-weight: 700; color: var(--blauw); margin-bottom: .5rem; }
+  .modus-start-sub { font-size: 15px; color: var(--tekst-zacht); margin-bottom: 2rem; line-height: 1.5; }
+  .modus-start-knop { font-family: var(--fv); font-size: 15px; font-weight: 700; padding: 13px 32px; border-radius: 99px; border: none; background: var(--roze); color: #fff; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: opacity 0.15s, transform 0.1s; }
+  .modus-start-knop:hover { opacity: 0.88; transform: translateY(-1px); }
+  .modus-start-check { display: flex; align-items: center; gap: 8px; justify-content: center; margin-top: 1.25rem; font-size: 13px; color: var(--tekst-zacht); cursor: pointer; }
+
+  /* Flashcard */
+  .flashcard-boven { padding: 2.5rem 2rem 2rem; text-align: center; border-bottom: 0.5px solid var(--rand); }
+  .flashcard-label { font-family: var(--fo); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--blauw); margin-bottom: 1rem; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 99px; background: rgba(19,66,127,.07); }
+  .flashcard-latijn { font-family: var(--fv); font-size: clamp(24px,5vw,48px); font-weight: 700; color: var(--tekst); margin-bottom: 0.5rem; letter-spacing: -.5px; line-height: 1.05; }
+  .flashcard-aanv { font-family: var(--fo); font-size: 14px; color: var(--tekst-zacht); margin-top: .5rem; }
+  .flashcard-onder { padding: 1.5rem 2rem; text-align: center; }
+  .flashcard-nl { font-family: var(--fv); font-size: clamp(20px,3.5vw,32px); font-weight: 700; color: var(--blauw); line-height: 1.15; }
+  .flashcard-actie { padding: 1.25rem 2rem; display: flex; justify-content: flex-end; border-top: 0.5px solid var(--rand); }
+
+  /* Meerkeuze */
+  .mk-boven { padding: 2.5rem 2rem 2rem; text-align: center; }
+  .mk-opties { padding: 0 2rem 1.5rem; display: flex; flex-direction: column; gap: 10px; }
+  .mk-optie {
+    font-family: var(--fo); font-size: 15px; padding: 14px 20px;
+    border-radius: 99px; border: 1.5px solid var(--rand);
+    background: var(--achtergrond); cursor: pointer; text-align: left;
+    transition: border-color 0.12s, background 0.12s, color 0.12s, transform 0.1s;
+    color: var(--tekst); position: relative; overflow: hidden;
+  }
+  .mk-optie:hover:not(:disabled) { border-color: var(--blauw); background: #eef4ff; color: var(--blauw); transform: translateX(4px); }
+  .mk-optie.goed { border-color: var(--groen); background: var(--groen-licht); color: var(--groen); animation: answerPop .26s ease; }
+  .mk-optie.fout { border-color: var(--rood); background: var(--rood-licht); color: var(--rood); animation: answerPop .26s ease; }
+  .mk-optie:disabled { cursor: default; }
+  @keyframes answerPop { 50% { transform: scale(1.018); } }
+
+  /* Invullen / toets */
+  .inv-boven { padding: 2.5rem 2rem 1.5rem; text-align: center; }
+  .inv-hint { font-family: var(--fo); font-size: 14px; color: var(--tekst-zacht); margin-top: 0.75rem; letter-spacing: 1px; }
+  .inv-midden { padding: 0 2rem 1.5rem; }
+  .inv-taal-label { font-family: var(--fo); font-size: 13px; color: var(--tekst-zacht); margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+  .inv-input { width: 100%; font-family: var(--fo); font-size: 20px; padding: 14px 0; border: none; border-bottom: 2px solid var(--blauw); background: transparent; outline: none; color: var(--tekst); transition: border-color 0.15s; }
+  .inv-input:focus { border-color: var(--roze); }
+  .inv-accenten { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 12px; }
+  .accent-btn { font-family: var(--fo); font-size: 14px; padding: 5px 10px; border-radius: var(--radius-sm); border: 0.5px solid var(--rand); background: var(--kaart); cursor: pointer; color: var(--tekst); transition: border-color 0.12s, background 0.12s; }
+  .accent-btn:hover { border-color: var(--blauw); background: #eef4ff; }
+  .inv-feedback { padding: 1.25rem 2rem; display: flex; align-items: center; gap: 14px; }
+  .feedback-goed { background: var(--groen-licht); border-top: 0.5px solid var(--groen-rand); }
+  .feedback-fout { background: var(--rood-licht); border-top: 0.5px solid var(--rood-rand); }
+  .feedback-icoon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .feedback-icoon.goed { background: var(--groen); }
+  .feedback-icoon.fout { background: var(--rood); }
+  .feedback-icoon svg { width: 18px; height: 18px; stroke: #fff; stroke-width: 2.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .feedback-tekst { flex: 1; }
+  .feedback-label { font-family: var(--fo); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--tekst-zacht); }
+  .feedback-antwoord { font-family: var(--fv); font-size: 15px; font-weight: 700; color: var(--tekst); margin-top: 2px; }
+  .inv-onder { padding: 1.25rem 2rem; display: flex; justify-content: flex-end; border-top: 0.5px solid var(--rand); }
+
+  /* Knoppen */
+  .verder-btn { font-family: var(--fv); font-size: 14px; font-weight: 700; padding: 11px 24px; border-radius: 99px; border: none; background: var(--blauw); color: #fff; cursor: pointer; transition: opacity 0.15s, transform 0.1s; flex-shrink: 0; }
+  .verder-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .controleer-btn { font-family: var(--fv); font-size: 14px; font-weight: 700; padding: 11px 24px; border-radius: 99px; border: none; background: var(--blauw); color: #fff; cursor: pointer; transition: opacity 0.15s; }
+  .controleer-btn:disabled { opacity: 0.4; cursor: default; }
+
+  /* Combo toast */
+  .combo-toast { position: fixed; left: 50%; top: 82px; transform: translateX(-50%) translateY(-8px); z-index: 50; padding: 10px 16px; border-radius: 99px; background: var(--kaart); border: 1px solid var(--rand); color: var(--roze); font-family: var(--fv); font-size: 14px; font-weight: 700; box-shadow: 0 12px 26px rgba(0,0,0,0.12); animation: toastInOut 1.05s ease forwards; pointer-events: none; }
+  @keyframes toastInOut { 0% { opacity: 0; transform: translateX(-50%) translateY(-8px) scale(.96); } 18%,75% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); } 100% { opacity: 0; transform: translateX(-50%) translateY(-10px) scale(.96); } }
+
+  /* Flash feedback */
+  .trainer-stage.flash-good .trainer-kaart { box-shadow: 0 18px 44px rgba(22,163,74,0.22), 0 0 0 4px rgba(22,163,74,0.08); }
+  .trainer-stage.flash-bad .trainer-kaart { animation: shakeBad .22s ease both; box-shadow: 0 18px 44px rgba(220,38,38,0.16), 0 0 0 4px rgba(220,38,38,0.06); }
+  @keyframes shakeBad { 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-3px); } }
+
+  /* ══ SCHERM 3: RESULTAAT ══════════════ */
+  #s-resultaat .inhoud { max-width: 600px; margin: 0 auto; width: 100%; padding: 3rem 2rem; flex: 1; text-align: center; }
+  .resultaat-card { background: var(--kaart); border: 1px solid var(--rand); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: 0 8px 28px rgba(19,66,127,.12); margin: 0 auto 1.5rem; max-width: 520px; }
+  .resultaat-rang { display: inline-flex; margin-bottom: .75rem; font-size: 12px; color: #fff; background: var(--blauw); padding: 6px 14px; border-radius: 99px; letter-spacing: .03em; font-weight: 600; }
+  .resultaat-emoji { font-size: 54px; margin-bottom: .75rem; }
+  .resultaat-titel { font-size: 28px; font-weight: 800; color: var(--blauw); margin-bottom: .5rem; }
+  .resultaat-sub { font-size: 15px; color: var(--tekst-zacht); margin-bottom: 1.5rem; }
+  .resultaat-meter { height: 10px; border-radius: 99px; background: #eef4ff; overflow: hidden; margin-top: 1rem; }
+  .resultaat-meter-inner { height: 100%; background: linear-gradient(90deg, var(--blauw), var(--roze)); border-radius: 99px; transition: width .8s ease; }
+  .resultaat-stats { display: flex; gap: .75rem; justify-content: center; margin-bottom: 2.5rem; flex-wrap: wrap; align-items: stretch; }
+  .stat-blok { text-align: center; background: rgba(19,66,127,.04); border: 1px solid rgba(19,66,127,.1); border-radius: var(--radius); padding: .9rem 1rem; min-width: 92px; }
+  .stat-getal { font-size: 32px; font-weight: 700; color: var(--blauw); line-height: 1; }
+  .stat-label { font-family: var(--fo); font-size: 12px; color: var(--tekst-zacht); margin-top: 2px; }
+  .resultaat-knoppen { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .res-btn { font-family: var(--fv); font-size: 14px; font-weight: 600; padding: 11px 22px; border-radius: 99px; cursor: pointer; transition: all .15s; border: none; }
+  .res-btn-primair { background: var(--blauw); color: #fff; box-shadow: 0 3px 10px rgba(19,66,127,.25); }
+  .res-btn-primair:hover { background: var(--blauw); }
+  .res-btn-secundair { background: var(--kaart); color: var(--blauw); border: 2px solid var(--blauw); }
+  .res-btn-secundair:hover { background: #eef4ff; }
+  .res-btn-roze { background: var(--roze); color: #fff; }
+  .res-btn-roze:hover { background: #c2006a; }
+
+  /* ══ SCHERM 4: LEADERBOARD ══════════ */
+  #s-leaderboard .inhoud { max-width: 700px; margin: 0 auto; width: 100%; padding: 2rem; flex: 1; }
+  .lb-kaart { background: var(--kaart); border: 1px solid var(--rand); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 4px 16px rgba(19,66,127,.1); }
+  .lb-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--rand); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+  .lb-rij { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--rand); transition: background .1s; }
+  .lb-rij:last-child { border-bottom: none; }
+  .lb-rij:first-child { background: rgba(19,66,127,.04); }
+  .lb-medaille { font-size: 22px; width: 32px; text-align: center; flex-shrink: 0; }
+  .lb-naam { font-size: 15px; font-weight: 700; color: var(--blauw); }
+  .lb-detail { font-size: 11px; color: #888; margin-top: 1px; }
+  .lb-score { text-align: right; flex-shrink: 0; }
+  .lb-pct { font-size: 20px; font-weight: 800; }
+  .lb-streak { font-size: 11px; color: #f59e0b; }
+
+  /* Voet */
+  .voet { text-align: center; padding: 1.5rem; font-size: 12px; color: #a0b0c8; margin-top: auto; }
+
+  /* Responsief */
+  @media (max-width: 600px) {
+    .merklint { padding: 0 1rem; }
+    .merklint-sub { display: none; }
+    #s-selectie .inhoud, #s-leaderboard .inhoud { padding: 1rem; }
+    .selectie-aanv { display: none; }
+    .thema-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+    .resultaat-stats { gap: .5rem; }
+    .trainer-header { padding: 10px 12px; gap: 8px; }
+    .trainer-stage { padding: 1rem; }
+  }
+
+  /* Header teller */
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════
+     SCHERM 1: SELECTIE
+═══════════════════════════════════ -->
+<div id="s-selectie" class="scherm actief">
+
+  <header class="merklint">
+    <img src="images/nav/logo_wit.png" alt="athena" class="merklint-logo">
+    <span class="merklint-titel">Woordjestrainer</span>
+    <span class="merklint-sub">athena Campus Pottelberg</span>
+  </header>
+  <nav class="subbalk">
+    <a href="oefeningen-keuze.html" class="subbalk-link">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      Terug
+    </a>
+    <div class="subbalk-sep"></div>
+    <span id="header-teller" style="font-size:12px;color:var(--tekst-zacht);font-family:var(--fo);"></span>
+    <button class="moeilijk-teller" id="moeilijk-teller" onclick="naarMoeilijkeLijst()" style="display:none;">
+      ⭐ <span id="moeilijk-aantal">0</span>
+    </button>
+  </nav>
+
+  <div class="inhoud">
+
+    <!-- Naam kiezen -->
+    <div class="naam-blok">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--tekst-zacht)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <label for="leerling-code" style="font-family:var(--fv);font-size:13px;font-weight:600;color:var(--blauw);white-space:nowrap;">Jouw naam:</label>
+      <select id="leerling-code"
+        style="font-family:var(--fo);font-size:13px;padding:7px 11px;border:1px solid var(--rand);border-radius:8px;background:#fff;outline:none;flex:1;min-width:140px;transition:border-color .15s;cursor:pointer;"
+        onchange="bewaarLeerlingCode()"
+        onfocus="this.style.borderColor='var(--blauw)'" onblur="this.style.borderColor='var(--rand)'">
+        <option value="">— Kies je naam —</option>
+        <option value="Jules Allaert">Jules Allaert</option>
+        <option value="Fons Blockhuys">Fons Blockhuys</option>
+        <option value="Chahid El jattari">Chahid El jattari</option>
+        <option value="Dušica Mišic">Dušica Mišic</option>
+        <option value="Ilias Godefroidt">Ilias Godefroidt</option>
+        <option value="Esther Vanderbeken Khoshnaw">Esther Vanderbeken Khoshnaw</option>
+        <option value="Jens Everaerdt">Jens Everaerdt</option>
+        <option value="Test">Test</option>
+      </select>
+      <span style="font-family:var(--fo);font-size:11px;color:#aaa;white-space:nowrap;">Kies je naam voor het leaderboard</span>
+    </div>
+
+    <!-- Zoekbalk -->
+    <div class="thema-zoek-wrap">
+      <svg class="thema-zoek-icoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input class="thema-zoek" id="zoek-input" type="text" placeholder="Zoek een woord…" oninput="filterOpZoekterm()">
+    </div>
+
+    <!-- Luduskaarten -->
+    <div class="thema-grid" id="ludus-grid"></div>
+
+    <!-- Tekst-pills -->
+    <div id="tekst-nav-wrap" style="display:none">
+      <div class="tekst-nav" id="tekst-nav"></div>
+    </div>
+
+    <!-- Filter & Bereik -->
+    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:1rem;">
+      <label class="basis-toggle">
+        <input type="checkbox" id="filter-basis" onchange="laadWoorden()">
+        Alleen basiswoorden
+      </label>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <span style="font-size:11px;font-weight:700;color:var(--tekst-zacht);text-transform:uppercase;letter-spacing:0.8px;font-family:var(--fo);">Bereik</span>
+        <div class="bereik-rij">
+          <input class="bereik-input" type="number" id="bereik-van" placeholder="van" min="1">
+          <span class="bereik-sep">t/m</span>
+          <input class="bereik-input" type="number" id="bereik-tot" placeholder="tot" min="1">
+          <button class="bereik-btn" onclick="selecteerBereik()">Selecteer</button>
+          <button class="bereik-btn" onclick="deselecteerAlles()" style="border-color:var(--rand);color:var(--tekst-zacht);">Wis</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modus-knoppen + Starten -->
+    <div class="start-balk">
+      <button class="modus-knop actief" id="btn-leren" onclick="kiesModus('leren', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+        Leren
+      </button>
+      <button class="modus-knop" id="btn-flash" onclick="kiesModus('flash', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        Flashcard
+      </button>
+      <button class="modus-knop" id="btn-toets" onclick="kiesModus('toets', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        Toets
+      </button>
+      <button class="modus-knop" id="btn-meerkeuze" onclick="kiesModus('meerkeuze', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>
+        Meerkeuze
+      </button>
+      <button class="modus-knop" id="btn-invullen" onclick="kiesModus('invullen', this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+        Invullen
+      </button>
+      <button class="modus-knop" id="btn-leaderboard" onclick="kiesModus('leaderboard', this)" style="border-color:#f59e0b;color:#f59e0b;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Leaderboard
+      </button>
+      <button class="oefen-btn" id="oefen-btn" onclick="startTraining()" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Oefen selectie
+      </button>
+    </div>
+
+    <!-- Actiebalk -->
+    <div class="actie-balk" style="margin-top:1rem;">
+      <button class="selecteer-alle-btn" onclick="selecteerAlles()">Alles selecteren</button>
+      <span class="geselecteerd-teller" id="sel-teller">0 geselecteerd</span>
+    </div>
+
+    <!-- Woordenlijst -->
+    <div class="selectie-lijst" id="selectie-lijst">
+      <div class="geen-woorden">Kies eerst een Ludus om woorden te laden.</div>
+    </div>
+  </div>
+  <p class="voet">J. Everaerdt &mdash; athena Campus Pottelberg</p>
+</div>
+
+<!-- ═══════════════════════════════════
+     SCHERM 2: TRAINER
+═══════════════════════════════════ -->
+<div id="s-trainer" class="scherm">
+  <div class="trainer-header">
+    <button class="trainer-terug" onclick="naarSelectie()" title="Terug">←</button>
+    <div class="voortgang-balk-wrap">
+      <div class="voortgang-balk-inner" id="voortgang-balk" style="width:0%"></div>
+    </div>
+    <span class="te-gaan-badge" id="te-gaan-badge">—</span>
+    <div class="goed-badge">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <span id="goed-teller">0</span>
+    </div>
+    <div class="fout-badge" id="fout-badge" style="display:none;">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <span id="fout-teller">0</span>
+    </div>
+    <div class="streak-badge" id="streak-badge">🔥 <span id="streak-teller">0</span></div>
+    <div class="score-pill" id="score-pill">0 punten</div>
+  </div>
+  <div class="trainer-stage" id="trainer-stage"></div>
+</div>
+
+<!-- ═══════════════════════════════════
+     SCHERM 3: RESULTAAT
+═══════════════════════════════════ -->
+<div id="s-resultaat" class="scherm">
+  <header class="merklint">
+    <img src="images/nav/logo_wit.png" alt="athena" class="merklint-logo">
+    <span class="merklint-titel">Woordjestrainer</span>
+    <span class="merklint-sub">athena Campus Pottelberg</span>
+  </header>
+  <div class="inhoud" style="max-width:600px;margin:0 auto;width:100%;padding:2rem;flex:1;text-align:center;">
+    <div class="resultaat-card">
+      <div class="resultaat-rang" id="res-rang">Novus discipulus</div>
+      <div class="resultaat-emoji" id="res-emoji">🎉</div>
+      <div class="resultaat-titel" id="res-titel">Goed gedaan!</div>
+      <div class="resultaat-sub" id="res-sub">Je hebt de training afgerond.</div>
+      <div class="resultaat-meter"><div class="resultaat-meter-inner" id="res-meter" style="width:0%"></div></div>
+    </div>
+    <div class="resultaat-stats">
+      <div class="stat-blok"><div class="stat-getal" id="res-goed">0</div><div class="stat-label">Goed</div></div>
+      <div class="stat-blok"><div class="stat-getal" id="res-fout" style="color:var(--rood)">0</div><div class="stat-label">Fout</div></div>
+      <div class="stat-blok"><div class="stat-getal" id="res-totaal">0</div><div class="stat-label">Totaal</div></div>
+      <div class="stat-blok"><div class="stat-getal" id="res-streak" style="color:var(--roze)">0</div><div class="stat-label">Beste streak</div></div>
+    </div>
+    <div class="resultaat-knoppen">
+      <button class="res-btn res-btn-secundair" onclick="naarSelectie()">← Terug</button>
+      <button class="res-btn res-btn-primair" onclick="opnieuw()">↺ Opnieuw</button>
+      <button class="res-btn res-btn-roze" id="train-fouten-btn" onclick="trainFoutenOpnieuw()" style="display:none;">✗ Oefen fouten</button>
+      <button class="res-btn" onclick="toonLeaderboardScherm()" style="border:none;background:#f59e0b;color:#fff;">🏆 Leaderboard</button>
+    </div>
+  </div>
+  <p class="voet">J. Everaerdt &mdash; athena Campus Pottelberg</p>
+</div>
+
+<!-- ═══════════════════════════════════
+     SCHERM 4: LEADERBOARD
+═══════════════════════════════════ -->
+<div id="s-leaderboard" class="scherm">
+  <header class="merklint">
+    <img src="images/nav/logo_wit.png" alt="athena" class="merklint-logo">
+    <span class="merklint-titel">Woordjestrainer</span>
+    <span class="merklint-sub">athena Campus Pottelberg</span>
+  </header>
+  <div class="inhoud" style="max-width:700px;margin:0 auto;width:100%;padding:2rem;flex:1;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;flex-wrap:wrap;">
+      <span style="font-size:13px;color:var(--tekst-zacht);font-family:var(--fo);">Jouw naam:</span>
+      <span style="font-family:var(--fv);font-size:14px;color:var(--blauw);font-weight:700;" id="lb-naam-toon">—</span>
+      <span style="font-size:11px;color:#aaa;font-family:var(--fo);">Wijzig je naam op de startpagina</span>
+      <span style="margin-left:auto;font-size:11px;color:#aaa;" id="lb-bron"></span>
+    </div>
+    <div class="lb-kaart">
+      <div class="lb-header">
+        <span style="font-family:var(--fv);font-size:16px;font-weight:700;color:var(--blauw);">🏆 Hoogste scores</span>
+      </div>
+      <div id="lb-tabel"></div>
+    </div>
+    <div style="margin-top:1.5rem;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+      <button class="res-btn res-btn-secundair" onclick="naarSelectie()">← Terug naar selectie</button>
+    </div>
+  </div>
+  <p class="voet">J. Everaerdt &mdash; athena Campus Pottelberg</p>
+</div>
+
+<!-- ═══════════════════════════════════
+     WOORDENLIJST
+═══════════════════════════════════ -->
+<script src="woordenlijst_volledig.js"></script>
+
+<!-- ═══════════════════════════════════
+     APPLICATIELOGICA
+═══════════════════════════════════ -->
+<script>
+// ══════════════════════════════════════════════
+// CONFIGURATIE — Ludus-namen en tekst-labels
+// ══════════════════════════════════════════════
+const LUDUS_CONFIG = {
+  '1a': { ludus: '1a', naam: 'Lingua Latina', nummer: 'Ludus 1A', kleur: '#e8f0fb' },
+  '1b': { ludus: '1b', naam: 'Een dorpje aan de Tiber', nummer: 'Ludus 1B', kleur: '#e8f0fb' },
+  '2a': { ludus: '2a', naam: 'Mare Nostrum', nummer: 'Ludus 2A', kleur: '#fce0ef' },
+  '2b': { ludus: '2b', naam: 'Over veldheren, legioenen en soldaten', nummer: 'Ludus 2B', kleur: '#fce0ef' },
+  '3a': { ludus: '3a', naam: 'Toen de dieren nog konden spreken', nummer: 'Ludus 3A', kleur: '#e8f0fb' },
+  '3b': { ludus: '3b', naam: 'Een mens is een dier dat kan lachen', nummer: 'Ludus 3B', kleur: '#e8f0fb' },
+  '4a': { ludus: '4a', naam: 'Bij de ludi magister, de grammaticus en de retor', nummer: 'Ludus 4A', kleur: '#fce0ef' },
+  '4b': { ludus: '4b', naam: 'Een dagje uit', nummer: 'Ludus 4B', kleur: '#fce0ef' },
+  '5a': { ludus: '5a', naam: 'In den beginne was er chaos', nummer: 'Ludus 5A', kleur: '#e8f0fb' },
+  '5b': { ludus: '5b', naam: 'De Romeinse godsdienst', nummer: 'Ludus 5B', kleur: '#e8f0fb' },
+};
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let huidigeWoorden = [];
+let geselecteerd   = new Set();
+let gekozenLudus   = null;
+let gekozenTekst   = null;
+let zoekterm       = '';
+let gekozenModus   = 'leren';
+
+let trainRij      = [];
+let trainIndex    = 0;
+let aantalGoed    = 0;
+let aantalFout    = 0;
+let huidigeStreak = 0;
+let besteStreak   = 0;
+let scorePunten   = 0;
+let foutWoorden   = [];
+let lerenSubfase  = {};
+let huidigeTrainWoord = '';
+
+const startschermGezien = { leren: false, flash: false, toets: false, meerkeuze: false, invullen: false };
+
+// ══════════════════════════════════════════════
+// GOOGLE FORM — persistente leaderboard-scores
+// ══════════════════════════════════════════════
+const SCORE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScSVs_bSRH5wq_VW-jS0aQMbrv-IfkujesW3gAUuZYHUfOsjQ/formResponse';
+const SCORE_FORM_FIELDS = {
+  naam:   'entry.1481564302',
+  modus:  'entry.796940469',
+  thema:  'entry.1714045958',
+  tekst:  'entry.856287731',
+  goed:   'entry.1928322991',
+  fout:   'entry.386037051',
+  pct:    'entry.2011926864',
+  streak: 'entry.1505969841',
+  datum:  'entry.1733253030',
+};
+
+function stuurScoreNaarForm(s) {
+  if (!SCORE_FORM_URL) return;
+  try {
+    const fd = new FormData();
+    fd.append(SCORE_FORM_FIELDS.naam,   s.leerling  || 'Anoniem');
+    fd.append(SCORE_FORM_FIELDS.modus,  s.modus     || '');
+    fd.append(SCORE_FORM_FIELDS.thema,  String(s.thema  || ''));
+    fd.append(SCORE_FORM_FIELDS.tekst,  String(s.tekst  || ''));
+    fd.append(SCORE_FORM_FIELDS.goed,   String(s.goed   ?? ''));
+    fd.append(SCORE_FORM_FIELDS.fout,   String(s.fout   ?? ''));
+    fd.append(SCORE_FORM_FIELDS.pct,    String(Math.round(s.juistheid ?? 0)));
+    fd.append(SCORE_FORM_FIELDS.streak, String(s.besteStreak ?? 0));
+    fd.append(SCORE_FORM_FIELDS.datum,  s.datum     || new Date().toISOString());
+    fetch(SCORE_FORM_URL, { method: 'POST', body: fd, mode: 'no-cors' }).catch(() => {});
+  } catch {}
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+function init() {
+  renderLudusKaarten();
+  updateMoeilijkTeller();
+
+  const leerlingInput = document.getElementById('leerling-code');
+  if (leerlingInput) {
+    const opgeslagen = localStorage.getItem('athena_leerling_code') || '';
+    const opties = leerlingInput.querySelectorAll('option');
+    for (const opt of opties) {
+      if (opt.value === opgeslagen) { opt.selected = true; break; }
+    }
+  }
+}
+
+// ══════════════════════════════════════════════
+// LUDUS-KAARTEN RENDEREN
+// ══════════════════════════════════════════════
+function renderLudusKaarten() {
+  const grid = document.getElementById('ludus-grid');
+  if (!grid) return;
+
+  // Tel woorden per ludus
+  const tellers = {};
+  woordenlijst_volledig.forEach(w => {
+    (w.teksten || []).forEach(t => {
+      const ludusCode = t.split('/')[0];
+      tellers[ludusCode] = (tellers[ludusCode] || 0) + 1;
+    });
+  });
+
+  // Verwijder dubbele tellingen (woord telt 1x per ludus)
+  const perLudus = {};
+  woordenlijst_volledig.forEach(w => {
+    const ludusSet = new Set((w.teksten || []).map(t => t.split('/')[0]));
+    ludusSet.forEach(l => { perLudus[l] = (perLudus[l] || 0) + 1; });
+  });
+
+  const moeilijkN = laadMoeilijkeWoorden().size;
+
+  let html = '';
+
+  // Vaste kaarten: Alfabetisch + Moeilijk
+  html += `<div class="thema-kaart${gekozenLudus==='alfa'?' actief':''}" onclick="kiesLudus('alfa')">
+    <div class="thema-kaart-check"></div>
+    <div class="thema-kaart-nummer">📖 Alle woorden</div>
+    <div class="thema-kaart-naam">Alfabetisch</div>
+    <div class="thema-kaart-meta">${woordenlijst_volledig.filter(w=>w.grondvorm).length} woorden</div>
+    <div class="ludus-voortgang"><div class="ludus-voortgang-inner" style="width:0%"></div></div>
+  </div>`;
+
+  if (moeilijkN > 0) {
+    html += `<div class="thema-kaart${gekozenLudus==='moei'?' actief':''}" onclick="kiesLudus('moei')">
+      <div class="thema-kaart-check"></div>
+      <div class="thema-kaart-nummer">⭐ Moeilijk</div>
+      <div class="thema-kaart-naam">Moeilijke woorden</div>
+      <div class="thema-kaart-meta">${moeilijkN} woord${moeilijkN===1?'':'en'}</div>
+      <div class="ludus-voortgang"><div class="ludus-voortgang-inner" style="width:0%"></div></div>
+    </div>`;
+  }
+
+  // Luduskaarten in volgorde
+  const volgorde = ['1a','1b','2a','2b','3a','3b','4a','4b','5a','5b'];
+  volgorde.forEach(l => {
+    const cfg = LUDUS_CONFIG[l] || { naam: l, nummer: l, kleur: '#f0f4fb' };
+    const n = perLudus[l] || 0;
+    const actief = gekozenLudus === l;
+    html += `<div class="thema-kaart${actief?' actief':''}" onclick="kiesLudus('${l}')">
+      <div class="thema-kaart-check"></div>
+      <div class="thema-kaart-nummer">${cfg.nummer}</div>
+      <div class="thema-kaart-naam">${cfg.naam}</div>
+      <div class="thema-kaart-meta">${n > 0 ? n+' woorden' : '<span style="color:#f59e0b;font-size:10px;">⏳ Binnenkort</span>'}</div>
+      <div class="ludus-voortgang"><div class="ludus-voortgang-inner" style="width:${scoreVoorLudus(l)}%"></div></div>
+    </div>`;
+  });
+
+  grid.innerHTML = html;
+}
+
+function scoreVoorLudus(ludus) {
+  try {
+    const scores = JSON.parse(localStorage.getItem('athena_1ejaar_scores') || '[]');
+    const rel = scores.filter(s => s.thema === ludus);
+    if (!rel.length) return 0;
+    return Math.round(rel.reduce((a,s) => a + (s.juistheid||0), 0) / rel.length);
+  } catch { return 0; }
+}
+
+// ══════════════════════════════════════════════
+// LUDUS KIEZEN
+// ══════════════════════════════════════════════
+function kiesLudus(ludus) {
+  gekozenLudus = ludus;
+  gekozenTekst = null;
+  zoekterm = '';
+  document.getElementById('zoek-input').value = '';
+  geselecteerd.clear();
+  renderLudusKaarten();
+  renderTekstPills();
+  laadWoorden();
+}
+
+function renderTekstPills() {
+  const wrap = document.getElementById('tekst-nav-wrap');
+  const nav  = document.getElementById('tekst-nav');
+  if (!wrap || !nav) return;
+
+  // Alleen voor echte ludussen
+  if (!gekozenLudus || gekozenLudus === 'alfa' || gekozenLudus === 'moei') {
+    wrap.style.display = 'none'; return;
+  }
+
+  const tekstSet = new Set();
+  woordenlijst_volledig.forEach(w => {
+    (w.teksten || []).forEach(t => {
+      if (t.split('/')[0] === gekozenLudus) {
+        const deel = t.split('/')[1];
+        if (deel) tekstSet.add(deel);
+      }
+    });
+  });
+
+  // Als 1a (geen slash-teksten), verberg pills
+  if (tekstSet.size === 0) { wrap.style.display = 'none'; return; }
+
+  const teksten = [...tekstSet].sort((a,b) => {
+    const na = parseInt(a) || 0, nb = parseInt(b) || 0;
+    return na - nb || a.localeCompare(b);
+  });
+
+  if (teksten.length <= 1) {
+    wrap.style.display = 'none';
+    if (teksten.length === 1) gekozenTekst = teksten[0];
+    return;
+  }
+
+  wrap.style.display = 'block';
+  let html = '<span class="tekst-nav-label">Tekst:</span>';
+  html += `<button class="tekst-pill${!gekozenTekst||gekozenTekst==='alle'?' actief':''}" onclick="kiesTekst('alle')">Alle</button>`;
+  teksten.forEach(t => {
+    const actief = gekozenTekst === t;
+    html += `<button class="tekst-pill${actief?' actief':''}" onclick="kiesTekst('${t}')">Tekst ${t}</button>`;
+  });
+  nav.innerHTML = html;
+}
+
+function kiesTekst(tekst) {
+  gekozenTekst = tekst;
+  geselecteerd.clear();
+  renderTekstPills();
+  laadWoorden();
+}
+
+// ══════════════════════════════════════════════
+// ZOEKFUNCTIE
+// ══════════════════════════════════════════════
+function filterOpZoekterm() {
+  zoekterm = (document.getElementById('zoek-input').value || '').trim().toLowerCase();
+  if (zoekterm) {
+    gekozenLudus = null;
+    gekozenTekst = null;
+    renderLudusKaarten();
+    document.getElementById('tekst-nav-wrap').style.display = 'none';
+  }
+  geselecteerd.clear();
+  laadWoorden();
+}
+
+// ══════════════════════════════════════════════
+// LAAD WOORDEN
+// ══════════════════════════════════════════════
+function laadWoorden() {
+  const basisOnly = document.getElementById('filter-basis')?.checked;
+  geselecteerd.clear();
+  let basis = woordenlijst_volledig.filter(w => w.grondvorm);
+
+  if (zoekterm) {
+    basis = basis.filter(w =>
+      w.grondvorm.toLowerCase().includes(zoekterm) ||
+      (w.vertaling||'').toLowerCase().includes(zoekterm) ||
+      (w.aanvullingen||'').toLowerCase().includes(zoekterm)
+    );
+  } else if (gekozenLudus === 'moei') {
+    const m = laadMoeilijkeWoorden();
+    basis = basis.filter(w => m.has(w.grondvorm));
+  } else if (gekozenLudus === 'alfa') {
+    basis = [...basis].sort((a,b) => a.grondvorm.localeCompare(b.grondvorm, 'nl'));
+  } else if (gekozenLudus) {
+    // Filter op ludus, optioneel ook op tekst
+    basis = basis.filter(w => (w.teksten||[]).some(t => {
+      const [l, tekst] = t.split('/');
+      if (l !== gekozenLudus) return false;
+      if (!gekozenTekst || gekozenTekst === 'alle') return true;
+      return tekst === gekozenTekst;
+    }));
+    basis = [...basis].sort((a,b) => a.grondvorm.localeCompare(b.grondvorm, 'nl'));
+  } else {
+    huidigeWoorden = [];
+    renderLijst();
+    updateHeaderTeller();
+    return;
+  }
+
+  if (basisOnly) basis = basis.filter(w => w.basis);
+
+  huidigeWoorden = basis;
+  renderLijst();
+  updateHeaderTeller();
+}
+
+// ══════════════════════════════════════════════
+// RENDER SELECTIELIJST
+// ══════════════════════════════════════════════
+function renderLijst() {
+  const lijst = document.getElementById('selectie-lijst');
+  if (huidigeWoorden.length === 0) {
+    lijst.innerHTML = '<div class="geen-woorden">Geen woorden gevonden voor deze selectie.</div>';
+    updateOefenBtn();
+    return;
+  }
+
+  lijst.innerHTML = huidigeWoorden.map((w, i) => {
+    const sel = geselecteerd.has(i);
+    const isMoeilijk = moeilijkeWoorden().has(w.grondvorm);
+    return `<div class="selectie-item${sel?' geselecteerd':''}" onclick="toggleItem(${i})">
+      <span class="selectie-num">${i+1}</span>
+      <div class="selectie-check"></div>
+      <span class="selectie-latijn${w.basis?' basis-woord':''}">${esc(w.grondvorm)}</span>
+      <span class="selectie-aanv">${esc(w.aanvullingen)}</span>
+      <span class="selectie-nl">${esc(w.vertaling)}</span>
+      <button class="ster-knop${isMoeilijk?' moeilijk':''}" title="${isMoeilijk?'Verwijder uit moeilijke woorden':'Voeg toe aan moeilijke woorden'}"
+        onclick="event.stopPropagation(); toggleMoeilijk('${esc(w.grondvorm)}')">${isMoeilijk?'⭐':'☆'}</button>
+    </div>`;
+  }).join('');
+
+  updateTeller();
+  updateOefenBtn();
+}
+
+function toggleItem(i) {
+  if (geselecteerd.has(i)) geselecteerd.delete(i);
+  else geselecteerd.add(i);
+  renderLijst();
+}
+
+function selecteerAlles() { huidigeWoorden.forEach((_,i) => geselecteerd.add(i)); renderLijst(); }
+function deselecteerAlles() { geselecteerd.clear(); renderLijst(); }
+
+function selecteerBereik() {
+  const van = parseInt(document.getElementById('bereik-van').value);
+  const tot = parseInt(document.getElementById('bereik-tot').value);
+  if (!van || !tot || van > tot) return;
+  for (let i = van-1; i < Math.min(tot, huidigeWoorden.length); i++) geselecteerd.add(i);
+  renderLijst();
+}
+
+function updateTeller() { document.getElementById('sel-teller').textContent = `${geselecteerd.size} geselecteerd`; }
+function updateOefenBtn() {
+  const btn = document.getElementById('oefen-btn');
+  btn.disabled = geselecteerd.size < 1;
+  btn.textContent = geselecteerd.size >= 1 ? `▶  Oefen selectie (${geselecteerd.size})` : '▶  Oefen selectie';
+}
+function updateHeaderTeller() {
+  document.getElementById('header-teller').textContent = huidigeWoorden.length > 0 ? `${huidigeWoorden.length} woorden` : '';
+}
+
+// ══════════════════════════════════════════════
+// MODUS KIEZEN
+// ══════════════════════════════════════════════
+function kiesModus(modus, btn) {
+  gekozenModus = modus;
+  document.querySelectorAll('.modus-knop').forEach(b => b.classList.remove('actief'));
+  btn.classList.add('actief');
+  if (modus === 'leaderboard') toonLeaderboardScherm();
+}
+
+async function toonLeaderboardScherm() {
+  toonScherm('s-leaderboard');
+  renderLeaderboard();
+}
+
+async function renderLeaderboard() {
+  const naam = localStorage.getItem('athena_leerling_code') || 'Anoniem';
+  const toon = document.getElementById('lb-naam-toon');
+  if (toon) toon.textContent = naam;
+  const container = document.getElementById('lb-tabel');
+
+  let scores = [];
+  // Probeer Google Apps Script
+  try {
+    const appsUrl = 'https://script.google.com/macros/s/AKfycbw5hzoZuYf5aP0ZNaWXY4ZnCxtlcoqMinxktjTMKGywCpXGG5J7YtOodauz2qo1cKUC/exec';
+    const resp = await fetch(appsUrl + '?action=getTrainerScores&t=' + Date.now());
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data.ok && Array.isArray(data.scores) && data.scores.length) {
+        scores = data.scores;
+        const bron = document.getElementById('lb-bron');
+        if (bron) bron.textContent = 'Gedeeld leaderboard';
+      }
+    }
+  } catch {}
+
+  // Fallback: lokale scores
+  if (!scores.length) {
+    try { scores = JSON.parse(localStorage.getItem('athena_1ejaar_scores') || '[]'); } catch {}
+    const bron = document.getElementById('lb-bron');
+    if (bron) bron.textContent = scores.length ? 'Lokale scores' : '';
+  }
+
+  if (!scores.length) {
+    container.innerHTML = '<p style="text-align:center;padding:2rem;color:#888;font-size:14px;">Nog geen scores opgeslagen. Oefen eerst een reeks.</p>';
+    return;
+  }
+
+  const perLeerling = {};
+  scores.forEach(s => {
+    const naam = s.leerling || s.naam || 'Anoniem';
+    const pct  = s.juistheid ?? s.procent ?? 0;
+    const streak = s.besteStreak ?? 0;
+    if (!perLeerling[naam] || pct > perLeerling[naam].pct) {
+      perLeerling[naam] = { naam, pct, streak, datum: s.datum, modus: s.modus, woorden: s.aantalWoorden };
+    }
+  });
+
+  const gesorteerd = Object.values(perLeerling).sort((a,b) => b.pct - a.pct);
+  const medailles = ['🥇','🥈','🥉'];
+
+  container.innerHTML = gesorteerd.map((r, i) => `
+    <div class="lb-rij">
+      <div class="lb-medaille">${medailles[i] || (i+1)}</div>
+      <div style="flex:1;">
+        <div class="lb-naam">${esc(r.naam)}</div>
+        <div class="lb-detail">${r.modus||''} · ${r.woorden||'?'} woorden · ${r.datum ? new Date(r.datum).toLocaleDateString('nl-BE') : ''}</div>
+      </div>
+      <div class="lb-score">
+        <div class="lb-pct" style="color:${r.pct>=80?'var(--groen)':r.pct>=50?'var(--blauw)':'var(--rood)'};">${r.pct}%</div>
+        <div class="lb-streak">🔥 ${r.streak}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════
+// TRAINING STARTEN
+// ══════════════════════════════════════════════
+function startTraining() {
+  if (gekozenModus === 'leaderboard') { toonLeaderboardScherm(); return; }
+
+  trainRij = [...geselecteerd].map(i => ({ ...huidigeWoorden[i], _idx: i }));
+  // Schudden
+  for (let i = trainRij.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [trainRij[i], trainRij[j]] = [trainRij[j], trainRij[i]];
+  }
+  trainIndex = 0; aantalGoed = 0; aantalFout = 0; huidigeStreak = 0; besteStreak = 0; scorePunten = 0; foutWoorden = [];
+  lerenSubfase = {};
+  trainRij.forEach((_,i) => { lerenSubfase[i] = 0; });
+
+  toonScherm('s-trainer');
+  document.getElementById('fout-badge').style.display = gekozenModus === 'toets' ? 'flex' : 'none';
+  document.getElementById('goed-teller').textContent = '0';
+  document.getElementById('fout-teller').textContent = '0';
+  document.getElementById('streak-teller').textContent = '0';
+  document.getElementById('score-pill').textContent = '0 punten';
+
+  updateVoortgang();
+
+  if (!startschermGezien[gekozenModus]) {
+    toonModusStart();
+  } else {
+    toonHuidig();
+  }
+}
+
+// Modus-info
+const MODUS_INFO = {
+  leren: {
+    titel: 'Leren',
+    sub: 'Leer stapsgewijs: flashcard → meerkeuze → invullen.',
+    kleur: '#eef4ff',
+    svg: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="38" fill="#dde8f4" stroke="#13427f" stroke-width="2"/>
+      <rect x="22" y="20" width="36" height="44" rx="4" fill="white" stroke="#13427f" stroke-width="2"/>
+      <line x1="28" y1="32" x2="52" y2="32" stroke="#13427f" stroke-width="2" stroke-linecap="round"/>
+      <line x1="28" y1="40" x2="52" y2="40" stroke="#13427f" stroke-width="2" stroke-linecap="round"/>
+      <line x1="28" y1="48" x2="44" y2="48" stroke="#E6007E" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="56" cy="56" r="10" fill="#13427f"/>
+      <polyline points="51,56 55,60 62,53" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>`
+  },
+  flash: {
+    titel: 'Flashcard',
+    sub: 'Bekijk de Latijnse woorden en geef aan of je ze kent.',
+    kleur: '#eef4ff',
+    svg: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="38" fill="#dde8f4" stroke="#13427f" stroke-width="2"/>
+      <rect x="16" y="22" width="48" height="34" rx="5" fill="white" stroke="#13427f" stroke-width="2"/>
+      <line x1="26" y1="34" x2="54" y2="34" stroke="#13427f" stroke-width="2" stroke-linecap="round"/>
+      <line x1="26" y1="43" x2="44" y2="43" stroke="#E6007E" stroke-width="2" stroke-linecap="round"/>
+    </svg>`
+  },
+  toets: {
+    titel: 'Toets',
+    sub: 'Typ de vertaling. Fouten worden bijgehouden.',
+    kleur: 'var(--roze-licht)',
+    svg: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="38" fill="#fce0ef" stroke="#E6007E" stroke-width="2"/>
+      <rect x="20" y="18" width="40" height="50" rx="4" fill="white" stroke="#E6007E" stroke-width="2"/>
+      <line x1="27" y1="30" x2="53" y2="30" stroke="#eee" stroke-width="1.5"/>
+      <line x1="27" y1="38" x2="53" y2="38" stroke="#eee" stroke-width="1.5"/>
+      <line x1="27" y1="46" x2="53" y2="46" stroke="#eee" stroke-width="1.5"/>
+      <path d="M27 52 Q32 48 37 52 Q42 56 47 52 Q50 49 53 52" stroke="#E6007E" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </svg>`
+  },
+  meerkeuze: {
+    titel: 'Meerkeuze',
+    sub: 'Kies de juiste vertaling uit vier opties.',
+    kleur: '#eef4ff',
+    svg: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="38" fill="#dde8f4" stroke="#13427f" stroke-width="2"/>
+      <rect x="18" y="22" width="44" height="10" rx="5" fill="white" stroke="#eee" stroke-width="1.5"/>
+      <rect x="18" y="36" width="44" height="10" rx="5" fill="#dde8f4" stroke="#13427f" stroke-width="2"/>
+      <rect x="18" y="50" width="44" height="10" rx="5" fill="white" stroke="#eee" stroke-width="1.5"/>
+      <circle cx="28" cy="41" r="4" fill="#13427f"/>
+      <polyline points="25.5,41 27.5,43 31,39" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>`
+  },
+  invullen: {
+    titel: 'Invullen',
+    sub: 'Typ de vertaling. Een hint toont de beginletters.',
+    kleur: '#eef4ff',
+    svg: `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="38" fill="#dde8f4" stroke="#13427f" stroke-width="2"/>
+      <rect x="18" y="32" width="44" height="16" rx="4" fill="white" stroke="#13427f" stroke-width="2"/>
+      <line x1="24" y1="40" x2="38" y2="40" stroke="#13427f" stroke-width="2" stroke-linecap="round"/>
+      <rect x="38" y="36" width="2" height="8" rx="1" fill="#E6007E"/>
+    </svg>`
+  }
+};
+
+function toonModusStart() {
+  const info = MODUS_INFO[gekozenModus] || MODUS_INFO['invullen'];
+  document.getElementById('trainer-stage').innerHTML = `
+    <div class="modus-start">
+      <div class="modus-start-illustratie" style="background:${info.kleur}">
+        ${info.svg}
+      </div>
+      <div class="modus-start-titel">${info.titel}</div>
+      <div class="modus-start-sub">${info.sub}</div>
+      <button class="modus-start-knop" onclick="startVanuitStartscherm()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Start
+      </button>
+      <label class="modus-start-check">
+        <input type="checkbox" id="start-niet-meer" onchange="slaStartschermOp()">
+        Toon dit niet meer
+      </label>
+    </div>`;
+}
+
+function startVanuitStartscherm() { toonHuidig(); }
+function slaStartschermOp() {
+  if (document.getElementById('start-niet-meer')?.checked) {
+    startschermGezien[gekozenModus] = true;
+  }
+}
+
+function toonScherm(id) {
+  document.querySelectorAll('.scherm').forEach(s => s.classList.remove('actief'));
+  document.getElementById(id).classList.add('actief');
+}
+
+function naarSelectie() { toonScherm('s-selectie'); }
+
+// ══════════════════════════════════════════════
+// ANTWOORD REGISTREREN & VOORTGANG
+// ══════════════════════════════════════════════
+function registreerAntwoord(isGoed) {
+  if (isGoed) {
+    aantalGoed++;
+    huidigeStreak++;
+    besteStreak = Math.max(besteStreak, huidigeStreak);
+    const comboBonus = huidigeStreak >= 3 ? Math.min(20, huidigeStreak * 2) : 0;
+    scorePunten += 10 + comboBonus;
+    toonFeedbackEffect(true);
+    if (huidigeStreak === 3) toonComboToast('🔥 Combo x3');
+    if (huidigeStreak === 5) toonComboToast('⚡ Combo x5');
+    if (huidigeStreak > 5 && huidigeStreak % 5 === 0) toonComboToast(`🏛️ Combo x${huidigeStreak}`);
+  } else {
+    aantalFout++;
+    huidigeStreak = 0;
+    toonFeedbackEffect(false);
+    const w = trainRij[trainIndex];
+    if (w && !foutWoorden.some(x => x.grondvorm === w.grondvorm)) foutWoorden.push(w);
+  }
+}
+
+function updateVoortgang() {
+  const totaal = trainRij.length;
+  let pct = 0, resterend = 0;
+  if (totaal > 0 && gekozenModus === 'leren') {
+    const fase = Math.min(lerenSubfase[trainIndex] || 0, 2);
+    pct = ((trainIndex + fase / 3) / totaal) * 100;
+    resterend = Math.max(0, totaal - trainIndex);
+  } else {
+    const gedaan = Math.min(aantalGoed + aantalFout, totaal);
+    pct = totaal > 0 ? (gedaan / totaal) * 100 : 0;
+    resterend = Math.max(0, totaal - gedaan);
+  }
+  document.getElementById('voortgang-balk').style.width = Math.min(100, pct) + '%';
+  document.getElementById('te-gaan-badge').textContent = `${resterend} te gaan`;
+  document.getElementById('goed-teller').textContent = aantalGoed;
+  document.getElementById('fout-teller').textContent = aantalFout;
+  const streakEl = document.getElementById('streak-teller');
+  const badge = document.getElementById('streak-badge');
+  if (streakEl) streakEl.textContent = huidigeStreak;
+  document.getElementById('score-pill').textContent = `${scorePunten} punten`;
+  if (badge) { badge.classList.remove('pulse'); void badge.offsetWidth; if (huidigeStreak > 1) badge.classList.add('pulse'); }
+}
+
+function toonComboToast(tekst) {
+  const oud = document.querySelector('.combo-toast');
+  if (oud) oud.remove();
+  const el = document.createElement('div');
+  el.className = 'combo-toast';
+  el.textContent = tekst;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1150);
+}
+
+function toonFeedbackEffect(isGoed) {
+  const stage = document.getElementById('trainer-stage');
+  if (!stage) return;
+  stage.classList.remove('flash-good', 'flash-bad');
+  void stage.offsetWidth;
+  stage.classList.add(isGoed ? 'flash-good' : 'flash-bad');
+  setTimeout(() => stage.classList.remove('flash-good', 'flash-bad'), 360);
+}
+
+// ══════════════════════════════════════════════
+// TOON HUIDIG WOORD
+// ══════════════════════════════════════════════
+function toonHuidig() {
+  if (trainIndex >= trainRij.length) { toonResultaat(); return; }
+  const w = trainRij[trainIndex];
+
+  if (gekozenModus === 'leren') {
+    const fase = lerenSubfase[trainIndex] || 0;
+    if (fase === 0) toonFlashcard(w);
+    else if (fase === 1) toonMeerkeuze(w);
+    else toonInvullen(w);
+  } else if (gekozenModus === 'flash') {
+    toonFlashcardEnkel(w);
+  } else if (gekozenModus === 'meerkeuze') {
+    toonMeerkeuze(w);
+  } else if (gekozenModus === 'toets') {
+    toonToets(w);
+  } else {
+    toonInvullen(w);
+  }
+}
+
+// ── FLASHCARD ENKEL ──
+function toonFlashcardEnkel(w) {
+  document.getElementById('trainer-stage').innerHTML = `
+    <div class="trainer-kaart">
+      <div class="flashcard-boven" style="min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div class="flashcard-label">Flashcard · ${trainIndex+1}/${trainRij.length} · voorkant</div>
+        <div class="flashcard-latijn" style="margin-top:.5rem;">${esc(w.grondvorm)}</div>
+        ${w.aanvullingen ? `<div class="flashcard-aanv">${esc(w.aanvullingen)}</div>` : ''}
+      </div>
+      <div id="fc-antwoord-zone" style="cursor:pointer;padding:1.25rem 2rem;text-align:center;border-top:1px solid var(--rand);background:rgba(19,66,127,.03);">
+        <span style="font-size:12px;color:var(--tekst-zacht);">↩ Tik om om te draaien</span>
+      </div>
+    </div>`;
+  document.getElementById('fc-antwoord-zone').addEventListener('click', () => {
+    document.getElementById('fc-antwoord-zone').outerHTML = `
+      <div id="fc-ommezijde" style="border-top:1px solid var(--rand);animation:cardIn .18s ease both;">
+        <div style="padding:.75rem 2rem .25rem;text-align:center;"><span class="flashcard-label">ommezijde</span></div>
+        ${w.aanvullingen ? `<div style="padding:.5rem 2rem;text-align:center;font-size:14px;color:var(--tekst-zacht);border-bottom:1px solid rgba(19,66,127,.08);">
+          <span style="font-size:10px;font-weight:700;color:var(--roze);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:3px;">Aanvullingen</span>
+          ${esc(w.aanvullingen)}
+        </div>` : ''}
+        <div style="padding:1.25rem 2rem;text-align:center;">
+          <span style="font-size:10px;font-weight:700;color:var(--roze);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:.5rem;">Vertaling</span>
+          <div class="flashcard-nl">${esc(w.vertaling)}</div>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;padding:0 2rem 1.5rem;">
+          <button class="verder-btn" style="background:var(--rood);" onclick="flashEnkelNee()">✕ Wist ik niet</button>
+          <button class="verder-btn" onclick="flashEnkelJa()">✓ Wist ik wel</button>
+        </div>
+      </div>`;
+  }, { once: true });
+}
+
+function flashEnkelJa()  { registreerAntwoord(true);  trainIndex++; updateVoortgang(); toonHuidig(); }
+function flashEnkelNee() { registreerAntwoord(false); trainIndex++; updateVoortgang(); toonHuidig(); }
+
+// ── FLASHCARD LEREN (stap 1) ──
+function toonFlashcard(w) {
+  document.getElementById('trainer-stage').innerHTML = `
+    <div class="trainer-kaart">
+      <div class="flashcard-boven">
+        <div class="flashcard-label">Stap 1 · onthoud</div>
+        <div class="flashcard-latijn">${esc(w.grondvorm)}${w.aanvullingen ? ' <span style="font-weight:400;font-size:18px;color:var(--tekst-zacht);">'+esc(w.aanvullingen)+'</span>' : ''}</div>
+      </div>
+      <div class="flashcard-onder">
+        <div class="flashcard-nl">${esc(w.vertaling)}</div>
+      </div>
+      <div class="flashcard-actie">
+        <button class="verder-btn" onclick="flashcardVerder()">Verder →</button>
+      </div>
+    </div>`;
+}
+
+function flashcardVerder() {
+  lerenSubfase[trainIndex] = 1;
+  toonMeerkeuze(trainRij[trainIndex]);
+}
+
+// ── MEERKEUZE ──
+function toonMeerkeuze(w) {
+  const opties = maakMeerkeuzeopties(w);
+  const label = gekozenModus === 'leren' ? 'Stap 2 · kies snel' : `${trainIndex+1}/${trainRij.length}`;
+  document.getElementById('trainer-stage').innerHTML = `
+    <div class="trainer-kaart">
+      <div class="mk-boven">
+        <div class="flashcard-label">${label}</div>
+        <div class="flashcard-latijn">${esc(w.grondvorm)}</div>
+        ${w.aanvullingen ? `<div class="flashcard-aanv">${esc(w.aanvullingen)}</div>` : ''}
+      </div>
+      <div class="mk-opties">
+        ${opties.map(o => `<button class="mk-optie" onclick="checkMK(this, ${o.correct}, '${esc(w.vertaling).replace(/'/g,"\\'")}', '${esc(o.tekst).replace(/'/g,"\\'")}')">
+          ${esc(o.tekst)}
+        </button>`).join('')}
+      </div>
+    </div>`;
+}
+
+function maakMeerkeuzeopties(w) {
+  const correct = { tekst: w.vertaling, correct: true };
+  const pool = trainRij.filter(x => x.vertaling !== w.vertaling);
+  const fout = [];
+  const shuffled = [...pool].sort(() => Math.random() - .5);
+  for (let i = 0; i < Math.min(3, shuffled.length); i++) fout.push({ tekst: shuffled[i].vertaling, correct: false });
+  if (fout.length < 3) {
+    const extra = woordenlijst_volledig.filter(x => x.grondvorm && x.vertaling !== w.vertaling && !fout.some(f => f.tekst === x.vertaling));
+    for (let i = 0; fout.length < 3 && i < extra.length; i++) fout.push({ tekst: extra[i].vertaling, correct: false });
+  }
+  return [...fout, correct].sort(() => Math.random() - .5);
+}
+
+function checkMK(btn, correct, juist, gekozen) {
+  document.querySelectorAll('.mk-optie').forEach(b => {
+    b.disabled = true;
+    if (b.textContent.trim() === juist) b.classList.add('goed');
+  });
+  if (!correct) {
+    btn.classList.remove('goed'); btn.classList.add('fout');
+    registreerAntwoord(false);
+    if (gekozenModus === 'leren') lerenSubfase[trainIndex] = 2;
+    updateVoortgang();
+    setTimeout(() => { if (gekozenModus === 'leren') toonInvullen(trainRij[trainIndex]); else { trainIndex++; toonHuidig(); } }, 1400);
+  } else {
+    registreerAntwoord(true);
+    if (gekozenModus === 'leren') lerenSubfase[trainIndex] = 2;
+    updateVoortgang();
+    setTimeout(() => { if (gekozenModus === 'leren') toonInvullen(trainRij[trainIndex]); else { trainIndex++; toonHuidig(); } }, 900);
+  }
+}
+
+// ── TOETS (invullen zonder hint) ──
+function toonToets(w) {
+  huidigeTrainWoord = w.grondvorm;
+  document.getElementById('trainer-stage').innerHTML = `
+    <div class="trainer-kaart">
+      <div class="inv-boven">
+        <div class="flashcard-label">Wat betekent dit woord? · ${trainIndex+1}/${trainRij.length}</div>
+        <div class="flashcard-latijn">${esc(w.grondvorm)}${w.aanvullingen ? ` <span style="font-weight:400;font-size:16px;color:var(--tekst-zacht)">${esc(w.aanvullingen)}</span>` : ''}</div>
+      </div>
+      <div class="inv-midden">
+        <div class="inv-taal-label">🇳🇱 Nederlands</div>
+        <input class="inv-input" type="text" id="inv-antwoord" autocomplete="off" autocorrect="off" spellcheck="false"
+          placeholder="Typ je vertaling…"
+          onkeydown="if(event.key==='Enter') controleerToets('${esc(w.vertaling).replace(/'/g,"\\'")}')">
+        <div class="inv-accenten">
+          ${ACCENTEN.map(a => `<button class="accent-btn" onclick="voegAccentToe('${a}')">${a}</button>`).join('')}
+        </div>
+      </div>
+      <div class="inv-onder">
+        <button class="controleer-btn" onclick="controleerToets('${esc(w.vertaling).replace(/'/g,"\\'")}')">Controleer</button>
+      </div>
+    </div>`;
+  document.getElementById('inv-antwoord').focus();
+}
+
+function controleerToets(juistAntwoord) { _controleer(juistAntwoord, false); }
+
+// ── INVULLEN MET HINT ──
+const ACCENTEN = ['ë','é','è','ê','ē','ï','î','ö','ô','ü','û','à','ā'];
+
+function toonInvullen(w) {
+  huidigeTrainWoord = w.grondvorm;
+  const hint = maakHint(w.vertaling);
+  const label = gekozenModus === 'leren' ? 'Stap 3 · invullen' : `${trainIndex+1}/${trainRij.length}`;
+  document.getElementById('trainer-stage').innerHTML = `
+    <div class="trainer-kaart">
+      <div class="inv-boven">
+        <div class="flashcard-label">${label}</div>
+        <div class="flashcard-latijn">${esc(w.grondvorm)}</div>
+        ${w.aanvullingen ? `<div class="flashcard-aanv">${esc(w.aanvullingen)}</div>` : ''}
+        <div class="inv-hint">${hint}</div>
+      </div>
+      <div class="inv-midden">
+        <div class="inv-taal-label">🇳🇱 Nederlands</div>
+        <input class="inv-input" type="text" id="inv-antwoord" autocomplete="off" autocorrect="off" spellcheck="false"
+          placeholder="Typ hier je antwoord…"
+          onkeydown="if(event.key==='Enter') controleer('${esc(w.vertaling).replace(/'/g,"\\'")}')">
+        <div class="inv-accenten">
+          ${ACCENTEN.map(a => `<button class="accent-btn" onclick="voegAccentToe('${a}')">${a}</button>`).join('')}
+        </div>
+      </div>
+      <div class="inv-onder">
+        <button class="controleer-btn" onclick="controleer('${esc(w.vertaling).replace(/'/g,"\\'")}')">Controleer</button>
+      </div>
+    </div>`;
+  document.getElementById('inv-antwoord').focus();
+}
+
+function maakHint(v) {
+  return v.split(/[\s,;]+/).filter(Boolean).map(w => w[0] + '.'.repeat(Math.max(1, w.length-1))).join(' ');
+}
+
+function voegAccentToe(a) {
+  const el = document.getElementById('inv-antwoord');
+  if (!el) return;
+  const pos = el.selectionStart;
+  el.value = el.value.slice(0, pos) + a + el.value.slice(el.selectionEnd);
+  el.selectionStart = el.selectionEnd = pos + 1;
+  el.focus();
+}
+
+function controleer(juistAntwoord) { _controleer(juistAntwoord, gekozenModus === 'leren'); }
+
+function _controleer(juistAntwoord, isLeren) {
+  const input = document.getElementById('inv-antwoord');
+  if (!input) return;
+  const antwoord = input.value.trim();
+  if (!antwoord) return;
+  const goed = evalueerAntwoord(antwoord, juistAntwoord);
+  const kaart = document.querySelector('.trainer-kaart');
+  const onderDiv = kaart.querySelector('.inv-onder');
+  input.disabled = true;
+  document.querySelectorAll('.accent-btn').forEach(b => b.disabled = true);
+
+  if (goed) {
+    registreerAntwoord(true);
+    onderDiv.outerHTML = `
+      <div class="inv-feedback feedback-goed">
+        <div class="feedback-icoon goed"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="feedback-tekst">
+          <div class="feedback-label">Juist!</div>
+          <div class="feedback-antwoord">${esc(juistAntwoord)}</div>
+        </div>
+        <button class="voeg-moeilijk-btn" onclick="toggleMoeilijkTraining(this)">☆ Moeilijk</button>
+        <button class="verder-btn" onclick="volgend()">Verder →</button>
+      </div>`;
+  } else {
+    registreerAntwoord(false);
+    onderDiv.outerHTML = `
+      <div class="inv-feedback feedback-fout">
+        <div class="feedback-icoon fout"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
+        <div class="feedback-tekst">
+          <div class="feedback-label">Goed antwoord</div>
+          <div class="feedback-antwoord">${esc(juistAntwoord)}</div>
+        </div>
+        <button class="voeg-moeilijk-btn" onclick="toggleMoeilijkTraining(this)">☆ Moeilijk</button>
+        <button class="verder-btn" style="background:var(--rood);" onclick="volgend()">Verder →</button>
+      </div>`;
+  }
+  updateVoortgang();
+}
+
+function volgend() {
+  if (gekozenModus === 'leren') {
+    lerenSubfase[trainIndex] = (lerenSubfase[trainIndex] || 0) + 1;
+    if (lerenSubfase[trainIndex] >= 3) { trainIndex++; lerenSubfase[trainIndex] = 0; }
+  } else {
+    trainIndex++;
+  }
+  toonHuidig();
+}
+
+// ══════════════════════════════════════════════
+// SLIMME ANTWOORDEVALUATIE
+// ══════════════════════════════════════════════
+function evalueerAntwoord(antwoord, juist) {
+  const antwoordNorm = normaliseer(antwoord);
+  if (!antwoordNorm) return false;
+  const groepen = maakAntwoordGroepen(juist);
+  if (!groepen.length) return false;
+  return groepen.every(groep => groep.some(optie => optieKomtVoorInAntwoord(optie, antwoordNorm)));
+}
+
+function maakAntwoordGroepen(juist) {
+  const opgeruimd = (juist || '')
+    .replace(/\(\s*hier:[^)]*\)/gi, '')
+    .replace(/;\s*hier:[^;,]*/gi, '')
+    .replace(/,\s*hier:[^;,]*/gi, '')
+    .replace(/\bhier:[^;,]*/gi, '')
+    .trim().replace(/[;,]\s*$/, '');
+  return opgeruimd.split(';')
+    .map(groep => groep.split(/[,/]+/).map(deel => normaliseer(deel)).filter(Boolean))
+    .filter(groep => groep.length > 0);
+}
+
+function optieKomtVoorInAntwoord(optie, antwoordNorm) {
+  if (!optie) return false;
+  if (antwoordNorm === optie) return true;
+  if (antwoordNorm.replace(/\s+/g,'') === optie.replace(/\s+/g,'')) return true;
+  const escaped = optie.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return new RegExp('(^|[\\s\\-])' + escaped + '($|[\\s\\-,;])', 'i').test(antwoordNorm);
+}
+
+function normaliseer(s) {
+  return (s||'').toLowerCase()
+    .replace(/[àáâãäā]/g,'a').replace(/[èéêëē]/g,'e')
+    .replace(/[ìíîï]/g,'i').replace(/[òóôõö]/g,'o')
+    .replace(/[ùúûü]/g,'u')
+    .replace(/\d+\.\s*/g,'')
+    .replace(/[()]/g,' ').replace(/[…]/g,' ').replace(/\.\.\./g,' ')
+    .replace(/[!?']/g,'').replace(/\s+/g,' ').trim();
+}
+
+// ══════════════════════════════════════════════
+// RESULTAAT
+// ══════════════════════════════════════════════
+function toonResultaat() {
+  const totaal = aantalGoed + aantalFout;
+  const pct = Math.round((aantalGoed / totaal) * 100) || 0;
+  document.getElementById('res-goed').textContent   = aantalGoed;
+  document.getElementById('res-fout').textContent   = aantalFout;
+  document.getElementById('res-totaal').textContent = totaal;
+  document.getElementById('res-streak').textContent = besteStreak;
+  const rang = pct >= 90 ? 'Magister memoriae' : pct >= 75 ? 'Victor verborum' : pct >= 50 ? 'Miles in training' : 'Novus discipulus';
+  document.getElementById('res-rang').textContent = rang;
+  const meter = document.getElementById('res-meter');
+  if (meter) { meter.style.width = '0%'; setTimeout(() => { meter.style.width = pct + '%'; }, 80); }
+  document.getElementById('res-emoji').textContent  = pct >= 80 ? '🎉' : pct >= 50 ? '💪' : '📖';
+  document.getElementById('res-titel').textContent  = pct >= 80 ? 'Uitstekend!' : pct >= 50 ? 'Goed bezig!' : 'Blijf oefenen!';
+  document.getElementById('res-sub').textContent    = `Je scoorde ${pct}% — ${scorePunten} punten. Beste combo: ${besteStreak}.`;
+  const foutenBtn = document.getElementById('train-fouten-btn');
+  if (foutenBtn) foutenBtn.style.display = foutWoorden.length > 0 ? 'inline-flex' : 'none';
+  bewaarScore(pct);
+  toonScherm('s-resultaat');
+}
+
+function opnieuw() { startTraining(); }
+
+function trainFoutenOpnieuw() {
+  if (!foutWoorden.length) return;
+  trainRij = foutWoorden.map((w,i) => ({ ...w, _idx: w._idx ?? i }));
+  for (let i = trainRij.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [trainRij[i],trainRij[j]] = [trainRij[j],trainRij[i]];
+  }
+  trainIndex = 0; aantalGoed = 0; aantalFout = 0; huidigeStreak = 0; besteStreak = 0; scorePunten = 0; foutWoorden = [];
+  lerenSubfase = {}; trainRij.forEach((_,i) => { lerenSubfase[i] = 0; });
+  toonScherm('s-trainer');
+  document.getElementById('fout-badge').style.display = gekozenModus === 'toets' ? 'flex' : 'none';
+  updateVoortgang(); toonHuidig();
+}
+
+function bewaarScore(pct) {
+  try {
+    const key = 'athena_1ejaar_scores';
+    const scores = JSON.parse(localStorage.getItem(key) || '[]');
+    const leerlingNaam = (document.getElementById('leerling-code')?.value || '').trim()
+                     || localStorage.getItem('athena_leerling_code') || 'Anoniem';
+    const scoreEntry = {
+      datum: new Date().toISOString(),
+      leerling: leerlingNaam, naam: leerlingNaam,
+      modus: gekozenModus,
+      goed: aantalGoed, fout: aantalFout,
+      juistheid: pct, besteStreak,
+      aantalWoorden: trainRij.length,
+      thema: gekozenLudus || '',
+      tekst: gekozenTekst || ''
+    };
+    scores.push(scoreEntry);
+    localStorage.setItem(key, JSON.stringify(scores.slice(-50)));
+    stuurScoreNaarForm(scoreEntry);
+  } catch {}
+}
+
+// ══════════════════════════════════════════════
+// MOEILIJKE WOORDEN
+// ══════════════════════════════════════════════
+const MOEILIJK_KEY = 'athena_moeilijke_woorden_1ejaar';
+
+function laadMoeilijkeWoorden() {
+  try { return new Set(JSON.parse(localStorage.getItem(MOEILIJK_KEY) || '[]')); } catch { return new Set(); }
+}
+function slaaMoeilijkeWoordenOp(set) {
+  try { localStorage.setItem(MOEILIJK_KEY, JSON.stringify([...set])); } catch {}
+}
+function moeilijkeWoorden() { return laadMoeilijkeWoorden(); }
+
+function toggleMoeilijk(grondvorm) {
+  const set = laadMoeilijkeWoorden();
+  if (set.has(grondvorm)) set.delete(grondvorm); else set.add(grondvorm);
+  slaaMoeilijkeWoordenOp(set);
+  updateMoeilijkTeller();
+  renderLijst();
+}
+
+function toggleMoeilijkTraining(btn) {
+  const grondvorm = huidigeTrainWoord;
+  if (!grondvorm) return;
+  const set = laadMoeilijkeWoorden();
+  if (set.has(grondvorm)) { set.delete(grondvorm); btn.textContent = '☆ Moeilijk'; btn.classList.remove('toegevoegd'); }
+  else { set.add(grondvorm); btn.textContent = '⭐ Moeilijk'; btn.classList.add('toegevoegd'); }
+  slaaMoeilijkeWoordenOp(set);
+  updateMoeilijkTeller();
+}
+
+function updateMoeilijkTeller() {
+  const n = laadMoeilijkeWoorden().size;
+  const teller = document.getElementById('moeilijk-teller');
+  const aantal = document.getElementById('moeilijk-aantal');
+  if (teller && aantal) { aantal.textContent = n; teller.style.display = n > 0 ? 'flex' : 'none'; }
+}
+
+function naarMoeilijkeLijst() { kiesLudus('moei'); }
+
+// ══════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════
+function esc(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function bewaarLeerlingCode() {
+  const v = (document.getElementById('leerling-code')?.value || '').trim();
+  if (v) localStorage.setItem('athena_leerling_code', v);
+}
+
+// ══════════════════════════════════════════════
+// START
+// ══════════════════════════════════════════════
+init();
+</script>
+</body>
+</html>
