@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teksten — 1A1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../theme.css">
+<style>
+  :root {
+    --blauw: #13427f;
+    --roze: #E6007E;
+    --fv: 'Lufga', Arial, sans-serif;
+    --fo: 'Aptos', Arial, sans-serif;
+    --achtergrond: #f7f8fa;
+    --kaart: #ffffff;
+    --rand: #e2e6ed;
+    --tekst: #1a1a1a;
+    --tekst-zacht: #6b7280;
+    --kaart-titel: #849dc2;
+    --radius: 18px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--fv);
+    background: var(--achtergrond);
+    color: var(--tekst);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* MERKLINT athena (2 lagen) */
+  .site-header {
+    background: #13427f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .85rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    position: relative;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: #E6007E;
+  }
+  .site-header .logo {
+    height: 34px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+  }
+  .site-header h1 {
+    font-family: 'Lufga', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .site-header .school {
+    font-family: 'Lufga', Arial, sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .85;
+    margin-left: auto;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .site-toolbar {
+    background: #f7f8fa;
+    border-bottom: 1px solid #e2e6ed;
+    padding: .55rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-divider,
+  .topbar-divider {
+    width: 1px;
+    height: 22px;
+    background: #e2e6ed;
+    margin: 0 .25rem;
+  }
+  .back-btn,
+  .pill-btn,
+  .ctrl-btn {
+    font-family: 'Lufga', Arial, sans-serif;
+    font-size: .82rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    background: transparent;
+    border: 1px solid #e2e6ed;
+    border-radius: 20px;
+    padding: .32rem .85rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .pill-btn,
+  .ctrl-btn {
+    color: #13427f;
+    border-color: rgba(19,66,127,.22);
+  }
+  .back-btn:hover {
+    background: rgba(19,66,127,.08);
+    border-color: #13427f;
+    color: #13427f;
+  }
+  .pill-btn:hover,
+  .ctrl-btn:hover {
+    background: #13427f;
+    border-color: #13427f;
+    color: #fff;
+  }
+  .back-btn svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .content-wrap {
+    flex: 1;
+    padding: 2.75rem 2rem 3.25rem;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* LUDUS SECTIE */
+  .ludus-sectie { margin-bottom: 2.65rem; }
+  .ludus-header {
+    display: flex;
+    align-items: baseline;
+    gap: .75rem;
+    margin-bottom: 1.1rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--rand);
+  }
+  .ludus-titel {
+    font-family: var(--fv);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--blauw);
+  }
+  .ludus-sub {
+    font-family: var(--fo);
+    font-size: 11px;
+    color: var(--tekst-zacht);
+    font-style: italic;
+  }
+
+  /* TEKST-GRID */
+  .tekst-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.15rem;
+    align-items: stretch;
+  }
+
+  /* TEKST-KAART â grote rustige kaart zoals referentie */
+  .tekst-kaart {
+    min-height: 230px;
+    background: var(--kaart);
+    border: 1px solid var(--rand);
+    border-radius: var(--radius);
+    padding: 1.55rem 1.45rem 1.3rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: .58rem;
+    transition: border-color .15s, transform .15s, box-shadow .15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .tekst-kaart:hover {
+    border-color: rgba(19,66,127,.55);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(19,66,127,.08);
+  }
+  .tekst-kaart.coming-soon {
+    opacity: 1;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .kaart-meta {
+    font-family: var(--fv);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .085em;
+    text-transform: uppercase;
+    color: var(--roze);
+    margin-bottom: .18rem;
+    padding-right: 7.5rem;
+  }
+  .kaart-titel {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--kaart-titel);
+    line-height: 1.15;
+    max-width: 92%;
+  }
+  .kaart-auteur {
+    font-family: var(--fv);
+    font-size: 13px;
+    font-weight: 400;
+    color: #9ca3af;
+    font-style: italic;
+    line-height: 1.55;
+    max-width: 94%;
+  }
+  .kaart-pijl {
+    margin-top: .45rem;
+    font-size: 24px;
+    line-height: 1;
+    color: #e4e9f0;
+    transition: color .15s;
+  }
+  .tekst-kaart:hover .kaart-pijl { color: var(--blauw); }
+
+  .kaart-badge {
+    position: absolute;
+    top: .95rem;
+    right: 1.05rem;
+    font-family: var(--fv);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    background: #f0f2f6;
+    color: #c2c8d2;
+    padding: .3rem .75rem;
+    border-radius: 999px;
+  }
+
+  /* AFBEELDING IN KAART â klaar voor latere illustraties */
+  .kaart-img {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+  }
+  .kaart-img img {
+    width: 78px;
+    height: 62px;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    opacity: .65;
+    transition: transform .18s, opacity .18s;
+  }
+  .tekst-kaart:hover .kaart-img img {
+    transform: scale(1.05);
+    opacity: .82;
+  }
+  .tekst-kaart.coming-soon .kaart-img img { opacity: .45; }
+
+  .voet {
+    text-align: center;
+    padding: 1rem;
+    font-family: var(--fo);
+    font-size: 11px;
+    color: #c0c8d4;
+  }
+
+  @media (max-width: 760px) {
+    .site-header { padding: .75rem 1rem; }
+    .site-header h1 { font-size: 1rem; }
+    .site-header .school { display: none; }
+    .site-toolbar { padding: .55rem 1rem; }
+    .content-wrap { padding: 2rem 1rem 3rem; }
+    .tekst-grid { grid-template-columns: 1fr; }
+    .tekst-kaart { min-height: 220px; }
+  }
+</style>
+
+</head>
+<body>
+
+<header class="site-header">
+  <img class="logo"
+       src="/athenalatijn1egraad/images/nav/logo_wit.png"
+       alt="athena campus Pottelberg"
+       onerror="this.onerror=null;this.src='../../../images/nav/logo_wit.png';">
+  <h1>Teksten</h1>
+  <span class="school">athena campus Pottelberg</span>
+</header>
+
+<div class="site-toolbar">
+  <div class="toolbar-left">
+    <a class="back-btn" href="../latijn.html">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12L6 8l4-4"/></svg>
+      Terug naar Latijn
+    </a>
+    <div class="toolbar-divider"></div>
+    <a class="pill-btn" href="#ludus-1a">Ludus 1A</a>
+    <a class="pill-btn" href="#ludus-1b">Ludus 1B</a>
+    <a class="pill-btn" href="#ludus-2a">Ludus 2A</a>
+    <a class="pill-btn" href="#ludus-2b">Ludus 2B</a>
+    <a class="pill-btn" href="#ludus-3a">Ludus 3A</a>
+    <a class="pill-btn" href="#ludus-3b">Ludus 3B</a>
+    <a class="pill-btn" href="#ludus-4a">Ludus 4A</a>
+    <a class="pill-btn" href="#ludus-4b">Ludus 4B</a>
+    <a class="pill-btn" href="#ludus-5a">Ludus 5A</a>
+    <a class="pill-btn" href="#ludus-5b">Ludus 5B</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+
+  <!-- ══════════════════════════════════
+       LUDUS 1A
+  ══════════════════════════════════ -->
+  <div class="ludus-sectie" id="ludus-1a">
+    <div class="ludus-header">
+      <span class="ludus-titel">Ludus 1A</span>
+      <span class="ludus-sub">Lingua Latina</span>
+    </div>
+    <div class="tekst-grid">
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 1</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       LUDUS 1B
+  ══════════════════════════════════ -->
+  <div class="ludus-sectie" id="ludus-1b">
+    <div class="ludus-header">
+      <span class="ludus-titel">Ludus 1B</span>
+      <span class="ludus-sub">Een dorpje aan de Tiber</span>
+    </div>
+    <div class="tekst-grid">
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 1</div>
+        <div class="kaart-titel">Aeneas vlucht uit Troje en sticht een nieuwe stad</div>
+        <div class="kaart-auteur">naar Augurium, 3</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 2</div>
+        <div class="kaart-titel">De geboorte van Romulus en Remus</div>
+        <div class="kaart-auteur">naar Livius, Ab urbe condita, 1, 3-4 en Aurelius Victor, De origine gentis Romanae, 20</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 3</div>
+        <div class="kaart-titel">De wolvin en de herder</div>
+        <div class="kaart-auteur">naar Livius, Ab urbe condita, 1, 3-4 en Aurelius Victor, De origine gentis Romanae, 20</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 5</div>
+        <div class="kaart-titel">De voortekens</div>
+        <div class="kaart-auteur">naar Livius, Ab urbe condita, 1, 6 en Aurelius Victor, De origine gentis Romanae, 21</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 7</div>
+        <div class="kaart-titel">De Sabijnse maagdenroof</div>
+        <div class="kaart-auteur">naar Livius, Ab urbe condita, 1, 8-9  en Eutropius, Breviarum historiae Romanae, I,2.</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       LUDUS 2A
+  ══════════════════════════════════ -->
+  <div class="ludus-sectie" id="ludus-2a">
+    <div class="ludus-header">
+      <span class="ludus-titel">Ludus 2A</span>
+      <span class="ludus-sub">Mare Nostrum</span>
+    </div>
+    <div class="tekst-grid">
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 1</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 2</div>
+        <div class="kaart-titel">De ganzen van de Capitolinus</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 3</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       LUDUS 2B
+  ══════════════════════════════════ -->
+  <div class="ludus-sectie" id="ludus-2b">
+    <div class="ludus-header">
+      <span class="ludus-titel">Ludus 2B</span>
+      <span class="ludus-sub">Over veldheren, legioenen en soldaten</span>
+    </div>
+    <div class="tekst-grid">
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 7</div>
+        <div class="kaart-titel">Een nationale held</div>
+        <div class="kaart-auteur">naar Livius, Ab urbe condita, II, 10</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       LUDUS 3A
+  ══════════════════════════════════ -->
+  <div class="ludus-sectie" id="ludus-3a">
+    <div class="ludus-header">
+      <span class="ludus-titel">Ludus 3A</span>
+      <span class="ludus-sub">Toen de dieren nog konden spreken</span>
+    </div>
+    <div class="tekst-grid">
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 3</div>
+        <div class="kaart-titel">Eendracht maakt macht</div>
+        <div class="kaart-auteur">naar Livius, Ab Urbe condita, II, 32</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart" href="ludus/ludus8atekst5.html">
+        <div class="kaart-meta">Tekst 5</div>
+        <div class="kaart-titel">De revolutionaire hervormingen van Gaius Gracchus</div>
+        <div class="kaart-auteur">naar Velleius Paterculus, Historia Romana, II, 6, 2-3</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       LUDUS 3B
+  ══════════════════════════════════ -->
+  <div class="ludus-sectie" id="ludus-3b">
+    <div class="ludus-header">
+      <span class="ludus-titel">Ludus 3B</span>
+      <span class="ludus-sub">Een mens is een dier dat kan lachen</span>
+    </div>
+    <div class="tekst-grid">
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 1</div>
+        <div class="kaart-titel">Je bent als slaaf geboren of je wordt het…</div>
+        <div class="kaart-auteur">naar Institutiones Iustiniani, I, tit. II en III</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 5</div>
+        <div class="kaart-titel">Geen rechten</div>
+        <div class="kaart-auteur">naar Gaius, Institutiones, I, 52; Corpus Ulpiani V,5; Varro, De re rustica, I, 17, 5 en II, 10, 6</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 6</div>
+        <div class="kaart-titel">Geen overbodige luxe voor slaven</div>
+        <div class="kaart-auteur">naar Columella, De re rustica, I, 8, 9 en I, 6, 3</div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       LUDUS 4A
+  ══════════════════════════════════ -->
+  <div class="ludus-sectie" id="ludus-4a">
+    <div class="ludus-header">
+      <span class="ludus-titel">Ludus 4A</span>
+      <span class="ludus-sub">Bij de ludi magister, de grammaticus en de retor</span>
+    </div>
+    <div class="tekst-grid">
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 1</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 2</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 3</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       LUDUS 4B
+  ══════════════════════════════════ -->
+  <div class="ludus-sectie" id="ludus-4b">
+    <div class="ludus-header">
+      <span class="ludus-titel">Ludus 4B</span>
+      <span class="ludus-sub">Een dagje uit</span>
+    </div>
+    <div class="tekst-grid">
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 1</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 2</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 3</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       LUDUS 5A
+  ══════════════════════════════════ -->
+  <div class="ludus-sectie" id="ludus-5a">
+    <div class="ludus-header">
+      <span class="ludus-titel">Ludus 5a</span>
+      <span class="ludus-sub">In den beginne was er chaos</span>
+    </div>
+    <div class="tekst-grid">
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 1</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 2</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 3</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       LUDUS 5B
+  ══════════════════════════════════ -->
+  <div class="ludus-sectie" id="ludus-5b">
+    <div class="ludus-header">
+      <span class="ludus-titel">Ludus 5b</span>
+      <span class="ludus-sub">De Romeinse godsdienst</span>
+    </div>
+    <div class="tekst-grid">
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 1</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+
+      <a class="tekst-kaart coming-soon" href="#">
+        <span class="kaart-badge">Binnenkort</span>
+        <div class="kaart-meta">Tekst 2</div>
+        <div class="kaart-titel">—</div>
+        <div class="kaart-auteur"></div>
+        <div class="kaart-pijl">›</div>
+      </a>
+      
+    </div>
+  </div>
+  
+</div><!-- /content-wrap -->
+
+<p class="voet">J. Everaerdt &mdash; athena Campus Pottelberg</p>
+</body>
+</html>
