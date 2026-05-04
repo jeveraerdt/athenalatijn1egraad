@@ -5,9 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>De revolutionaire hervormingen van Gaius Gracchus – Ludus 8A T5 · athena</title>
 <link href="https://fonts.googleapis.com/css2?family=Lufga:wght@300;400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../../theme.css">
+<link rel="stylesheet" href="../../../../theme.css">
 <style>
 :root {
+  --blue:#13427f;
+  --blue-mid:#0f3769;
+  --blue-soft:rgba(19,66,127,.08);
+  --magenta:#E6007E;
+  --magenta-soft:rgba(230,0,126,.08);
+  --paper:#ffffff;
+  --page:#f7f8fa;
+  --rule:#e2e6ed;
+  --ink:#1a1a1a;
+  --ink-mid:#374151;
+  --ink-light:#6b7280;
+  --accent:#E6007E;
+  --ft:'Lufga', Arial, sans-serif;
+  --tf:'Lufga', Arial, sans-serif;
+  --fb:'Lufga', Arial, sans-serif;
   --green:#2d7a3a; --green-bg:#e8f5eb;
   --orange:#c05a00; --orange-bg:#fff0e0;
   --purple:#6a1a8a; --purple-bg:#f3e8fb;
@@ -15,7 +30,7 @@
   --lh:2.3; --fs:1.18rem;
 }
 html{overflow-x:hidden;}
-body{font-family:'EB Garamond',Georgia,serif;}
+body{font-family:var(--ft);}
 
 .weergave-wrap{position:relative;}
 .weergave-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1.5px solid rgba(19,66,127,.18);border-radius:12px;box-shadow:0 6px 24px rgba(19,66,127,.13);z-index:400;min-width:160px;padding:.35rem 0;overflow:hidden;}
@@ -27,8 +42,8 @@ body{font-family:'EB Garamond',Georgia,serif;}
 .weergave-chevron{transition:transform .18s;}
 #btnWeergave.open .weergave-chevron{transform:rotate(180deg);}
 
-.rp{position:fixed;top:108px;left:0;right:0;height:2px;z-index:199;}
-.rp-fill{height:100%;background:var(--magenta);width:0%;transition:width .12s linear;}
+/* Progressbar verwijderd: de roze merklint-lijn blijft, maar er loopt geen scrollbalk meer mee. */
+.rp,.rp-fill{display:none!important;}
 
 .outer{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
 .main-col{max-width:760px;margin:0 auto;padding:3rem 0 9rem;}
@@ -250,13 +265,193 @@ body.twocol .col-resizer{display:flex;align-items:center;justify-content:center;
 
 @media(max-width:900px){body.twocol .outer{display:block;}body.twocol .main-col{padding:2rem 0 5rem;}body.twocol .side-panel{display:none!important;}}
 @media(max-width:600px){.main-col{padding:2rem 0 5rem;}.outer{padding:0 1rem;}.text-title{font-size:1.7rem;}.site-header{padding:0 14px;}.site-toolbar{padding:8px 14px;height:auto;flex-wrap:wrap;}.topbar-label,.topbar-divider{display:none;}}
+
+
+/* ── TYPOGRAFIEPATCH ───────────────────────────
+   Interface en titels: Lufga. Latijnse leestekst: EB Garamond. */
+h1,h2,h3,
+.text-title,
+.text-meta,
+.site-header h1,
+.kaart-modal-title,
+.poetry-modal-title,
+.la-sectie-titel,
+.fn-title,
+.panel-card h3,
+#wlSectieLabel,
+#wlSectieTitle {
+  font-family: var(--ft) !important;
+}
+
+.latin-text,
+.latin-text .latin-para,
+.latin-text .wg,
+.latin-text .lat-word,
+.latin-text .lat-surface,
+.numbered-view,
+.numbered-view .lc {
+  font-family: 'EB Garamond', Georgia, serif !important;
+}
+
+body.interlin-analysis .inline-analysis,
+.ia-line,
+.word-popup,
+.wp-lemma,
+.wp-row,
+.wp-val,
+.wp-hint {
+  font-family: var(--ft) !important;
+}
+
+/* De Latijnse woordvorm in de popup blijft typografisch verwant met de tekst. */
+.wp-word {
+  font-family: 'EB Garamond', Georgia, serif !important;
+}
+
+
+/* ── MERKLINT athena (2 lagen) ─────────────────────────── */
+*{box-sizing:border-box;}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--ft);}
+.site-header {
+  background: var(--blue);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .85rem 1.5rem;
+  min-height: 62px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  position: relative;
+  z-index: 210;
+}
+.site-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--magenta);
+}
+.site-header .logo { height: 34px; width: auto; display: block; flex-shrink: 0; }
+.site-header h1 {
+  font-family: var(--ft);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+  white-space: nowrap;
+  margin: 0;
+  line-height: 1;
+}
+.site-header .school {
+  font-family: var(--ft);
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .88;
+  margin-left: auto;
+  color: #fff;
+  white-space: nowrap;
+}
+.site-toolbar {
+  background: #f7f8fa;
+  border-bottom: 1px solid var(--rule);
+  padding: .55rem 1.5rem;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 205;
+}
+.toolbar-left,.toolbar-right{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
+.toolbar-divider,.topbar-divider{width:1px;height:22px;background:var(--rule);margin:0 .25rem;}
+.back-btn,.ctrl-btn,.pill-btn {
+  font-family: var(--ft);
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--blue);
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: .32rem .85rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  transition: background .15s, border-color .15s, color .15s, transform .15s;
+}
+.back-btn:hover,.ctrl-btn:hover,.pill-btn:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.back-btn svg,.ctrl-btn svg,.pill-btn svg{width:14px;height:14px;flex-shrink:0;stroke:currentColor;}
+.ctrl-btn.active,.ctrl-btn.open,.back-btn.active,.pill-btn.active{background:var(--magenta);border-color:var(--magenta);color:#fff;}
+.weergave-menu{border-color:var(--rule);box-shadow:0 8px 28px rgba(19,66,127,.16);}
+.weergave-item{color:var(--blue);font-family:var(--ft);}
+.weergave-item:hover{background:var(--blue-soft);color:var(--blue);}
+.weergave-item.active{color:var(--magenta);}
+
+body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
+
+/* ── Huisstijlherstel blauw/magenta ────────────────────── */
+.text-meta,
+.extras-label,
+#wlSectieLabel,
+.fn-n,
+.d-badge.lpd.vis,
+.wp-word,
+.pw-basis{color:var(--magenta);}
+.text-title,
+.kaart-modal-title,
+.poetry-modal-title,
+.la-sectie-titel,
+.panel-card h3,
+.ac-word,
+.pw-lat,
+.vertaling-tekst,
+.tegel-lijst a{color:var(--blue);}
+.context-block{background:linear-gradient(135deg,#eef3fa,#fbe6f3);border-left-color:var(--blue);color:#25324a;}
+.context-block strong{color:var(--magenta);}
+.extras-icon{color:var(--magenta);}
+.extras-icon:hover,.extras-icon.active{background:var(--magenta-soft);color:var(--magenta);}
+.link-pill{color:var(--blue);background:#fff;}
+.link-pill:hover{background:var(--blue);border-color:var(--blue);color:#fff;}
+.lat-word:hover{background:rgba(230,0,126,.08);}
+.lat-word.active-word .lat-surface{outline-color:var(--magenta);}
+.ia-lemma{color:var(--magenta);}
+.ia-func{color:var(--blue);}
+.wp-tag.tw,.pn-tag{background:#eef3fa;color:var(--blue);}
+.wp-tag.tg{background:#fbe6f3;color:var(--magenta);}
+.reveal-bar button{background:var(--blue);}
+.reveal-bar button:hover{background:var(--magenta);}
+.reveal-bar button.sec{background:#fff;color:var(--blue);border-color:var(--blue);}
+.reveal-bar button.sec:hover{background:var(--blue);color:#fff;}
+#woordenlijst-sectie{border-top-color:var(--rule)!important;}
+.wl-card{background:#fff;border:.5px solid var(--rule);border-radius:12px;overflow:hidden;box-shadow:0 6px 22px rgba(19,66,127,.05);}
+.wl-row{display:flex;align-items:center;gap:14px;padding:11px 16px;border-bottom:.5px solid var(--rule);}
+.wl-row:last-child{border-bottom:none;}
+.wl-nr{font-family:var(--ft);font-size:12px;color:var(--ink-light);width:28px;flex-shrink:0;text-align:right;}
+.wl-dot{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--rule);flex-shrink:0;display:inline-block;background:#fff;}
+.wl-row.basis .wl-dot{background:var(--magenta-soft);border-color:rgba(230,0,126,.28);}
+.wl-lat-wrap{flex:1;min-width:0;}
+.wl-lat{font-family:var(--ft);font-size:14px;font-weight:600;color:var(--blue);}
+.wl-row.basis .wl-lat{font-weight:800;color:var(--magenta);}
+.wl-aanv{font-family:var(--ft);font-size:12px;color:var(--ink-light);margin-left:.5rem;}
+.wl-nl{font-family:var(--ft);font-size:13px;color:var(--ink);flex:1.2;text-align:left;}
+.wl-star{font-size:16px;color:#d1d5db;flex-shrink:0;padding:2px 4px;line-height:1;}
+@media(max-width:700px){.site-header{padding:.75rem 1rem;}.site-header h1{font-size:1rem;}.site-header .school{display:none;}.site-toolbar{padding:.55rem 1rem;justify-content:flex-start;}.toolbar-right{width:100%;}.wl-row{align-items:flex-start;gap:10px;}.wl-nl{flex:1 0 100%;}.wl-lat-wrap{flex-basis:calc(100% - 56px);}}
+
 </style>
 </head>
 <body class="show-lesson-toolbar">
 
 <canvas id="inkCanvas" class="ink-canvas"></canvas>
 
-<div class="rp"><div class="rp-fill" id="rpFill"></div></div>
 <div class="word-popup" id="popup">
   <div class="wp-word" id="ppWord"></div>
   <div class="wp-lemma" id="ppLemma"></div>
@@ -266,17 +461,17 @@ body.twocol .col-resizer{display:flex;align-items:center;justify-content:center;
 </div>
 
 <header class="site-header">
-  <img class="logo" src="../../../images/nav/logo_wit.png" alt="athena logo">
-  <h1>Latijn</h1>
-  <span class="sub">2GR-LAT</span>
+  <img class="logo" src="/athenalatijn1egraad/images/nav/logo_wit.png" alt="athena campus Pottelberg" onerror="this.onerror=null;this.src='../../../../images/nav/logo_wit.png';">
+  <h1>Ludus 8A · Tekst 5</h1>
+  <span class="school">athena campus Pottelberg</span>
 </header>
 
 <div class="site-toolbar">
   <div class="toolbar-left">
-    <button class="back-btn" onclick="history.back()">
+    <a class="back-btn" href="../teksten.html">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 12L6 8l4-4"/></svg>
-      Teksten
-    </button>
+      Terug naar Teksten
+    </a>
   </div>
   <div class="toolbar-right">
     <button class="ctrl-btn" id="btnReveal" onclick="toggleReveal()">
@@ -603,20 +798,17 @@ function filterWL(tekst) {
 function renderWLData(list) {
   var el = document.getElementById('wlTable');
   if (!el) return;
-  var html = '<div style="background:#fff;border:0.5px solid var(--rule);border-radius:12px;overflow:hidden;">';
+  var html = '<div class="wl-card">';
   list.forEach(function(w, i) {
-    var isLast = (i === list.length - 1);
-    var borderB = isLast ? '' : 'border-bottom:0.5px solid var(--rule);';
-    var latColor = w.b ? 'var(--magenta)' : 'var(--ink)';
-    html += '<div style="display:flex;align-items:center;gap:14px;padding:11px 16px;' + borderB + '">'
-      + '<span style="font-family:\'Lufga\',sans-serif;font-size:12px;color:var(--ink-light);width:28px;flex-shrink:0;text-align:right;">' + (i+1) + '</span>'
-      + '<span style="width:18px;height:18px;border-radius:50%;border:1.5px solid var(--rule);flex-shrink:0;display:inline-block;"></span>'
-      + '<span style="flex:1;min-width:0;">'
-        + '<span style="font-family:\'Lufga\',sans-serif;font-size:14px;font-weight:500;color:' + latColor + ';">' + w.g + '</span>'
-        + (w.a ? '<span style="font-family:\'Lufga\',sans-serif;font-size:12px;color:var(--ink-light);margin-left:.5rem;">' + w.a + '</span>' : '')
+    html += '<div class="wl-row' + (w.b ? ' basis' : '') + '">'
+      + '<span class="wl-nr">' + (i+1) + '</span>'
+      + '<span class="wl-dot"></span>'
+      + '<span class="wl-lat-wrap">'
+        + '<span class="wl-lat">' + w.g + '</span>'
+        + (w.a ? '<span class="wl-aanv">' + w.a + '</span>' : '')
       + '</span>'
-      + '<span style="font-family:\'Lufga\',sans-serif;font-size:13px;color:var(--ink);flex:1.2;text-align:left;">' + w.v + '</span>'
-      + '<span style="font-size:16px;color:#d1d5db;flex-shrink:0;padding:2px 4px;line-height:1;">&#9734;</span>'
+      + '<span class="wl-nl">' + w.v + '</span>'
+      + '<span class="wl-star">&#9734;</span>'
       + '</div>';
   });
   html += '</div>';
@@ -946,9 +1138,8 @@ document.addEventListener('click', function(e) {
 
 window.addEventListener('scroll', function() {
   var d = document.documentElement;
-  var pct = d.scrollTop / (d.scrollHeight - d.clientHeight);
-  document.getElementById('rpFill').style.width = (pct*100) + '%';
-  document.getElementById('scrollTop').classList.toggle('on', d.scrollTop > 280);
+  var scrollBtn = document.getElementById('scrollTop');
+  if (scrollBtn) scrollBtn.classList.toggle('on', d.scrollTop > 280);
 });
 
 (function(){
