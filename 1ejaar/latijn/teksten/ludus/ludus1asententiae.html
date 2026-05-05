@@ -45,7 +45,7 @@ body.twocol .side-panel{display:flex!important;flex-direction:column;gap:1rem;pa
 .title-hero-wrap{margin:2rem 0 2rem}
 .title-hero{position:relative;display:block;height:320px;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#eef3fa,#fbe6f1);text-decoration:none;color:#fff;box-shadow:0 12px 36px rgba(19,66,127,.12)}
 .title-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;opacity:0;transition:opacity .2s}
-.title-hero img.is-loaded{opacity:1} .title-hero img.is-missing{display:none}
+.title-hero img.is-loaded{opacity:1} .title-hero img.is-loaded + .title-hero-placeholder{display:none} .title-hero img.is-missing{display:none}
 .title-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,66,127,.05) 15%,rgba(19,66,127,.45) 72%,rgba(19,66,127,.78) 100%)}
 .title-hero-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.78rem;color:rgba(19,66,127,.55);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .title-hero-text{position:absolute;left:1.5rem;right:1.5rem;bottom:1.3rem;z-index:2;display:flex;flex-direction:column;gap:.25rem}
@@ -188,14 +188,15 @@ body:not(.reveal-mode) .sent-image-wrap, body:not(.reveal-mode) .sent-translatio
   <div class="main-col">
     <div class="title-hero-wrap">
       <a class="title-hero" href="images/ludus1A/ludus1asententiae.png" aria-label="Titelbeeld openen">
-  <img src="images/ludus1A/ludus1asententiae.png" alt="Titelbeeld bij Ludus 1A Sententiae">
-  <span class="title-hero-placeholder">Afbeelding volgt: ludus1asententiae.png</span>
-  <span class="title-hero-text">
-    <span class="title-hero-meta">Ludus 1A · Sententiae</span>
-    <span class="title-hero-title">Ludus Primus</span>
-    <span class="title-hero-sub">Latijnse spreuken en korte zinnen · kaartlaag per kaartlaag ontdekken</span>
-  </span>
-</a>
+        <img
+          src="images/ludus1A/ludus1asententiae.png"
+          alt="Titelbeeld bij Ludus 1A Sententiae"
+          onload="this.classList.remove('is-missing');this.classList.add('is-loaded');"
+          onerror="this.classList.remove('is-loaded');this.classList.add('is-missing');"
+        >
+        <span class="title-hero-placeholder">Afbeelding volgt: ludus1asententiae.png</span>
+        <span class="title-hero-text"><span class="title-hero-meta">Ludus 1A · Sententiae</span><span class="title-hero-title">Ludus Primus</span><span class="title-hero-sub">Latijnse spreuken en korte zinnen · kaartlaag per kaartlaag ontdekken</span></span>
+      </a>
     </div>
     <div class="text-header is-visually-hidden" aria-hidden="true"><h1>Ludus Primus Sententiae</h1></div>
     <div class="context-block" data-bs="1" data-lpd="BO1_03.01 BO1_03.02 BO1_03.07">
