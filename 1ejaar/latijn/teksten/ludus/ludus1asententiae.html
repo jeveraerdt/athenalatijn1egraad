@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ludus Primus Sententiae · athena</title>
+<link href="https://fonts.googleapis.com/css2?family=Lufga:wght@300;400;500;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../../theme.css">
+<style>
+:root {
+  --blue:#13427f; --blue-mid:#0f3769; --blue-soft:rgba(19,66,127,.08);
+  --magenta:#E6007E; --magenta-soft:rgba(230,0,126,.08);
+  --paper:#fff; --page:#f7f8fa; --rule:#e2e6ed; --ink:#1a1a1a; --ink-mid:#374151; --ink-light:#6b7280;
+  --accent:#E6007E; --ft:'Lufga',Arial,sans-serif; --tf:'Lufga',Arial,sans-serif; --fb:'Lufga',Arial,sans-serif;
+  --green:#2d7a3a; --green-bg:#e8f5eb; --orange:#c05a00; --orange-bg:#fff0e0; --purple:#6a1a8a; --purple-bg:#f3e8fb;
+  --hl:#fff3c4; --hl-b:#e8c840;
+}
+*{box-sizing:border-box}
+html{overflow-x:hidden;scroll-behavior:smooth}
+body{margin:0;font-family:var(--ft);background:var(--page);color:var(--ink);min-height:100vh}
+.site-header,.site-header *{font-family:var(--ft)}
+.site-header{height:56px;background:var(--blue);color:#fff;display:flex;align-items:center;gap:1rem;padding:0 1.5rem;position:sticky;top:0;z-index:600;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.site-header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--magenta)}
+.logo{height:34px;width:auto;display:block;flex-shrink:0}
+.site-header h1{font-size:1.05rem;font-weight:700;margin:0;color:#fff;white-space:nowrap}
+.school{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.85;margin-left:auto;white-space:nowrap}
+.site-toolbar{height:54px;background:#fff;border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:space-between;padding:.55rem 1.5rem;position:sticky;top:56px;z-index:590;box-shadow:0 2px 8px rgba(19,66,127,.04)}
+.toolbar-left,.toolbar-right{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}
+.back-btn,.ctrl-btn{font-family:var(--ft);font-size:.78rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;color:var(--blue);background:#fff;border:1.5px solid rgba(19,66,127,.14);border-radius:24px;padding:.42rem .95rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.4rem;transition:background .15s,border-color .15s,color .15s,transform .15s}
+.back-btn:hover,.ctrl-btn:hover{background:#eef3fa;border-color:rgba(19,66,127,.38)}
+.ctrl-btn.active,#btnReveal.active{background:var(--magenta);color:#fff;border-color:var(--magenta);box-shadow:0 0 0 2px rgba(230,0,126,.16)}
+.ctrl-btn svg,.back-btn svg{width:14px;height:14px;flex-shrink:0}
+.weergave-wrap{position:relative}
+.weergave-menu{display:none;position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1.5px solid rgba(19,66,127,.18);border-radius:12px;box-shadow:0 6px 24px rgba(19,66,127,.13);z-index:700;min-width:175px;padding:.35rem 0;overflow:hidden}
+.weergave-menu.open{display:block;animation:fadeUp .12s ease both}
+.weergave-item{display:flex;align-items:center;gap:.45rem;width:100%;background:none;border:none;padding:.45rem .9rem;font-family:var(--ft);font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);cursor:pointer;white-space:nowrap}
+.weergave-item:hover{background:#eef3fa} .weergave-item.active{color:var(--magenta)} .weergave-item svg{width:12px;height:12px;flex-shrink:0}
+.weergave-chevron{transition:transform .18s} #btnWeergave.open .weergave-chevron{transform:rotate(180deg)}
+.outer{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+.main-col{max-width:760px;margin:0 auto;padding:0 0 9rem}
+body.twocol .outer{display:grid;grid-template-columns:var(--col-split,60%) 12px 1fr;gap:0;align-items:start}
+body.twocol .main-col{max-width:none;padding:0 2rem 6rem 0}
+body.twocol .side-panel{display:flex!important;flex-direction:column;gap:1rem;padding:2.15rem 0 6rem 1.5rem;border-left:1px solid var(--rule);position:sticky;top:110px;max-height:calc(100vh - 110px);overflow-y:auto}
+.side-panel{display:none}
+.title-hero-wrap{margin:2rem 0 2rem}
+.title-hero{position:relative;display:block;height:320px;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#eef3fa,#fbe6f1);text-decoration:none;color:#fff;box-shadow:0 12px 36px rgba(19,66,127,.12)}
+.title-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;opacity:0;transition:opacity .2s}
+.title-hero img.is-loaded{opacity:1} .title-hero img.is-missing{display:none}
+.title-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,66,127,.05) 15%,rgba(19,66,127,.45) 72%,rgba(19,66,127,.78) 100%)}
+.title-hero-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.78rem;color:rgba(19,66,127,.55);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.title-hero-text{position:absolute;left:1.5rem;right:1.5rem;bottom:1.3rem;z-index:2;display:flex;flex-direction:column;gap:.25rem}
+.title-hero-meta{font-size:.68rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#fff}
+.title-hero-title{font-size:2rem;font-weight:700;line-height:1.1;color:#fff}
+.title-hero-sub{font-family:'EB Garamond',Georgia,serif;font-size:1.05rem;font-style:italic;color:rgba(255,255,255,.88)}
+.text-header{margin-bottom:2rem;padding-bottom:1.75rem;border-bottom:1px solid var(--rule);animation:fadeUp .5s ease both}
+.is-visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.context-block{background:linear-gradient(135deg,#eef3fa,#f5f0fb);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:1rem 1.3rem;margin-bottom:2rem;font-size:.86rem;line-height:1.65;color:#2a3a5e;animation:fadeUp .5s .07s ease both}
+.context-block strong{display:block;font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--magenta);margin-bottom:.25rem}
+.context-subtitel{display:block;font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:.88rem;color:#888;margin-bottom:.5rem}
+.extras-strip{margin-bottom:2rem;animation:fadeUp .5s .12s ease both}
+.extras-row{display:flex;align-items:center;gap:.9rem} .extras-label{font-size:.7rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--magenta)}
+.extras-icon{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:none;background:none;color:var(--magenta);cursor:pointer;padding:0;opacity:.75;transition:opacity .15s,background .15s;color .15s;text-decoration:none}
+.extras-icon:hover,.extras-icon.active{opacity:1;background:#fbe6f1}
+.extras-icon svg{width:18px;height:18px}
+.d-badges{display:none;gap:.35rem;flex-wrap:wrap;margin-bottom:.65rem}
+body.show-bs .d-badges, body.show-lpd .d-badges{display:flex}
+.d-badge{display:none;font-size:.58rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:.18rem .48rem}
+body.show-bs .d-badge.bs{display:inline-flex;background:#dbeafe;color:#1d4ed8}
+body.show-lpd .d-badge.lpd{display:inline-flex;background:#dcfce7;color:#15803d}
+.reveal-bar{display:none;align-items:center;gap:.6rem;margin-bottom:1.5rem;padding:.65rem 1rem;background:var(--paper);border:1.5px solid var(--rule);border-radius:10px;font-size:.78rem;color:var(--ink-mid);flex-wrap:wrap}
+.reveal-bar.vis{display:flex} .reveal-bar button{background:var(--blue);color:#fff;border:none;border-radius:6px;padding:.3rem .8rem;font-family:var(--ft);font-size:.72rem;cursor:pointer;white-space:nowrap}
+.reveal-bar button:hover{background:var(--blue-mid)} .reveal-bar button.sec{background:#fff;color:var(--blue);border:1.5px solid var(--blue)} .reveal-bar button.sec:hover{background:#eef3fa}
+.rev-count{margin-left:auto;color:var(--ink-light);font-size:.68rem;white-space:nowrap}
+.sent-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-bottom:3rem}
+.sent-card{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:1.15rem 1.2rem 1.25rem;box-shadow:0 4px 20px rgba(19,66,127,.045);transition:border-color .16s,box-shadow .16s,transform .16s,opacity .16s}
+.sent-card:hover{border-color:rgba(19,66,127,.35);box-shadow:0 8px 28px rgba(19,66,127,.08);transform:translateY(-1px)}
+.sent-card.active{border-color:var(--magenta);box-shadow:0 0 0 2px rgba(230,0,126,.12),0 12px 30px rgba(19,66,127,.10)}
+.reveal-mode .sent-card{opacity:.18}
+.reveal-mode .sent-card.active,.reveal-mode .sent-card.done{opacity:1}
+.sent-card-top{display:flex;align-items:center;gap:.55rem;margin-bottom:.45rem}
+.sent-num{font-size:.68rem;font-weight:800;color:var(--magenta);letter-spacing:.08em}
+.sent-label{font-size:.58rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-light)}
+.sent-latin{font-family:'EB Garamond',Georgia,serif;font-size:1.9rem;line-height:1.15;font-weight:600;color:var(--blue);margin:.2rem 0 .8rem}
+.sent-word{display:inline;border-radius:4px;padding:0 1px;cursor:pointer;transition:background .12s}
+.sent-word:hover{background:rgba(19,66,127,.08)}
+body.interlin-analysis .sent-word{display:inline-flex;flex-direction:column;align-items:center;vertical-align:bottom;margin:0 2px}
+.inline-analysis{display:none} body.interlin-analysis .inline-analysis{display:flex;flex-direction:column;align-items:center;gap:1px;margin-bottom:.1rem}
+.lat-surface{display:inline} body.interlin-analysis .lat-surface{display:inline-block}
+.ia-line{display:block;font-family:var(--ft);line-height:1.05;text-align:center;white-space:nowrap}
+.ia-lemma{font-size:.48em;color:var(--accent)} .ia-meaning{font-size:.47em;color:var(--ink-light)}
+.sent-image-wrap{display:none;position:relative;min-height:160px;border-radius:13px;overflow:hidden;background:#eef3fa;border:1px dashed rgba(19,66,127,.18);margin:.7rem 0 .75rem;text-decoration:none}
+.sent-image-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.sent-image-wrap img.is-missing{display:none}
+.sent-image-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(19,66,127,.45)}
+.sent-translation{display:none;font-size:1.05rem;line-height:1.45;color:var(--magenta);font-weight:700;margin-top:.25rem}
+.sent-meaning{display:none;margin-top:.7rem;padding:.7rem .9rem;border-left:3px solid var(--blue);border-radius:0 10px 10px 0;background:#eef3fa;font-size:.82rem;line-height:1.6;color:var(--ink-mid)}
+.sent-meaning-label{display:block;font-family:var(--ft);font-size:.58rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase;color:var(--blue);margin-bottom:.25rem}
+.sent-similar{display:block;margin-top:.45rem;color:var(--ink-light)}
+.sent-similar strong{color:var(--magenta)}
+.sent-card[data-step="2"] .sent-image-wrap,.sent-card[data-step="3"] .sent-image-wrap,.sent-card[data-step="4"] .sent-image-wrap{display:block}
+.sent-card[data-step="3"] .sent-translation,.sent-card[data-step="4"] .sent-translation{display:block}
+.sent-card[data-step="4"] .sent-meaning{display:block}
+body:not(.reveal-mode) .sent-image-wrap, body:not(.reveal-mode) .sent-translation, body:not(.reveal-mode) .sent-meaning{display:block}
+.word-popup{position:absolute;z-index:800;background:var(--paper);border:1.5px solid var(--rule);border-radius:10px;box-shadow:0 8px 32px rgba(19,66,127,.18);padding:.85rem 1.1rem;max-width:300px;min-width:200px;font-size:.78rem;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .18s,transform .18s}
+.word-popup.vis{opacity:1;transform:translateY(0)} .wp-word{font-family:'EB Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:var(--blue);margin-bottom:.1rem} .wp-lemma{font-size:.68rem;color:var(--ink-light);margin-bottom:.35rem}
+.wp-row{display:flex;gap:.4rem;margin-bottom:.2rem;align-items:flex-start} .wp-tag{font-size:.6rem;font-weight:800;padding:.08rem .35rem;border-radius:10px;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0;margin-top:.12rem} .tg{background:var(--green-bg);color:var(--green)} .tw{background:#eef3fa;color:var(--blue)} .wp-val{color:var(--ink-mid);line-height:1.45}
+.panel-card,.analysis-card{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:1rem 1.1rem;font-size:.8rem;line-height:1.6;color:var(--ink-mid)}
+.panel-card h3{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin:.1rem 0 .7rem}
+.panel-note{padding:.35rem 0;border-bottom:1px solid var(--rule)} .panel-note:last-child{border-bottom:none}
+.pn-tag{display:inline-block;font-size:.58rem;font-weight:800;padding:.05rem .35rem;border-radius:10px;text-transform:uppercase;margin-right:.35rem;background:#eef3fa;color:var(--blue)}
+.side-panel-shell{width:100%;min-width:0}
+.side-panel-tabs{display:flex;gap:.45rem;margin-bottom:1rem;align-items:center}
+.side-tab-btn{width:32px;height:32px;border-radius:9px;border:1px solid var(--rule);background:#fff;color:var(--blue);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:background .12s,color .12s,border-color .12s}
+.side-tab-btn.active{background:var(--magenta);color:#fff;border-color:var(--magenta)} .side-tab-btn svg{width:17px;height:17px;fill:none;stroke:currentColor}
+.side-panel-view{display:none;min-width:0} .side-panel-view.active{display:block;animation:fadeUp .18s ease both}
+.la-side-head{margin-bottom:1rem} .la-side-label{font-size:.62rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--magenta);margin-bottom:.25rem} .la-side-title{font-size:1rem;font-weight:800;color:var(--blue);margin-bottom:.25rem} .la-side-help{font-size:.74rem;line-height:1.55;color:var(--ink-light)}
+.la-cue-box{background:linear-gradient(135deg,#fbe6f1,#fff);border:1.5px solid rgba(230,0,126,.25);border-left:4px solid var(--magenta);border-radius:10px;padding:.8rem 1rem;margin-bottom:1rem;font-size:.8rem;color:var(--ink-mid);line-height:1.55}
+.la-vraag{margin-bottom:1.2rem} .la-vraag-tekst{font-size:.84rem;font-weight:700;color:var(--ink);margin-bottom:.4rem;line-height:1.5}
+.la-toggle-btn{font-family:var(--ft);font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:none;border:1.5px solid var(--rule);border-radius:20px;padding:.22rem .7rem;cursor:pointer;color:var(--ink-light);display:inline-flex;align-items:center;gap:.3rem;transition:background .12s,color .12s}
+.la-toggle-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue)} .la-antwoord{display:none;font-size:.8rem;color:var(--ink-mid);line-height:1.6;border-left:2px solid var(--rule);padding-left:.85rem;margin-top:.45rem} .la-antwoord.vis{display:block}
+.sent-help-title{font-family:'EB Garamond',Georgia,serif;font-size:1.45rem;color:var(--blue);font-weight:600;margin:.15rem 0 .35rem}
+.help-list{margin:.5rem 0;padding:0;list-style:none} .help-list li{border-bottom:1px solid var(--rule);padding:.35rem 0;display:flex;justify-content:space-between;gap:.6rem} .help-list li:last-child{border-bottom:none} .help-lat{font-family:'EB Garamond',Georgia,serif;color:var(--blue);font-weight:600;font-size:1.02rem} .help-nl{text-align:right;color:var(--ink-mid)}
+.col-resizer{display:none;width:12px;cursor:col-resize;align-self:stretch;position:relative;z-index:10;flex-shrink:0} body.twocol .col-resizer{display:flex;align-items:center;justify-content:center} .col-resizer-handle{width:4px;height:48px;border-radius:4px;background:var(--rule);transition:background .15s,height .15s;position:sticky;top:50%}
+.ink-canvas{position:fixed;inset:0;z-index:640;pointer-events:none;touch-action:none} .ink-canvas.on{pointer-events:auto} body.ink-on{cursor:crosshair}
+.lesson-toolbar-wrap{position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%) translateY(20px);z-index:9999;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease} body.show-lesson-toolbar .lesson-toolbar-wrap{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)} body.show-lesson-toolbar .lesson-toolbar-wrap *{pointer-events:auto}
+.lesson-toolbar{display:flex;align-items:center;gap:.28rem;padding:.38rem .5rem;border-radius:28px;background:rgba(255,255,255,.95);border:1px solid rgba(19,66,127,.15);box-shadow:0 8px 32px rgba(19,66,127,.22),0 2px 8px rgba(0,0,0,.08)} .lesson-toolbar-divider{width:1px;height:26px;background:rgba(19,66,127,.10);margin:0 .18rem;flex-shrink:0}
+.lesson-btn{width:40px;height:40px;padding:0;border:none;border-radius:12px;background:transparent;color:#1a2a4a;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:background .14s,color .14s,box-shadow .14s;flex-shrink:0} .lesson-btn:hover{background:rgba(230,0,126,.09);color:var(--magenta)} .lesson-btn.active{background:var(--magenta);color:#fff;box-shadow:0 0 0 2px rgba(230,0,126,.28)} .lesson-btn.danger:hover{background:#fee2e2;color:#b91c1c} .lesson-btn svg{width:19px;height:19px;stroke:currentColor;fill:none}
+.scroll-top{position:fixed;right:1.4rem;bottom:1.5rem;width:44px;height:44px;border-radius:50%;border:none;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(19,66,127,.25);z-index:650}
+.scroll-top svg{width:17px;height:17px}
+.vertaling-tekst{font-size:.82rem;line-height:1.7;color:var(--blue)} .vertaling-tekst p{margin:.2rem 0 .6rem}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:900px){body.twocol .outer{display:block}body.twocol .main-col{padding:2rem 0 5rem}body.twocol .side-panel{display:none!important}}
+@media(max-width:760px){.site-header{padding:0 1rem}.school{display:none}.site-toolbar{height:auto;min-height:54px;align-items:flex-start;flex-direction:column}.toolbar-right{width:100%}.main-col{padding:0 0 6rem}.outer{padding:0 1rem}.title-hero{height:260px}.title-hero-title{font-size:1.55rem}.sent-latin{font-size:1.55rem}}
+</style>
+</head>
+<body class="show-lesson-toolbar twocol">
+<canvas id="inkCanvas" class="ink-canvas"></canvas>
+<div class="word-popup" id="popup"><div class="wp-word" id="ppWord"></div><div class="wp-lemma" id="ppLemma"></div><div id="ppContent"></div></div>
+<header class="site-header">
+  <img class="logo" src="../../../../images/nav/logo_wit.png" alt="athena" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/athenalatijn1egraad/images/nav/logo_wit.png';}else{this.remove();}">
+  <h1>Ludus 1A · Sententiae</h1>
+  <span class="school">athena campus Pottelberg</span>
+</header>
+<div class="site-toolbar">
+  <div class="toolbar-left">
+    <a class="back-btn" href="../teksten.html"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 12L6 8l4-4"/></svg>Terug naar Teksten</a>
+  </div>
+  <div class="toolbar-right">
+    <button class="ctrl-btn" id="btnReveal" onclick="toggleReveal()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8s2.5-5 6-5 6 5 6 5-2.5 5-6 5-6-5-6-5z"/><circle cx="8" cy="8" r="2"/></svg>Onthul</button>
+    <div class="weergave-wrap" id="weergaveWrap">
+      <button class="ctrl-btn" id="btnWeergave" onclick="toggleWeergaveMenu(event)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.5v1.2M8 13.3v1.2M1.5 8h1.2M13.3 8h1.2M3.4 3.4l.85.85M11.75 11.75l.85.85M12.6 3.4l-.85.85M4.25 11.75l-.85.85"/></svg>Weergave<svg class="weergave-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width:9px;height:9px;margin-left:1px"><path d="M4 6l4 4 4-4"/></svg></button>
+      <div class="weergave-menu" id="weergaveMenu">
+        <button class="weergave-item" id="btnInterlin" onclick="toggleInterlin()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h12M2 10h12"/></svg>Interlineair</button>
+        <button class="weergave-item active" id="btnTwocol" onclick="toggleTwocol()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="6" height="10" rx="1"/><rect x="9" y="3" width="6" height="10" rx="1"/></svg>Tweekolom</button>
+        <div style="height:1px;background:rgba(19,66,127,.08);margin:.3rem 0;"></div>
+        <div style="font-family:'Lufga',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,66,127,.4);padding:.2rem .9rem .1rem;">Didactiek</div>
+        <button class="weergave-item" id="btnBs" onclick="toggleLayer('bs');event.stopPropagation()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2563eb;flex-shrink:0;"></span>Bouwstenen</button>
+        <button class="weergave-item" id="btnLpd" onclick="toggleLayer('lpd');event.stopPropagation()"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;flex-shrink:0;"></span>LPD</button>
+      </div>
+    </div>
+    <button class="ctrl-btn" id="btnFont" onclick="toggleFont()"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12L8 4l5 8M5.5 9h5"/></svg>Groter</button>
+  </div>
+</div>
+<div class="outer">
+  <div class="main-col">
+    <div class="title-hero-wrap">
+      <a class="title-hero" href="/athenalatijn1egraad/1ejaar/latijn/teksten/ludus/images/ludus1A/ludus1asententiae.png" aria-label="Titelbeeld openen">
+        <img src="/athenalatijn1egraad/1ejaar/latijn/teksten/ludus/images/ludus1A/ludus1asententiae.png" alt="Titelbeeld bij Ludus 1A Sententiae" onload="this.classList.remove('is-missing');this.classList.add('is-loaded');" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='images/ludus1A/ludus1asententiae.png';}else{this.classList.remove('is-loaded');this.classList.add('is-missing');}">
+        <span class="title-hero-placeholder">Afbeelding volgt: ludus1asententiae.png</span>
+        <span class="title-hero-text"><span class="title-hero-meta">Ludus 1A · Sententiae</span><span class="title-hero-title">Ludus Primus</span><span class="title-hero-sub">Latijnse spreuken en korte zinnen · kaartlaag per kaartlaag ontdekken</span></span>
+      </a>
+    </div>
+    <div class="text-header is-visually-hidden" aria-hidden="true"><h1>Ludus Primus Sententiae</h1></div>
+    <div class="context-block" data-bs="1" data-lpd="BO1_03.01 BO1_03.02 BO1_03.07">
+      <div class="d-badges" id="badges-context"><span class="d-badge bs" data-layer="bs">① Voorkennis activeren</span><span class="d-badge bs" data-layer="bs">④ Dual coding</span><span class="d-badge lpd" data-layer="lpd">BO1_03.01 – basiswoordenschat</span><span class="d-badge lpd" data-layer="lpd">BO1_03.02 – woordenschatstrategieën</span></div>
+      <strong>Context</strong><span class="context-subtitel">Sententiae als opstap naar Latijn</span>
+      In Ludus 1A ontdek je korte Latijnse zinnen en spreuken. Je leest telkens eerst het Latijn, kijkt daarna naar het beeld en controleert pas daarna de vertaling. De opdracht stopt daar niet: je moet ook in eigen woorden kunnen uitleggen wat met de spreuk bedoeld wordt en, waar dat nuttig is, vergelijken met een bekend Nederlands spreekwoord.
+    </div>
+    <div class="extras-strip">
+      <div class="d-badges" id="badges-extra"><span class="d-badge bs" data-layer="bs">⑤ Actieve verwerking</span><span class="d-badge bs" data-layer="bs">⑩ Zelftoetsing</span><span class="d-badge lpd" data-layer="lpd">BO1_03.03 – morfologie &amp; syntaxis</span></div>
+      <div class="extras-row"><span class="extras-label">Extra's</span><button type="button" class="extras-icon" onclick="selectSidePanel('la')" title="Sententiehulp"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h10"/><circle cx="13" cy="11" r="2.2" fill="currentColor" stroke="none"/></svg></button><button type="button" class="extras-icon" onclick="selectSidePanel('translation')" title="Vertaling"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 4h6M4 2v2M2 4c0 2.2 1.8 3.7 4 4M8 12l1.6-4 1.6 4M9.1 10.5h2"/></svg></button></div>
+    </div>
+    <div id="textStartSentinel" aria-hidden="true" style="height:1px;"></div>
+    <div class="d-badges" id="badges-reveal" style="margin-bottom:.5rem;"><span class="d-badge bs" data-layer="bs">⑤ Actieve verwerking</span><span class="d-badge bs" data-layer="bs">⑦ Scaffolding</span><span class="d-badge lpd" data-layer="lpd">BO1_03.04 – lectuurstrategieën</span></div>
+    <div class="reveal-bar" id="revealBar"><span style="font-size:.72rem;color:var(--ink-light);">Onthulling: Latijn → beeld → vertaling → bedoeling</span><button onclick="revealPrev()">&#8592; Vorige</button><button onclick="revealNext()">Volgende &#8594;</button><button class="sec" onclick="revealAll()">Alles tonen</button><span class="rev-count" id="revCount">0 / 0</span></div>
+    <div class="d-badges" id="badges-tekst" style="margin-bottom:.5rem;"><span class="d-badge bs" data-layer="bs">④ Dual coding</span><span class="d-badge bs" data-layer="bs">⑧ Gespreide oefening</span><span class="d-badge lpd" data-layer="lpd">BO1_03.01 – basiswoordenschat</span><span class="d-badge lpd" data-layer="lpd">BO1_03.07 – cultuuruitingen</span></div>
+    <section class="sent-grid" id="sentGrid" aria-label="Sententiae">
+      
+    <article class="sent-card" data-index="0" data-step="0" id="sent-1">
+      <div class="sent-card-top">
+        <span class="sent-num">01</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Pecunia" data-l="pecunia" data-d="nom. enk. v." data-n="geld"><span class="inline-analysis"><span class="ia-line ia-lemma">pecunia</span><span class="ia-line ia-meaning">geld</span></span><span class="lat-surface">Pecunia</span></span> <span class="lat-word sent-word" data-w="non" data-l="non" data-d="ontkenning" data-n="niet"><span class="inline-analysis"><span class="ia-line ia-lemma">non</span><span class="ia-line ia-meaning">niet</span></span><span class="lat-surface">non</span></span> <span class="lat-word sent-word" data-w="olet" data-l="olere" data-d="A. ind. praes. 3 enk." data-n="stinkt"><span class="inline-analysis"><span class="ia-line ia-lemma">olere</span><span class="ia-line ia-meaning">stinkt</span></span><span class="lat-surface">olet</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/pecunia-non-olet.png" aria-label="Beeld bij Pecunia non olet openen">
+        <img src="images/ludus1A/sententiae/pecunia-non-olet.png" alt="Beeld bij Pecunia non olet" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: pecunia-non-olet.png</span>
+      </a>
+      <div class="sent-translation">Geld stinkt niet</div>
+    </article>
+    <article class="sent-card" data-index="1" data-step="0" id="sent-2">
+      <div class="sent-card-top">
+        <span class="sent-num">02</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Fortuna" data-l="fortuna" data-d="nom. enk. v." data-n="lot, geluk"><span class="inline-analysis"><span class="ia-line ia-lemma">fortuna</span><span class="ia-line ia-meaning">lot, geluk</span></span><span class="lat-surface">Fortuna</span></span> <span class="lat-word sent-word" data-w="caeca" data-l="caecus, -a, -um" data-d="nom. enk. v." data-n="blind"><span class="inline-analysis"><span class="ia-line ia-lemma">caecus, -a, -um</span><span class="ia-line ia-meaning">blind</span></span><span class="lat-surface">caeca</span></span> <span class="lat-word sent-word" data-w="est" data-l="esse" data-d="A. ind. praes. 3 enk." data-n="is"><span class="inline-analysis"><span class="ia-line ia-lemma">esse</span><span class="ia-line ia-meaning">is</span></span><span class="lat-surface">est</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/fortuna-caeca-est.png" aria-label="Beeld bij Fortuna caeca est openen">
+        <img src="images/ludus1A/sententiae/fortuna-caeca-est.png" alt="Beeld bij Fortuna caeca est" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: fortuna-caeca-est.png</span>
+      </a>
+      <div class="sent-translation">Het lot/geluk is blind</div>
+    </article>
+    <article class="sent-card" data-index="2" data-step="0" id="sent-3">
+      <div class="sent-card-top">
+        <span class="sent-num">03</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Aquilae" data-l="aquila" data-d="nom. mv. v." data-n="adelaars"><span class="inline-analysis"><span class="ia-line ia-lemma">aquila</span><span class="ia-line ia-meaning">adelaars</span></span><span class="lat-surface">Aquilae</span></span> <span class="lat-word sent-word" data-w="non" data-l="non" data-d="ontkenning" data-n="niet"><span class="inline-analysis"><span class="ia-line ia-lemma">non</span><span class="ia-line ia-meaning">niet</span></span><span class="lat-surface">non</span></span> <span class="lat-word sent-word" data-w="captant" data-l="captare" data-d="A. ind. praes. 3 mv." data-n="vangen"><span class="inline-analysis"><span class="ia-line ia-lemma">captare</span><span class="ia-line ia-meaning">vangen</span></span><span class="lat-surface">captant</span></span> <span class="lat-word sent-word" data-w="muscas" data-l="musca" data-d="acc. mv. v." data-n="vliegen"><span class="inline-analysis"><span class="ia-line ia-lemma">musca</span><span class="ia-line ia-meaning">vliegen</span></span><span class="lat-surface">muscas</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/aquilae-non-captant-muscas.png" aria-label="Beeld bij Aquilae non captant muscas openen">
+        <img src="images/ludus1A/sententiae/aquilae-non-captant-muscas.png" alt="Beeld bij Aquilae non captant muscas" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: aquilae-non-captant-muscas.png</span>
+      </a>
+      <div class="sent-translation">Adelaars vangen geen vliegen</div>
+    </article>
+    <article class="sent-card" data-index="3" data-step="0" id="sent-4">
+      <div class="sent-card-top">
+        <span class="sent-num">04</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Lapsus" data-l="lapsus" data-d="nom. enk. m." data-n="val, struikeling"><span class="inline-analysis"><span class="ia-line ia-lemma">lapsus</span><span class="ia-line ia-meaning">val, struikeling</span></span><span class="lat-surface">Lapsus</span></span> <span class="lat-word sent-word" data-w="linguae" data-l="lingua" data-d="gen. enk. v." data-n="van de tong"><span class="inline-analysis"><span class="ia-line ia-lemma">lingua</span><span class="ia-line ia-meaning">van de tong</span></span><span class="lat-surface">linguae</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/lapsus-linguae.png" aria-label="Beeld bij Lapsus linguae openen">
+        <img src="images/ludus1A/sententiae/lapsus-linguae.png" alt="Beeld bij Lapsus linguae" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: lapsus-linguae.png</span>
+      </a>
+      <div class="sent-translation">Een struikeling van de tong</div>
+    </article>
+    <article class="sent-card" data-index="4" data-step="0" id="sent-5">
+      <div class="sent-card-top">
+        <span class="sent-num">05</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Umbram" data-l="umbra" data-d="acc. enk. v." data-n="schaduw"><span class="inline-analysis"><span class="ia-line ia-lemma">umbra</span><span class="ia-line ia-meaning">schaduw</span></span><span class="lat-surface">Umbram</span></span> <span class="lat-word sent-word" data-w="suam" data-l="suus, -a, -um" data-d="acc. enk. v." data-n="zijn/haar eigen"><span class="inline-analysis"><span class="ia-line ia-lemma">suus, -a, -um</span><span class="ia-line ia-meaning">zijn/haar eigen</span></span><span class="lat-surface">suam</span></span> <span class="lat-word sent-word" data-w="timet" data-l="timere" data-d="A. ind. praes. 3 enk." data-n="vreest"><span class="inline-analysis"><span class="ia-line ia-lemma">timere</span><span class="ia-line ia-meaning">vreest</span></span><span class="lat-surface">timet</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/umbram-suam-timet.png" aria-label="Beeld bij Umbram suam timet openen">
+        <img src="images/ludus1A/sententiae/umbram-suam-timet.png" alt="Beeld bij Umbram suam timet" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: umbram-suam-timet.png</span>
+      </a>
+      <div class="sent-translation">Hij/zij vreest zijn/haar schaduw</div>
+    </article>
+    <article class="sent-card" data-index="5" data-step="0" id="sent-6">
+      <div class="sent-card-top">
+        <span class="sent-num">06</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Omne" data-l="omnis, omne" data-d="nom. enk. o." data-n="elk, alle"><span class="inline-analysis"><span class="ia-line ia-lemma">omnis, omne</span><span class="ia-line ia-meaning">elk, alle</span></span><span class="lat-surface">Omne</span></span> <span class="lat-word sent-word" data-w="principium" data-l="principium" data-d="nom. enk. o." data-n="begin"><span class="inline-analysis"><span class="ia-line ia-lemma">principium</span><span class="ia-line ia-meaning">begin</span></span><span class="lat-surface">principium</span></span> <span class="lat-word sent-word" data-w="difficile" data-l="difficilis, difficile" data-d="nom. enk. o." data-n="moeilijk"><span class="inline-analysis"><span class="ia-line ia-lemma">difficilis, difficile</span><span class="ia-line ia-meaning">moeilijk</span></span><span class="lat-surface">difficile</span></span> <span class="lat-word sent-word" data-w="est" data-l="esse" data-d="A. ind. praes. 3 enk." data-n="is"><span class="inline-analysis"><span class="ia-line ia-lemma">esse</span><span class="ia-line ia-meaning">is</span></span><span class="lat-surface">est</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/omne-principium-difficile-est.png" aria-label="Beeld bij Omne principium difficile est openen">
+        <img src="images/ludus1A/sententiae/omne-principium-difficile-est.png" alt="Beeld bij Omne principium difficile est" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: omne-principium-difficile-est.png</span>
+      </a>
+      <div class="sent-translation">Alle begin is moeilijk</div>
+    </article>
+    <article class="sent-card" data-index="6" data-step="0" id="sent-7">
+      <div class="sent-card-top">
+        <span class="sent-num">07</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="In" data-l="in" data-d="voorzetsel + abl." data-n="in"><span class="inline-analysis"><span class="ia-line ia-lemma">in</span><span class="ia-line ia-meaning">in</span></span><span class="lat-surface">In</span></span> <span class="lat-word sent-word" data-w="vino" data-l="vinum" data-d="abl. enk. o." data-n="wijn"><span class="inline-analysis"><span class="ia-line ia-lemma">vinum</span><span class="ia-line ia-meaning">wijn</span></span><span class="lat-surface">vino</span></span> <span class="lat-word sent-word" data-w="veritas" data-l="veritas" data-d="nom. enk. v." data-n="waarheid"><span class="inline-analysis"><span class="ia-line ia-lemma">veritas</span><span class="ia-line ia-meaning">waarheid</span></span><span class="lat-surface">veritas</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/in-vino-veritas.png" aria-label="Beeld bij In vino veritas openen">
+        <img src="images/ludus1A/sententiae/in-vino-veritas.png" alt="Beeld bij In vino veritas" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: in-vino-veritas.png</span>
+      </a>
+      <div class="sent-translation">De waarheid is in de wijn</div>
+    </article>
+    <article class="sent-card" data-index="7" data-step="0" id="sent-8">
+      <div class="sent-card-top">
+        <span class="sent-num">08</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Cum" data-l="cum" data-d="voorzetsel + abl." data-n="met"><span class="inline-analysis"><span class="ia-line ia-lemma">cum</span><span class="ia-line ia-meaning">met</span></span><span class="lat-surface">Cum</span></span> <span class="lat-word sent-word" data-w="grano" data-l="granum" data-d="abl. enk. o." data-n="korrel"><span class="inline-analysis"><span class="ia-line ia-lemma">granum</span><span class="ia-line ia-meaning">korrel</span></span><span class="lat-surface">grano</span></span> <span class="lat-word sent-word" data-w="salis" data-l="sal" data-d="gen. enk. m." data-n="van zout"><span class="inline-analysis"><span class="ia-line ia-lemma">sal</span><span class="ia-line ia-meaning">van zout</span></span><span class="lat-surface">salis</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/cum-grano-salis.png" aria-label="Beeld bij Cum grano salis openen">
+        <img src="images/ludus1A/sententiae/cum-grano-salis.png" alt="Beeld bij Cum grano salis" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: cum-grano-salis.png</span>
+      </a>
+      <div class="sent-translation">Met een korrel(tje) zout</div>
+    </article>
+    <article class="sent-card" data-index="8" data-step="0" id="sent-9">
+      <div class="sent-card-top">
+        <span class="sent-num">09</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Verba" data-l="verbum" data-d="nom. mv. o." data-n="woorden"><span class="inline-analysis"><span class="ia-line ia-lemma">verbum</span><span class="ia-line ia-meaning">woorden</span></span><span class="lat-surface">Verba</span></span> <span class="lat-word sent-word" data-w="volant" data-l="volare" data-d="A. ind. praes. 3 mv." data-n="vliegen"><span class="inline-analysis"><span class="ia-line ia-lemma">volare</span><span class="ia-line ia-meaning">vliegen</span></span><span class="lat-surface">volant</span></span> <span class="lat-word sent-word" data-w="scripta" data-l="scriptum" data-d="nom. mv. o." data-n="geschreven dingen"><span class="inline-analysis"><span class="ia-line ia-lemma">scriptum</span><span class="ia-line ia-meaning">geschreven dingen</span></span><span class="lat-surface">scripta</span></span> <span class="lat-word sent-word" data-w="manent" data-l="manere" data-d="A. ind. praes. 3 mv." data-n="blijven"><span class="inline-analysis"><span class="ia-line ia-lemma">manere</span><span class="ia-line ia-meaning">blijven</span></span><span class="lat-surface">manent</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/verba-volant-scripta-manent.png" aria-label="Beeld bij Verba volant, scripta manent openen">
+        <img src="images/ludus1A/sententiae/verba-volant-scripta-manent.png" alt="Beeld bij Verba volant, scripta manent" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: verba-volant-scripta-manent.png</span>
+      </a>
+      <div class="sent-translation">Woorden (ver)vliegen, het geschrevene blijft (bestaan)</div>
+    </article>
+    <article class="sent-card" data-index="9" data-step="0" id="sent-10">
+      <div class="sent-card-top">
+        <span class="sent-num">10</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Inter" data-l="inter" data-d="voorzetsel + acc." data-n="tussen"><span class="inline-analysis"><span class="ia-line ia-lemma">inter</span><span class="ia-line ia-meaning">tussen</span></span><span class="lat-surface">Inter</span></span> <span class="lat-word sent-word" data-w="arma" data-l="arma" data-d="acc. mv. o." data-n="wapens"><span class="inline-analysis"><span class="ia-line ia-lemma">arma</span><span class="ia-line ia-meaning">wapens</span></span><span class="lat-surface">arma</span></span> <span class="lat-word sent-word" data-w="silent" data-l="silere" data-d="A. ind. praes. 3 mv." data-n="zwijgen"><span class="inline-analysis"><span class="ia-line ia-lemma">silere</span><span class="ia-line ia-meaning">zwijgen</span></span><span class="lat-surface">silent</span></span> <span class="lat-word sent-word" data-w="leges" data-l="lex" data-d="nom. mv. v." data-n="wetten"><span class="inline-analysis"><span class="ia-line ia-lemma">lex</span><span class="ia-line ia-meaning">wetten</span></span><span class="lat-surface">leges</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/inter-arma-silent-leges.png" aria-label="Beeld bij Inter arma silent leges openen">
+        <img src="images/ludus1A/sententiae/inter-arma-silent-leges.png" alt="Beeld bij Inter arma silent leges" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: inter-arma-silent-leges.png</span>
+      </a>
+      <div class="sent-translation">De wetten zwijgen in oorlogstijd</div>
+    </article>
+    <article class="sent-card" data-index="10" data-step="0" id="sent-11">
+      <div class="sent-card-top">
+        <span class="sent-num">11</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Asinus" data-l="asinus" data-d="nom. enk. m." data-n="ezel"><span class="inline-analysis"><span class="ia-line ia-lemma">asinus</span><span class="ia-line ia-meaning">ezel</span></span><span class="lat-surface">Asinus</span></span> <span class="lat-word sent-word" data-w="ad" data-l="ad" data-d="voorzetsel + acc." data-n="tegen, naar"><span class="inline-analysis"><span class="ia-line ia-lemma">ad</span><span class="ia-line ia-meaning">tegen, naar</span></span><span class="lat-surface">ad</span></span> <span class="lat-word sent-word" data-w="lapidem" data-l="lapis" data-d="acc. enk. m." data-n="steen"><span class="inline-analysis"><span class="ia-line ia-lemma">lapis</span><span class="ia-line ia-meaning">steen</span></span><span class="lat-surface">lapidem</span></span> <span class="lat-word sent-word" data-w="eundem" data-l="idem" data-d="acc. enk. m." data-n="dezelfde"><span class="inline-analysis"><span class="ia-line ia-lemma">idem</span><span class="ia-line ia-meaning">dezelfde</span></span><span class="lat-surface">eundem</span></span> <span class="lat-word sent-word" data-w="non" data-l="non" data-d="ontkenning" data-n="niet"><span class="inline-analysis"><span class="ia-line ia-lemma">non</span><span class="ia-line ia-meaning">niet</span></span><span class="lat-surface">non</span></span> <span class="lat-word sent-word" data-w="bis" data-l="bis" data-d="bijwoord" data-n="twee keer"><span class="inline-analysis"><span class="ia-line ia-lemma">bis</span><span class="ia-line ia-meaning">twee keer</span></span><span class="lat-surface">bis</span></span> <span class="lat-word sent-word" data-w="offendit" data-l="offendere" data-d="A. ind. praes. 3 enk." data-n="stoot zich"><span class="inline-analysis"><span class="ia-line ia-lemma">offendere</span><span class="ia-line ia-meaning">stoot zich</span></span><span class="lat-surface">offendit</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/asinus-ad-lapidem-eundem-non-bis-offendit.png" aria-label="Beeld bij Asinus ad lapidem eundem non bis offendit openen">
+        <img src="images/ludus1A/sententiae/asinus-ad-lapidem-eundem-non-bis-offendit.png" alt="Beeld bij Asinus ad lapidem eundem non bis offendit" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: asinus-ad-lapidem-eundem-non-bis-offendit.png</span>
+      </a>
+      <div class="sent-translation">Een ezel stoot zich geen twee keer aan dezelfde steen</div>
+    </article>
+    <article class="sent-card" data-index="11" data-step="0" id="sent-12">
+      <div class="sent-card-top">
+        <span class="sent-num">12</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Mortui" data-l="mortuus" data-d="nom. mv. m." data-n="doden"><span class="inline-analysis"><span class="ia-line ia-lemma">mortuus</span><span class="ia-line ia-meaning">doden</span></span><span class="lat-surface">Mortui</span></span> <span class="lat-word sent-word" data-w="non" data-l="non" data-d="ontkenning" data-n="niet"><span class="inline-analysis"><span class="ia-line ia-lemma">non</span><span class="ia-line ia-meaning">niet</span></span><span class="lat-surface">non</span></span> <span class="lat-word sent-word" data-w="mordent" data-l="mordere" data-d="A. ind. praes. 3 mv." data-n="bijten"><span class="inline-analysis"><span class="ia-line ia-lemma">mordere</span><span class="ia-line ia-meaning">bijten</span></span><span class="lat-surface">mordent</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/mortui-non-mordent.png" aria-label="Beeld bij Mortui non mordent openen">
+        <img src="images/ludus1A/sententiae/mortui-non-mordent.png" alt="Beeld bij Mortui non mordent" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: mortui-non-mordent.png</span>
+      </a>
+      <div class="sent-translation">De doden bijten niet</div>
+    </article>
+    <article class="sent-card" data-index="12" data-step="0" id="sent-13">
+      <div class="sent-card-top">
+        <span class="sent-num">13</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Repetitio" data-l="repetitio" data-d="nom. enk. v." data-n="herhaling"><span class="inline-analysis"><span class="ia-line ia-lemma">repetitio</span><span class="ia-line ia-meaning">herhaling</span></span><span class="lat-surface">Repetitio</span></span> <span class="lat-word sent-word" data-w="est" data-l="esse" data-d="A. ind. praes. 3 enk." data-n="is"><span class="inline-analysis"><span class="ia-line ia-lemma">esse</span><span class="ia-line ia-meaning">is</span></span><span class="lat-surface">est</span></span> <span class="lat-word sent-word" data-w="mater" data-l="mater" data-d="nom. enk. v." data-n="moeder"><span class="inline-analysis"><span class="ia-line ia-lemma">mater</span><span class="ia-line ia-meaning">moeder</span></span><span class="lat-surface">mater</span></span> <span class="lat-word sent-word" data-w="studiorum" data-l="studium" data-d="gen. mv. o." data-n="van de inspanningen/studies"><span class="inline-analysis"><span class="ia-line ia-lemma">studium</span><span class="ia-line ia-meaning">van de inspanningen/studies</span></span><span class="lat-surface">studiorum</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/repetitio-est-mater-studiorum.png" aria-label="Beeld bij Repetitio est mater studiorum openen">
+        <img src="images/ludus1A/sententiae/repetitio-est-mater-studiorum.png" alt="Beeld bij Repetitio est mater studiorum" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: repetitio-est-mater-studiorum.png</span>
+      </a>
+      <div class="sent-translation">Herhaling is de moeder van de inspanningen</div>
+    </article>
+    <article class="sent-card" data-index="13" data-step="0" id="sent-14">
+      <div class="sent-card-top">
+        <span class="sent-num">14</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Mens" data-l="mens" data-d="nom. enk. v." data-n="geest"><span class="inline-analysis"><span class="ia-line ia-lemma">mens</span><span class="ia-line ia-meaning">geest</span></span><span class="lat-surface">Mens</span></span> <span class="lat-word sent-word" data-w="sana" data-l="sanus, -a, -um" data-d="nom. enk. v." data-n="gezond"><span class="inline-analysis"><span class="ia-line ia-lemma">sanus, -a, -um</span><span class="ia-line ia-meaning">gezond</span></span><span class="lat-surface">sana</span></span> <span class="lat-word sent-word" data-w="in" data-l="in" data-d="voorzetsel + abl." data-n="in"><span class="inline-analysis"><span class="ia-line ia-lemma">in</span><span class="ia-line ia-meaning">in</span></span><span class="lat-surface">in</span></span> <span class="lat-word sent-word" data-w="corpore" data-l="corpus" data-d="abl. enk. o." data-n="lichaam"><span class="inline-analysis"><span class="ia-line ia-lemma">corpus</span><span class="ia-line ia-meaning">lichaam</span></span><span class="lat-surface">corpore</span></span> <span class="lat-word sent-word" data-w="sano" data-l="sanus, -a, -um" data-d="abl. enk. o." data-n="gezond"><span class="inline-analysis"><span class="ia-line ia-lemma">sanus, -a, -um</span><span class="ia-line ia-meaning">gezond</span></span><span class="lat-surface">sano</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/mens-sana-in-corpore-sano.png" aria-label="Beeld bij Mens sana in corpore sano openen">
+        <img src="images/ludus1A/sententiae/mens-sana-in-corpore-sano.png" alt="Beeld bij Mens sana in corpore sano" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: mens-sana-in-corpore-sano.png</span>
+      </a>
+      <div class="sent-translation">Een gezonde geest in een gezond lichaam</div>
+    </article>
+    <article class="sent-card" data-index="14" data-step="0" id="sent-15">
+      <div class="sent-card-top">
+        <span class="sent-num">15</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Errare" data-l="errare" data-d="infinitief" data-n="zich vergissen, missen"><span class="inline-analysis"><span class="ia-line ia-lemma">errare</span><span class="ia-line ia-meaning">zich vergissen, missen</span></span><span class="lat-surface">Errare</span></span> <span class="lat-word sent-word" data-w="humanum" data-l="humanus, -a, -um" data-d="nom. enk. o." data-n="menselijk"><span class="inline-analysis"><span class="ia-line ia-lemma">humanus, -a, -um</span><span class="ia-line ia-meaning">menselijk</span></span><span class="lat-surface">humanum</span></span> <span class="lat-word sent-word" data-w="est" data-l="esse" data-d="A. ind. praes. 3 enk." data-n="is"><span class="inline-analysis"><span class="ia-line ia-lemma">esse</span><span class="ia-line ia-meaning">is</span></span><span class="lat-surface">est</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/errare-humanum-est.png" aria-label="Beeld bij Errare humanum est openen">
+        <img src="images/ludus1A/sententiae/errare-humanum-est.png" alt="Beeld bij Errare humanum est" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: errare-humanum-est.png</span>
+      </a>
+      <div class="sent-translation">Missen is menselijk</div>
+    </article>
+    <article class="sent-card" data-index="15" data-step="0" id="sent-16">
+      <div class="sent-card-top">
+        <span class="sent-num">16</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Roma" data-l="Roma" data-d="nom. enk. v." data-n="Rome"><span class="inline-analysis"><span class="ia-line ia-lemma">Roma</span><span class="ia-line ia-meaning">Rome</span></span><span class="lat-surface">Roma</span></span> <span class="lat-word sent-word" data-w="aeterna" data-l="aeternus, -a, -um" data-d="nom. enk. v." data-n="eeuwig"><span class="inline-analysis"><span class="ia-line ia-lemma">aeternus, -a, -um</span><span class="ia-line ia-meaning">eeuwig</span></span><span class="lat-surface">aeterna</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/roma-aeterna.png" aria-label="Beeld bij Roma aeterna openen">
+        <img src="images/ludus1A/sententiae/roma-aeterna.png" alt="Beeld bij Roma aeterna" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: roma-aeterna.png</span>
+      </a>
+      <div class="sent-translation">Het eeuwige Rome</div>
+    </article>
+    <article class="sent-card" data-index="16" data-step="0" id="sent-17">
+      <div class="sent-card-top">
+        <span class="sent-num">17</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Dura" data-l="durus, -a, -um" data-d="nom. enk. v." data-n="hard"><span class="inline-analysis"><span class="ia-line ia-lemma">durus, -a, -um</span><span class="ia-line ia-meaning">hard</span></span><span class="lat-surface">Dura</span></span> <span class="lat-word sent-word" data-w="lex" data-l="lex" data-d="nom. enk. v." data-n="wet"><span class="inline-analysis"><span class="ia-line ia-lemma">lex</span><span class="ia-line ia-meaning">wet</span></span><span class="lat-surface">lex</span></span> <span class="lat-word sent-word" data-w="sed" data-l="sed" data-d="voegwoord" data-n="maar"><span class="inline-analysis"><span class="ia-line ia-lemma">sed</span><span class="ia-line ia-meaning">maar</span></span><span class="lat-surface">sed</span></span> <span class="lat-word sent-word" data-w="lex" data-l="lex" data-d="nom. enk. v." data-n="wet"><span class="inline-analysis"><span class="ia-line ia-lemma">lex</span><span class="ia-line ia-meaning">wet</span></span><span class="lat-surface">lex</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/dura-lex-sed-lex.png" aria-label="Beeld bij Dura lex, sed lex openen">
+        <img src="images/ludus1A/sententiae/dura-lex-sed-lex.png" alt="Beeld bij Dura lex, sed lex" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: dura-lex-sed-lex.png</span>
+      </a>
+      <div class="sent-translation">Het is een harde wet, maar het is de wet</div>
+    </article>
+    <article class="sent-card" data-index="17" data-step="0" id="sent-18">
+      <div class="sent-card-top">
+        <span class="sent-num">18</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Tempus" data-l="tempus" data-d="nom. enk. o." data-n="tijd"><span class="inline-analysis"><span class="ia-line ia-lemma">tempus</span><span class="ia-line ia-meaning">tijd</span></span><span class="lat-surface">Tempus</span></span> <span class="lat-word sent-word" data-w="fugit" data-l="fugere" data-d="A. ind. praes. 3 enk." data-n="vlucht, vliegt"><span class="inline-analysis"><span class="ia-line ia-lemma">fugere</span><span class="ia-line ia-meaning">vlucht, vliegt</span></span><span class="lat-surface">fugit</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/tempus-fugit.png" aria-label="Beeld bij Tempus fugit openen">
+        <img src="images/ludus1A/sententiae/tempus-fugit.png" alt="Beeld bij Tempus fugit" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: tempus-fugit.png</span>
+      </a>
+      <div class="sent-translation">De tijd vliegt (lett.: vlucht)</div>
+    </article>
+    <article class="sent-card" data-index="18" data-step="0" id="sent-19">
+      <div class="sent-card-top">
+        <span class="sent-num">19</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Flos" data-l="flos" data-d="nom. enk. m." data-n="bloem"><span class="inline-analysis"><span class="ia-line ia-lemma">flos</span><span class="ia-line ia-meaning">bloem</span></span><span class="lat-surface">Flos</span></span> <span class="lat-word sent-word" data-w="unus" data-l="unus" data-d="nom. enk. m." data-n="één"><span class="inline-analysis"><span class="ia-line ia-lemma">unus</span><span class="ia-line ia-meaning">één</span></span><span class="lat-surface">unus</span></span> <span class="lat-word sent-word" data-w="non" data-l="non" data-d="ontkenning" data-n="niet"><span class="inline-analysis"><span class="ia-line ia-lemma">non</span><span class="ia-line ia-meaning">niet</span></span><span class="lat-surface">non</span></span> <span class="lat-word sent-word" data-w="facit" data-l="facere" data-d="A. ind. praes. 3 enk." data-n="maakt"><span class="inline-analysis"><span class="ia-line ia-lemma">facere</span><span class="ia-line ia-meaning">maakt</span></span><span class="lat-surface">facit</span></span> <span class="lat-word sent-word" data-w="hortum" data-l="hortus" data-d="acc. enk. m." data-n="tuin"><span class="inline-analysis"><span class="ia-line ia-lemma">hortus</span><span class="ia-line ia-meaning">tuin</span></span><span class="lat-surface">hortum</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/flos-unus-non-facit-hortum.png" aria-label="Beeld bij Flos unus non facit hortum openen">
+        <img src="images/ludus1A/sententiae/flos-unus-non-facit-hortum.png" alt="Beeld bij Flos unus non facit hortum" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: flos-unus-non-facit-hortum.png</span>
+      </a>
+      <div class="sent-translation">Eén bloem maakt geen tuin</div>
+    </article>
+    <article class="sent-card" data-index="19" data-step="0" id="sent-20">
+      <div class="sent-card-top">
+        <span class="sent-num">20</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Amor" data-l="amor" data-d="nom. enk. m." data-n="liefde"><span class="inline-analysis"><span class="ia-line ia-lemma">amor</span><span class="ia-line ia-meaning">liefde</span></span><span class="lat-surface">Amor</span></span> <span class="lat-word sent-word" data-w="omnia" data-l="omnis, omne" data-d="acc. mv. o." data-n="alles"><span class="inline-analysis"><span class="ia-line ia-lemma">omnis, omne</span><span class="ia-line ia-meaning">alles</span></span><span class="lat-surface">omnia</span></span> <span class="lat-word sent-word" data-w="vincit" data-l="vincere" data-d="A. ind. praes. 3 enk." data-n="overwint"><span class="inline-analysis"><span class="ia-line ia-lemma">vincere</span><span class="ia-line ia-meaning">overwint</span></span><span class="lat-surface">vincit</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/amor-omnia-vincit.png" aria-label="Beeld bij Amor omnia vincit openen">
+        <img src="images/ludus1A/sententiae/amor-omnia-vincit.png" alt="Beeld bij Amor omnia vincit" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: amor-omnia-vincit.png</span>
+      </a>
+      <div class="sent-translation">Liefde overwint alles</div>
+    </article>
+    <article class="sent-card" data-index="20" data-step="0" id="sent-21">
+      <div class="sent-card-top">
+        <span class="sent-num">21</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="In" data-l="in" data-d="voorzetsel + abl." data-n="in"><span class="inline-analysis"><span class="ia-line ia-lemma">in</span><span class="ia-line ia-meaning">in</span></span><span class="lat-surface">In</span></span> <span class="lat-word sent-word" data-w="cauda" data-l="cauda" data-d="abl. enk. v." data-n="staart"><span class="inline-analysis"><span class="ia-line ia-lemma">cauda</span><span class="ia-line ia-meaning">staart</span></span><span class="lat-surface">cauda</span></span> <span class="lat-word sent-word" data-w="venenum" data-l="venenum" data-d="nom. enk. o." data-n="gif, venijn"><span class="inline-analysis"><span class="ia-line ia-lemma">venenum</span><span class="ia-line ia-meaning">gif, venijn</span></span><span class="lat-surface">venenum</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/in-cauda-venenum.png" aria-label="Beeld bij In cauda venenum openen">
+        <img src="images/ludus1A/sententiae/in-cauda-venenum.png" alt="Beeld bij In cauda venenum" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: in-cauda-venenum.png</span>
+      </a>
+      <div class="sent-translation">Het venijn zit in de staart</div>
+    </article>
+    <article class="sent-card" data-index="21" data-step="0" id="sent-22">
+      <div class="sent-card-top">
+        <span class="sent-num">22</span>
+        <span class="sent-label">Sententia</span>
+      </div>
+      <h2 class="sent-latin"><span class="lat-word sent-word" data-w="Nihil" data-l="nihil" data-d="onveranderlijk" data-n="niets"><span class="inline-analysis"><span class="ia-line ia-lemma">nihil</span><span class="ia-line ia-meaning">niets</span></span><span class="lat-surface">Nihil</span></span> <span class="lat-word sent-word" data-w="novi" data-l="novus" data-d="gen. enk. o." data-n="nieuws"><span class="inline-analysis"><span class="ia-line ia-lemma">novus</span><span class="ia-line ia-meaning">nieuws</span></span><span class="lat-surface">novi</span></span> <span class="lat-word sent-word" data-w="sub" data-l="sub" data-d="voorzetsel + abl." data-n="onder"><span class="inline-analysis"><span class="ia-line ia-lemma">sub</span><span class="ia-line ia-meaning">onder</span></span><span class="lat-surface">sub</span></span> <span class="lat-word sent-word" data-w="sole" data-l="sol" data-d="abl. enk. m." data-n="zon"><span class="inline-analysis"><span class="ia-line ia-lemma">sol</span><span class="ia-line ia-meaning">zon</span></span><span class="lat-surface">sole</span></span></h2>
+      <a class="sent-image-wrap" href="images/ludus1A/sententiae/nihil-novi-sub-sole.png" aria-label="Beeld bij Nihil novi sub sole openen">
+        <img src="images/ludus1A/sententiae/nihil-novi-sub-sole.png" alt="Beeld bij Nihil novi sub sole" onerror="this.classList.add('is-missing')">
+        <span class="sent-image-placeholder">Afbeelding volgt: nihil-novi-sub-sole.png</span>
+      </a>
+      <div class="sent-translation">Niets nieuws onder de zon</div>
+    </article>
+    </section>
+  </div><!-- /main-col -->
+  <div class="col-resizer" id="colResizer"><div class="col-resizer-handle"></div></div>
+  <div class="side-panel" id="sidePanel">
+    <div class="side-panel-shell">
+      <div class="side-panel-tabs" role="tablist" aria-label="Zijpaneel">
+        <button type="button" class="side-tab-btn active" data-panel="la" onclick="selectSidePanel('la')" title="Sententiehulp" aria-label="Sententiehulp"><svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M2 4h12M2 8h8M2 12h10"/><circle cx="13" cy="11" r="2.1" fill="currentColor" stroke="none"/></svg></button>
+        <button type="button" class="side-tab-btn" data-panel="grammar" onclick="selectSidePanel('grammar')" title="Grammaticahulp" aria-label="Grammaticahulp"><svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M3 3h10M3 7h10M3 11h6"/></svg></button>
+        <button type="button" class="side-tab-btn" data-panel="translation" onclick="selectSidePanel('translation')" title="Vertaling" aria-label="Vertaling"><svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M1 4h6M4 2v2M2 4c0 2.2 1.8 3.7 4 4"/><path d="M8 12l1.6-4 1.6 4M9.1 10.5h2"/></svg></button>
+        <button type="button" class="side-tab-btn" data-panel="notes" onclick="selectSidePanel('notes')" title="Noten" aria-label="Noten"><svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M3 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="M5 6h6M5 9h6"/></svg></button>
+      </div>
+      <section class="side-panel-view active" id="panel-la" aria-label="Sententiehulp"><div class="la-side-head"><div class="la-side-label">Sententiehulp</div><div class="la-side-title">Actieve kaart naast de tekst</div><div class="la-side-help">Klik links op een sententia of gebruik de onthulknoppen. Rechts verschijnt alleen de hulp bij de actieve kaart.</div></div><div class="la-cue-box" id="laCueBox"></div><div id="laPanelBody"></div></section>
+      <section class="side-panel-view" id="panel-grammar" aria-label="Grammaticahulp"><div class="analysis-card" id="analysisCard"><div class="ac-empty">Klik op een Latijns woord voor grammaticahulp.</div></div></section>
+      <section class="side-panel-view" id="panel-translation" aria-label="Vertaling"><div class="panel-card"><h3 style="color:var(--magenta);">Vertaling</h3><div class="vertaling-tekst" id="vertaalTekst"></div></div></section>
+      <section class="side-panel-view" id="panel-notes" aria-label="Noten"><div class="panel-card"><h3>Let op</h3><div class="panel-note"><span class="pn-tag">vorm</span>Ludus 1A is een sententiae-module: korte zinnen, geen doorlopende tekst.</div><div class="panel-note"><span class="pn-tag">onthul</span>De onthulling verloopt in kaartlagen: Latijn → beeld → betekenis.</div><div class="panel-note"><span class="pn-tag">analyse</span>De rechterkolom toont de actieve sententiehulp, zoals de LA in de gewone tekstmodule.</div><div class="panel-note"><span class="pn-tag">LPD</span>Focus op woordenschat, woordstrategieën, eenvoudige zinsbouw en cultuur.</div></div></section>
+    </div>
+  </div><!-- /side-panel -->
+</div><!-- /outer -->
+
+<div class="lesson-toolbar-wrap"><div class="lesson-toolbar">
+  <button class="lesson-btn" data-tip="Vorige" onclick="revealPrev()"><svg viewBox="0 0 16 16"><path d="M10 12L6 8l4-4"/></svg></button>
+  <button class="lesson-btn" data-tip="Volgende" onclick="revealNext()"><svg viewBox="0 0 16 16"><path d="M6 4l4 4-4 4"/></svg></button>
+  <button class="lesson-btn active" id="toolReveal" data-tip="Onthul" onclick="toggleReveal()"><svg viewBox="0 0 16 16"><path d="M2 8s2.5-5 6-5 6 5 6 5-2.5 5-6 5-6-5-6-5z"/><circle cx="8" cy="8" r="2"/></svg></button>
+  <div class="lesson-toolbar-divider"></div>
+  <button class="lesson-btn" data-tip="Tweekolom" onclick="toggleTwocol()"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="5" height="10" rx="1"/><rect x="9" y="3" width="5" height="10" rx="1"/></svg></button>
+  <button class="lesson-btn" data-tip="Interlineair" onclick="toggleInterlin()"><svg viewBox="0 0 16 16"><path d="M2 5h12M2 10h12"/></svg></button>
+  <div class="lesson-toolbar-divider"></div>
+  <button class="lesson-btn" data-tip="Wissen" onclick="clearInk()"><svg viewBox="0 0 16 16"><path d="M4 4h8M6 4v9M10 4v9M3 4l1 10h8l1-10"/></svg></button>
+</div></div>
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4-4 4 4"/></svg></button>
+<script>
+var SENTENTIAE = [{"id": 1, "latin": "Pecunia non olet", "nl": "Geld stinkt niet", "context": "Een korte spreuk over geld en oordeel: niet de herkomst, maar de bruikbaarheid wordt benadrukt.", "vraag": "Waarom kan iemand zeggen dat geld “niet stinkt”? Wat bedoelt men dan figuurlijk?", "analyse": "Pecunia is het onderwerp; non ontkent; olet is de persoonsvorm. De zin is zeer kort en werkt daardoor als kernachtige sententia.", "slug": "pecunia-non-olet", "words": [{"f": "Pecunia", "l": "pecunia", "d": "nom. enk. v.", "n": "geld"}, {"f": "non", "l": "non", "d": "ontkenning", "n": "niet"}, {"f": "olet", "l": "olere", "d": "A. ind. praes. 3 enk.", "n": "stinkt"}], "bedoeling": "Wie deze spreuk gebruikt, bedoelt dat de waarde van geld niet verdwijnt door de manier waarop het verdiend is. De spreuk kan ook kritisch klinken: mensen vergeten soms waar geld vandaan komt zodra het nuttig is.", "spreekwoord": "Geld stinkt niet.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 2, "latin": "Fortuna caeca est", "nl": "Het lot/geluk is blind", "context": "Fortuna wordt voorgesteld als een kracht die mensen zonder vaste reden bevoordeelt of treft.", "vraag": "Wat zegt caeca over Fortuna? Waarom past het beeld van blindheid bij “lot” of “geluk”?", "analyse": "Fortuna is onderwerp; caeca is naamwoordelijk deel; est is koppelwerkwoord. Caeca congrueert met Fortuna.", "slug": "fortuna-caeca-est", "words": [{"f": "Fortuna", "l": "fortuna", "d": "nom. enk. v.", "n": "lot, geluk"}, {"f": "caeca", "l": "caecus, -a, -um", "d": "nom. enk. v.", "n": "blind"}, {"f": "est", "l": "esse", "d": "A. ind. praes. 3 enk.", "n": "is"}], "bedoeling": "Deze spreuk betekent dat geluk en ongeluk niet altijd eerlijk of logisch verdeeld zijn. Het lot kijkt niet naar wie iets verdient: iedereen kan geluk of pech hebben.", "spreekwoord": "Het geluk is blind.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 3, "latin": "Aquilae non captant muscas", "nl": "Adelaars vangen geen vliegen", "context": "De spreuk contrasteert iets groots en waardigs met iets kleins en onbelangrijks.", "vraag": "Welke tegenstelling maakt de spreuk sterk: aquilae tegenover muscas, of non tegenover captant?", "analyse": "Aquilae is onderwerp in het meervoud; captant is de persoonsvorm in de 3e persoon meervoud; muscas is lijdend voorwerp.", "slug": "aquilae-non-captant-muscas", "words": [{"f": "Aquilae", "l": "aquila", "d": "nom. mv. v.", "n": "adelaars"}, {"f": "non", "l": "non", "d": "ontkenning", "n": "niet"}, {"f": "captant", "l": "captare", "d": "A. ind. praes. 3 mv.", "n": "vangen"}, {"f": "muscas", "l": "musca", "d": "acc. mv. v.", "n": "vliegen"}], "bedoeling": "Deze spreuk zegt dat iemand die belangrijk, sterk of verstandig is zich niet moet bezighouden met onbenullige kleinigheden.", "spreekwoord": "Grote mensen houden zich niet met kleinigheden bezig.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 4, "latin": "Lapsus linguae", "nl": "Een struikeling van de tong", "context": "Een lapsus linguae is een verspreking: de tong “struikelt”.", "vraag": "Waarom is “struikeling van de tong” een goed beeld voor een verspreking?", "analyse": "Dit is geen volledige werkwoordelijke zin, maar een naamwoordgroep. Linguae staat in de genitief: van de tong.", "slug": "lapsus-linguae", "words": [{"f": "Lapsus", "l": "lapsus", "d": "nom. enk. m.", "n": "val, struikeling"}, {"f": "linguae", "l": "lingua", "d": "gen. enk. v.", "n": "van de tong"}], "bedoeling": "Een lapsus linguae is een verspreking: je zegt per ongeluk iets verkeerds, of je mond verraadt iets dat je eigenlijk niet wilde zeggen.", "spreekwoord": "Een verspreking.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 5, "latin": "Umbram suam timet", "nl": "Hij/zij vreest zijn/haar schaduw", "context": "De spreuk typeert iemand die overdreven bang of schrikachtig is.", "vraag": "Wat maakt het beeld van de eigen schaduw komisch of scherp?", "analyse": "Het onderwerp zit in de persoonsvorm timet; umbram is lijdend voorwerp; suam hoort bij umbram.", "slug": "umbram-suam-timet", "words": [{"f": "Umbram", "l": "umbra", "d": "acc. enk. v.", "n": "schaduw"}, {"f": "suam", "l": "suus, -a, -um", "d": "acc. enk. v.", "n": "zijn/haar eigen"}, {"f": "timet", "l": "timere", "d": "A. ind. praes. 3 enk.", "n": "vreest"}], "bedoeling": "Dit zeg je over iemand die extreem bang of onzeker is, zelfs wanneer er eigenlijk geen echt gevaar is.", "spreekwoord": "Bang zijn voor je eigen schaduw.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 6, "latin": "Omne principium difficile est", "nl": "Alle begin is moeilijk", "context": "Een herkenbare spreuk over starten, leren en oefenen.", "vraag": "Welke woorden vormen samen de kern: omne principium of difficile est?", "analyse": "Omne principium is de onderwerpgroep; difficile is naamwoordelijk deel; est is koppelwerkwoord.", "slug": "omne-principium-difficile-est", "words": [{"f": "Omne", "l": "omnis, omne", "d": "nom. enk. o.", "n": "elk, alle"}, {"f": "principium", "l": "principium", "d": "nom. enk. o.", "n": "begin"}, {"f": "difficile", "l": "difficilis, difficile", "d": "nom. enk. o.", "n": "moeilijk"}, {"f": "est", "l": "esse", "d": "A. ind. praes. 3 enk.", "n": "is"}], "bedoeling": "De spreuk moedigt aan om niet op te geven omdat de eerste stap vaak de moeilijkste is. Zodra je begonnen bent, wordt het meestal duidelijker.", "spreekwoord": "Alle begin is moeilijk.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 7, "latin": "In vino veritas", "nl": "De waarheid is in de wijn", "context": "De spreuk suggereert dat mensen onder invloed makkelijker de waarheid spreken.", "vraag": "Waarom staat hier geen vorm van esse? Kun je die zelf aanvullen?", "analyse": "In vino is een voorzetselgroep; veritas is onderwerp. Het koppelwerkwoord est is weggelaten maar begrepen.", "slug": "in-vino-veritas", "words": [{"f": "In", "l": "in", "d": "voorzetsel + abl.", "n": "in"}, {"f": "vino", "l": "vinum", "d": "abl. enk. o.", "n": "wijn"}, {"f": "veritas", "l": "veritas", "d": "nom. enk. v.", "n": "waarheid"}], "bedoeling": "Deze spreuk drukt uit dat mensen onder invloed van wijn soms eerlijker spreken dan normaal, omdat ze minder nadenken over wat ze verbergen.", "spreekwoord": "Kinderen en dronken mensen zeggen de waarheid.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 8, "latin": "Cum grano salis", "nl": "Met een korrel(tje) zout", "context": "Je neemt iets cum grano salis wanneer je het niet helemaal letterlijk of ernstig neemt.", "vraag": "Hoe helpt het beeld van “een korreltje zout” om de betekenis te onthouden?", "analyse": "Cum is een voorzetsel met ablativus. Grano en salis vormen samen “met een korrel zout”; salis is genitief.", "slug": "cum-grano-salis", "words": [{"f": "Cum", "l": "cum", "d": "voorzetsel + abl.", "n": "met"}, {"f": "grano", "l": "granum", "d": "abl. enk. o.", "n": "korrel"}, {"f": "salis", "l": "sal", "d": "gen. enk. m.", "n": "van zout"}], "bedoeling": "Iets cum grano salis nemen betekent dat je het niet helemaal letterlijk of volledig ernstig moet nemen. Je blijft kritisch.", "spreekwoord": "Iets met een korreltje zout nemen.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 9, "latin": "Verba volant, scripta manent", "nl": "Woorden (ver)vliegen, het geschrevene blijft (bestaan)", "context": "De spreuk contrasteert vluchtige gesproken woorden met blijvend schrift.", "vraag": "Welke twee zinsdelen worden tegenover elkaar geplaatst?", "analyse": "Verba en scripta zijn onderwerp in het meervoud; volant en manent zijn parallelle persoonsvormen.", "slug": "verba-volant-scripta-manent", "words": [{"f": "Verba", "l": "verbum", "d": "nom. mv. o.", "n": "woorden"}, {"f": "volant", "l": "volare", "d": "A. ind. praes. 3 mv.", "n": "vliegen"}, {"f": "scripta", "l": "scriptum", "d": "nom. mv. o.", "n": "geschreven dingen"}, {"f": "manent", "l": "manere", "d": "A. ind. praes. 3 mv.", "n": "blijven"}], "bedoeling": "Gesproken woorden verdwijnen snel, maar wat opgeschreven is blijft bestaan en kan later als bewijs of herinnering dienen.", "spreekwoord": "Wie schrijft, die blijft.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 10, "latin": "Inter arma silent leges", "nl": "De wetten zwijgen in oorlogstijd", "context": "In oorlog worden wetten en regels vaak opzijgeschoven.", "vraag": "Wat betekent “tussen de wapens” figuurlijk?", "analyse": "Inter arma is een voorzetselgroep; leges is onderwerp; silent is de persoonsvorm. De zin personifieert wetten.", "slug": "inter-arma-silent-leges", "words": [{"f": "Inter", "l": "inter", "d": "voorzetsel + acc.", "n": "tussen"}, {"f": "arma", "l": "arma", "d": "acc. mv. o.", "n": "wapens"}, {"f": "silent", "l": "silere", "d": "A. ind. praes. 3 mv.", "n": "zwijgen"}, {"f": "leges", "l": "lex", "d": "nom. mv. v.", "n": "wetten"}], "bedoeling": "De spreuk zegt dat recht en regels in oorlogstijd vaak niet meer normaal functioneren. Geweld verdringt dan het recht.", "spreekwoord": "Nood breekt wet — niet hetzelfde, maar wel verwant in betekenis.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 11, "latin": "Asinus ad lapidem eundem non bis offendit", "nl": "Een ezel stoot zich geen twee keer aan dezelfde steen", "context": "Een spreuk over leren uit fouten, zelfs bij een dier dat traditioneel als dom geldt.", "vraag": "Welke woorden maken duidelijk dat het om herhaling gaat?", "analyse": "Asinus is onderwerp; offendit is persoonsvorm; ad lapidem eundem geeft richting/beeld; non bis ontkent de herhaling.", "slug": "asinus-ad-lapidem-eundem-non-bis-offendit", "words": [{"f": "Asinus", "l": "asinus", "d": "nom. enk. m.", "n": "ezel"}, {"f": "ad", "l": "ad", "d": "voorzetsel + acc.", "n": "tegen, naar"}, {"f": "lapidem", "l": "lapis", "d": "acc. enk. m.", "n": "steen"}, {"f": "eundem", "l": "idem", "d": "acc. enk. m.", "n": "dezelfde"}, {"f": "non", "l": "non", "d": "ontkenning", "n": "niet"}, {"f": "bis", "l": "bis", "d": "bijwoord", "n": "twee keer"}, {"f": "offendit", "l": "offendere", "d": "A. ind. praes. 3 enk.", "n": "stoot zich"}], "bedoeling": "De betekenis is dat een verstandig mens dezelfde fout niet twee keer maakt. Je leert uit wat eerder misliep.", "spreekwoord": "Een ezel stoot zich geen twee keer aan dezelfde steen.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 12, "latin": "Mortui non mordent", "nl": "De doden bijten niet", "context": "Een korte, wat macabere spreuk over gevaar dat voorbij is.", "vraag": "Waarom werkt deze spreuk zo sterk met maar drie woorden?", "analyse": "Mortui is het onderwerp in het meervoud; non ontkent; mordent is de persoonsvorm.", "slug": "mortui-non-mordent", "words": [{"f": "Mortui", "l": "mortuus", "d": "nom. mv. m.", "n": "doden"}, {"f": "non", "l": "non", "d": "ontkenning", "n": "niet"}, {"f": "mordent", "l": "mordere", "d": "A. ind. praes. 3 mv.", "n": "bijten"}], "bedoeling": "Deze spreuk betekent dat iemand die dood is geen bedreiging meer vormt. Ze kan hard of cynisch klinken.", "spreekwoord": "Dode honden bijten niet.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 13, "latin": "Repetitio est mater studiorum", "nl": "Herhaling is de moeder van de inspanningen", "context": "Een echte schoolspreuk: herhaling ondersteunt studie en leren.", "vraag": "Wat is volgens deze spreuk de “moeder” van studeren?", "analyse": "Repetitio is onderwerp; est is koppelwerkwoord; mater is naamwoordelijk deel; studiorum is genitief meervoud.", "slug": "repetitio-est-mater-studiorum", "words": [{"f": "Repetitio", "l": "repetitio", "d": "nom. enk. v.", "n": "herhaling"}, {"f": "est", "l": "esse", "d": "A. ind. praes. 3 enk.", "n": "is"}, {"f": "mater", "l": "mater", "d": "nom. enk. v.", "n": "moeder"}, {"f": "studiorum", "l": "studium", "d": "gen. mv. o.", "n": "van de inspanningen/studies"}], "bedoeling": "Door iets vaak te herhalen, leer je het beter en onthoud je het langer. De spreuk past perfect bij woordenschat en vormen inoefenen.", "spreekwoord": "Oefening baart kunst.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 14, "latin": "Mens sana in corpore sano", "nl": "Een gezonde geest in een gezond lichaam", "context": "De spreuk verbindt geestelijke en lichamelijke gezondheid.", "vraag": "Welke twee woorden horen duidelijk bij elkaar door vorm en betekenis?", "analyse": "Mens sana vormt een onderwerp/naamwoordgroep; in corpore sano is een voorzetselgroep. Sana en sano congrueren met verschillende naamwoorden.", "slug": "mens-sana-in-corpore-sano", "words": [{"f": "Mens", "l": "mens", "d": "nom. enk. v.", "n": "geest"}, {"f": "sana", "l": "sanus, -a, -um", "d": "nom. enk. v.", "n": "gezond"}, {"f": "in", "l": "in", "d": "voorzetsel + abl.", "n": "in"}, {"f": "corpore", "l": "corpus", "d": "abl. enk. o.", "n": "lichaam"}, {"f": "sano", "l": "sanus, -a, -um", "d": "abl. enk. o.", "n": "gezond"}], "bedoeling": "De spreuk zegt dat lichaam en geest samen horen: zorg dragen voor je lichaam helpt ook je denken en welzijn.", "spreekwoord": "Een gezonde geest in een gezond lichaam.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 15, "latin": "Errare humanum est", "nl": "Missen is menselijk", "context": "Een spreuk die fouten maken als iets typisch menselijks voorstelt.", "vraag": "Welke vorm is hier geen persoonsvorm maar een infinitief?", "analyse": "Errare is een infinitief die als onderwerp functioneert; humanum is naamwoordelijk deel; est is koppelwerkwoord.", "slug": "errare-humanum-est", "words": [{"f": "Errare", "l": "errare", "d": "infinitief", "n": "zich vergissen, missen"}, {"f": "humanum", "l": "humanus, -a, -um", "d": "nom. enk. o.", "n": "menselijk"}, {"f": "est", "l": "esse", "d": "A. ind. praes. 3 enk.", "n": "is"}], "bedoeling": "Deze spreuk zegt dat fouten maken bij mensen hoort. Ze wordt vaak gebruikt om mild te reageren op een vergissing.", "spreekwoord": "Vergissen is menselijk.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 16, "latin": "Roma aeterna", "nl": "Het eeuwige Rome", "context": "Een korte naamwoordgroep die Rome als blijvend en eeuwig voorstelt.", "vraag": "Waarom hoeft hier geen werkwoord te staan om toch betekenis te hebben?", "analyse": "Roma is de kern; aeterna is bijvoeglijk naamwoord en congrueert met Roma.", "slug": "roma-aeterna", "words": [{"f": "Roma", "l": "Roma", "d": "nom. enk. v.", "n": "Rome"}, {"f": "aeterna", "l": "aeternus, -a, -um", "d": "nom. enk. v.", "n": "eeuwig"}], "bedoeling": "Roma aeterna noemt Rome de eeuwige stad: Rome blijft voortleven in geschiedenis, taal, kunst en cultuur.", "spreekwoord": "Rome, de eeuwige stad.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 17, "latin": "Dura lex, sed lex", "nl": "Het is een harde wet, maar het is de wet", "context": "De spreuk erkent dat een wet streng kan zijn, maar toch wet blijft.", "vraag": "Wat doet sed in deze korte zin?", "analyse": "Dura hoort bij lex; sed maakt de tegenstelling: hard, maar toch wet. Est wordt tweemaal begrepen.", "slug": "dura-lex-sed-lex", "words": [{"f": "Dura", "l": "durus, -a, -um", "d": "nom. enk. v.", "n": "hard"}, {"f": "lex", "l": "lex", "d": "nom. enk. v.", "n": "wet"}, {"f": "sed", "l": "sed", "d": "voegwoord", "n": "maar"}, {"f": "lex", "l": "lex", "d": "nom. enk. v.", "n": "wet"}], "bedoeling": "Ook wanneer een regel streng of lastig is, blijft hij gelden. De spreuk benadrukt dat persoonlijke gevoelens niet zomaar boven de wet staan.", "spreekwoord": "Wet is wet / regels zijn regels.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 18, "latin": "Tempus fugit", "nl": "De tijd vliegt (lett.: vlucht)", "context": "Een korte personificatie: de tijd gedraagt zich alsof hij vlucht.", "vraag": "Waarom is fugit sterker dan gewoon “gaat voorbij”?", "analyse": "Tempus is onderwerp; fugit is persoonsvorm. Het beeld maakt tijd levend en snel.", "slug": "tempus-fugit", "words": [{"f": "Tempus", "l": "tempus", "d": "nom. enk. o.", "n": "tijd"}, {"f": "fugit", "l": "fugere", "d": "A. ind. praes. 3 enk.", "n": "vlucht, vliegt"}], "bedoeling": "De spreuk betekent dat de tijd snel voorbijgaat. Ze herinnert eraan dat je tijd kostbaar is en niet blijft wachten.", "spreekwoord": "De tijd vliegt.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 19, "latin": "Flos unus non facit hortum", "nl": "Eén bloem maakt geen tuin", "context": "Eén mooi of goed element maakt nog geen geheel.", "vraag": "Welke woorden drukken enkelvoud tegenover geheel uit?", "analyse": "Flos unus is onderwerp; non facit is de ontkende persoonsvorm; hortum is lijdend voorwerp.", "slug": "flos-unus-non-facit-hortum", "words": [{"f": "Flos", "l": "flos", "d": "nom. enk. m.", "n": "bloem"}, {"f": "unus", "l": "unus", "d": "nom. enk. m.", "n": "één"}, {"f": "non", "l": "non", "d": "ontkenning", "n": "niet"}, {"f": "facit", "l": "facere", "d": "A. ind. praes. 3 enk.", "n": "maakt"}, {"f": "hortum", "l": "hortus", "d": "acc. enk. m.", "n": "tuin"}], "bedoeling": "Eén goed teken of één mooi voorbeeld is nog niet genoeg om een algemene conclusie te trekken. Je hebt meer nodig dan één uitzondering.", "spreekwoord": "Eén zwaluw maakt de lente niet.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 20, "latin": "Amor omnia vincit", "nl": "Liefde overwint alles", "context": "Een bekende spreuk over de kracht van liefde.", "vraag": "Wat is het lijdend voorwerp bij vincit?", "analyse": "Amor is onderwerp; omnia is lijdend voorwerp; vincit is persoonsvorm.", "slug": "amor-omnia-vincit", "words": [{"f": "Amor", "l": "amor", "d": "nom. enk. m.", "n": "liefde"}, {"f": "omnia", "l": "omnis, omne", "d": "acc. mv. o.", "n": "alles"}, {"f": "vincit", "l": "vincere", "d": "A. ind. praes. 3 enk.", "n": "overwint"}], "bedoeling": "Deze spreuk zegt dat liefde sterker kan zijn dan hindernissen, regels, afstand of conflict.", "spreekwoord": "Liefde overwint alles.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 21, "latin": "In cauda venenum", "nl": "Het venijn zit in de staart", "context": "De gevaarlijke wending komt pas op het einde.", "vraag": "Waarom past cauda goed bij het idee van een verrassend slot?", "analyse": "In cauda is een voorzetselgroep; venenum is onderwerp. Est wordt begrepen.", "slug": "in-cauda-venenum", "words": [{"f": "In", "l": "in", "d": "voorzetsel + abl.", "n": "in"}, {"f": "cauda", "l": "cauda", "d": "abl. enk. v.", "n": "staart"}, {"f": "venenum", "l": "venenum", "d": "nom. enk. o.", "n": "gif, venijn"}], "bedoeling": "De verrassing, het gevaar of de gemene wending komt pas op het einde. Je moet dus wachten tot de staart van het verhaal.", "spreekwoord": "Het venijn zit in de staart.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}, {"id": 22, "latin": "Nihil novi sub sole", "nl": "Niets nieuws onder de zon", "context": "Een spreuk over herhaling: wat lijkt nieuw, bestond vaak al eerder.", "vraag": "Welke woordgroep betekent letterlijk “onder de zon”?", "analyse": "Nihil novi betekent letterlijk “niets van nieuws”; sub sole is een voorzetselgroep met ablativus.", "slug": "nihil-novi-sub-sole", "words": [{"f": "Nihil", "l": "nihil", "d": "onveranderlijk", "n": "niets"}, {"f": "novi", "l": "novus", "d": "gen. enk. o.", "n": "nieuws"}, {"f": "sub", "l": "sub", "d": "voorzetsel + abl.", "n": "onder"}, {"f": "sole", "l": "sol", "d": "abl. enk. m.", "n": "zon"}], "bedoeling": "Wat nieuw lijkt, is vaak al eerder gebeurd. De spreuk relativeert nieuwigheid en herinnert aan herhaling in de geschiedenis.", "spreekwoord": "Niets nieuws onder de zon.", "bedoelingVraag": "Leg in je eigen woorden uit wat met deze spreuk bedoeld wordt. Geef eventueel een situatie waarin je ze zou gebruiken."}];
+var revealOn = false;
+var revealStep = 0;
+var stepCount = 4;
+var totalSteps = SENTENTIAE.length * stepCount;
+var activeIndex = 0;
+
+function byId(id){ return document.getElementById(id); }
+function toggleReveal(){
+  revealOn = !revealOn;
+  document.body.classList.toggle('reveal-mode', revealOn);
+  byId('btnReveal').classList.toggle('active', revealOn);
+  byId('toolReveal').classList.toggle('active', revealOn);
+  byId('revealBar').classList.toggle('vis', revealOn);
+  if(revealOn && revealStep===0) revealStep=1;
+  updateReveal();
+}
+function revealNext(){ if(!revealOn) toggleReveal(); if(revealStep < totalSteps) revealStep++; updateReveal(true); }
+function revealPrev(){ if(!revealOn) toggleReveal(); if(revealStep > 1) revealStep--; updateReveal(true); }
+function revealAll(){ if(!revealOn) toggleReveal(); revealStep = totalSteps; updateReveal(true); }
+function selectSententia(index){ activeIndex = Math.max(0, Math.min(SENTENTIAE.length-1, index)); if(revealOn){ revealStep = Math.max(1, activeIndex*stepCount + 1); } updateReveal(); scrollActiveIntoView(false); }
+function updateReveal(doScroll){
+  var cards = Array.from(document.querySelectorAll('.sent-card'));
+  var currentIndex = revealOn ? Math.floor((Math.max(revealStep,1)-1)/stepCount) : activeIndex;
+  var layer = revealOn ? ((Math.max(revealStep,1)-1)%stepCount)+1 : stepCount;
+  activeIndex = currentIndex;
+  cards.forEach(function(card, i){
+    var step = revealOn ? (i < currentIndex ? stepCount : (i === currentIndex ? layer : 1)) : stepCount;
+    card.dataset.step = String(step);
+    card.classList.toggle('active', i === currentIndex);
+    card.classList.toggle('done', revealOn && i < currentIndex);
+  });
+  byId('revCount').textContent = (revealOn ? revealStep : totalSteps) + ' / ' + totalSteps;
+  updateSideHelp();
+  updateTranslationPanel();
+  if(doScroll) scrollActiveIntoView(true);
+}
+function scrollActiveIntoView(smooth){
+  var el = document.querySelector('.sent-card.active');
+  if(el) el.scrollIntoView({behavior:smooth?'smooth':'auto', block:'center'});
+}
+function updateSideHelp(){
+  var s = SENTENTIAE[activeIndex] || SENTENTIAE[0];
+  byId('laCueBox').innerHTML = '<strong style="color:var(--magenta);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;">Actieve sententia</strong><div class="sent-help-title">'+escapeHtml(s.latin)+'</div><div style="font-weight:700;color:var(--magenta);">'+escapeHtml(s.nl)+'</div><div style="margin-top:.45rem;color:var(--ink-mid);">Opdracht: leg uit wat ermee bedoeld wordt, niet alleen wat er letterlijk staat.</div>';
+  var words = s.words.map(function(w){ return '<li><span class="help-lat">'+escapeHtml(w.f)+'</span><span class="help-nl">'+escapeHtml(w.n)+'</span></li>'; }).join('');
+  var spreekwoord = s.spreekwoord ? '<p class="panel-note"><span class="pn-tag">vergelijk</span>'+escapeHtml(s.spreekwoord)+'</p>' : '';
+  byId('laPanelBody').innerHTML = '<div class="panel-card"><h3>Woordhulp</h3><ul class="help-list">'+words+'</ul></div>'+ 
+    '<div class="panel-card" style="margin-top:1rem"><h3>Mini-analyse</h3><p>'+escapeHtml(s.analyse)+'</p><div class="la-vraag"><div class="la-vraag-tekst">'+escapeHtml(s.vraag)+'</div><button class="la-toggle-btn" data-closed="Toon antwoordrichting" data-open="Verberg antwoordrichting" onclick="toggleAntwoord(this)">Toon antwoordrichting</button><div class="la-antwoord">Vertrek vanuit de Latijnse woorden, koppel ze aan het beeld en formuleer daarna pas de Nederlandse betekenis in je eigen woorden.</div></div></div>'+ 
+    '<div class="panel-card" style="margin-top:1rem"><h3>Wat bedoelt de spreuk?</h3><div class="la-vraag"><div class="la-vraag-tekst">'+escapeHtml(s.bedoelingVraag || 'Leg uit wat met deze spreuk bedoeld wordt.')+'</div><button class="la-toggle-btn" data-closed="Toon mogelijke uitleg" data-open="Verberg uitleg" onclick="toggleAntwoord(this)">Toon mogelijke uitleg</button><div class="la-antwoord">'+escapeHtml(s.bedoeling || '')+'</div></div>'+spreekwoord+'</div>';
+}
+function updateTranslationPanel(){
+  byId('vertaalTekst').innerHTML = SENTENTIAE.map(function(s, i){
+    var extra = s.bedoeling ? '<br><span style="color:var(--ink-mid)"><strong>Bedoeling:</strong> '+escapeHtml(s.bedoeling)+'</span>' : '';
+    var vergelijk = s.spreekwoord ? '<br><span style="color:var(--ink-light)"><strong>Vergelijk:</strong> '+escapeHtml(s.spreekwoord)+'</span>' : '';
+    return '<p><strong>'+String(i+1).padStart(2,'0')+'. '+escapeHtml(s.latin)+'</strong><br>'+escapeHtml(s.nl)+extra+vergelijk+'</p>';
+  }).join('');
+}
+function toggleAntwoord(btn){
+  var ans = btn.parentElement.querySelector('.la-antwoord');
+  if(ans) ans.classList.toggle('vis');
+  btn.textContent = ans && ans.classList.contains('vis') ? (btn.dataset.open || 'Verberg') : (btn.dataset.closed || 'Toon antwoordrichting');
+}
+function selectSidePanel(name){
+  document.querySelectorAll('.side-tab-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.panel===name); });
+  document.querySelectorAll('.side-panel-view').forEach(function(v){ v.classList.toggle('active', v.id==='panel-'+name); });
+}
+function toggleInterlin(){ document.body.classList.toggle('interlin-analysis'); byId('btnInterlin').classList.toggle('active', document.body.classList.contains('interlin-analysis')); }
+function toggleTwocol(){ document.body.classList.toggle('twocol'); byId('btnTwocol').classList.toggle('active', document.body.classList.contains('twocol')); }
+function toggleFont(){ document.body.classList.toggle('font-lg'); document.documentElement.style.setProperty('--font-boost', document.body.classList.contains('font-lg')?'1':'0'); document.querySelectorAll('.sent-latin').forEach(function(e){ e.style.fontSize = document.body.classList.contains('font-lg') ? '2.2rem' : ''; }); byId('btnFont').classList.toggle('active', document.body.classList.contains('font-lg')); }
+function toggleLayer(layer){ document.body.classList.toggle('show-'+layer); byId(layer==='bs'?'btnBs':'btnLpd').classList.toggle('active', document.body.classList.contains('show-'+layer)); }
+function toggleWeergaveMenu(event){ if(event) event.stopPropagation(); byId('weergaveMenu').classList.toggle('open'); byId('btnWeergave').classList.toggle('open'); }
+document.addEventListener('click', function(e){ if(!e.target.closest('#weergaveWrap')){ byId('weergaveMenu').classList.remove('open'); byId('btnWeergave').classList.remove('open'); } });
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];}); }
+
+function addMeaningBlocks(){
+  document.querySelectorAll('.sent-card').forEach(function(card){
+    var i = parseInt(card.dataset.index,10);
+    var s = SENTENTIAE[i];
+    if(!s || card.querySelector('.sent-meaning')) return;
+    var vergelijk = s.spreekwoord ? '<span class="sent-similar"><strong>Vergelijk:</strong> '+escapeHtml(s.spreekwoord)+'</span>' : '';
+    card.insertAdjacentHTML('beforeend','<div class="sent-meaning"><span class="sent-meaning-label">Wat wordt ermee bedoeld?</span>'+escapeHtml(s.bedoeling || '')+vergelijk+'</div>');
+  });
+}
+document.querySelectorAll('.sent-card').forEach(function(card){ card.addEventListener('click', function(e){ if(!e.target.closest('.sent-word')) selectSententia(parseInt(card.dataset.index,10)); }); });
+document.querySelectorAll('.sent-word').forEach(function(w){
+  w.addEventListener('click', function(e){ e.stopPropagation(); showWordPopup(w, e); updateAnalysisCard(w); selectSidePanel('grammar'); });
+});
+function showWordPopup(el, e){
+  var pop = byId('popup'); byId('ppWord').textContent = el.dataset.w || ''; byId('ppLemma').textContent = el.dataset.l || '';
+  byId('ppContent').innerHTML = '<div class="wp-row"><span class="wp-tag tg">vorm</span><span class="wp-val">'+escapeHtml(el.dataset.d || '')+'</span></div><div class="wp-row"><span class="wp-tag tw">bet.</span><span class="wp-val">'+escapeHtml(el.dataset.n || '')+'</span></div>';
+  pop.style.left = Math.min(window.innerWidth-320, e.pageX+12)+'px'; pop.style.top = (e.pageY+14)+'px'; pop.classList.add('vis');
+}
+document.addEventListener('mousemove', function(e){ if(!e.target.closest('.sent-word')) byId('popup').classList.remove('vis'); });
+function updateAnalysisCard(el){
+  byId('analysisCard').innerHTML = '<div class="sent-help-title" style="font-size:1.35rem">'+escapeHtml(el.dataset.w||'')+'</div><div style="font-size:.72rem;color:var(--ink-light);margin-bottom:.5rem">'+escapeHtml(el.dataset.l||'')+'</div><div class="panel-note"><span class="pn-tag">vorm</span>'+escapeHtml(el.dataset.d||'')+'</div><div class="panel-note"><span class="pn-tag">betekenis</span>'+escapeHtml(el.dataset.n||'')+'</div>';
+}
+
+// resizer, minimal reference-compatible
+(function(){
+  var resizer=byId('colResizer'), dragging=false, startX=0, startPct=60;
+  if(!resizer) return;
+  function down(e){ dragging=true; startX=(e.touches?e.touches[0].clientX:e.clientX); var current=getComputedStyle(document.body).getPropertyValue('--col-split')||'60%'; startPct=parseFloat(current)||60; document.body.style.userSelect='none'; }
+  function move(e){ if(!dragging) return; var x=(e.touches?e.touches[0].clientX:e.clientX); var outer=resizer.closest('.outer'); var outerW=outer.getBoundingClientRect().width; var delta=x-startX; var pct=Math.min(80,Math.max(35,startPct+(delta/outerW)*100)); document.body.style.setProperty('--col-split',pct+'%'); }
+  function up(){ dragging=false; document.body.style.userSelect=''; }
+  resizer.addEventListener('mousedown',down); window.addEventListener('mousemove',move); window.addEventListener('mouseup',up); resizer.addEventListener('touchstart',down); window.addEventListener('touchmove',move); window.addEventListener('touchend',up);
+})();
+
+// annotation canvas: keep toolbar safe even when unused
+function clearInk(){ var c=byId('inkCanvas'); if(c){ var ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); } }
+function sizeCanvas(){ var c=byId('inkCanvas'); if(c){ c.width=window.innerWidth; c.height=window.innerHeight; } }
+window.addEventListener('resize', sizeCanvas); sizeCanvas();
+
+addMeaningBlocks();
+updateReveal();
+updateTranslationPanel();
+</script>
+</body>
+</html>
