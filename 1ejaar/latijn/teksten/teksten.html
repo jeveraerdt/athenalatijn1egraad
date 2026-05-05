@@ -277,31 +277,39 @@
     border-radius: 999px;
   }
 
-  /* AFBEELDING IN KAART */
-  .kaart-img {
-    position: absolute;
-    right: 1.35rem;
-    bottom: 1.15rem;
-    width: 138px;
+  /* KAARTEN MET AFBEELDING — afbeelding zit in de gewone flow, dus overlap is onmogelijk */
+  .tekst-kaart.kaart-met-afbeelding {
+    min-height: 285px;
+  }
+
+  .tekst-kaart.kaart-met-afbeelding .kaart-img {
+    position: static;
+    right: auto;
+    bottom: auto;
+    width: 100%;
     height: 104px;
     display: flex;
-    align-items: flex-end;
     justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: auto;
     pointer-events: none;
   }
-  .kaart-img img {
-    width: 100%;
-    height: 100%;
+
+  .tekst-kaart.kaart-met-afbeelding .kaart-img img {
+    width: 138px;
+    height: 104px;
     object-fit: contain;
     object-position: right bottom;
     display: block;
     opacity: .72;
     transition: transform .18s, opacity .18s;
   }
-  .tekst-kaart:hover .kaart-img img {
+
+  .tekst-kaart.kaart-met-afbeelding:hover .kaart-img img {
     transform: scale(1.04);
     opacity: .86;
   }
+
   .tekst-kaart.coming-soon .kaart-img img {
     opacity: .45;
   }
@@ -322,6 +330,16 @@
     .content-wrap { padding: 2rem 1rem 3rem; }
     .tekst-grid { grid-template-columns: 1fr; }
     .tekst-kaart { min-height: 220px; }
+    .tekst-kaart.kaart-met-afbeelding {
+      min-height: 270px;
+    }
+    .tekst-kaart.kaart-met-afbeelding .kaart-img {
+      height: 96px;
+    }
+    .tekst-kaart.kaart-met-afbeelding .kaart-img img {
+      width: 128px;
+      height: 96px;
+    }
   }
 </style>
 
@@ -370,10 +388,10 @@
     </div>
     <div class="tekst-grid">
 
-      <a class="tekst-kaart" href="ludus/ludus1asententiae.html">
-        <div class="kaart-meta">Sententiae</div>
-        <div class="kaart-titel">Ludus Primus</div>
-        <div class="kaart-auteur">Latijnse spreuken en korte zinnen</div>
+      <a class="tekst-kaart kaart-met-afbeelding" href="ludus/ludus1asententiae.html">
+        <div class="kaart-meta">Tekst 1</div>
+        <div class="kaart-titel">Spreekwoorden</div>
+        <div class="kaart-auteur"></div>
         <div class="kaart-pijl">›</div>
         <div class="kaart-img">
           <img src="images/cards/cardludus1asententiae.png" alt="" loading="lazy">
@@ -393,7 +411,7 @@
     </div>
     <div class="tekst-grid">
 
-      <a class="tekst-kaart" href="ludus/ludus1btekst1.html">
+      <a class="tekst-kaart kaart-met-afbeelding" href="ludus/ludus1btekst1.html">
         <div class="kaart-meta">Tekst 1</div>
         <div class="kaart-titel">Aeneas vlucht uit Troje en sticht een nieuwe stad</div>
         <div class="kaart-auteur">naar Augurium, 3</div>
@@ -403,7 +421,7 @@
         </div>
       </a>
 
-      <a class="tekst-kaart" href="ludus/ludus1btekst2.html">
+      <a class="tekst-kaart kaart-met-afbeelding" href="ludus/ludus1btekst2.html">
         <div class="kaart-meta">Tekst 2</div>
         <div class="kaart-titel">De geboorte van Romulus en Remus</div>
         <div class="kaart-auteur">naar Livius, Ab urbe condita, 1, 3-4 en Aurelius Victor, De origine gentis Romanae, 20</div>
@@ -413,7 +431,7 @@
         </div>
       </a>
 
-      <a class="tekst-kaart" href="ludus/ludus1btekst3.html">
+      <a class="tekst-kaart kaart-met-afbeelding" href="ludus/ludus1btekst3.html">
         <div class="kaart-meta">Tekst 3</div>
         <div class="kaart-titel">De wolvin en de herder</div>
         <div class="kaart-auteur">naar Livius, Ab urbe condita, 1, 3-4 en Aurelius Victor, De origine gentis Romanae, 20</div>
@@ -423,7 +441,7 @@
         </div>
       </a>
 
-      <a class="tekst-kaart" href="ludus/ludus1btekst5.html">
+      <a class="tekst-kaart kaart-met-afbeelding" href="ludus/ludus1btekst5.html">
         <div class="kaart-meta">Tekst 5</div>
         <div class="kaart-titel">De voortekens</div>
         <div class="kaart-auteur">naar Livius, Ab urbe condita, 1, 6 en Aurelius Victor, De origine gentis Romanae, 21</div>
@@ -433,7 +451,7 @@
         </div>
       </a>
 
-      <a class="tekst-kaart" href="ludus/ludus1btekst7.html">
+      <a class="tekst-kaart kaart-met-afbeelding" href="ludus/ludus1btekst7.html">
         <div class="kaart-meta">Tekst 7</div>
         <div class="kaart-titel">De Sabijnse maagdenroof</div>
         <div class="kaart-auteur">naar Livius, Ab urbe condita, 1, 8-9  en Eutropius, Breviarum historiae Romanae, I,2.</div>
