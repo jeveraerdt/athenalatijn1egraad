@@ -44,11 +44,11 @@ body.twocol .side-panel{display:flex!important;flex-direction:column;gap:1rem;pa
 .side-panel{display:none}
 .title-hero-wrap{margin:2rem 0 2rem}
 .title-hero{position:relative;display:block;height:320px;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#eef3fa,#fbe6f1);text-decoration:none;color:#fff;box-shadow:0 12px 36px rgba(19,66,127,.12)}
-.title-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;opacity:0;transition:opacity .2s}
-.title-hero img.is-loaded{opacity:1} .title-hero img.is-loaded + .title-hero-placeholder{display:none} .title-hero img.is-missing{display:none}
-.title-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,66,127,.05) 15%,rgba(19,66,127,.45) 72%,rgba(19,66,127,.78) 100%)}
-.title-hero-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.78rem;color:rgba(19,66,127,.55);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-.title-hero-text{position:absolute;left:1.5rem;right:1.5rem;bottom:1.3rem;z-index:2;display:flex;flex-direction:column;gap:.25rem}
+.title-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 35%;opacity:1;z-index:1;display:block}
+.title-hero img.is-missing{display:none}.title-hero.has-image .title-hero-placeholder{display:none}
+.title-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,66,127,.05) 15%,rgba(19,66,127,.45) 72%,rgba(19,66,127,.78) 100%);z-index:2;pointer-events:none}
+.title-hero-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.78rem;color:rgba(19,66,127,.55);font-weight:700;letter-spacing:.06em;text-transform:uppercase;z-index:0}
+.title-hero-text{position:absolute;left:1.5rem;right:1.5rem;bottom:1.3rem;z-index:3;display:flex;flex-direction:column;gap:.25rem}
 .title-hero-meta{font-size:.68rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:#fff}
 .title-hero-title{font-size:2rem;font-weight:800;line-height:1.1;color:var(--magenta);text-shadow:0 2px 8px rgba(0,0,0,.45)}
 .title-hero-sub{font-family:'EB Garamond',Georgia,serif;font-size:1.05rem;font-style:italic;color:rgba(255,255,255,.88)}
@@ -190,9 +190,10 @@ body:not(.reveal-mode) .sent-image-wrap, body:not(.reveal-mode) .sent-translatio
       <a class="title-hero" href="images/ludus1A/ludus1asententiae.png" aria-label="Titelbeeld openen">
         <img
           src="images/ludus1A/ludus1asententiae.png"
+          data-fallback-src="/athenalatijn1egraad/1ejaar/latijn/teksten/ludus/images/ludus1A/ludus1asententiae.png"
           alt="Titelbeeld bij Ludus 1A Sententiae"
-          onload="this.classList.remove('is-missing');this.classList.add('is-loaded');"
-          onerror="this.classList.remove('is-loaded');this.classList.add('is-missing');"
+          onload="this.classList.remove('is-missing');this.classList.add('is-loaded');this.closest('.title-hero').classList.add('has-image');"
+          onerror="if(!this.dataset.usedFallback){this.dataset.usedFallback='1';this.src=this.dataset.fallbackSrc;}else{this.closest('.title-hero').classList.remove('has-image');this.classList.remove('is-loaded');this.classList.add('is-missing');}"
         >
         <span class="title-hero-placeholder">Afbeelding volgt: ludus1asententiae.png</span>
         <span class="title-hero-text"><span class="title-hero-meta">Ludus 1A · Sententiae</span><span class="title-hero-title">Ludus Primus</span><span class="title-hero-sub">Latijnse spreuken en korte zinnen · kaartlaag per kaartlaag ontdekken</span></span>
@@ -621,7 +622,20 @@ function clearInk(){ var c=byId('inkCanvas'); if(c){ var ctx=c.getContext('2d');
 function sizeCanvas(){ var c=byId('inkCanvas'); if(c){ c.width=window.innerWidth; c.height=window.innerHeight; } }
 window.addEventListener('resize', sizeCanvas); sizeCanvas();
 
+
+function initHeroImages(){
+  document.querySelectorAll('.title-hero img').forEach(function(img){
+    if(img.complete && img.naturalWidth > 0){
+      img.classList.remove('is-missing');
+      img.classList.add('is-loaded');
+      var hero = img.closest('.title-hero');
+      if(hero) hero.classList.add('has-image');
+    }
+  });
+}
+
 addMeaningBlocks();
+initHeroImages();
 updateReveal();
 updateTranslationPanel();
 </script>
