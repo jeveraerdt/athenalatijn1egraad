@@ -19,7 +19,7 @@
     --rand: #e2e6ed;
     --tekst: #1a1a1a;
     --tekst-zacht: #6b7280;
-    --kaart-titel: #849dc2;
+    --kaart-titel: var(--blauw);
     --radius: 18px;
   }
 
@@ -180,10 +180,10 @@
     align-items: stretch;
   }
 
-  /* TEKST-KAART â grote rustige kaart zoals referentie */
+  /* TEKST-KAART — actieve kaarten helder, binnenkort-kaarten bewust valer */
   .tekst-kaart {
     min-height: 230px;
-    background: var(--kaart);
+    background: #ffffff;
     border: 1px solid var(--rand);
     border-radius: var(--radius);
     padding: 1.55rem 1.45rem 1.3rem;
@@ -192,7 +192,7 @@
     display: flex;
     flex-direction: column;
     gap: .58rem;
-    transition: border-color .15s, transform .15s, box-shadow .15s;
+    transition: border-color .15s, transform .15s, box-shadow .15s, background .15s;
     position: relative;
     overflow: hidden;
   }
@@ -201,12 +201,8 @@
     transform: translateY(-2px);
     box-shadow: 0 8px 26px rgba(19,66,127,.08);
   }
-  .tekst-kaart.coming-soon {
-    opacity: 1;
-    pointer-events: none;
-    cursor: default;
-  }
 
+  /* ACTIEVE KAARTEN: gewone huiskleuren */
   .kaart-meta {
     font-family: var(--fv);
     font-size: 11px;
@@ -221,7 +217,7 @@
     font-family: 'EB Garamond', Georgia, serif;
     font-size: 21px;
     font-weight: 600;
-    color: var(--kaart-titel);
+    color: var(--blauw);
     line-height: 1.15;
     max-width: 92%;
   }
@@ -229,7 +225,7 @@
     font-family: var(--fv);
     font-size: 13px;
     font-weight: 400;
-    color: #9ca3af;
+    color: #5f6b7a;
     font-style: italic;
     line-height: 1.55;
     max-width: 94%;
@@ -238,10 +234,33 @@
     margin-top: .45rem;
     font-size: 24px;
     line-height: 1;
-    color: #e4e9f0;
+    color: rgba(19,66,127,.28);
     transition: color .15s;
   }
-  .tekst-kaart:hover .kaart-pijl { color: var(--blauw); }
+  .tekst-kaart:hover .kaart-pijl {
+    color: var(--blauw);
+  }
+
+  /* BINNENKORT: alleen deze kaarten worden valer en niet klikbaar */
+  .tekst-kaart.coming-soon {
+    background: #f0f2f6;
+    border-color: #e4e8ef;
+    pointer-events: none;
+    cursor: default;
+    box-shadow: none;
+  }
+  .tekst-kaart.coming-soon .kaart-meta {
+    color: rgba(230,0,126,.34);
+  }
+  .tekst-kaart.coming-soon .kaart-titel {
+    color: #9fb0c8;
+  }
+  .tekst-kaart.coming-soon .kaart-auteur {
+    color: #aeb6c3;
+  }
+  .tekst-kaart.coming-soon .kaart-pijl {
+    color: #d2d9e3;
+  }
 
   .kaart-badge {
     position: absolute;
@@ -252,13 +271,13 @@
     font-weight: 700;
     letter-spacing: .07em;
     text-transform: uppercase;
-    background: #f0f2f6;
-    color: #c2c8d2;
+    background: #e4e8ef;
+    color: #9aa5b5;
     padding: .3rem .75rem;
     border-radius: 999px;
   }
 
-  /* AFBEELDING IN KAART â klaar voor latere illustraties */
+  /* AFBEELDING IN KAART — klaar voor latere illustraties */
   .kaart-img {
     display: flex;
     justify-content: flex-end;
@@ -277,7 +296,9 @@
     transform: scale(1.05);
     opacity: .82;
   }
-  .tekst-kaart.coming-soon .kaart-img img { opacity: .45; }
+  .tekst-kaart.coming-soon .kaart-img img {
+    opacity: .45;
+  }
 
   .voet {
     text-align: center;
