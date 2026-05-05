@@ -277,24 +277,30 @@
     border-radius: 999px;
   }
 
-  /* AFBEELDING IN KAART — klaar voor latere illustraties */
+  /* AFBEELDING IN KAART */
   .kaart-img {
+    position: absolute;
+    right: 1.35rem;
+    bottom: 1.15rem;
+    width: 138px;
+    height: 104px;
     display: flex;
+    align-items: flex-end;
     justify-content: flex-end;
-    margin-top: auto;
+    pointer-events: none;
   }
   .kaart-img img {
-    width: 78px;
-    height: 62px;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    object-position: center;
+    object-position: right bottom;
     display: block;
-    opacity: .65;
+    opacity: .72;
     transition: transform .18s, opacity .18s;
   }
   .tekst-kaart:hover .kaart-img img {
-    transform: scale(1.05);
-    opacity: .82;
+    transform: scale(1.04);
+    opacity: .86;
   }
   .tekst-kaart.coming-soon .kaart-img img {
     opacity: .45;
@@ -364,12 +370,14 @@
     </div>
     <div class="tekst-grid">
 
-      <a class="tekst-kaart coming-soon" href="#">
-        <span class="kaart-badge">Binnenkort</span>
-        <div class="kaart-meta">Tekst 1</div>
-        <div class="kaart-titel">—</div>
-        <div class="kaart-auteur"></div>
+      <a class="tekst-kaart" href="ludus/ludus1asententiae.html">
+        <div class="kaart-meta">Sententiae</div>
+        <div class="kaart-titel">Ludus Primus</div>
+        <div class="kaart-auteur">Latijnse spreuken en korte zinnen</div>
         <div class="kaart-pijl">›</div>
+        <div class="kaart-img">
+          <img src="images/cards/cardludus1asententiae.png" alt="" loading="lazy">
+        </div>
       </a>
 
     </div>
