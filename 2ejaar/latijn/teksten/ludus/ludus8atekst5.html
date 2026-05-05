@@ -784,6 +784,64 @@ body.twocol #woordenlijst-sectie{
   .wg.has-la::after{display:none;}
 }
 
+
+
+/* ── FINALE FIX: topbar blijft boven zijpaneel; zijpaneel start onder topbar ──
+   Raakt geen JS-systemen aan: alleen stapeling, sticky-offset en LA-startinhoud. */
+.site-header{
+  position:relative !important;
+  z-index:3000 !important;
+  min-height:62px !important;
+}
+.site-toolbar{
+  position:sticky !important;
+  top:0 !important;
+  z-index:2990 !important;
+  min-height:56px !important;
+  height:56px !important;
+  flex-wrap:nowrap !important;
+  background:#f7f8fa !important;
+  box-shadow:0 2px 12px rgba(19,66,127,.06) !important;
+}
+.toolbar-left,.toolbar-right{
+  flex-wrap:nowrap !important;
+}
+body.twocol .side-panel{
+  position:sticky !important;
+  top:72px !important;
+  max-height:calc(100vh - 72px) !important;
+  z-index:1 !important;
+  padding:1rem 0 6rem 1.5rem !important;
+  overflow-y:auto !important;
+  background:var(--page) !important;
+}
+.side-panel-tabs{
+  position:sticky !important;
+  top:0 !important;
+  z-index:3 !important;
+  background:var(--page) !important;
+  padding:.2rem 0 .65rem !important;
+  margin-bottom:.25rem !important;
+}
+.la-side-head{
+  display:none !important;
+}
+.la-cue-box{
+  margin-top:0 !important;
+}
+.la-side-section:first-child{
+  margin-top:0 !important;
+}
+@media(max-width:900px){
+  .site-toolbar{
+    position:relative !important;
+    top:auto !important;
+    height:auto !important;
+    min-height:56px !important;
+    flex-wrap:wrap !important;
+  }
+}
+
 </style>
 </head>
 <body class="show-lesson-toolbar twocol">
@@ -1054,7 +1112,7 @@ body.twocol #woordenlijst-sectie{
       <div class="la-side-head">
         <div class="la-side-label">Lectuuranalyse</div>
         <div class="la-side-title">Leesvraag naast de tekst</div>
-        <div class="la-side-help">Wanneer een woordgroep of passage bij een analysevraag hoort, verschijnt hier automatisch de juiste vraag.</div>
+        <div class="la-side-help">Hier staat alleen de actuele leesvraag. Bij een gekoppelde woordgroep of passage springt dit paneel automatisch naar de juiste vraag.</div>
       </div>
       <div class="la-cue-box" id="laCueBox"></div>
       <div id="laPanelBody"></div>
@@ -1615,17 +1673,46 @@ function selectSidePanel(panel) {
 function renderLaPanel(activeQuestion) {
   var body = document.getElementById('laPanelBody');
   if (!body) return;
-  var html = '';
-  LA_SECTIES.forEach(function(s, idx){
-    html += '<section class="la-side-section" id="la-sectie-' + idx + '">' + s.html + '</section>';
+
+  /* Toon niet de volledige lectuuranalyse in één keer.
+     Het rechterpaneel toont alleen de actuele vraag: standaard vraag 1,
+     daarna automatisch de vraag die bij de huidige woordgroep/passage hoort. */
+  var target = parseInt(activeQuestion || '1', 10);
+  var found = null;
+  var counter = 0;
+
+  LA_SECTIES.forEach(function(s, sectIdx){
+    var tmp = document.createElement('section');
+    tmp.innerHTML = s.html;
+    var titel = tmp.querySelector('.la-sectie-titel');
+    var titelHtml = titel ? titel.outerHTML : '<div class="la-sectie-titel">' + s.titel + '</div>';
+
+    Array.from(tmp.querySelectorAll('.la-vraag')).forEach(function(q){
+      counter++;
+      if (counter === target) {
+        found = {
+          sectIdx: sectIdx,
+          questionNr: counter,
+          titelHtml: titelHtml,
+          vraagHtml: q.outerHTML
+        };
+      }
+    });
   });
-  body.innerHTML = html;
-  var questions = Array.from(body.querySelectorAll('.la-vraag'));
-  questions.forEach(function(q, idx){
-    q.id = 'la-vraag-' + (idx + 1);
-    q.dataset.laQuestion = String(idx + 1);
-  });
-  if (activeQuestion) setActiveLA(activeQuestion, false);
+
+  if (!found) return;
+
+  body.innerHTML = '<section class="la-side-section la-focus-section" id="la-sectie-' + found.sectIdx + '">'
+    + found.titelHtml
+    + found.vraagHtml
+    + '</section>';
+
+  var q = body.querySelector('.la-vraag');
+  if (q) {
+    q.id = 'la-vraag-' + found.questionNr;
+    q.dataset.laQuestion = String(found.questionNr);
+    q.classList.add('is-active');
+  }
 }
 
 var LA_CUES = [
@@ -1664,13 +1751,8 @@ function initLAMarkers() {
 }
 
 function setActiveLA(questionNr, scroll) {
-  renderLaPanel._rendering = renderLaPanel._rendering || false;
+  renderLaPanel(questionNr);
   var q = document.getElementById('la-vraag-' + questionNr);
-  if (!q) {
-    renderLaPanel(questionNr);
-    q = document.getElementById('la-vraag-' + questionNr);
-  }
-  document.querySelectorAll('.la-vraag.is-active').forEach(function(el){el.classList.remove('is-active');});
   if (q) {
     q.classList.add('is-active');
     if (scroll) q.scrollIntoView({behavior:'smooth', block:'nearest'});
@@ -1725,7 +1807,7 @@ function toggleAntwoord(btn){
   document.body.classList.toggle('twocol', S.twocol);
   var btn = document.getElementById('btnTwocol');
   if (btn) btn.classList.toggle('active', S.twocol);
-  renderLaPanel();
+  renderLaPanel(1);
   renderVertaling();
   initLAMarkers();
   selectSidePanel('la');
