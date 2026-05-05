@@ -399,39 +399,32 @@ body{margin:0;background:var(--page);color:var(--ink);font-family:var(--ft);}
 body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
 
 
-/* ── Titelbeeld / hero volgens Stom tijdverdrijf-verhouding ───────────
-   Let op: dit blok staat LOS van .main-col, zodat de bestaande tekstsystemen,
-   tweekolommodus en toolbar niet geraakt worden. */
+/* ── Titelbeeld / hero: exact overgenomen uit Stom tijdverdrijf ───────────
+   Alleen visuele maatvoering. Geen JS, toolbar of tekstonthulling geraakt. */
 .title-hero-wrap{
   width: 100%;
-  max-width: 1350px;
-  margin: 2.05rem auto 2.35rem;
-  padding: 0 1.5rem;
+  max-width: 760px;
+  margin: 3rem auto 2rem;
+  padding: 0;
 }
 .title-hero {
-  width: 100%;
-  aspect-ratio: 2.38 / 1;
-  min-height: 0;
-  margin: 0;
-  transform: none;
   position: relative;
   display: block;
+  width: 100%;
+  height: 320px;
+  border-radius: 12px;
   overflow: hidden;
-  border-radius: 16px;
-  border: 1px solid rgba(19,66,127,.14);
-  background:
-    linear-gradient(135deg, rgba(19,66,127,.08), rgba(230,0,126,.07)),
-    #eef3fa;
-  box-shadow: 0 10px 32px rgba(19,66,127,.12);
+  margin: 0;
+  background: linear-gradient(135deg, rgba(19,66,127,.08), rgba(230,0,126,.07)), #eef3fa;
   text-decoration: none;
   color: #fff;
-  animation: fadeUp .45s ease both;
+  animation: fadeUp .5s ease both;
 }
 .title-hero img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
+  object-position: 50% 35%;
   display: block;
 }
 .title-hero img.is-missing { display: none; }
@@ -439,7 +432,7 @@ body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(9,25,48,.04) 32%, rgba(9,25,48,.78) 100%);
+  background: linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.18) 55%, rgba(0,0,0,0) 100%);
   pointer-events: none;
 }
 .title-hero-placeholder {
@@ -449,7 +442,7 @@ body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
   align-items: center;
   justify-content: center;
   font-family: var(--ft);
-  font-size: .78rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
@@ -461,42 +454,44 @@ body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
 .title-hero-text {
   position: absolute;
   z-index: 2;
-  left: clamp(2rem, 4vw, 3.8rem);
-  right: clamp(2rem, 4vw, 3.8rem);
-  bottom: clamp(1.25rem, 3vw, 2.3rem);
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.4rem 1.6rem;
   display: block;
+  pointer-events: none;
 }
 .title-hero-meta {
   display: block;
   font-family: var(--ft);
-  font-size: clamp(.72rem, 1.05vw, .9rem);
-  font-weight: 800;
-  letter-spacing: .15em;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .13em;
   text-transform: uppercase;
   color: #fff;
-  margin-bottom: .55rem;
-  text-shadow: 0 1px 8px rgba(0,0,0,.45);
+  margin-bottom: .35rem;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
 }
 .title-hero-title {
   display: block;
   font-family: var(--ft);
-  font-size: clamp(2.05rem, 3.95vw, 3.45rem);
+  font-size: 2.1rem;
   font-weight: 800;
-  line-height: 1.05;
+  line-height: 1.1;
   color: var(--magenta);
-  margin: 0 0 .5rem;
-  letter-spacing: -.035em;
-  text-shadow: 0 1px 10px rgba(0,0,0,.36);
-  max-width: 980px;
+  margin: 0 0 .35rem;
+  letter-spacing: -.01em;
+  text-shadow: 0 2px 8px rgba(0,0,0,.7);
+  max-width: 700px;
 }
 .title-hero-sub {
   display: block;
   font-family: 'EB Garamond', Georgia, serif;
-  font-size: clamp(1rem, 1.75vw, 1.25rem);
+  font-size: .96rem;
   font-style: italic;
-  color: rgba(255,255,255,.94);
-  line-height: 1.35;
-  text-shadow: 0 1px 8px rgba(0,0,0,.45);
+  color: rgba(255,255,255,.9);
+  line-height: 1.45;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
 }
 .text-header.is-visually-hidden {
   position: absolute;
@@ -511,11 +506,11 @@ body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
 }
 @media(max-width:700px){
   .main-col{padding-top:0;}
-  .title-hero-wrap{margin:1.4rem auto 1.75rem;padding:0 1rem;}
-  .title-hero{aspect-ratio:1.75/1;border-radius:14px;}
+  .title-hero-wrap{margin:1.8rem auto 1.75rem;padding:0 1rem;max-width:760px;}
+  .title-hero{height:260px;border-radius:12px;}
   .title-hero-meta{font-size:.58rem;}
   .title-hero-title{font-size:1.55rem;}
-  .title-hero-sub{font-size:.92rem;}
+  .title-hero-sub{font-size:.88rem;}
 }
 
 /* ── Huisstijlherstel blauw/magenta ────────────────────── */
@@ -566,9 +561,232 @@ body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
 .wl-star{font-size:16px;color:#d1d5db;flex-shrink:0;padding:2px 4px;line-height:1;}
 @media(max-width:700px){.site-header{padding:.75rem 1rem;}.site-header h1{font-size:1rem;}.site-header .school{display:none;}.site-toolbar{padding:.55rem 1rem;justify-content:flex-start;}.toolbar-right{width:100%;}.wl-row{align-items:flex-start;gap:10px;}.wl-nl{flex:1 0 100%;}.wl-lat-wrap{flex-basis:calc(100% - 56px);}}
 
+
+
+/* ── PATCH: titelbeeld, tekst en context blijven één linkerkolom ─────────── */
+body.twocol .title-hero-wrap{
+  max-width:none;
+  width:100%;
+  margin:3rem 0 2rem;
+}
+body.twocol .title-hero{
+  width:100%;
+  height:320px;
+}
+body.twocol .context-block,
+body.twocol .latin-text,
+body.twocol #woordenlijst-sectie{
+  width:100%;
+}
+
+/* ── PATCH: rechterkolom als paneel met tabs; LA standaard actief ─────────── */
+.side-panel-shell{
+  display:flex;
+  flex-direction:column;
+  gap:.8rem;
+  min-width:0;
+}
+.side-panel-tabs{
+  position:sticky;
+  top:0;
+  z-index:4;
+  display:flex;
+  gap:.35rem;
+  flex-wrap:wrap;
+  padding-bottom:.45rem;
+  background:var(--page);
+}
+.side-tab-btn{
+  width:36px;
+  height:34px;
+  border-radius:12px;
+  border:1px solid var(--rule);
+  background:#fff;
+  color:var(--blue);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:background .14s,border-color .14s,color .14s,transform .14s;
+}
+.side-tab-btn:hover{
+  background:var(--blue-soft);
+  border-color:var(--blue);
+  transform:translateY(-1px);
+}
+.side-tab-btn.active{
+  background:var(--magenta);
+  border-color:var(--magenta);
+  color:#fff;
+}
+.side-tab-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;}
+.side-panel-view{display:none;min-width:0;}
+.side-panel-view.active{display:block;animation:fadeUp .18s ease both;}
+.la-side-head{
+  background:#fff;
+  border:1px solid var(--rule);
+  border-radius:12px;
+  padding:1rem 1.1rem;
+  margin-bottom:.8rem;
+}
+.la-side-label{
+  font-family:var(--ft);
+  font-size:.62rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--magenta);
+  margin-bottom:.35rem;
+}
+.la-side-title{
+  font-family:var(--ft);
+  font-size:1rem;
+  font-weight:800;
+  color:var(--blue);
+  line-height:1.25;
+  margin-bottom:.35rem;
+}
+.la-side-help{
+  font-family:var(--ft);
+  font-size:.76rem;
+  line-height:1.55;
+  color:var(--ink-light);
+}
+.la-cue-box{
+  display:none;
+  background:linear-gradient(135deg,#fff,#fbe6f3);
+  border:1.5px solid rgba(230,0,126,.22);
+  border-left:4px solid var(--magenta);
+  border-radius:0 12px 12px 0;
+  padding:.75rem .9rem;
+  margin-bottom:.8rem;
+  font-family:var(--ft);
+  font-size:.78rem;
+  line-height:1.5;
+  color:var(--ink-mid);
+}
+.la-cue-box.vis{display:block;}
+.la-cue-box strong{
+  display:block;
+  color:var(--magenta);
+  font-size:.64rem;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  margin-bottom:.2rem;
+}
+.la-side-section{
+  background:#fff;
+  border:1px solid var(--rule);
+  border-radius:12px;
+  padding:1rem 1.05rem;
+  margin-bottom:.8rem;
+}
+.la-side-section .la-sectie-titel{
+  margin-top:0;
+  margin-bottom:.8rem;
+  color:var(--blue);
+}
+.la-vraag{
+  border-left:3px solid var(--rule);
+  padding:.65rem .75rem;
+  margin-bottom:.75rem;
+  border-radius:0 10px 10px 0;
+  background:#fff;
+  transition:border-color .18s, background .18s, box-shadow .18s;
+}
+.la-vraag:last-child{margin-bottom:0;}
+.la-vraag.is-active{
+  border-left-color:var(--magenta);
+  background:linear-gradient(135deg,#fff,#fbe6f3);
+  box-shadow:0 8px 24px rgba(230,0,126,.08);
+}
+.la-vraag-tekst{
+  font-family:var(--ft);
+  font-size:.82rem;
+  font-weight:650;
+  color:var(--ink-mid);
+  line-height:1.5;
+  margin-bottom:.5rem;
+}
+.la-vraag.is-active .la-vraag-tekst{color:var(--blue);}
+.la-toggle-btn{
+  font-family:var(--ft);
+  font-size:.66rem;
+  font-weight:750;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  background:#fff;
+  border:1px solid var(--rule);
+  border-radius:20px;
+  padding:.22rem .68rem;
+  cursor:pointer;
+  color:var(--blue);
+  display:inline-flex;
+  align-items:center;
+  gap:.3rem;
+  transition:background .12s,color .12s,border-color .12s;
+}
+.la-toggle-btn:hover{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+.la-toggle-btn svg{width:12px;height:12px;transition:transform .18s;}
+.la-toggle-btn.open svg{transform:rotate(180deg);}
+.la-antwoord{
+  display:none;
+  font-family:var(--ft);
+  font-size:.78rem;
+  color:var(--ink-mid);
+  line-height:1.62;
+  margin-top:.55rem;
+  padding:.65rem .75rem;
+  background:#f7f8fa;
+  border-radius:10px;
+}
+.la-antwoord.vis{display:block;}
+.wg.has-la,
+.wg.has-la-linked{
+  position:relative;
+}
+.wg.has-la::after{
+  content:'';
+  display:inline-block;
+  width:.34rem;
+  height:.34rem;
+  border-radius:50%;
+  background:var(--magenta);
+  margin-left:.16rem;
+  vertical-align:super;
+  opacity:.42;
+  transform:translateY(-.04rem);
+  transition:opacity .15s, transform .15s, box-shadow .15s;
+}
+.wg.has-la:hover::after,
+.wg.current.has-la::after{
+  opacity:.95;
+  transform:translateY(-.04rem) scale(1.22);
+  box-shadow:0 0 0 3px rgba(230,0,126,.12);
+}
+.wg.has-la:hover,
+.wg.has-la-linked:hover{
+  background:rgba(230,0,126,.045);
+}
+.wg.current.has-la,
+.wg.current.has-la-linked{
+  outline:none!important;
+  background:rgba(230,0,126,.045)!important;
+  box-shadow:inset 0 -2px 0 rgba(230,0,126,.45);
+}
+@media(max-width:900px){
+  .side-panel-tabs{display:none;}
+  .la-cue-box{display:none!important;}
+  .wg.has-la::after{display:none;}
+}
+
 </style>
 </head>
-<body class="show-lesson-toolbar">
+<body class="show-lesson-toolbar twocol">
 
 <canvas id="inkCanvas" class="ink-canvas"></canvas>
 
@@ -636,6 +854,9 @@ body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
   </div>
 </div>
 
+<div class="outer">
+<div class="main-col">
+
 <div class="title-hero-wrap">
 <a class="title-hero" href="/athenalatijn1egraad/2ejaar/latijn/teksten/ludus/images/ludus8A/ludus8atekst5.png" aria-label="Titelbeeld openen">
     <img src="/athenalatijn1egraad/2ejaar/latijn/teksten/ludus/images/ludus8A/ludus8atekst5.png" alt="Titelbeeld bij Ludus 8A tekst 5" onload="this.classList.remove('is-missing');this.classList.add('is-loaded');" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='images/ludus8A/ludus8atekst5.png';}else{this.classList.remove('is-loaded');this.classList.add('is-missing');}">
@@ -647,9 +868,6 @@ body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
     </span>
   </a>
 </div>
-
-<div class="outer">
-<div class="main-col">
 
   <div class="text-header is-visually-hidden" aria-hidden="true">
     <div class="text-meta">Ludus 8A · Tekst 5</div>
@@ -816,19 +1034,54 @@ body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
 <div class="col-resizer" id="colResizer"><div class="col-resizer-handle"></div></div>
 
 <div class="side-panel" id="sidePanel">
-  <div class="analysis-card" id="analysisCard">
-    <div class="ac-empty">Klik op een woord voor grammaticahulp.</div>
-  </div>
-  <div class="panel-card" id="sidePanelVertaling">
-    <h3 style="color:var(--magenta);">Vertaling</h3>
-    <div class="vertaling-tekst" id="vertaalTekst"></div>
-  </div>
-  <div class="panel-card">
-    <h3>Let op</h3>
-    <div class="panel-note"><span class="pn-tag">ACI</span>Zoek: <em>quemquam civem habere</em> na <em>vetabat</em> en <em>frumentum dari</em> na <em>instituebat</em>.</div>
-    <div class="panel-note"><span class="pn-tag">PPP</span><em>cautum erat</em> — onpersoonlijk passief plusquamperfectum van <em>cavere</em>.</div>
-    <div class="panel-note"><span class="pn-tag">Anafoor</span>Viervoudig <em>nihil</em> met ellips van <em>erat</em> — typisch voor Velleius' stijl.</div>
-    <div class="panel-note"><span class="pn-tag">Imperf.</span>Historisch imperfectum: acht werkwoorden beschrijven Gaius' aanhoudende hervormingen.</div>
+  <div class="side-panel-shell">
+    <div class="side-panel-tabs" role="tablist" aria-label="Zijpaneel">
+      <button type="button" class="side-tab-btn active" data-panel="la" onclick="selectSidePanel('la')" title="Lectuuranalyse" aria-label="Lectuuranalyse">
+        <svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M2 4h12M2 8h8M2 12h10"/><circle cx="13" cy="11" r="2.1" fill="currentColor" stroke="none"/><path d="M13 10v2M12 11h2" stroke="#fff" stroke-width="1.1"/></svg>
+      </button>
+      <button type="button" class="side-tab-btn" data-panel="grammar" onclick="selectSidePanel('grammar')" title="Grammaticahulp" aria-label="Grammaticahulp">
+        <svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M3 3h10M3 7h10M3 11h6"/></svg>
+      </button>
+      <button type="button" class="side-tab-btn" data-panel="translation" onclick="selectSidePanel('translation')" title="Vertaling" aria-label="Vertaling">
+        <svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M1 4h6M4 2v2M2 4c0 2.2 1.8 3.7 4 4M6 4c0 1.4-.5 2.8-2 4"/><path d="M8 12l1.6-4 1.6 4M9.1 10.5h2"/></svg>
+      </button>
+      <button type="button" class="side-tab-btn" data-panel="notes" onclick="selectSidePanel('notes')" title="Noten" aria-label="Noten">
+        <svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M3 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="M5 6h6M5 9h6"/></svg>
+      </button>
+    </div>
+
+    <section class="side-panel-view active" id="panel-la" aria-label="Lectuuranalyse">
+      <div class="la-side-head">
+        <div class="la-side-label">Lectuuranalyse</div>
+        <div class="la-side-title">Leesvraag naast de tekst</div>
+        <div class="la-side-help">Wanneer een woordgroep of passage bij een analysevraag hoort, verschijnt hier automatisch de juiste vraag.</div>
+      </div>
+      <div class="la-cue-box" id="laCueBox"></div>
+      <div id="laPanelBody"></div>
+    </section>
+
+    <section class="side-panel-view" id="panel-grammar" aria-label="Grammaticahulp">
+      <div class="analysis-card" id="analysisCard">
+        <div class="ac-empty">Klik op een woord voor grammaticahulp. De hulp verschijnt hier wanneer je dit tabblad opent.</div>
+      </div>
+    </section>
+
+    <section class="side-panel-view" id="panel-translation" aria-label="Vertaling">
+      <div class="panel-card" id="sidePanelVertaling">
+        <h3 style="color:var(--magenta);">Vertaling</h3>
+        <div class="vertaling-tekst" id="vertaalTekst"></div>
+      </div>
+    </section>
+
+    <section class="side-panel-view" id="panel-notes" aria-label="Noten">
+      <div class="panel-card">
+        <h3>Let op</h3>
+        <div class="panel-note"><span class="pn-tag">ACI</span>Zoek: <em>quemquam civem habere</em> na <em>vetabat</em> en <em>frumentum dari</em> na <em>instituebat</em>.</div>
+        <div class="panel-note"><span class="pn-tag">PPP</span><em>cautum erat</em> — onpersoonlijk passief plusquamperfectum van <em>cavere</em>.</div>
+        <div class="panel-note"><span class="pn-tag">Anafoor</span>Viervoudig <em>nihil</em> met ellips van <em>erat</em> — typisch voor Velleius' stijl.</div>
+        <div class="panel-note"><span class="pn-tag">Imperf.</span>Historisch imperfectum: acht werkwoorden beschrijven Gaius' aanhoudende hervormingen.</div>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -967,7 +1220,7 @@ function renderWLSide(list) {
 
 filterWL('8a/5');
 
-var S = {lines:false, font:false, reveal:false, twocol:false, interlin:true, revIdx:-1};
+var S = {lines:false, font:false, reveal:false, twocol:true, interlin:true, revIdx:-1};
 var ksWgroups = Array.from(document.querySelectorAll('.wg'));
 var ksActiveWord = null;
 
@@ -1126,6 +1379,7 @@ function revealNext() {
   ksWgroups[S.revIdx].scrollIntoView({behavior:'smooth', block:'nearest'});
   ksFocusFirstInWg();
   updCount();
+  notifyLAForCurrentWg();
 }
 function revealPrev() {
   if (!S.reveal) return;
@@ -1136,6 +1390,7 @@ function revealPrev() {
     else ksSetActive(null);
   }
   updCount();
+  notifyLAForCurrentWg();
 }
 function revealAll() {
   if (!S.reveal) toggleReveal();
@@ -1144,6 +1399,7 @@ function revealAll() {
   if(ksWgroups[S.revIdx]) ksWgroups[S.revIdx].classList.add('current');
   ksFocusFirstInWg();
   updCount();
+  notifyLAForCurrentWg();
 }
 function updCount() {
   var done = document.querySelectorAll('.wg.revealed').length;
@@ -1168,7 +1424,7 @@ function toggleTwocol() {
   var btn = document.getElementById('btnTwocol');
   if (btn) btn.classList.toggle('active', S.twocol);
   document.body.classList.toggle('twocol', S.twocol);
-  if (S.twocol) renderVertaling();
+  if (S.twocol) { renderVertaling(); selectSidePanel('la'); }
 }
 function renderVertaling() {
   var el = document.getElementById('vertaalTekst');
@@ -1193,12 +1449,9 @@ function toggleLayer(layer) {
 }
 
 function toggleNoten() {
-  var blk = document.getElementById('notenBlock');
+  selectSidePanel('notes');
   var btn = document.getElementById('btnNoten');
-  if (!blk) return;
-  var open = blk.classList.toggle('vis');
-  if (btn) btn.classList.toggle('active', open);
-  if (open) blk.scrollIntoView({behavior:'smooth', block:'start'});
+  if (btn) btn.classList.add('active');
 }
 
 (function annotateBadges(){
@@ -1349,32 +1602,134 @@ var LA_SECTIES = [
   }
 ];
 
+function selectSidePanel(panel) {
+  document.querySelectorAll('.side-tab-btn').forEach(function(btn){
+    btn.classList.toggle('active', btn.dataset.panel === panel);
+  });
+  document.querySelectorAll('.side-panel-view').forEach(function(view){
+    view.classList.toggle('active', view.id === 'panel-' + panel);
+  });
+  if (panel === 'translation') renderVertaling();
+}
+
+function renderLaPanel(activeQuestion) {
+  var body = document.getElementById('laPanelBody');
+  if (!body) return;
+  var html = '';
+  LA_SECTIES.forEach(function(s, idx){
+    html += '<section class="la-side-section" id="la-sectie-' + idx + '">' + s.html + '</section>';
+  });
+  body.innerHTML = html;
+  var questions = Array.from(body.querySelectorAll('.la-vraag'));
+  questions.forEach(function(q, idx){
+    q.id = 'la-vraag-' + (idx + 1);
+    q.dataset.laQuestion = String(idx + 1);
+  });
+  if (activeQuestion) setActiveLA(activeQuestion, false);
+}
+
+var LA_CUES = [
+  {from:1,  to:8,  q:1, label:'De eerste reeks imperfecta: Velleius toont Gaius als voortdurend handelende hervormer.'},
+  {from:9,  to:12, q:3, label:'Hier zit de ACI na vetabat: zoek accusativus-subjectum, infinitief en aanstuurder.'},
+  {from:13, to:15, q:4, label:'Deze relatieve bijzin vraagt uitleg bij cautum erat en lege Licinia.'},
+  {from:16, to:26, q:1, label:'De reeks maatregelen loopt verder: let op het staccato-effect van de imperfecta.'},
+  {from:27, to:32, q:2, label:'De nihil-reeks hoort bij de lectuuranalyse: anafoor, climax en slotzin.'}
+];
+
+function findLaCueForWg(wg) {
+  if (!wg) return null;
+  var nr = parseInt(wg.dataset.wg || '0', 10);
+  for (var i = 0; i < LA_CUES.length; i++) {
+    if (nr >= LA_CUES[i].from && nr <= LA_CUES[i].to) return LA_CUES[i];
+  }
+  return null;
+}
+
+function initLAMarkers() {
+  ksWgroups.forEach(function(wg){
+    var cue = findLaCueForWg(wg);
+    if (!cue) return;
+    var nr = parseInt(wg.dataset.wg || '0', 10);
+    /* Alleen de start van een LA-passage krijgt een zichtbaar markerpunt.
+       De volledige passage blijft wel klikbaar en triggert nog steeds het LA-paneel. */
+    if (nr === cue.from) wg.classList.add('has-la');
+    else wg.classList.add('has-la-linked');
+    wg.dataset.laQuestion = String(cue.q);
+    wg.dataset.laLabel = cue.label;
+    wg.addEventListener('click', function(e){
+      if (e.target.closest('.lat-word')) return;
+      triggerLAForWg(wg, true);
+    });
+  });
+}
+
+function setActiveLA(questionNr, scroll) {
+  renderLaPanel._rendering = renderLaPanel._rendering || false;
+  var q = document.getElementById('la-vraag-' + questionNr);
+  if (!q) {
+    renderLaPanel(questionNr);
+    q = document.getElementById('la-vraag-' + questionNr);
+  }
+  document.querySelectorAll('.la-vraag.is-active').forEach(function(el){el.classList.remove('is-active');});
+  if (q) {
+    q.classList.add('is-active');
+    if (scroll) q.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+}
+
+function triggerLAForWg(wg, scrollPanel) {
+  var cue = findLaCueForWg(wg);
+  if (!cue) return;
+  selectSidePanel('la');
+  var cueBox = document.getElementById('laCueBox');
+  if (cueBox) {
+    cueBox.innerHTML = '<strong>Lectuurvraag bij deze passage</strong>' + cue.label;
+    cueBox.classList.add('vis');
+  }
+  setActiveLA(cue.q, true);
+  if (scrollPanel) {
+    var panel = document.getElementById('sidePanel');
+    if (panel) panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+}
+
+function notifyLAForCurrentWg() {
+  var wg = ksCurrentWg();
+  if (wg) triggerLAForWg(wg, false);
+}
+
 function openLectuurModal(){
-  laSectieIdx=0; renderLaSectie();
-  document.getElementById('lectuurOverlay').classList.add('open');
-  document.body.style.overflow='hidden';
+  selectSidePanel('la');
+  var panel = document.getElementById('sidePanel');
+  if (panel) panel.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 function closeLectuurModal(){
-  document.getElementById('lectuurOverlay').classList.remove('open');
-  document.body.style.overflow='';
+  selectSidePanel('la');
 }
 function renderLaSectie(){
-  var s=LA_SECTIES[laSectieIdx];
-  document.getElementById('lectuurModalBody').innerHTML=s.html;
-  document.getElementById('laSectieNr').textContent=(laSectieIdx+1)+' / '+LA_SECTIES.length;
-  document.getElementById('laSectieVorige').disabled=laSectieIdx===0;
-  document.getElementById('laSectieVolgende').disabled=laSectieIdx===LA_SECTIES.length-1;
+  renderLaPanel(laSectieIdx + 1);
 }
 function navigateLaSectie(dir){
   laSectieIdx=Math.max(0,Math.min(LA_SECTIES.length-1,laSectieIdx+dir));
-  renderLaSectie();
+  var firstQuestion = laSectieIdx === 0 ? 1 : (laSectieIdx === 1 ? 3 : 5);
+  setActiveLA(firstQuestion, true);
 }
 function toggleAntwoord(btn){
   var antw=btn.parentElement.querySelector('.la-antwoord');
   var open=antw.classList.toggle('vis');
   btn.classList.toggle('open',open);
-  btn.querySelector('svg').style.transform=open?'rotate(180deg)':'';
 }
+
+
+(function initSidePanelAndLA(){
+  document.body.classList.toggle('twocol', S.twocol);
+  var btn = document.getElementById('btnTwocol');
+  if (btn) btn.classList.toggle('active', S.twocol);
+  renderLaPanel();
+  renderVertaling();
+  initLAMarkers();
+  selectSidePanel('la');
+})();
 
 var inkCanvas=document.getElementById('inkCanvas');
 var inkCtx=inkCanvas.getContext('2d');
