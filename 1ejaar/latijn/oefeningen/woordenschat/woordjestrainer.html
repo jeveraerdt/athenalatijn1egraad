@@ -571,6 +571,77 @@ const LUDUS_CONFIG = {
 };
 
 // ══════════════════════════════════════════════
+// WOORDENBRON — accepteert bestaande en nieuwe woordenlijst.js
+// ══════════════════════════════════════════════
+const WOORDEN_DATA = (() => {
+  if (typeof woordenlijst_volledig !== 'undefined' && Array.isArray(woordenlijst_volledig)) return woordenlijst_volledig;
+  if (typeof woordenlijst !== 'undefined' && Array.isArray(woordenlijst)) return woordenlijst;
+  console.error('Geen geldige woordenlijst gevonden. Verwacht: woordenlijst_volledig of woordenlijst.');
+  return [];
+})();
+
+function getTekstKeysVoorLudus(w, ludus, tekst = null) {
+  return (w.teksten || []).filter(key => {
+    const [l, deel] = String(key).split('/');
+    if (l !== ludus) return false;
+    if (!tekst || tekst === 'alle') return true;
+    return deel === tekst;
+  });
+}
+
+function tekstSortWaarde(key) {
+  const deel = String(key).split('/')[1];
+  if (!deel) return 0;
+  const n = parseInt(deel, 10);
+  return Number.isFinite(n) ? n : 9999;
+}
+
+function getPositiesVoorKey(w, key) {
+  const raw = w.volgorde ? w.volgorde[key] : undefined;
+  const posities = Array.isArray(raw) ? raw : (raw == null ? [] : [raw]);
+  return posities
+    .map(v => Number(v))
+    .filter(v => Number.isFinite(v));
+}
+
+function maakWoordVoorkomens(w, key) {
+  const posities = getPositiesVoorKey(w, key);
+  const teGebruikenPosities = posities.length ? posities : [99999];
+  return teGebruikenPosities.map((positie, duplicaatIndex) => ({
+    ...w,
+    __tekstKey: key,
+    __positie: positie,
+    __duplicaatIndex: duplicaatIndex
+  }));
+}
+
+function sorteerVolgensFoto(a, b) {
+  const tekstA = tekstSortWaarde(a.__tekstKey || '');
+  const tekstB = tekstSortWaarde(b.__tekstKey || '');
+  if (tekstA !== tekstB) return tekstA - tekstB;
+
+  const posA = Number.isFinite(Number(a.__positie)) ? Number(a.__positie) : 99999;
+  const posB = Number.isFinite(Number(b.__positie)) ? Number(b.__positie) : 99999;
+  if (posA !== posB) return posA - posB;
+
+  return (a.__duplicaatIndex || 0) - (b.__duplicaatIndex || 0);
+}
+
+function bouwFotoVolgordeLijst(ludus, tekst = null) {
+  const lijst = [];
+  WOORDEN_DATA.filter(w => w.grondvorm).forEach(w => {
+    getTekstKeysVoorLudus(w, ludus, tekst).forEach(key => {
+      lijst.push(...maakWoordVoorkomens(w, key));
+    });
+  });
+  return lijst.sort(sorteerVolgensFoto);
+}
+
+function telVoorkomensVoorLudus(ludus) {
+  return bouwFotoVolgordeLijst(ludus, 'alle').length;
+}
+
+// ══════════════════════════════════════════════
 // STATE
 // ══════════════════════════════════════════════
 let huidigeWoorden = [];
@@ -764,7 +835,7 @@ function renderLudusKaarten() {
 
   // Tel woorden per ludus
   const tellers = {};
-  woordenlijst_volledig.forEach(w => {
+  WOORDEN_DATA.forEach(w => {
     (w.teksten || []).forEach(t => {
       const ludusCode = t.split('/')[0];
       tellers[ludusCode] = (tellers[ludusCode] || 0) + 1;
@@ -773,7 +844,7 @@ function renderLudusKaarten() {
 
   // Verwijder dubbele tellingen (woord telt 1x per ludus)
   const perLudus = {};
-  woordenlijst_volledig.forEach(w => {
+  WOORDEN_DATA.forEach(w => {
     const ludusSet = new Set((w.teksten || []).map(t => t.split('/')[0]));
     ludusSet.forEach(l => { perLudus[l] = (perLudus[l] || 0) + 1; });
   });
@@ -787,7 +858,7 @@ function renderLudusKaarten() {
     <div class="thema-kaart-check"></div>
     <div class="thema-kaart-nummer">📖 Alle woorden</div>
     <div class="thema-kaart-naam">Alfabetisch</div>
-    <div class="thema-kaart-meta">${woordenlijst_volledig.filter(w=>w.grondvorm).length} woorden</div>
+    <div class="thema-kaart-meta">${WOORDEN_DATA.filter(w=>w.grondvorm).length} woorden</div>
     <div class="ludus-voortgang"><div class="ludus-voortgang-inner" style="width:0%"></div></div>
   </div>`;
 
@@ -805,7 +876,7 @@ function renderLudusKaarten() {
   const volgorde = ['1a','1b','2a','2b','3a','3b','4a','4b','5a','5b'];
   volgorde.forEach(l => {
     const cfg = LUDUS_CONFIG[l] || { naam: l, nummer: l, kleur: '#f0f4fb' };
-    const n = perLudus[l] || 0;
+    const n = telVoorkomensVoorLudus(l);
     const actief = gekozenLudus === l;
     html += `<div class="thema-kaart${actief?' actief':''}" onclick="kiesLudus('${l}')">
       <div class="thema-kaart-check"></div>
@@ -853,7 +924,7 @@ function renderTekstPills() {
   }
 
   const tekstSet = new Set();
-  woordenlijst_volledig.forEach(w => {
+  WOORDEN_DATA.forEach(w => {
     (w.teksten || []).forEach(t => {
       if (t.split('/')[0] === gekozenLudus) {
         const deel = t.split('/')[1];
@@ -914,28 +985,23 @@ function filterOpZoekterm() {
 function laadWoorden() {
   const basisOnly = document.getElementById('filter-basis')?.checked;
   geselecteerd.clear();
-  let basis = woordenlijst_volledig.filter(w => w.grondvorm);
+  let basis = WOORDEN_DATA.filter(w => w.grondvorm);
 
   if (zoekterm) {
     basis = basis.filter(w =>
       w.grondvorm.toLowerCase().includes(zoekterm) ||
       (w.vertaling||'').toLowerCase().includes(zoekterm) ||
       (w.aanvullingen||'').toLowerCase().includes(zoekterm)
-    );
+    ).sort((a,b) => a.grondvorm.localeCompare(b.grondvorm, 'nl'));
   } else if (gekozenLudus === 'moei') {
     const m = laadMoeilijkeWoorden();
     basis = basis.filter(w => m.has(w.grondvorm));
   } else if (gekozenLudus === 'alfa') {
     basis = [...basis].sort((a,b) => a.grondvorm.localeCompare(b.grondvorm, 'nl'));
   } else if (gekozenLudus) {
-    // Filter op ludus, optioneel ook op tekst
-    basis = basis.filter(w => (w.teksten||[]).some(t => {
-      const [l, tekst] = t.split('/');
-      if (l !== gekozenLudus) return false;
-      if (!gekozenTekst || gekozenTekst === 'alle') return true;
-      return tekst === gekozenTekst;
-    }));
-    basis = [...basis].sort((a,b) => a.grondvorm.localeCompare(b.grondvorm, 'nl'));
+    // Echte ludus/tekstkeuze: exacte fotovolgorde.
+    // Bij meerdere posities binnen dezelfde tekst wordt één zichtbaar item per positie gemaakt.
+    basis = bouwFotoVolgordeLijst(gekozenLudus, gekozenTekst || 'alle');
   } else {
     huidigeWoorden = [];
     renderLijst();
@@ -1398,7 +1464,7 @@ function maakMeerkeuzeopties(w) {
   const shuffled = [...pool].sort(() => Math.random() - .5);
   for (let i = 0; i < Math.min(3, shuffled.length); i++) fout.push({ tekst: shuffled[i].vertaling, correct: false });
   if (fout.length < 3) {
-    const extra = woordenlijst_volledig.filter(x => x.grondvorm && x.vertaling !== w.vertaling && !fout.some(f => f.tekst === x.vertaling));
+    const extra = WOORDEN_DATA.filter(x => x.grondvorm && x.vertaling !== w.vertaling && !fout.some(f => f.tekst === x.vertaling));
     for (let i = 0; fout.length < 3 && i < extra.length; i++) fout.push({ tekst: extra[i].vertaling, correct: false });
   }
   return [...fout, correct].sort(() => Math.random() - .5);
