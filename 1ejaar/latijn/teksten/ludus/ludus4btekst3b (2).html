@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verus en Priscus – Ludus 4B · Tekst 3B · athena</title>
+<link href="https://fonts.googleapis.com/css2?family=Lufga:wght@300;400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../../theme.css">
+<style>
+:root {
+  --blue:#13427f;
+  --blue-mid:#0f3769;
+  --blue-soft:rgba(19,66,127,.08);
+  --magenta:#E6007E;
+  --magenta-soft:rgba(230,0,126,.08);
+  --paper:#ffffff;
+  --page:#f7f8fa;
+  --rule:#e2e6ed;
+  --ink:#1a1a1a;
+  --ink-mid:#374151;
+  --ink-light:#6b7280;
+  --accent:#E6007E;
+  --ft:'Lufga', Arial, sans-serif;
+  --tf:'Lufga', Arial, sans-serif;
+  --fb:'Lufga', Arial, sans-serif;
+  --green:#2d7a3a; --green-bg:#e8f5eb;
+  --orange:#c05a00; --orange-bg:#fff0e0;
+  --purple:#6a1a8a; --purple-bg:#f3e8fb;
+  --hl:#fff3c4; --hl-b:#e8c840;
+  --lh:2.3; --fs:1.18rem;
+}
+html{overflow-x:hidden;}
+body{font-family:var(--ft);}
+
+.weergave-wrap{position:relative;}
+.weergave-menu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:#fff;border:1.5px solid rgba(19,66,127,.18);border-radius:12px;box-shadow:0 6px 24px rgba(19,66,127,.13);z-index:400;min-width:160px;padding:.35rem 0;overflow:hidden;}
+.weergave-menu.open{display:block;animation:fadeUp .12s ease both;}
+.weergave-item{display:flex;align-items:center;gap:.45rem;width:100%;background:none;border:none;padding:.45rem .9rem;font-family:'Lufga',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);cursor:pointer;transition:background .12s,color .12s;white-space:nowrap;}
+.weergave-item:hover{background:#eef3fa;}
+.weergave-item.active{color:var(--magenta);}
+.weergave-item svg{width:12px;height:12px;flex-shrink:0;}
+.weergave-chevron{transition:transform .18s;}
+#btnWeergave.open .weergave-chevron{transform:rotate(180deg);}
+
+/* Progressbar verwijderd: de roze merklint-lijn blijft, maar er loopt geen scrollbalk meer mee. */
+.rp,.rp-fill{display:none!important;}
+
+.outer{max-width:1200px;margin:0 auto;padding:0 1.5rem;}
+.main-col{max-width:760px;margin:0 auto;padding:0 0 9rem;}
+body.twocol .outer{display:grid;grid-template-columns:var(--col-split,60%) 12px 1fr;gap:0;align-items:start;}
+body.twocol .main-col{max-width:none;padding:0 2rem 6rem 0;}
+body.twocol .side-panel{display:flex!important;flex-direction:column;gap:1rem;padding:2.15rem 0 6rem 1.5rem;border-left:1px solid var(--rule);position:sticky;top:108px;max-height:calc(100vh - 108px);overflow-y:auto;}
+.side-panel{display:none;}
+
+.text-header{margin-bottom:2rem;padding-bottom:1.75rem;border-bottom:1px solid var(--rule);animation:fadeUp .5s ease both;}
+.text-meta{font-family:'Lufga',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--magenta);margin-bottom:.6rem;}
+.text-title{font-family:'Lufga',sans-serif;font-size:2rem;font-weight:600;line-height:1.2;color:var(--blue);margin-bottom:.5rem;letter-spacing:-.01em;}
+.text-sub{font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:1rem;color:var(--ink-light);line-height:1.5;}
+
+.context-block{background:linear-gradient(135deg,#eef3fa,#f5f0fb);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:1rem 1.3rem;margin-bottom:2rem;font-family:'Lufga',sans-serif;font-size:.86rem;line-height:1.65;color:#2a3a5e;animation:fadeUp .5s .07s ease both;}
+.context-block strong{display:block;font-family:'Lufga',sans-serif;font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--magenta);margin-bottom:.25rem;font-weight:600;}
+.context-subtitel{display:block;font-family:'EB Garamond',Georgia,serif;font-style:italic;font-size:.88rem;color:#888;margin-bottom:.5rem;}
+
+.link-strip{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;animation:fadeUp .5s .12s ease both;}
+.link-pill{font-family:'Lufga',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.04em;padding:.38rem .85rem;border-radius:20px;border:1.5px solid var(--rule);background:var(--paper);color:var(--ink-light);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:.35rem;text-decoration:none;}
+.link-pill:hover{border-color:var(--blue);color:var(--blue);background:#eef3fa;}
+.link-pill svg{width:11px;height:11px;}
+button.link-pill{font-size:.7rem;font-weight:500;font-family:'Lufga',sans-serif;letter-spacing:.04em;cursor:pointer;}
+
+.extras-strip{margin-bottom:2rem;animation:fadeUp .5s .12s ease both;}
+.extras-row{display:flex;align-items:center;gap:.9rem;}
+.extras-label{font-family:'Lufga',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--magenta);}
+.extras-icon{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;border:none;background:none;color:var(--magenta);cursor:pointer;padding:0;opacity:.75;transition:opacity .15s,background .15s,color .15s;text-decoration:none;}
+.extras-icon:hover{opacity:1;background:#fbe6f1;}
+.extras-icon svg{width:18px;height:18px;}
+.extras-icon.active{opacity:1;background:#fbe6f1;color:var(--magenta);}
+
+.noten-block{display:none;}
+.noten-block.vis{display:block;}
+
+.kaart-modal-overlay{display:none;position:fixed;inset:0;background:rgba(19,66,127,.18);backdrop-filter:blur(2px);z-index:800;align-items:center;justify-content:center;}
+.kaart-modal-overlay.open{display:flex;animation:fadeUp .18s ease both;}
+.kaart-modal{background:var(--paper);border:1.5px solid var(--rule);border-radius:14px;box-shadow:0 16px 48px rgba(19,66,127,.22);width:min(680px,92vw);max-height:80vh;display:flex;flex-direction:column;overflow:hidden;}
+.kaart-modal-header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;border-bottom:1px solid var(--rule);}
+.kaart-modal-title{font-family:'Lufga',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);}
+.kaart-modal-close{background:none;border:none;cursor:pointer;color:var(--ink-light);padding:.2rem;border-radius:6px;display:flex;transition:color .12s;}
+.kaart-modal-close:hover{color:var(--blue);}
+.kaart-modal-close svg{width:15px;height:15px;}
+.kaart-modal-body{padding:1.5rem;overflow-y:auto;}
+.kaart-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:220px;border:2px dashed rgba(19,66,127,.15);border-radius:10px;color:var(--ink-light);font-family:'Lufga',sans-serif;font-size:.82rem;}
+
+.latin-text{font-size:var(--fs);line-height:var(--lh);animation:fadeUp .5s .18s ease both;}
+body.font-lg .latin-text{--fs:1.35rem;--lh:2.45;}
+.latin-para{margin-bottom:2rem;}
+
+.wg{
+  display:inline;
+  border-radius:4px;
+  cursor:pointer;
+  transition:background .15s, outline .1s;
+  padding:1px 0;
+}
+.wg:hover{background:rgba(19,66,127,.07);}
+
+/* ── PATCH 1: opacity .02 (was .12) ── */
+.reveal-mode .wg{
+  opacity:.02;
+  transition:opacity .3s;
+}
+.reveal-mode .wg.revealed{opacity:1;}
+.reveal-mode .wg.current{
+  opacity:1;
+  background:var(--hl);
+  outline:1px solid var(--hl-b);
+  border-radius:4px;
+}
+
+.lat-word{display:inline;border-radius:3px;cursor:pointer;transition:background .12s;padding:0 1px;}
+.lat-word:hover{background:rgba(19,66,127,.09);}
+
+body.interlin-analysis .lat-word{display:inline-flex;flex-direction:column;align-items:center;vertical-align:bottom;margin:0 2px;padding:0 1px;}
+.inline-analysis{display:none;}
+body.interlin-analysis .inline-analysis{display:flex;flex-direction:column;align-items:center;gap:1px;margin-bottom:.14rem;min-height:0;}
+.lat-surface{display:inline;}
+body.interlin-analysis .lat-surface{display:inline-block;}
+.ia-line{display:block;font-family:var(--ft);line-height:1.05;text-align:center;white-space:nowrap;}
+.ia-lemma{font-size:.53em;color:var(--accent);}
+.ia-meaning{font-size:.5em;color:var(--ink-light);}
+.ia-det{font-size:.49em;color:#006633;}
+.ia-func{font-size:.49em;color:var(--blue);font-weight:700;}
+.lat-word.has-analysis .lat-surface{border-radius:3px;}
+.lat-word.stage-1 .lat-surface{box-shadow:inset 0 -2px 0 rgba(255,59,29,.22);}
+.lat-word.stage-2 .lat-surface{box-shadow:inset 0 -2px 0 rgba(0,102,51,.25);}
+.lat-word.stage-3 .lat-surface{background:rgba(255,234,61,.35);outline:1px solid rgba(0,102,51,.28);}
+.lat-word.active-word .lat-surface{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px;}
+
+.ink-canvas{position:fixed;inset:0;z-index:640;pointer-events:none;touch-action:none;}
+.ink-canvas.on{pointer-events:auto;}
+body.ink-on{cursor:crosshair;}
+
+.poetry-modal-overlay{display:none;position:fixed;inset:0;background:rgba(19,66,127,.18);backdrop-filter:blur(3px);z-index:800;align-items:center;justify-content:center;}
+.poetry-modal-overlay.open{display:flex;animation:fadeUp .18s ease both;}
+.poetry-modal{background:var(--paper);border:1.5px solid var(--rule);border-radius:14px;box-shadow:0 16px 48px rgba(19,66,127,.22);width:min(700px,92vw);max-height:82vh;display:flex;flex-direction:column;overflow:hidden;}
+.poetry-modal-header{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.25rem;border-bottom:1px solid var(--rule);}
+.poetry-modal-title{font-family:var(--ft);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue);}
+.poetry-modal-nav{display:flex;align-items:center;gap:.6rem;}
+.poetry-modal-nav-btn{font-family:var(--ft);font-size:.72rem;font-weight:600;padding:.3rem .75rem;border:1.5px solid var(--rule);border-radius:8px;background:none;cursor:pointer;color:var(--ink-mid);transition:background .12s,color .12s,border-color .12s;}
+.poetry-modal-nav-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+.poetry-modal-nav-btn:disabled{opacity:.35;cursor:default;}
+.poetry-modal-close{background:none;border:none;cursor:pointer;color:var(--ink-light);padding:.25rem;border-radius:6px;display:flex;transition:color .12s;}
+.poetry-modal-close:hover{color:var(--blue);}
+.poetry-modal-close svg{width:16px;height:16px;}
+.poetry-modal-body{flex:1;overflow-y:auto;padding:1.25rem 1.5rem;}
+.la-sectie-titel{font-family:var(--ft);font-size:.85rem;font-weight:700;color:var(--blue);margin-bottom:1rem;}
+.la-vraag{margin-bottom:1.2rem;}
+.la-vraag-tekst{font-family:var(--ft);font-size:.84rem;font-weight:600;color:var(--ink);margin-bottom:.4rem;line-height:1.5;}
+.la-antwoord-wrap{border-left:2px solid var(--rule);padding-left:.85rem;margin-top:.35rem;}
+.la-antwoord{display:none;font-family:var(--fb,'Noto Sans',Arial,sans-serif);font-size:.8rem;color:var(--ink-mid);line-height:1.6;}
+.la-antwoord.vis{display:block;}
+.la-toggle-btn{font-family:var(--ft);font-size:.68rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;background:none;border:1.5px solid var(--rule);border-radius:20px;padding:.22rem .7rem;cursor:pointer;color:var(--ink-light);display:inline-flex;align-items:center;gap:.3rem;transition:background .12s,color .12s;}
+.la-toggle-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+.la-toggle-btn svg{width:12px;height:12px;transition:transform .18s;}
+.la-toggle-btn.open svg{transform:rotate(180deg);}
+
+/* ── PATCH 2: toolbar magenta hover/active ── */
+.lesson-toolbar-wrap{position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%) translateY(20px);z-index:9999;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;}
+body.show-lesson-toolbar .lesson-toolbar-wrap{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+body.show-lesson-toolbar .lesson-toolbar-wrap *{pointer-events:auto;}
+.lesson-toolbar{display:flex;flex-direction:row;align-items:center;gap:.28rem;padding:.38rem .5rem;border-radius:28px;background:rgba(255,255,255,.95);border:1px solid rgba(19,66,127,.15);box-shadow:0 8px 32px rgba(19,66,127,.22),0 2px 8px rgba(0,0,0,.08);}
+.lesson-toolbar-divider{width:1px;height:26px;background:rgba(19,66,127,.10);margin:0 .18rem;flex-shrink:0;}
+.lesson-btn{width:40px;height:40px;padding:0;border:none;border-radius:12px;background:transparent;color:#1a2a4a;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:background .14s ease,color .14s ease,box-shadow .14s ease;flex-shrink:0;}
+/* PATCH 2a: hover magenta */
+.lesson-btn:hover{background:rgba(230,0,126,.09);color:var(--magenta);}
+.lesson-btn:active{background:rgba(230,0,126,.15);color:var(--magenta);}
+/* PATCH 2b: active magenta */
+.lesson-btn.active{background:var(--magenta);color:#fff;box-shadow:0 0 0 2px rgba(230,0,126,.28);}
+.lesson-btn.danger:hover{background:#fee2e2;color:#b91c1c;}
+.lesson-btn svg{width:19px;height:19px;stroke:currentColor;fill:none;}
+.lesson-btn::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:#1a2238;color:#fff;font-family:var(--tf,Arial);font-size:.6rem;font-weight:600;letter-spacing:.04em;white-space:nowrap;padding:.2rem .5rem;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .12s;}
+.lesson-btn:hover::after{opacity:1;}
+.tool-palette{position:fixed;bottom:5.5rem;left:50%;transform:translateX(-50%);display:none;flex-direction:row;gap:8px;padding:10px 14px;background:rgba(255,255,255,.96);border:1px solid rgba(0,0,0,.08);border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:701;}
+.tool-palette.open{display:flex;}
+.swatch{width:20px;height:20px;border-radius:50%;border:2px solid rgba(0,0,0,.10);cursor:pointer;transition:transform .12s,box-shadow .12s,border-color .12s;flex-shrink:0;}
+.swatch:hover{transform:scale(1.12);}
+.swatch.active{border-color:#111;box-shadow:0 0 0 2px rgba(0,0,0,.10);}
+
+.latin-para.tekst-scheiding{border-top:1px solid #ddd;margin-top:1.5em;padding-top:1.5em;}
+
+.numbered-view{display:none;}
+.numbered-view.on{display:block;}
+.plain-view.off{display:none;}
+.latin-line{display:flex;gap:1.4rem;line-height:var(--lh);}
+.ln{font-family:'Lufga',sans-serif;font-size:.62rem;color:#ccc;min-width:1.7rem;text-align:right;padding-top:.44em;user-select:none;flex-shrink:0;}
+.lc{flex:1;}
+
+.word-popup{position:absolute;z-index:500;background:var(--paper);border:1.5px solid var(--rule);border-radius:10px;box-shadow:0 8px 32px rgba(19,66,127,.18);padding:.85rem 1.1rem;max-width:300px;min-width:200px;font-family:'Lufga',sans-serif;font-size:.78rem;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .18s,transform .18s;}
+.word-popup.vis{opacity:1;transform:translateY(0);}
+.wp-word{font-family:'EB Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:var(--blue);margin-bottom:.1rem;}
+.wp-lemma{font-size:.68rem;color:var(--ink-light);margin-bottom:.35rem;}
+.wp-row{display:flex;gap:.4rem;margin-bottom:.2rem;align-items:flex-start;}
+.wp-tag{font-size:.6rem;font-weight:700;padding:.08rem .35rem;border-radius:10px;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0;margin-top:.12rem;}
+.tg{background:var(--green-bg);color:var(--green);}
+.to{background:var(--orange-bg);color:var(--orange);}
+.tp{background:var(--purple-bg);color:var(--purple);}
+.tw{background:#eef3fa;color:var(--blue);}
+.wp-val{color:var(--ink-mid);line-height:1.45;}
+.wp-sep{border:none;border-top:1px solid var(--rule);margin:.4rem 0;}
+.wp-hint{font-size:.7rem;color:var(--ink-light);}
+
+.reveal-bar{display:none;align-items:center;gap:.6rem;margin-bottom:1.5rem;padding:.65rem 1rem;background:var(--paper);border:1.5px solid var(--rule);border-radius:10px;font-family:'Lufga',sans-serif;font-size:.78rem;color:var(--ink-mid);flex-wrap:wrap;}
+.reveal-bar.vis{display:flex;}
+.reveal-bar button{background:var(--blue);color:#fff;border:none;border-radius:6px;padding:.3rem .8rem;font-family:'Lufga',sans-serif;font-size:.72rem;cursor:pointer;transition:background .15s;white-space:nowrap;}
+.reveal-bar button:hover{background:var(--blue-mid);}
+.reveal-bar button.sec{background:var(--paper);color:var(--blue);border:1.5px solid var(--blue);}
+.reveal-bar button.sec:hover{background:#eef3fa;}
+.rev-count{margin-left:auto;color:var(--ink-light);font-size:.68rem;white-space:nowrap;}
+
+.footnotes{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--rule);}
+.fn-title{font-family:'Lufga',sans-serif;font-size:.66rem;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-light);margin-bottom:.9rem;}
+.fn{display:flex;gap:.65rem;font-size:.8rem;line-height:1.58;color:var(--ink-light);margin-bottom:.45rem;font-family:'Lufga',sans-serif;}
+.fn-n{color:var(--magenta);font-size:.68rem;font-weight:600;min-width:1.1rem;padding-top:.1rem;flex-shrink:0;}
+
+.panel-card{background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:1rem 1.1rem;}
+.panel-card h3{font-family:'Lufga',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:.7rem;}
+.panel-word{display:flex;justify-content:space-between;align-items:baseline;padding:.32rem 0;border-bottom:1px solid var(--rule);font-size:.85rem;gap:.5rem;}
+.panel-word:last-child{border-bottom:none;}
+.pw-lat{font-family:'EB Garamond',Georgia,serif;font-weight:600;color:var(--blue);}
+.pw-aanv{font-family:'Lufga',sans-serif;font-size:.65rem;color:var(--ink-light);}
+.pw-nl{font-family:'Lufga',sans-serif;font-size:.72rem;color:var(--ink-mid);text-align:right;max-width:55%;}
+.pw-basis{display:inline-block;font-size:.55rem;font-weight:700;padding:.04rem .28rem;border-radius:8px;background:#fbe6f1;color:var(--magenta);text-transform:uppercase;margin-left:.3rem;vertical-align:middle;}
+.panel-note{padding:.3rem 0;font-family:'Lufga',sans-serif;font-size:.78rem;color:var(--ink-mid);line-height:1.5;border-bottom:1px solid var(--rule);}
+.panel-note:last-child{border-bottom:none;}
+.pn-tag{display:inline-block;font-size:.6rem;font-weight:600;padding:.05rem .35rem;border-radius:10px;text-transform:uppercase;margin-right:.35rem;background:#eef3fa;color:var(--blue);}
+.analysis-card{background:linear-gradient(135deg,#eef3fa,#f0f5ff);border:1.5px solid #c8d6ed;border-radius:10px;padding:1rem 1.1rem;font-family:'Lufga',sans-serif;font-size:.8rem;line-height:1.6;}
+.ac-word{font-family:'EB Garamond',Georgia,serif;font-size:1.4rem;font-weight:600;color:var(--blue);}
+.ac-lemma{font-size:.68rem;color:var(--ink-light);margin-bottom:.5rem;}
+.ac-row{display:flex;gap:.5rem;margin-bottom:.2rem;align-items:flex-start;}
+.ac-tag{font-size:.6rem;font-weight:700;padding:.08rem .38rem;border-radius:10px;text-transform:uppercase;flex-shrink:0;margin-top:.15rem;}
+.ac-empty{color:var(--ink-light);font-size:.78rem;font-style:italic;}
+
+.vertaling-tekst{font-family:'Lufga',sans-serif;font-size:.82rem;line-height:1.7;color:var(--blue);}
+.vertaling-tekst p{margin-bottom:.7rem;}
+.vertaling-tekst p:last-child{margin-bottom:0;}
+
+.col-resizer{display:none;width:12px;cursor:col-resize;align-self:stretch;position:relative;z-index:10;flex-shrink:0;}
+body.twocol .col-resizer{display:flex;align-items:center;justify-content:center;}
+.col-resizer-handle{width:4px;height:48px;border-radius:4px;background:var(--rule);transition:background .15s, height .15s;position:sticky;top:calc(50vh - 24px);}
+.col-resizer:hover .col-resizer-handle,.col-resizer.dragging .col-resizer-handle{background:var(--blue);height:64px;}
+
+.scroll-top{position:fixed;bottom:1.75rem;right:1.75rem;width:38px;height:38px;border-radius:50%;background:var(--blue);color:#fff;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(8px);transition:all .2s;box-shadow:0 4px 14px rgba(19,66,127,.28);z-index:100;}
+.scroll-top.on{opacity:1;transform:translateY(0);}
+.scroll-top svg{width:15px;height:15px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(7px);}to{opacity:1;transform:translateY(0);}}
+
+.d-badge{display:inline-flex;align-items:center;gap:.25rem;font-family:'Lufga',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.18rem .5rem;border-radius:20px;vertical-align:middle;margin:0 .2rem .1rem;white-space:nowrap;transition:opacity .2s,transform .2s;opacity:0;pointer-events:none;transform:scale(.85);}
+.d-badge.bs{background:#dbeafe;color:#1d4ed8;border:1px solid #bfdbfe;}
+.d-badge.lpd{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0;}
+.d-badge.vis{opacity:1;pointer-events:auto;transform:scale(1);}
+.d-badges{display:block;margin-bottom:.35rem;min-height:0;line-height:1.6;}
+.d-badges:empty{margin-bottom:0;}
+.d-tooltip{position:absolute;z-index:900;background:#1a2238;color:#fff;font-family:'Lufga',sans-serif;font-size:.78rem;font-weight:500;line-height:1.45;letter-spacing:.005em;padding:.7rem .95rem;border-radius:10px;max-width:340px;box-shadow:0 12px 32px rgba(19,66,127,.28);pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .15s ease,transform .15s ease;}
+.d-tooltip.vis{opacity:1;transform:translateY(0);}
+.d-badge{cursor:help;}
+
+@media(max-width:900px){body.twocol .outer{display:block;}body.twocol .main-col{padding:2rem 0 5rem;}body.twocol .side-panel{display:none!important;}}
+@media(max-width:600px){.main-col{padding:2rem 0 5rem;}.outer{padding:0 1rem;}.text-title{font-size:1.7rem;}.site-header{padding:0 14px;}.site-toolbar{padding:8px 14px;height:auto;flex-wrap:wrap;}.topbar-label,.topbar-divider{display:none;}}
+
+
+/* ── TYPOGRAFIEPATCH ───────────────────────────
+   Interface en titels: Lufga. Latijnse leestekst: EB Garamond. */
+h1,h2,h3,
+.text-title,
+.text-meta,
+.site-header h1,
+.kaart-modal-title,
+.poetry-modal-title,
+.la-sectie-titel,
+.fn-title,
+.panel-card h3,
+#wlSectieLabel,
+#wlSectieTitle {
+  font-family: var(--ft) !important;
+}
+
+.latin-text,
+.latin-text .latin-para,
+.latin-text .wg,
+.latin-text .lat-word,
+.latin-text .lat-surface,
+.numbered-view,
+.numbered-view .lc {
+  font-family: 'EB Garamond', Georgia, serif !important;
+}
+
+body.interlin-analysis .inline-analysis,
+.ia-line,
+.word-popup,
+.wp-lemma,
+.wp-row,
+.wp-val,
+.wp-hint {
+  font-family: var(--ft) !important;
+}
+
+/* De Latijnse woordvorm in de popup blijft typografisch verwant met de tekst. */
+.wp-word {
+  font-family: 'EB Garamond', Georgia, serif !important;
+}
+
+
+/* ── MERKLINT athena (2 lagen) ─────────────────────────── */
+*{box-sizing:border-box;}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--ft);}
+.site-header {
+  background: var(--blue);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .85rem 1.5rem;
+  min-height: 62px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.1);
+  position: relative;
+  z-index: 210;
+}
+.site-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--magenta);
+}
+.site-header .logo { height: 34px; width: auto; display: block; flex-shrink: 0; }
+.site-header h1 {
+  font-family: var(--ft);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+  white-space: nowrap;
+  margin: 0;
+  line-height: 1;
+}
+.site-header .school {
+  font-family: var(--ft);
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  opacity: .88;
+  margin-left: auto;
+  color: #fff;
+  white-space: nowrap;
+}
+.site-toolbar {
+  background: #f7f8fa;
+  border-bottom: 1px solid var(--rule);
+  padding: .55rem 1.5rem;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 205;
+}
+.toolbar-left,.toolbar-right{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
+.toolbar-divider,.topbar-divider{width:1px;height:22px;background:var(--rule);margin:0 .25rem;}
+.back-btn,.ctrl-btn,.pill-btn {
+  font-family: var(--ft);
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--blue);
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: .32rem .85rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  transition: background .15s, border-color .15s, color .15s, transform .15s;
+}
+.back-btn:hover,.ctrl-btn:hover,.pill-btn:hover {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.back-btn svg,.ctrl-btn svg,.pill-btn svg{width:14px;height:14px;flex-shrink:0;stroke:currentColor;}
+.ctrl-btn.active,.ctrl-btn.open,.back-btn.active,.pill-btn.active{background:var(--magenta);border-color:var(--magenta);color:#fff;}
+.weergave-menu{border-color:var(--rule);box-shadow:0 8px 28px rgba(19,66,127,.16);}
+.weergave-item{color:var(--blue);font-family:var(--ft);}
+.weergave-item:hover{background:var(--blue-soft);color:var(--blue);}
+.weergave-item.active{color:var(--magenta);}
+
+body.twocol .side-panel{top:110px;max-height:calc(100vh - 110px);}
+
+
+/* ── Titelbeeld / hero: exact overgenomen uit Stom tijdverdrijf ───────────
+   Alleen visuele maatvoering. Geen JS, toolbar of tekstonthulling geraakt. */
+.title-hero-wrap{
+  width: 100%;
+  max-width: 760px;
+  margin: 3rem auto 2rem;
+  padding: 0;
+}
+.title-hero {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 0;
+  background: linear-gradient(135deg, rgba(19,66,127,.08), rgba(230,0,126,.07)), #eef3fa;
+  text-decoration: none;
+  color: #fff;
+  animation: fadeUp .5s ease both;
+}
+.title-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 35%;
+  display: block;
+}
+.title-hero img.is-missing { display: none; }
+.title-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.18) 55%, rgba(0,0,0,0) 100%);
+  pointer-events: none;
+}
+.title-hero-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ft);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(19,66,127,.42);
+  z-index: 0;
+  white-space: nowrap;
+}
+.title-hero img.is-loaded + .title-hero-placeholder { display: none; }
+.title-hero-text {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.4rem 1.6rem;
+  display: block;
+  pointer-events: none;
+}
+.title-hero-meta {
+  display: block;
+  font-family: var(--ft);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: .35rem;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+.title-hero-title {
+  display: block;
+  font-family: var(--ft);
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--magenta);
+  margin: 0 0 .35rem;
+  letter-spacing: -.01em;
+  text-shadow: 0 2px 8px rgba(0,0,0,.7);
+  max-width: 700px;
+}
+.title-hero-sub {
+  display: block;
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: .96rem;
+  font-style: italic;
+  color: rgba(255,255,255,.9);
+  line-height: 1.45;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+.text-header.is-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+@media(max-width:700px){
+  .main-col{padding-top:0;}
+  .title-hero-wrap{margin:1.8rem auto 1.75rem;padding:0 1rem;max-width:760px;}
+  .title-hero{height:260px;border-radius:12px;}
+  .title-hero-meta{font-size:.58rem;}
+  .title-hero-title{font-size:1.55rem;}
+  .title-hero-sub{font-size:.88rem;}
+}
+
+/* ── Huisstijlherstel blauw/magenta ────────────────────── */
+.text-meta,
+.extras-label,
+#wlSectieLabel,
+.fn-n,
+.d-badge.lpd.vis,
+.wp-word,
+.pw-basis{color:var(--magenta);}
+.text-title,
+.kaart-modal-title,
+.poetry-modal-title,
+.la-sectie-titel,
+.panel-card h3,
+.ac-word,
+.pw-lat,
+.vertaling-tekst,
+.tegel-lijst a{color:var(--blue);}
+.context-block{background:linear-gradient(135deg,#eef3fa,#fbe6f3);border-left-color:var(--blue);color:#25324a;}
+.context-block strong{color:var(--magenta);}
+.extras-icon{color:var(--magenta);}
+.extras-icon:hover,.extras-icon.active{background:var(--magenta-soft);color:var(--magenta);}
+.link-pill{color:var(--blue);background:#fff;}
+.link-pill:hover{background:var(--blue);border-color:var(--blue);color:#fff;}
+.lat-word:hover{background:rgba(230,0,126,.08);}
+.lat-word.active-word .lat-surface{outline-color:var(--magenta);}
+.ia-lemma{color:var(--magenta);}
+.ia-func{color:var(--blue);}
+.wp-tag.tw,.pn-tag{background:#eef3fa;color:var(--blue);}
+.wp-tag.tg{background:#fbe6f3;color:var(--magenta);}
+.reveal-bar button{background:var(--blue);}
+.reveal-bar button:hover{background:var(--magenta);}
+.reveal-bar button.sec{background:#fff;color:var(--blue);border-color:var(--blue);}
+.reveal-bar button.sec:hover{background:var(--blue);color:#fff;}
+#woordenlijst-sectie{border-top-color:var(--rule)!important;}
+.wl-card{background:#fff;border:.5px solid var(--rule);border-radius:12px;overflow:hidden;box-shadow:0 6px 22px rgba(19,66,127,.05);}
+.wl-row{display:flex;align-items:center;gap:14px;padding:11px 16px;border-bottom:.5px solid var(--rule);}
+.wl-row:last-child{border-bottom:none;}
+.wl-nr{font-family:var(--ft);font-size:12px;color:var(--ink-light);width:28px;flex-shrink:0;text-align:right;}
+.wl-dot{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--rule);flex-shrink:0;display:inline-block;background:#fff;}
+.wl-row.basis .wl-dot{background:var(--magenta-soft);border-color:rgba(230,0,126,.28);}
+.wl-lat-wrap{flex:1;min-width:0;}
+.wl-lat{font-family:var(--ft);font-size:14px;font-weight:600;color:var(--blue);}
+.wl-row.basis .wl-lat{font-weight:800;color:var(--magenta);}
+.wl-aanv{font-family:var(--ft);font-size:12px;color:var(--ink-light);margin-left:.5rem;}
+.wl-nl{font-family:var(--ft);font-size:13px;color:var(--ink);flex:1.2;text-align:left;}
+.wl-star{font-size:16px;color:#d1d5db;flex-shrink:0;padding:2px 4px;line-height:1;}
+@media(max-width:700px){.site-header{padding:.75rem 1rem;}.site-header h1{font-size:1rem;}.site-header .school{display:none;}.site-toolbar{padding:.55rem 1rem;justify-content:flex-start;}.toolbar-right{width:100%;}.wl-row{align-items:flex-start;gap:10px;}.wl-nl{flex:1 0 100%;}.wl-lat-wrap{flex-basis:calc(100% - 56px);}}
+
+
+
+/* ── PATCH: titelbeeld, tekst en context blijven één linkerkolom ─────────── */
+body.twocol .title-hero-wrap{
+  max-width:none;
+  width:100%;
+  margin:3rem 0 2rem;
+}
+body.twocol .title-hero{
+  width:100%;
+  height:320px;
+}
+body.twocol .context-block,
+body.twocol .latin-text,
+body.twocol #woordenlijst-sectie{
+  width:100%;
+}
+
+/* ── PATCH: rechterkolom als paneel met tabs; LA standaard actief ─────────── */
+.side-panel-shell{
+  display:flex;
+  flex-direction:column;
+  gap:.8rem;
+  min-width:0;
+}
+.side-panel-tabs{
+  position:sticky;
+  top:0;
+  z-index:4;
+  display:flex;
+  gap:.35rem;
+  flex-wrap:wrap;
+  padding-bottom:.45rem;
+  background:var(--page);
+}
+.side-tab-btn{
+  width:36px;
+  height:34px;
+  border-radius:12px;
+  border:1px solid var(--rule);
+  background:#fff;
+  color:var(--blue);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:background .14s,border-color .14s,color .14s,transform .14s;
+}
+.side-tab-btn:hover{
+  background:var(--blue-soft);
+  border-color:var(--blue);
+  transform:translateY(-1px);
+}
+.side-tab-btn.active{
+  background:var(--magenta);
+  border-color:var(--magenta);
+  color:#fff;
+}
+.side-tab-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;}
+.side-panel-view{display:none;min-width:0;}
+.side-panel-view.active{display:block;animation:fadeUp .18s ease both;}
+.la-side-head{
+  background:#fff;
+  border:1px solid var(--rule);
+  border-radius:12px;
+  padding:1rem 1.1rem;
+  margin-bottom:.8rem;
+}
+.la-side-label{
+  font-family:var(--ft);
+  font-size:.62rem;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--magenta);
+  margin-bottom:.35rem;
+}
+.la-side-title{
+  font-family:var(--ft);
+  font-size:1rem;
+  font-weight:800;
+  color:var(--blue);
+  line-height:1.25;
+  margin-bottom:.35rem;
+}
+.la-side-help{
+  font-family:var(--ft);
+  font-size:.76rem;
+  line-height:1.55;
+  color:var(--ink-light);
+}
+.la-cue-box{
+  display:none;
+  background:linear-gradient(135deg,#fff,#fbe6f3);
+  border:1.5px solid rgba(230,0,126,.22);
+  border-left:4px solid var(--magenta);
+  border-radius:0 12px 12px 0;
+  padding:.75rem .9rem;
+  margin-bottom:.8rem;
+  font-family:var(--ft);
+  font-size:.78rem;
+  line-height:1.5;
+  color:var(--ink-mid);
+}
+.la-cue-box.vis{display:block;}
+.la-cue-box strong{
+  display:block;
+  color:var(--magenta);
+  font-size:.64rem;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  margin-bottom:.2rem;
+}
+.la-side-section{
+  background:#fff;
+  border:1px solid var(--rule);
+  border-radius:12px;
+  padding:1rem 1.05rem;
+  margin-bottom:.8rem;
+}
+.la-side-section .la-sectie-titel{
+  margin-top:0;
+  margin-bottom:.8rem;
+  color:var(--blue);
+}
+.la-vraag{
+  border-left:3px solid var(--rule);
+  padding:.65rem .75rem;
+  margin-bottom:.75rem;
+  border-radius:0 10px 10px 0;
+  background:#fff;
+  transition:border-color .18s, background .18s, box-shadow .18s;
+}
+.la-vraag:last-child{margin-bottom:0;}
+.la-vraag.is-active{
+  border-left-color:var(--magenta);
+  background:linear-gradient(135deg,#fff,#fbe6f3);
+  box-shadow:0 8px 24px rgba(230,0,126,.08);
+}
+.la-vraag-tekst{
+  font-family:var(--ft);
+  font-size:.82rem;
+  font-weight:650;
+  color:var(--ink-mid);
+  line-height:1.5;
+  margin-bottom:.5rem;
+}
+.la-vraag.is-active .la-vraag-tekst{color:var(--blue);}
+.la-toggle-btn{
+  font-family:var(--ft);
+  font-size:.66rem;
+  font-weight:750;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  background:#fff;
+  border:1px solid var(--rule);
+  border-radius:20px;
+  padding:.22rem .68rem;
+  cursor:pointer;
+  color:var(--blue);
+  display:inline-flex;
+  align-items:center;
+  gap:.3rem;
+  transition:background .12s,color .12s,border-color .12s;
+}
+.la-toggle-btn:hover{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+.la-toggle-btn svg{width:12px;height:12px;transition:transform .18s;}
+.la-toggle-btn.open svg{transform:rotate(180deg);}
+.la-antwoord{
+  display:none;
+  font-family:var(--ft);
+  font-size:.78rem;
+  color:var(--ink-mid);
+  line-height:1.62;
+  margin-top:.55rem;
+  padding:.65rem .75rem;
+  background:#f7f8fa;
+  border-radius:10px;
+}
+.la-antwoord.vis{display:block;}
+.wg.has-la,
+.wg.has-la-linked{
+  position:relative;
+}
+.wg.has-la::after{
+  content:'';
+  display:inline-block;
+  width:.34rem;
+  height:.34rem;
+  border-radius:50%;
+  background:var(--magenta);
+  margin-left:.16rem;
+  vertical-align:super;
+  opacity:.42;
+  transform:translateY(-.04rem);
+  transition:opacity .15s, transform .15s, box-shadow .15s;
+}
+.wg.has-la:hover::after,
+.wg.current.has-la::after{
+  opacity:.95;
+  transform:translateY(-.04rem) scale(1.22);
+  box-shadow:0 0 0 3px rgba(230,0,126,.12);
+}
+.wg.has-la:hover,
+.wg.has-la-linked:hover{
+  background:rgba(230,0,126,.045);
+}
+.wg.current.has-la,
+.wg.current.has-la-linked{
+  outline:none!important;
+  background:rgba(230,0,126,.045)!important;
+  box-shadow:inset 0 -2px 0 rgba(230,0,126,.45);
+}
+@media(max-width:900px){
+  .side-panel-tabs{display:none;}
+  .la-cue-box{display:none!important;}
+  .wg.has-la::after{display:none;}
+}
+
+
+
+/* ── FINALE FIX: topbar blijft boven zijpaneel; zijpaneel start onder topbar ──
+   Raakt geen JS-systemen aan: alleen stapeling, sticky-offset en LA-startinhoud. */
+.site-header{
+  position:relative !important;
+  z-index:3000 !important;
+  min-height:62px !important;
+}
+.site-toolbar{
+  position:sticky !important;
+  top:0 !important;
+  z-index:2990 !important;
+  min-height:56px !important;
+  height:56px !important;
+  flex-wrap:nowrap !important;
+  background:#f7f8fa !important;
+  box-shadow:0 2px 12px rgba(19,66,127,.06) !important;
+}
+.toolbar-left,.toolbar-right{
+  flex-wrap:nowrap !important;
+}
+body.twocol .side-panel{
+  position:sticky !important;
+  top:72px !important;
+  max-height:calc(100vh - 72px) !important;
+  z-index:1 !important;
+  padding:1rem 0 6rem 1.5rem !important;
+  overflow-y:auto !important;
+  background:var(--page) !important;
+}
+.side-panel-tabs{
+  position:sticky !important;
+  top:0 !important;
+  z-index:3 !important;
+  background:var(--page) !important;
+  padding:.2rem 0 .65rem !important;
+  margin-bottom:.25rem !important;
+}
+.la-side-head{
+  display:none !important;
+}
+.la-cue-box{
+  margin-top:0 !important;
+}
+.la-side-section:first-child{
+  margin-top:0 !important;
+}
+@media(max-width:900px){
+  .site-toolbar{
+    position:relative !important;
+    top:auto !important;
+    height:auto !important;
+    min-height:56px !important;
+    flex-wrap:wrap !important;
+  }
+}
+
+</style>
+</head>
+<body class="show-lesson-toolbar twocol">
+
+<canvas id="inkCanvas" class="ink-canvas"></canvas>
+
+<div class="word-popup" id="popup">
+  <div class="wp-word" id="ppWord"></div>
+  <div class="wp-lemma" id="ppLemma"></div>
+  <div id="ppContent"></div>
+  <hr class="wp-sep" id="ppSep" style="display:none">
+  <div class="wp-hint" id="ppHint"></div>
+</div>
+
+<header class="site-header">
+  <img class="logo" src="../../../../images/nav/logo_wit.png" alt="athena" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='/athenalatijn1egraad/images/nav/logo_wit.png';}else{this.remove();}">
+  <h1>Ludus 4B · Tekst 3B</h1>
+  <span class="school">athena campus Pottelberg</span>
+</header>
+
+<div class="site-toolbar">
+  <div class="toolbar-left">
+    <a class="back-btn" href="../teksten.html">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 12L6 8l4-4"/></svg>
+      Terug naar Teksten
+    </a>
+  </div>
+  <div class="toolbar-right">
+    <button class="ctrl-btn" id="btnReveal" onclick="toggleReveal()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8s2.5-5 6-5 6 5 6 5-2.5 5-6 5-6-5-6-5z"/><circle cx="8" cy="8" r="2"/></svg>
+      Onthul
+    </button>
+    <div class="weergave-wrap" id="weergaveWrap">
+      <button class="ctrl-btn" id="btnWeergave" onclick="toggleWeergaveMenu(event)">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.2"/><path d="M8 1.5v1.2M8 13.3v1.2M1.5 8h1.2M13.3 8h1.2M3.4 3.4l.85.85M11.75 11.75l.85.85M12.6 3.4l-.85.85M4.25 11.75l-.85.85"/></svg>
+        Weergave
+        <svg class="weergave-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" style="width:9px;height:9px;margin-left:1px"><path d="M4 6l4 4 4-4"/></svg>
+      </button>
+      <div class="weergave-menu" id="weergaveMenu">
+        <button class="weergave-item" id="btnLines" onclick="toggleLines()">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h12M2 12h8"/></svg>
+          Regelnummers
+        </button>
+        <button class="weergave-item" id="btnInterlin" onclick="toggleInterlin()">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h12M2 10h12"/></svg>
+          Interlineair
+        </button>
+        <button class="weergave-item" id="btnTwocol" onclick="toggleTwocol()">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="6" height="10" rx="1"/><rect x="9" y="3" width="6" height="10" rx="1"/></svg>
+          Tweekolom
+        </button>
+        <div style="height:1px;background:rgba(19,66,127,.08);margin:.3rem 0;"></div>
+        <div style="font-family:'Lufga',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(19,66,127,.4);padding:.2rem .9rem .1rem;">Didactiek</div>
+        <button class="weergave-item" id="btnBs" onclick="toggleLayer('bs');event.stopPropagation()">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#2563eb;flex-shrink:0;"></span>
+          Bouwstenen
+        </button>
+        <button class="weergave-item" id="btnLpd" onclick="toggleLayer('lpd');event.stopPropagation()">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;flex-shrink:0;"></span>
+          LPD
+        </button>
+      </div>
+    </div>
+    <button class="ctrl-btn" id="btnFont" onclick="toggleFont()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12L8 4l5 8M5.5 9h5"/></svg>
+      Groter
+    </button>
+  </div>
+</div>
+
+<div class="outer">
+<div class="main-col">
+
+<div class="title-hero-wrap">
+<a class="title-hero" href="/athenalatijn1egraad/1ejaar/latijn/teksten/ludus/images/ludus4B/ludus4btekst3b.png" aria-label="Titelbeeld openen">
+    <img src="/athenalatijn1egraad/1ejaar/latijn/teksten/ludus/images/ludus4B/ludus4btekst3b.png" alt="Titelbeeld bij Ludus 4B · Tekst 3B" onload="this.classList.remove('is-missing');this.classList.add('is-loaded');" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='images/ludus4B/ludus4btekst3b.png';}else{this.classList.remove('is-loaded');this.classList.add('is-missing');}">
+    <span class="title-hero-placeholder">Afbeelding volgt: ludus4btekst3b.png</span>
+    <span class="title-hero-text">
+      <span class="title-hero-meta">Ludus 4B · Tekst 3B</span>
+      <span class="title-hero-title">Verus en Priscus</span>
+      <span class="title-hero-sub">Martialis, <em>Liber Spectaculorum</em>, 29 · twee gladiatoren als gelijken</span>
+    </span>
+  </a>
+</div>
+
+<div class="text-header is-visually-hidden" aria-hidden="true">
+    <div class="text-meta">Ludus 4B · Tekst 3B</div>
+    <h2 class="text-title">Verus en Priscus</h2>
+    <div class="text-sub">Martialis, <em>Liber Spectaculorum</em>, 29 · twee gladiatoren als gelijken</div>
+  </div>
+
+<div class="context-block" data-subtitel="Gladiatoren en clementia" data-bs="1" data-lpd="BO1_03.06">
+    <div class="d-badges" id="badges-context">
+      <span class="d-badge bs" data-layer="bs">① Voorkennis activeren</span>
+      <span class="d-badge lpd" data-layer="lpd">BO1_03.06 – situeren in tijd &amp; ruimte</span>
+    </div>
+    <strong>Context</strong>
+    <span class="context-subtitel">Gladiatoren en clementia</span>
+    Martialis beschrijft het beroemde duel tussen Priscus en Verus onder keizer Titus. De toeschouwers vragen om genade, maar de keizer houdt vast aan de regel. De uitkomst is uitzonderlijk: beide gladiatoren strijden en eindigen als gelijken.
+  </div>
+
+<div class="extras-strip">
+    <div class="d-badges" id="badges-kaart">
+      <span class="d-badge bs" data-layer="bs">④ Dual coding</span>
+      <span class="d-badge lpd" data-layer="lpd">BO1_03.06 – situeren in tijd &amp; ruimte</span>
+    </div>
+    <div class="extras-row">
+      <span class="extras-label">Extra's</span>
+      <a class="extras-icon" href="#woordenlijst-sectie" title="Woordenlijst van deze tekst" aria-label="Woordenlijst">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 2h8a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/><path d="M3 2v12"/><path d="M6 6h4M6 9h3"/></svg>
+      </a>
+      <button type="button" class="extras-icon" id="btnNoten" onclick="toggleNoten()" title="Grammaticale noten tonen / verbergen" aria-label="Grammaticale noten">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 3.5h11M2.5 7h11M2.5 10.5h7"/><circle cx="12" cy="11" r="1.6" fill="currentColor" stroke="none"/></svg>
+      </button>
+      <button type="button" class="extras-icon" id="btnLectuur" onclick="openLectuurModal()" title="Lectuuranalyse openen" aria-label="Lectuuranalyse">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h10"/><circle cx="13" cy="11" r="2.2" fill="currentColor" stroke="none"/><path d="M13 10v2M12 11h2" stroke="white" stroke-width="1.2"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="kaart-modal-overlay" id="kaartModalOverlay" onclick="closeKaartModal()">
+    <div class="kaart-modal" onclick="event.stopPropagation()">
+      <div class="kaart-modal-header">
+        <span class="kaart-modal-title">Historische kaart</span>
+        <button class="kaart-modal-close" onclick="closeKaartModal()">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+        </button>
+      </div>
+      <div class="kaart-modal-body">
+        <div class="kaart-placeholder">
+          <svg viewBox="0 0 48 48" fill="none" stroke="rgba(19,66,127,.2)" stroke-width="1.5" style="width:48px;height:48px;margin-bottom:1rem"><rect x="4" y="8" width="40" height="32" rx="3"/><path d="M4 20l10-6 8 8 8-5 14 9"/><circle cx="34" cy="15" r="3"/></svg>
+          <p>Kaart wordt hier getoond</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="textStartSentinel" aria-hidden="true" style="height:1px;"></div>
+
+  <div class="d-badges" id="badges-reveal" style="margin-bottom:.5rem;">
+      <span class="d-badge bs" data-layer="bs">⑤ Actieve verwerking</span>
+      <span class="d-badge bs" data-layer="bs">⑦ Scaffolding</span>
+      <span class="d-badge lpd" data-layer="lpd">BO1_03.05 – tekst begrijpen via lectuurmethode</span>
+      <span class="d-badge lpd" data-layer="lpd">BO1_03.04 – lectuurstrategieën</span>
+  </div>
+  <div class="reveal-bar" id="revealBar">
+    <span>Onthulling per woordgroep</span>
+    <button onclick="revealPrev()">← Vorige</button>
+    <button onclick="revealNext()">Volgende →</button>
+    <button class="sec" onclick="revealAll()">Alles tonen</button>
+    <span class="rev-count" id="revCount">0 / 0</span>
+  </div>
+
+  <div class="d-badges" id="badges-tekst" style="margin-bottom:.5rem;">
+      <span class="d-badge bs" data-layer="bs">③ Voorbeelden & modelling</span>
+      <span class="d-badge bs" data-layer="bs">⑤ Actieve verwerking</span>
+      <span class="d-badge lpd" data-layer="lpd">BO1_03.05 – tekst begrijpen via lectuurmethode</span>
+      <span class="d-badge lpd" data-layer="lpd">BO1_03.03 – morfologie & syntaxis</span>
+  </div>
+  <div class="latin-text" id="latinText">
+<div class="plain-view" id="plainView">
+<div class="latin-para">
+<span class="wg" data-wg="1"><span class="lat-word" data-w="Priscus" data-l="Priscus" data-d="eigennaam nom. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="Priscus">Priscus</span> <span class="lat-word" data-w="certamina" data-l="certamen" data-d="znw. acc. mv. o." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="gevechten/strijd">certamina</span> <span class="lat-word" data-w="traxit" data-l="trahere" data-d="ww. ind. perf. 3 enk." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="rekte/ sleepte voort">traxit</span>,</span>
+<span class="wg" data-wg="2"><span class="lat-word" data-w="traxit" data-l="trahere" data-d="ww. ind. perf. 3 enk." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="rekte/ sleepte voort">traxit</span> <span class="lat-word" data-w="et" data-l="et" data-d="voegwoord" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="en">et</span> <span class="lat-word" data-w="Verus" data-l="Verus" data-d="eigennaam nom. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="Verus">Verus</span>.</span>
+</div>
+<div class="latin-para tekst-scheiding">
+<span class="wg" data-wg="3"><span class="lat-word" data-w="Missio" data-l="missio" data-d="znw. nom. enk. v." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="genade/vrijlating">Missio</span> <span class="lat-word" data-w="saepe" data-l="saepe" data-d="bijwoord" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="vaak">saepe</span> <span class="lat-word" data-w="viris" data-l="vir" data-d="znw. dat. mv. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="voor/aan de mannen">viris</span></span>
+<span class="wg" data-wg="4"><span class="lat-word" data-w="magno" data-l="magnus" data-d="adj. abl. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="groot/luid">magno</span> <span class="lat-word" data-w="clamore" data-l="clamor" data-d="znw. abl. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="geroep">clamore</span> <span class="lat-word" data-w="petita" data-l="petere" data-d="PPP nom. enk. v." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="gevraagd">petita</span> <span class="lat-word" data-w="est" data-l="esse" data-d="ww. ind. praes./perf. 3 enk." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="is/werd">est</span>,</span>
+<span class="wg" data-wg="5"><span class="lat-word" data-w="sed" data-l="sed" data-d="voegwoord" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="maar">sed</span> <span class="lat-word" data-w="Caesar" data-l="Caesar" data-d="znw./eigennaam nom. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="de keizer/Caesar">Caesar</span> <span class="lat-word" data-w="ipse" data-l="ipse" data-d="vnw. nom. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="zelf">ipse</span></span>
+<span class="wg" data-wg="6"><span class="lat-word" data-w="paruit" data-l="parere" data-d="ww. ind. perf. 3 enk." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="gehoorzaamde">paruit</span> <span class="lat-word" data-w="legi" data-l="lex" data-d="znw. dat. enk. v." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="aan de wet">legi</span> <span class="lat-word" data-w="suae" data-l="suus" data-d="bez. vnw. dat. enk. v." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="zijn eigen">suae</span>:</span>
+<span class="wg" data-wg="7"><span class="lat-word" data-w="lex" data-l="lex" data-d="znw. nom. enk. v." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="wet">lex</span> <span class="lat-word" data-w="erat" data-l="esse" data-d="ww. ind. imperf. 3 enk." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="was">erat</span> <span class="lat-word" data-w="pugnare" data-l="pugnare" data-d="inf. praes." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="vechten/strijden">pugnare</span> <span class="lat-word" data-w="ad" data-l="ad" data-d="voorzetsel" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="tot/naar">ad</span> <span class="lat-word" data-w="mortem" data-l="mors" data-d="znw. acc. enk. v." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="de dood">mortem</span>.</span>
+</div>
+<div class="latin-para tekst-scheiding">
+<span class="wg" data-wg="8"><span class="lat-word" data-w="Finiverunt" data-l="finire" data-d="ww. ind. perf. 3 mv." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="zij beëindigden">Finiverunt</span> <span class="lat-word" data-w="tandem" data-l="tandem" data-d="bijwoord" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="eindelijk/uiteindelijk">tandem</span> <span class="lat-word" data-w="certamen" data-l="certamen" data-d="znw. acc. enk. o." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="strijd">certamen</span></span>
+<span class="wg" data-wg="9"><span class="lat-word" data-w="aequo" data-l="aequus" data-d="adj. abl. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="gelijk">aequo</span> <span class="lat-word" data-w="modo" data-l="modus" data-d="znw. abl. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="wijze/manier">modo</span>:</span>
+<span class="wg" data-wg="10"><span class="lat-word" data-w="pugnaverunt" data-l="pugnare" data-d="ww. ind. perf. 3 mv." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="zij streden">pugnaverunt</span> <span class="lat-word" data-w="pares" data-l="par" data-d="adj./znw. nom. mv. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="gelijken">pares</span>,</span>
+<span class="wg" data-wg="11"><span class="lat-word" data-w="succubuerunt" data-l="succumbere" data-d="ww. ind. perf. 3 mv." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="zij bezweken/eindigden">succubuerunt</span> <span class="lat-word" data-w="pares" data-l="par" data-d="adj./znw. nom. mv. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="gelijken">pares</span>.</span>
+</div>
+<div class="latin-para tekst-scheiding">
+<span class="wg" data-wg="12"><span class="lat-word" data-w="Caesar" data-l="Caesar" data-d="znw./eigennaam nom. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="de keizer/Caesar">Caesar</span> <span class="lat-word" data-w="eis" data-l="is/ea/id" data-d="vnw. dat. mv." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="aan hen">eis</span></span>
+<span class="wg" data-wg="13"><span class="lat-word" data-w="ob" data-l="ob" data-d="voorzetsel" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="omwille van/wegens">ob</span> <span class="lat-word" data-w="virtutem" data-l="virtus" data-d="znw. acc. enk. v." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="moed/dapperheid">virtutem</span> <span class="lat-word" data-w="ingeniosam" data-l="ingeniosus" data-d="adj. acc. enk. v." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="schitterend/bijzonder">ingeniosam</span></span>
+<span class="wg" data-wg="14"><span class="lat-word" data-w="rudes" data-l="rudis" data-d="znw. acc. mv. v." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="houten zwaarden">rudes</span> <span class="lat-word" data-w="et" data-l="et" data-d="voegwoord" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="en">et</span> <span class="lat-word" data-w="palmas" data-l="palma" data-d="znw. acc. mv. v." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="palmtakken">palmas</span> <span class="lat-word" data-w="dedit" data-l="dare" data-d="ww. ind. perf. 3 enk." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="gaf">dedit</span>.</span>
+</div>
+<div class="latin-para tekst-scheiding">
+<span class="wg" data-wg="15"><span class="lat-word" data-w="Contigit" data-l="contingere" data-d="ww. ind. perf. 3 enk." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="het gebeurde">Contigit</span> <span class="lat-word" data-w="hoc" data-l="hic" data-d="aanw. vnw. nom./acc. enk. o." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="dit">hoc</span></span>
+<span class="wg" data-wg="16"><span class="lat-word" data-w="sub" data-l="sub" data-d="voorzetsel" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="onder">sub</span> <span class="lat-word" data-w="nullo" data-l="nullus" data-d="adj. abl. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="geen enkele">nullo</span> <span class="lat-word" data-w="principe" data-l="princeps" data-d="znw. abl. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="keizer/princeps">principe</span></span>
+<span class="wg" data-wg="17"><span class="lat-word" data-w="nisi" data-l="nisi" data-d="voegwoord" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="behalve/tenzij">nisi</span> <span class="lat-word" data-w="sub" data-l="sub" data-d="voorzetsel" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="onder">sub</span> <span class="lat-word" data-w="te" data-l="tu" data-d="pers. vnw. abl./acc." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="u/jij">te</span>, <span class="lat-word" data-w="Caesar" data-l="Caesar" data-d="znw./eigennaam nom. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="de keizer/Caesar">Caesar</span>:</span>
+<span class="wg" data-wg="18"><span class="lat-word" data-w="cum" data-l="cum" data-d="voegwoord/voorzetsel" data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="toen/wanneer/met">cum</span> <span class="lat-word" data-w="duo" data-l="duo" data-d="telwoord nom. mv. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="twee">duo</span> <span class="lat-word" data-w="pugnarent" data-l="pugnare" data-d="ww. conj. imperf. 3 mv." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="zij streden">pugnarent</span>,</span>
+<span class="wg" data-wg="19"><span class="lat-word" data-w="victor" data-l="victor" data-d="znw. nom. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="winnaar">victor</span> <span class="lat-word" data-w="uterque" data-l="uterque" data-d="vnw. nom. enk. m." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="elk van beiden/beiden">uterque</span> <span class="lat-word" data-w="fuit" data-l="esse" data-d="ww. ind. perf. 3 enk." data-s="woord in deze woordgroep; bepaal de functie vanuit de context" data-n="was">fuit</span>!</span>
+</div>
+</div><!-- /plain-view -->
+<div class="numbered-view" id="numberedView">
+<div class="latin-line"><span class="ln">1</span><span class="lc">Priscus certamina traxit, traxit et Verus.</span></div>
+<div class="latin-line"><span class="ln">2</span><span class="lc">Missio saepe viris magno clamore petita est, sed Caesar ipse paruit legi suae: lex erat pugnare ad mortem.</span></div>
+<div class="latin-line"><span class="ln">3</span><span class="lc">Finiverunt tandem certamen aequo modo: pugnaverunt pares, succubuerunt pares.</span></div>
+<div class="latin-line"><span class="ln">4</span><span class="lc">Caesar eis ob virtutem ingeniosam rudes et palmas dedit.</span></div>
+<div class="latin-line"><span class="ln">5</span><span class="lc">Contigit hoc sub nullo principe nisi sub te, Caesar: cum duo pugnarent, victor uterque fuit!</span></div>
+</div>
+</div>
+
+<div class="noten-block" id="notenBlock">
+  <div style="margin-bottom:.5rem;" class="d-badges" id="badges-noten">
+      <span class="d-badge bs" data-layer="bs">⑦ Scaffolding</span>
+      <span class="d-badge bs" data-layer="bs">⑪ Feedback die denken aanzet</span>
+      <span class="d-badge lpd" data-layer="lpd">BO1_03.03 – morfologie & syntaxis</span>
+    </div>
+    <div class="footnotes">
+      <div class="fn-title">Grammaticale noten</div>
+      <div class="fn"><span class="fn-n">1</span><span><em>traxit ... traxit</em>: herhaling benadrukt dat beide strijders het gevecht rekten.</span></div><div class="fn"><span class="fn-n">2</span><span><em>missio</em>: genade/vrijlating voor gladiatoren.</span></div><div class="fn"><span class="fn-n">3</span><span><em>paruit legi suae</em>: <em>parere</em> krijgt een dativus: aan zijn wet gehoorzamen.</span></div><div class="fn"><span class="fn-n">4</span><span><em>pugnaverunt pares, succubuerunt pares</em>: parallelisme met herhaling van <em>pares</em>.</span></div><div class="fn"><span class="fn-n">5</span><span><em>victor uterque fuit</em>: paradoxale pointe: beiden zijn winnaar.</span></div>
+    </div>
+  </div>
+
+<div style="margin-bottom:.5rem;" class="d-badges" id="badges-wl">
+      <span class="d-badge bs" data-layer="bs">① Voorkennis activeren</span>
+      <span class="d-badge bs" data-layer="bs">⑧ Gespreide oefening</span>
+      <span class="d-badge lpd" data-layer="lpd">BO1_03.01 – basiswoordenschat</span>
+      <span class="d-badge lpd" data-layer="lpd">BO1_03.02 – woordenschatstrategieën</span>
+    </div>
+  <div id="woordenlijst-sectie" style="margin-top:3.5rem;padding-top:2rem;border-top:2px solid var(--rule);">
+    <div id="wlSectieLabel" style="font-family:'Lufga',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--magenta);margin-bottom:.3rem;opacity:.85;">
+      Ludus 4B · Tekst 3B
+    </div>
+    <h2 style="font-family:'Lufga',sans-serif;color:var(--blue);font-size:1.35rem;font-weight:700;margin-bottom:.75rem;">Woordenlijst</h2>
+    <div id="wlSectieInfo" style="font-family:'Lufga',sans-serif;font-size:.78rem;color:var(--ink-light);margin-bottom:1rem;">
+      Woorden op volgorde van voorkomen. <span style="display:inline-block;font-size:.6rem;font-weight:700;padding:.04rem .3rem;border-radius:8px;background:#fbe6f1;color:var(--magenta);text-transform:uppercase;vertical-align:middle;">basis</span> = basiswoordenschat.
+    </div>
+    <div id="wlTable"></div>
+  </div>
+
+</div><!-- /main-col -->
+
+
+<div class="col-resizer" id="colResizer"><div class="col-resizer-handle"></div></div>
+
+<div class="side-panel" id="sidePanel">
+  <div class="side-panel-shell">
+    <div class="side-panel-tabs" role="tablist" aria-label="Zijpaneel">
+      <button type="button" class="side-tab-btn active" data-panel="la" onclick="selectSidePanel('la')" title="Lectuuranalyse" aria-label="Lectuuranalyse">
+        <svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M2 4h12M2 8h8M2 12h10"/><circle cx="13" cy="11" r="2.1" fill="currentColor" stroke="none"/><path d="M13 10v2M12 11h2" stroke="#fff" stroke-width="1.1"/></svg>
+      </button>
+      <button type="button" class="side-tab-btn" data-panel="grammar" onclick="selectSidePanel('grammar')" title="Grammaticahulp" aria-label="Grammaticahulp">
+        <svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M3 3h10M3 7h10M3 11h6"/></svg>
+      </button>
+      <button type="button" class="side-tab-btn" data-panel="translation" onclick="selectSidePanel('translation')" title="Vertaling" aria-label="Vertaling">
+        <svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M1 4h6M4 2v2M2 4c0 2.2 1.8 3.7 4 4M6 4c0 1.4-.5 2.8-2 4"/><path d="M8 12l1.6-4 1.6 4M9.1 10.5h2"/></svg>
+      </button>
+      <button type="button" class="side-tab-btn" data-panel="notes" onclick="selectSidePanel('notes')" title="Noten" aria-label="Noten">
+        <svg viewBox="0 0 16 16" stroke-width="1.6"><path d="M3 2h8a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"/><path d="M5 6h6M5 9h6"/></svg>
+      </button>
+    </div>
+
+    <section class="side-panel-view active" id="panel-la" aria-label="Lectuuranalyse">
+      <div class="la-side-head">
+        <div class="la-side-label">Lectuuranalyse</div>
+        <div class="la-side-title">Leesvraag naast de tekst</div>
+        <div class="la-side-help">Hier staat alleen de actuele leesvraag. Bij een gekoppelde woordgroep of passage springt dit paneel automatisch naar de juiste vraag.</div>
+      </div>
+      <div class="la-cue-box" id="laCueBox"></div>
+      <div id="laPanelBody"></div>
+    </section>
+
+    <section class="side-panel-view" id="panel-grammar" aria-label="Grammaticahulp">
+      <div class="analysis-card" id="analysisCard">
+        <div class="ac-empty">Klik op een woord voor grammaticahulp. De hulp verschijnt hier wanneer je dit tabblad opent.</div>
+      </div>
+    </section>
+
+    <section class="side-panel-view" id="panel-translation" aria-label="Vertaling">
+      <div class="panel-card" id="sidePanelVertaling">
+        <h3 style="color:var(--magenta);">Vertaling</h3>
+        <div class="vertaling-tekst" id="vertaalTekst"></div>
+      </div>
+    </section>
+
+    <section class="side-panel-view" id="panel-notes" aria-label="Noten">
+      <div class="panel-card">
+        <h3>Let op</h3>
+<div class="panel-note"><span class="pn-tag">Herhaling</span><em>traxit, traxit</em> en tweemaal <em>pares</em> maken de gelijkheid voelbaar.</div>
+<div class="panel-note"><span class="pn-tag">Dativus</span><em>legi suae</em> bij <em>paruit</em>: gehoorzamen aan.</div>
+<div class="panel-note"><span class="pn-tag">Gladiatoren</span><em>missio</em>, <em>rudes</em> en <em>palmas</em> horen bij de arena-context.</div>
+<div class="panel-note"><span class="pn-tag">Pointe</span>De uitzonderlijke uitkomst: niet één winnaar, maar beiden winnaar.</div>
+      </div>
+    </section>
+  </div>
+</div>
+
+</div><!-- /outer -->
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10l4-4 4 4"/></svg>
+</button>
+
+<script>
+var WL = [
+  {
+    "g": "Priscus",
+    "a": "eigennaam nom. enk. m.",
+    "v": "Priscus",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 1
+    }
+  },
+  {
+    "g": "certamen",
+    "a": "znw. acc. mv. o.",
+    "v": "gevechten/strijd",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 2
+    }
+  },
+  {
+    "g": "trahere",
+    "a": "ww. ind. perf. 3 enk.",
+    "v": "rekte/ sleepte voort",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 3
+    }
+  },
+  {
+    "g": "et",
+    "a": "voegwoord",
+    "v": "en",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 4
+    }
+  },
+  {
+    "g": "Verus",
+    "a": "eigennaam nom. enk. m.",
+    "v": "Verus",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 5
+    }
+  },
+  {
+    "g": "missio",
+    "a": "znw. nom. enk. v.",
+    "v": "genade/vrijlating",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 6
+    }
+  },
+  {
+    "g": "saepe",
+    "a": "bijwoord",
+    "v": "vaak",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 7
+    }
+  },
+  {
+    "g": "vir",
+    "a": "znw. dat. mv. m.",
+    "v": "voor/aan de mannen",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 8
+    }
+  },
+  {
+    "g": "magnus",
+    "a": "adj. abl. enk. m.",
+    "v": "groot/luid",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 9
+    }
+  },
+  {
+    "g": "clamor",
+    "a": "znw. abl. enk. m.",
+    "v": "geroep",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 10
+    }
+  },
+  {
+    "g": "petere",
+    "a": "PPP nom. enk. v.",
+    "v": "gevraagd",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 11
+    }
+  },
+  {
+    "g": "esse",
+    "a": "ww. ind. praes./perf. 3 enk.",
+    "v": "is/werd",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 12
+    }
+  },
+  {
+    "g": "sed",
+    "a": "voegwoord",
+    "v": "maar",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 13
+    }
+  },
+  {
+    "g": "Caesar",
+    "a": "znw./eigennaam nom. enk. m.",
+    "v": "de keizer/Caesar",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 14
+    }
+  },
+  {
+    "g": "ipse",
+    "a": "vnw. nom. enk. m.",
+    "v": "zelf",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 15
+    }
+  },
+  {
+    "g": "parere",
+    "a": "ww. ind. perf. 3 enk.",
+    "v": "gehoorzaamde",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 16
+    }
+  },
+  {
+    "g": "lex",
+    "a": "znw. dat. enk. v.",
+    "v": "aan de wet",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 17
+    }
+  },
+  {
+    "g": "suus",
+    "a": "bez. vnw. dat. enk. v.",
+    "v": "zijn eigen",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 18
+    }
+  },
+  {
+    "g": "pugnare",
+    "a": "inf. praes.",
+    "v": "vechten/strijden",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 19
+    }
+  },
+  {
+    "g": "ad",
+    "a": "voorzetsel",
+    "v": "tot/naar",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 20
+    }
+  },
+  {
+    "g": "mors",
+    "a": "znw. acc. enk. v.",
+    "v": "de dood",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 21
+    }
+  },
+  {
+    "g": "finire",
+    "a": "ww. ind. perf. 3 mv.",
+    "v": "zij beëindigden",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 22
+    }
+  },
+  {
+    "g": "tandem",
+    "a": "bijwoord",
+    "v": "eindelijk/uiteindelijk",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 23
+    }
+  },
+  {
+    "g": "aequus",
+    "a": "adj. abl. enk. m.",
+    "v": "gelijk",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 24
+    }
+  },
+  {
+    "g": "modus",
+    "a": "znw. abl. enk. m.",
+    "v": "wijze/manier",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 25
+    }
+  },
+  {
+    "g": "par",
+    "a": "adj./znw. nom. mv. m.",
+    "v": "gelijken",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 26
+    }
+  },
+  {
+    "g": "succumbere",
+    "a": "ww. ind. perf. 3 mv.",
+    "v": "zij bezweken/eindigden",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 27
+    }
+  },
+  {
+    "g": "is/ea/id",
+    "a": "vnw. dat. mv.",
+    "v": "aan hen",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 28
+    }
+  },
+  {
+    "g": "ob",
+    "a": "voorzetsel",
+    "v": "omwille van/wegens",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 29
+    }
+  },
+  {
+    "g": "virtus",
+    "a": "znw. acc. enk. v.",
+    "v": "moed/dapperheid",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 30
+    }
+  },
+  {
+    "g": "ingeniosus",
+    "a": "adj. acc. enk. v.",
+    "v": "schitterend/bijzonder",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 31
+    }
+  },
+  {
+    "g": "rudis",
+    "a": "znw. acc. mv. v.",
+    "v": "houten zwaarden",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 32
+    }
+  },
+  {
+    "g": "palma",
+    "a": "znw. acc. mv. v.",
+    "v": "palmtakken",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 33
+    }
+  },
+  {
+    "g": "dare",
+    "a": "ww. ind. perf. 3 enk.",
+    "v": "gaf",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 34
+    }
+  },
+  {
+    "g": "contingere",
+    "a": "ww. ind. perf. 3 enk.",
+    "v": "het gebeurde",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 35
+    }
+  },
+  {
+    "g": "hic",
+    "a": "aanw. vnw. nom./acc. enk. o.",
+    "v": "dit",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 36
+    }
+  },
+  {
+    "g": "sub",
+    "a": "voorzetsel",
+    "v": "onder",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 37
+    }
+  },
+  {
+    "g": "nullus",
+    "a": "adj. abl. enk. m.",
+    "v": "geen enkele",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 38
+    }
+  },
+  {
+    "g": "princeps",
+    "a": "znw. abl. enk. m.",
+    "v": "keizer/princeps",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 39
+    }
+  },
+  {
+    "g": "nisi",
+    "a": "voegwoord",
+    "v": "behalve/tenzij",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 40
+    }
+  },
+  {
+    "g": "tu",
+    "a": "pers. vnw. abl./acc.",
+    "v": "u/jij",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 41
+    }
+  },
+  {
+    "g": "cum",
+    "a": "voegwoord/voorzetsel",
+    "v": "toen/wanneer/met",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 42
+    }
+  },
+  {
+    "g": "duo",
+    "a": "telwoord nom. mv. m.",
+    "v": "twee",
+    "b": true,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 43
+    }
+  },
+  {
+    "g": "victor",
+    "a": "znw. nom. enk. m.",
+    "v": "winnaar",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 44
+    }
+  },
+  {
+    "g": "uterque",
+    "a": "vnw. nom. enk. m.",
+    "v": "elk van beiden/beiden",
+    "b": false,
+    "t": [
+      "4b/3b"
+    ],
+    "vol": {
+      "4b/3b": 45
+    }
+  }
+];
+
+/* ══════════════════════════════════════════
+   PATCH 3: verbeterde lookupWL
+   Matcht nu ook op enkel het eerste woord van grondvorm
+   (bijv. data-l="civitas" matcht g:"civitas")
+   En normaliseert de data-l door alles na komma/haakje weg te laten
+══════════════════════════════════════════ */
+function lookupWL(lemma) {
+  if (!lemma) return null;
+  // Normaliseer: haal alles na komma, slash, haakje weg; lowercase; trim
+  var clean = lemma.toLowerCase()
+    .replace(/[,;\/\(\)].*/g, '')
+    .trim();
+  // Exacte match op grondvorm (eerste woord)
+  for (var i = 0; i < WL.length; i++) {
+    var g = WL[i].g.toLowerCase().replace(/[,;\/\(\)].*/g, '').trim();
+    if (g === clean) return WL[i];
+  }
+  // Gedeeltelijke match: grondvorm begint met clean of clean begint met grondvorm
+  if (clean.length >= 3) {
+    for (var i = 0; i < WL.length; i++) {
+      var g = WL[i].g.toLowerCase().replace(/[,;\/\(\)].*/g, '').trim();
+      if (g.startsWith(clean) || clean.startsWith(g)) return WL[i];
+    }
+  }
+  // Fallback: zoek in aanvullingen
+  if (clean.length >= 4) {
+    for (var i = 0; i < WL.length; i++) {
+      var a = (WL[i].a || '').toLowerCase();
+      if (a.includes(clean)) return WL[i];
+    }
+  }
+  return null;
+}
+
+function filterWL(tekst) {
+  var label = 'Ludus 4B · Tekst 3B';
+  var filtered = WL.filter(function(w){ return w.t && w.t.indexOf(tekst) !== -1; })
+                   .sort(function(a,b){ return ((a.vol&&a.vol[tekst])||999) - ((b.vol&&b.vol[tekst])||999); });
+  var sectInfo = document.getElementById('wlSectieInfo');
+  if (sectInfo) sectInfo.innerHTML = filtered.length + ' woorden op volgorde van voorkomen. <span style="display:inline-block;font-size:.6rem;font-weight:700;padding:.04rem .3rem;border-radius:8px;background:#fbe6f1;color:var(--magenta);text-transform:uppercase;vertical-align:middle;">basis</span> = basiswoordenschat.';
+  renderWLData(filtered);
+  renderWLSide(filtered);
+}
+
+function renderWLData(list) {
+  var el = document.getElementById('wlTable');
+  if (!el) return;
+  var html = '<div class="wl-card">';
+  list.forEach(function(w, i) {
+    html += '<div class="wl-row' + (w.b ? ' basis' : '') + '">'
+      + '<span class="wl-nr">' + (i+1) + '</span>'
+      + '<span class="wl-dot"></span>'
+      + '<span class="wl-lat-wrap">'
+        + '<span class="wl-lat">' + w.g + '</span>'
+        + (w.a ? '<span class="wl-aanv">' + w.a + '</span>' : '')
+      + '</span>'
+      + '<span class="wl-nl">' + w.v + '</span>'
+      + '<span class="wl-star">&#9734;</span>'
+      + '</div>';
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function renderWLSide(list) {
+  var el = document.getElementById('wlSide');
+  if (!el) return;
+  var html = '';
+  var max = Math.min(20, list.length);
+  for (var i = 0; i < max; i++) {
+    var w = list[i];
+    html += '<div class="panel-word">'
+      + '<span class="pw-lat">' + w.g + (w.b ? '<span class="pw-basis">basis</span>' : '') + '</span>'
+      + '<span class="pw-nl">' + w.v.split(';')[0] + '</span>'
+      + '</div>';
+  }
+  if (list.length > 20) {
+    html += '<div style="font-family:\'Lufga\',sans-serif;font-size:.7rem;color:var(--ink-light);padding:.5rem 0;text-align:center;">+ ' + (list.length - 20) + ' meer ↓ zie woordenlijst</div>';
+  }
+  el.innerHTML = html;
+}
+
+filterWL('4b/3b');
+
+var S = {lines:false, font:false, reveal:false, twocol:true, interlin:true, revIdx:-1};
+var ksWgroups = Array.from(document.querySelectorAll('.wg'));
+var ksActiveWord = null;
+
+document.body.classList.add('interlin-analysis');
+(function ksPrep(){
+  document.querySelectorAll('.lat-word').forEach(function(w){
+    if(w.dataset.ksPrepared==='1') return;
+    var txt=w.textContent;
+    w.innerHTML='<span class="inline-analysis"></span><span class="lat-surface">'+txt+'</span>';
+    w.dataset.stage='0'; w.dataset.ksPrepared='1';
+  });
+})();
+
+function ksWordAvailable(word){
+  if(!S.reveal) return true;
+  var wg=word.closest('.wg');
+  return !wg||wg.classList.contains('revealed')||wg.classList.contains('current');
+}
+function ksGetStage(w){return parseInt(w.dataset.stage||'0',10);}
+function ksSetStage(w,stage){w.dataset.stage=String(stage);ksRenderAnalysis(w);}
+function ksSetActive(word){
+  document.querySelectorAll('.lat-word.active-word').forEach(function(w){w.classList.remove('active-word');});
+  ksActiveWord=word||null;
+  if(ksActiveWord) ksActiveWord.classList.add('active-word');
+}
+function ksRenderAnalysis(w){
+  var slot=w.querySelector('.inline-analysis'); if(!slot) return;
+  var stage=ksGetStage(w);
+  w.classList.remove('has-analysis','stage-1','stage-2','stage-3');
+  if(!S.interlin||stage===0){slot.innerHTML='';return;}
+  var h='';
+  if(stage>=1){h+='<span class="ia-line ia-lemma">'+(w.dataset.l||'')+'</span><span class="ia-line ia-meaning">'+(w.dataset.n||'')+'</span>';}
+  if(stage>=2){h+='<span class="ia-line ia-det">'+(w.dataset.d||'')+'</span>';}
+  if(stage>=3){h+='<span class="ia-line ia-func">'+(w.dataset.s||'')+'</span>';}
+  slot.innerHTML=h;
+  w.classList.add('has-analysis','stage-'+stage);
+}
+function ksStepWord(w){
+  if(!w||!ksWordAvailable(w)) return;
+  ksSetActive(w);
+  var stage=ksGetStage(w); if(stage<3) stage++;
+  ksSetStage(w,stage);
+  updatePanel(w); hidePopup();
+}
+function stepActiveWord(){if(!ksActiveWord) ksFocusFirstInWg(); if(ksActiveWord) ksStepWord(ksActiveWord);}
+
+document.querySelectorAll('.lat-word').forEach(function(w){
+  var clone=w.cloneNode(true);
+  w.parentNode.replaceChild(clone,w);
+  clone.addEventListener('click',function(e){e.stopPropagation();ksStepWord(clone);});
+});
+ksWgroups=Array.from(document.querySelectorAll('.wg'));
+
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.lat-word')&&!e.target.closest('.lesson-toolbar-wrap')&&!e.target.closest('.tool-palette')){
+    document.querySelectorAll('.lat-word.active-word').forEach(function(w){w.classList.remove('active-word');});
+    ksActiveWord=null; hidePopup();
+  }
+});
+
+function ksCurrentWg(){
+  if(S.reveal&&S.revIdx>=0&&ksWgroups[S.revIdx]) return ksWgroups[S.revIdx];
+  if(ksActiveWord) return ksActiveWord.closest('.wg');
+  return null;
+}
+function ksWordsInWg(){var wg=ksCurrentWg();return wg?Array.from(wg.querySelectorAll('.lat-word')): [];}
+function ksFocusFirstInWg(){var ws=ksWordsInWg();if(ws.length) ksSetActive(ws[0]);}
+function focusNextWord(){
+  var ws=ksWordsInWg(); if(!ws.length) return;
+  if(!ksActiveWord||ws.indexOf(ksActiveWord)===-1){ksSetActive(ws[0]);return;}
+  var idx=Math.min(ws.length-1,ws.indexOf(ksActiveWord)+1);
+  ksSetActive(ws[idx]); ws[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'});
+}
+function focusPrevWord(){
+  var ws=ksWordsInWg(); if(!ws.length) return;
+  if(!ksActiveWord||ws.indexOf(ksActiveWord)===-1){ksSetActive(ws[0]);return;}
+  var idx=Math.max(0,ws.indexOf(ksActiveWord)-1);
+  ksSetActive(ws[idx]); ws[idx].scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'});
+}
+function clearCurrentWgAnalysis(){ksWordsInWg().forEach(function(w){ksSetStage(w,0);});}
+function clearAllAnalysis(){document.querySelectorAll('.lat-word').forEach(function(w){ksSetStage(w,0);});ksSetActive(null);}
+
+var popup = document.getElementById('popup');
+function showPopup(el, click) {
+  var wl = lookupWL(el.dataset.l);
+  document.getElementById('ppWord').textContent = el.dataset.w;
+  document.getElementById('ppLemma').textContent = el.dataset.l || '';
+  var info = click === 1 ? el.dataset.d : el.dataset.s;
+  var tagClass = click === 1 ? 'tg' : 'to';
+  var tagLabel = click === 1 ? 'Det.' : 'Funct.';
+  var html = '<div class="wp-row"><span class="wp-tag ' + tagClass + '">' + tagLabel + '</span><span class="wp-val">' + info + '</span></div>';
+  html += '<div class="wp-row" style="margin-top:.25rem"><span class="wp-tag tp">NL</span><span class="wp-val">' + el.dataset.n + '</span></div>';
+  if (wl) {
+    html += '<hr class="wp-sep">';
+    var isBasis = wl.b;
+    var grondvorm = '<span style="font-family:\'EB Garamond\',Georgia,serif;font-size:1rem;font-weight:600;color:' + (isBasis ? 'var(--magenta)' : 'var(--blue)') + ';">' + wl.g + '</span>';
+    if (isBasis) grondvorm += ' <span style="display:inline-block;font-size:.55rem;font-weight:700;padding:.03rem .28rem;border-radius:8px;background:#fce4f1;color:var(--magenta);text-transform:uppercase;vertical-align:middle;">basis</span>';
+    html += '<div class="wp-row"><span class="wp-tag tw">&#128218;</span><div>' + grondvorm;
+    if (wl.a) html += '<div style="font-size:.66rem;color:var(--ink-light);margin-top:.1rem;">' + wl.a + '</div>';
+    html += '<div style="font-size:.78rem;color:var(--ink-mid);margin-top:.15rem;">' + wl.v + '</div>';
+    html += '</div></div>';
+  }
+  document.getElementById('ppContent').innerHTML = html;
+  document.getElementById('ppSep').style.display = 'none';
+  document.getElementById('ppHint').innerHTML = '';
+  var rect = el.getBoundingClientRect();
+  var top = rect.bottom + window.scrollY + 6;
+  var left = rect.left;
+  if (rect.bottom + 160 > window.innerHeight) top = rect.top + window.scrollY - 170;
+  if (left + 310 > window.innerWidth) left = window.innerWidth - 315;
+  if (left < 8) left = 8;
+  popup.style.top = top + 'px';
+  popup.style.left = left + 'px';
+  popup.classList.add('vis');
+}
+function hidePopup() { popup.classList.remove('vis'); }
+
+function updatePanel(w) {
+  var wl = lookupWL(w.dataset.l);
+  var wlHtml = '';
+  if (wl) {
+    var isBasis = wl.b;
+    var grondvorm = '<span style="font-family:\'EB Garamond\',Georgia,serif;font-size:1rem;font-weight:600;color:' + (isBasis ? 'var(--magenta)' : 'var(--blue)') + ';">' + wl.g + '</span>';
+    if (isBasis) grondvorm += ' <span style="display:inline-block;font-size:.55rem;font-weight:700;padding:.03rem .28rem;border-radius:8px;background:#fce4f1;color:var(--magenta);text-transform:uppercase;vertical-align:middle;">basis</span>';
+    wlHtml = '<div class="ac-row" style="margin-top:.4rem"><span class="ac-tag tw">&#128218;</span><div>' + grondvorm
+      + (wl.a ? '<div style="font-size:.66rem;color:var(--ink-light);margin-top:.1rem;">' + wl.a + '</div>' : '')
+      + '<div style="font-size:.78rem;color:var(--ink-mid);margin-top:.15rem;">' + wl.v + '</div>'
+      + '</div></div>';
+  }
+  document.getElementById('analysisCard').innerHTML =
+    '<div class="ac-word">' + w.dataset.w + '</div>' +
+    '<div class="ac-lemma">' + (w.dataset.l||'') + '</div>' +
+    '<div class="ac-row"><span class="ac-tag tg">Det.</span><span class="ac-val">' + w.dataset.d + '</span></div>' +
+    '<div class="ac-row" style="margin-top:.3rem"><span class="ac-tag to">Funct.</span><span class="ac-val">' + w.dataset.s + '</span></div>' +
+    '<div class="ac-row" style="margin-top:.3rem"><span class="ac-tag tp">NL</span><span class="ac-val">' + w.dataset.n + '</span></div>' +
+    wlHtml;
+}
+
+function toggleReveal() {
+  S.reveal = !S.reveal;
+  document.getElementById('btnReveal').classList.toggle('active', S.reveal);
+  var lrb=document.getElementById('lessonRevealBtn'); if(lrb) lrb.classList.toggle('active',S.reveal);
+  document.getElementById('revealBar').classList.toggle('vis', S.reveal);
+  document.getElementById('latinText').classList.toggle('reveal-mode', S.reveal);
+  ksWgroups.forEach(function(g){ g.classList.remove('revealed','current'); });
+  ksSetActive(null);
+  if (S.reveal) { S.revIdx = -1; updCount(); }
+  else { updCount(); }
+}
+function revealNext() {
+  if (!S.reveal) toggleReveal();
+  if (S.revIdx >= 0 && S.revIdx < ksWgroups.length) ksWgroups[S.revIdx].classList.remove('current');
+  S.revIdx = Math.min(S.revIdx + 1, ksWgroups.length - 1);
+  if(S.revIdx<0||!ksWgroups[S.revIdx]) return;
+  ksWgroups[S.revIdx].classList.add('revealed','current');
+  ksWgroups[S.revIdx].scrollIntoView({behavior:'smooth', block:'nearest'});
+  ksFocusFirstInWg();
+  updCount();
+  notifyLAForCurrentWg();
+}
+function revealPrev() {
+  if (!S.reveal) return;
+  if (S.revIdx >= 0) {
+    ksWgroups[S.revIdx].classList.remove('current','revealed');
+    S.revIdx = Math.max(S.revIdx - 1, -1);
+    if (S.revIdx >= 0) { ksWgroups[S.revIdx].classList.add('current'); ksFocusFirstInWg(); }
+    else ksSetActive(null);
+  }
+  updCount();
+  notifyLAForCurrentWg();
+}
+function revealAll() {
+  if (!S.reveal) toggleReveal();
+  ksWgroups.forEach(function(g){ g.classList.add('revealed'); g.classList.remove('current'); });
+  S.revIdx = ksWgroups.length - 1;
+  if(ksWgroups[S.revIdx]) ksWgroups[S.revIdx].classList.add('current');
+  ksFocusFirstInWg();
+  updCount();
+  notifyLAForCurrentWg();
+}
+function updCount() {
+  var done = document.querySelectorAll('.wg.revealed').length;
+  document.getElementById('revCount').textContent = done + ' / ' + ksWgroups.length;
+}
+
+function toggleLines() {
+  S.lines = !S.lines;
+  document.getElementById('btnLines').classList.toggle('active', S.lines);
+  document.getElementById('plainView').classList.toggle('off', S.lines);
+  document.getElementById('numberedView').classList.toggle('on', S.lines);
+  if (S.lines && S.reveal) toggleReveal();
+}
+function toggleInterlin() {
+  S.interlin = !S.interlin;
+  document.getElementById('btnInterlin').classList.toggle('active', S.interlin);
+  document.body.classList.toggle('interlin-analysis', S.interlin);
+  document.querySelectorAll('.lat-word').forEach(ksRenderAnalysis);
+}
+function toggleTwocol() {
+  S.twocol = !S.twocol;
+  var btn = document.getElementById('btnTwocol');
+  if (btn) btn.classList.toggle('active', S.twocol);
+  document.body.classList.toggle('twocol', S.twocol);
+  if (S.twocol) { renderVertaling(); selectSidePanel('la'); }
+}
+function renderVertaling() {
+  var el = document.getElementById('vertaalTekst');
+  if (!el) return;
+  el.innerHTML = "<p>Priscus rekte de gevechten, ook Verus rekte ze.</p><p>Vaak werd er met luid geroep genade gevraagd voor deze mannen, maar de keizer gehoorzaamde aan zijn eigen wet: de wet was om te strijden tot de dood.</p><p>Uiteindelijk beëindigden ze de strijd op gelijke voet: ze streden als gelijken, ze eindigden als gelijken.</p><p>Omwille van hun schitterende moed gaf de keizer hun ieder een houten zwaard en een palmtak.</p><p>Dit is onder geen enkele keizer gebeurd behalve onder u, keizer: toen twee mannen streden, werd ieder van beiden winnaar.</p>";
+}
+function toggleFont() {
+  S.font = !S.font;
+  document.getElementById('btnFont').classList.toggle('active', S.font);
+  document.body.classList.toggle('font-lg', S.font);
+}
+
+var D = { bs: false, lpd: false };
+function toggleLayer(layer) {
+  D[layer] = !D[layer];
+  var btnId = layer === 'bs' ? 'btnBs' : 'btnLpd';
+  var btn = document.getElementById(btnId);
+  if (btn) btn.classList.toggle('active', D[layer]);
+  document.querySelectorAll('.d-badge[data-layer="' + layer + '"]').forEach(function(b) {
+    b.classList.toggle('vis', D[layer]);
+  });
+}
+
+function toggleNoten() {
+  selectSidePanel('notes');
+  var btn = document.getElementById('btnNoten');
+  if (btn) btn.classList.add('active');
+}
+
+(function annotateBadges(){
+  var TIPS = {
+    "badges-context|① Voorkennis activeren": "① Voorkennis activeren: de context zet de pointe van Verus en Priscus kort klaar vóór de lectuur.",
+    "badges-context|BO1_03.06 – situeren in tijd & ruimte": "BO1_03.06 situeren in tijd & ruimte: leerlingen plaatsen het korte epigram binnen Romeinse omgangsvormen en humor.",
+    "badges-kaart|④ Dual coding": "④ Dual coding: het titelbeeld kan later de situatie of pointe visueel ondersteunen zonder de tekststructuur te wijzigen.",
+    "badges-kaart|BO1_03.06 – situeren in tijd & ruimte": "BO1_03.06 situeren in tijd & ruimte: de afbeelding verankert personages en situatie in een Romeinse context.",
+    "badges-reveal|⑤ Actieve verwerking": "⑤ Actieve verwerking: leerlingen onthullen het epigram in korte woordgroepen en voorspellen de pointe.",
+    "badges-reveal|⑦ Scaffolding": "⑦ Scaffolding: korte segmenten verlagen de belasting bij compacte poëtische formuleringen.",
+    "badges-reveal|BO1_03.05 – tekst begrijpen via lectuurmethode": "BO1_03.05 tekst begrijpen via lectuurmethode: de volgorde van woordgroepen ondersteunt lineair lezen en tekstbegrip.",
+    "badges-reveal|BO1_03.04 – lectuurstrategieën": "BO1_03.04 lectuurstrategieën: leerlingen zoeken eerst de kernwerkwoorden en bouwen van daaruit de zin op.",
+    "badges-noten|⑦ Scaffolding": "⑦ Scaffolding: de noten lichten precies de vormen toe die nodig zijn om de pointe te begrijpen.",
+    "badges-noten|⑪ Feedback die denken aanzet": "⑪ Feedback die denken aanzet: de vragen sturen leerlingen naar verklaring van de humor, niet enkel naar vertaling.",
+    "badges-noten|BO1_03.03 – morfologie & syntaxis": "BO1_03.03 morfologie & syntaxis: aandacht voor infinitiefconstructies, naamvallen en kernwerkwoorden in de zin.",
+    "badges-wl|① Voorkennis activeren": "① Voorkennis activeren: de woordenlijst zet kernwoorden en structuurwoorden klaar vóór de lectuur.",
+    "badges-wl|⑧ Gespreide oefening": "⑧ Gespreide oefening: terugkerende structuurwoorden en werkwoorden worden opnieuw geconfronteerd.",
+    "badges-wl|BO1_03.01 – basiswoordenschat": "BO1_03.01 basiswoordenschat: de woordenlijst bevat 11 woorden op volgorde van voorkomen.",
+    "badges-wl|BO1_03.02 – woordenschatstrategieën": "BO1_03.02 woordenschatstrategieën: leerlingen koppelen vormen aan grondwoord en betekenis in context."
+};
+  var tip = document.createElement('div');
+  tip.className = 'd-tooltip';
+  document.body.appendChild(tip);
+  function show(badge, text) {
+    tip.textContent = text;
+    tip.classList.add('vis');
+    var r = badge.getBoundingClientRect();
+    var tw = tip.offsetWidth, th = tip.offsetHeight, pad = 10;
+    var left = r.left + r.width/2 - tw/2;
+    left = Math.max(8, Math.min(window.innerWidth - tw - 8, left));
+    var top = r.top - th - pad;
+    if (top < 8) top = r.bottom + pad;
+    tip.style.left = (left + window.scrollX) + 'px';
+    tip.style.top  = (top  + window.scrollY) + 'px';
+  }
+  function hide() { tip.classList.remove('vis'); }
+  document.querySelectorAll('.d-badges').forEach(function(container){
+    var pid = container.id; if (!pid) return;
+    container.querySelectorAll('.d-badge').forEach(function(b){
+      var key = pid + '|' + b.textContent.trim();
+      var text = TIPS[key];
+      if (!text) return;
+      b.addEventListener('mouseenter', function(){ show(b, text); });
+      b.addEventListener('mouseleave', hide);
+      b.addEventListener('focus',      function(){ show(b, text); });
+      b.addEventListener('blur',       hide);
+    });
+  });
+})();
+
+function openKaartModal()  { document.getElementById('kaartModalOverlay').classList.add('open'); }
+function closeKaartModal() { document.getElementById('kaartModalOverlay').classList.remove('open'); }
+
+function toggleWeergaveMenu(e) {
+  e.stopPropagation();
+  var menu = document.getElementById('weergaveMenu');
+  var btn  = document.getElementById('btnWeergave');
+  var open = menu.classList.toggle('open');
+  btn.classList.toggle('open', open);
+}
+document.addEventListener('click', function(e) {
+  var menu = document.getElementById('weergaveMenu');
+  var btn  = document.getElementById('btnWeergave');
+  if (menu && btn && !menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+
+window.addEventListener('scroll', function() {
+  var d = document.documentElement;
+  var scrollBtn = document.getElementById('scrollTop');
+  if (scrollBtn) scrollBtn.classList.toggle('on', d.scrollTop > 280);
+});
+
+(function(){
+  var resizer = document.getElementById('colResizer');
+  if (!resizer) return;
+  var outer = resizer.closest('.outer');
+  var dragging = false, startX, startPct;
+  function getPct() {
+    var val = getComputedStyle(document.documentElement).getPropertyValue('--col-split') || '60%';
+    return parseFloat(val);
+  }
+  resizer.addEventListener('mousedown', function(e) {
+    dragging=true; startX=e.clientX; startPct=getPct();
+    resizer.classList.add('dragging');
+    document.body.style.cursor='col-resize'; document.body.style.userSelect='none';
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', function(e) {
+    if(!dragging) return;
+    var outerW=outer.getBoundingClientRect().width;
+    var delta=e.clientX-startX;
+    var newPct=Math.min(80,Math.max(30,startPct+(delta/outerW)*100));
+    document.documentElement.style.setProperty('--col-split',newPct.toFixed(1)+'%');
+  });
+  document.addEventListener('mouseup', function() {
+    if(!dragging) return;
+    dragging=false; resizer.classList.remove('dragging');
+    document.body.style.cursor=''; document.body.style.userSelect='';
+  });
+  resizer.addEventListener('touchstart',function(e){
+    dragging=true; startX=e.touches[0].clientX; startPct=getPct();
+    resizer.classList.add('dragging'); e.preventDefault();
+  },{passive:false});
+  document.addEventListener('touchmove',function(e){
+    if(!dragging) return;
+    var outerW=outer.getBoundingClientRect().width;
+    var delta=e.touches[0].clientX-startX;
+    var newPct=Math.min(80,Math.max(30,startPct+(delta/outerW)*100));
+    document.documentElement.style.setProperty('--col-split',newPct.toFixed(1)+'%');
+  },{passive:false});
+  document.addEventListener('touchend',function(){dragging=false;resizer.classList.remove('dragging');});
+})();
+
+var laSectieIdx = 0;
+var LA_SECTIES = [{"titel": "1. Gelijke strijd", "html": "<div class=\"la-sectie-titel\">1. Gelijke strijd</div><div class=\"la-vraag\"><div class=\"la-vraag-tekst\">Hoe toont de eerste zin dat Priscus en Verus gelijkwaardig zijn?</div><div class=\"la-antwoord-wrap\"><button class=\"la-toggle-btn\" onclick=\"toggleAntwoord(this)\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M4 6l4 4 4-4\"/></svg> Toon antwoord</button><div class=\"la-antwoord\">Door de herhaling <em>traxit, traxit</em>: beiden rekken het gevecht.</div></div></div><div class=\"la-vraag\"><div class=\"la-vraag-tekst\">Wat vraagt het publiek met <em>missio</em>?</div><div class=\"la-antwoord-wrap\"><button class=\"la-toggle-btn\" onclick=\"toggleAntwoord(this)\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M4 6l4 4 4-4\"/></svg> Toon antwoord</button><div class=\"la-antwoord\">Het publiek vraagt genade of vrijlating voor de mannen.</div></div></div>"}, {"titel": "2. Regel en uitkomst", "html": "<div class=\"la-sectie-titel\">2. Regel en uitkomst</div><div class=\"la-vraag\"><div class=\"la-vraag-tekst\">Waarom geeft Caesar niet meteen toe aan het publiek?</div><div class=\"la-antwoord-wrap\"><button class=\"la-toggle-btn\" onclick=\"toggleAntwoord(this)\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M4 6l4 4 4-4\"/></svg> Toon antwoord</button><div class=\"la-antwoord\">Hij gehoorzaamt aan zijn eigen wet: er moest tot de dood gevochten worden.</div></div></div><div class=\"la-vraag\"><div class=\"la-vraag-tekst\">Welke formulering toont dat de strijd gelijk eindigt?</div><div class=\"la-antwoord-wrap\"><button class=\"la-toggle-btn\" onclick=\"toggleAntwoord(this)\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M4 6l4 4 4-4\"/></svg> Toon antwoord</button><div class=\"la-antwoord\"><em>pugnaverunt pares, succubuerunt pares</em>: ze streden en vielen/eindigden als gelijken.</div></div></div>"}, {"titel": "3. Keizerlijke lof", "html": "<div class=\"la-sectie-titel\">3. Keizerlijke lof</div><div class=\"la-vraag\"><div class=\"la-vraag-tekst\">Wat geven <em>rudes et palmas</em> aan?</div><div class=\"la-antwoord-wrap\"><button class=\"la-toggle-btn\" onclick=\"toggleAntwoord(this)\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M4 6l4 4 4-4\"/></svg> Toon antwoord</button><div class=\"la-antwoord\">Een houten zwaard en palmtak zijn beloningen/tekens van eer voor de gladiatoren.</div></div></div><div class=\"la-vraag\"><div class=\"la-vraag-tekst\">Waarom is <em>victor uterque fuit</em> de pointe?</div><div class=\"la-antwoord-wrap\"><button class=\"la-toggle-btn\" onclick=\"toggleAntwoord(this)\"><svg viewBox=\"0 0 16 16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M4 6l4 4 4-4\"/></svg> Toon antwoord</button><div class=\"la-antwoord\">Normaal is er één winnaar; hier worden beide strijders als winnaar erkend.</div></div></div>"}];
+
+function selectSidePanel(panel) {
+  document.querySelectorAll('.side-tab-btn').forEach(function(btn){
+    btn.classList.toggle('active', btn.dataset.panel === panel);
+  });
+  document.querySelectorAll('.side-panel-view').forEach(function(view){
+    view.classList.toggle('active', view.id === 'panel-' + panel);
+  });
+  if (panel === 'translation') renderVertaling();
+}
+
+function renderLaPanel(activeQuestion) {
+  var body = document.getElementById('laPanelBody');
+  if (!body) return;
+
+  /* Toon niet de volledige lectuuranalyse in één keer.
+     Het rechterpaneel toont alleen de actuele vraag: standaard vraag 1,
+     daarna automatisch de vraag die bij de huidige woordgroep/passage hoort. */
+  var target = parseInt(activeQuestion || '1', 10);
+  var found = null;
+  var counter = 0;
+
+  LA_SECTIES.forEach(function(s, sectIdx){
+    var tmp = document.createElement('section');
+    tmp.innerHTML = s.html;
+    var titel = tmp.querySelector('.la-sectie-titel');
+    var titelHtml = titel ? titel.outerHTML : '<div class="la-sectie-titel">' + s.titel + '</div>';
+
+    Array.from(tmp.querySelectorAll('.la-vraag')).forEach(function(q){
+      counter++;
+      if (counter === target) {
+        found = {
+          sectIdx: sectIdx,
+          questionNr: counter,
+          titelHtml: titelHtml,
+          vraagHtml: q.outerHTML
+        };
+      }
+    });
+  });
+
+  if (!found) return;
+
+  body.innerHTML = '<section class="la-side-section la-focus-section" id="la-sectie-' + found.sectIdx + '">'
+    + found.titelHtml
+    + found.vraagHtml
+    + '</section>';
+
+  var q = body.querySelector('.la-vraag');
+  if (q) {
+    q.id = 'la-vraag-' + found.questionNr;
+    q.dataset.laQuestion = String(found.questionNr);
+    q.classList.add('is-active');
+  }
+}
+
+var LA_CUES = [
+  {
+    "from": 1,
+    "to": 2,
+    "q": 1,
+    "label": "De opening zet beide namen parallel: Priscus én Verus rekken het gevecht."
+  },
+  {
+    "from": 3,
+    "to": 7,
+    "q": 2,
+    "label": "Het publiek vraagt missio, maar Caesar volgt de wet."
+  },
+  {
+    "from": 8,
+    "to": 11,
+    "q": 4,
+    "label": "Hier staat de kern van hun gelijkheid: pares ... pares."
+  },
+  {
+    "from": 12,
+    "to": 14,
+    "q": 5,
+    "label": "De beloning toont de uitzonderlijke waardering."
+  },
+  {
+    "from": 15,
+    "to": 19,
+    "q": 6,
+    "label": "De slotpointe prijst Caesar: beide strijders worden winnaar."
+  }
+];
+
+function findLaCueForWg(wg) {
+  if (!wg) return null;
+  var nr = parseInt(wg.dataset.wg || '0', 10);
+  for (var i = 0; i < LA_CUES.length; i++) {
+    if (nr >= LA_CUES[i].from && nr <= LA_CUES[i].to) return LA_CUES[i];
+  }
+  return null;
+}
+
+function initLAMarkers() {
+  ksWgroups.forEach(function(wg){
+    var cue = findLaCueForWg(wg);
+    if (!cue) return;
+    var nr = parseInt(wg.dataset.wg || '0', 10);
+    /* Alleen de start van een LA-passage krijgt een zichtbaar markerpunt.
+       De volledige passage blijft wel klikbaar en triggert nog steeds het LA-paneel. */
+    if (nr === cue.from) wg.classList.add('has-la');
+    else wg.classList.add('has-la-linked');
+    wg.dataset.laQuestion = String(cue.q);
+    wg.dataset.laLabel = cue.label;
+    wg.addEventListener('click', function(e){
+      if (e.target.closest('.lat-word')) return;
+      triggerLAForWg(wg, true);
+    });
+  });
+}
+
+function setActiveLA(questionNr, scroll) {
+  renderLaPanel(questionNr);
+  var q = document.getElementById('la-vraag-' + questionNr);
+  if (q) {
+    q.classList.add('is-active');
+    if (scroll) q.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+}
+
+function triggerLAForWg(wg, scrollPanel) {
+  var cue = findLaCueForWg(wg);
+  if (!cue) return;
+  selectSidePanel('la');
+  var cueBox = document.getElementById('laCueBox');
+  if (cueBox) {
+    cueBox.innerHTML = '<strong>Lectuurvraag bij deze passage</strong>' + cue.label;
+    cueBox.classList.add('vis');
+  }
+  setActiveLA(cue.q, true);
+  if (scrollPanel) {
+    var panel = document.getElementById('sidePanel');
+    if (panel) panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+}
+
+function notifyLAForCurrentWg() {
+  var wg = ksCurrentWg();
+  if (wg) triggerLAForWg(wg, false);
+}
+
+function openLectuurModal(){
+  selectSidePanel('la');
+  var panel = document.getElementById('sidePanel');
+  if (panel) panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+function closeLectuurModal(){
+  selectSidePanel('la');
+}
+function renderLaSectie(){
+  renderLaPanel(laSectieIdx + 1);
+}
+function navigateLaSectie(dir){
+  laSectieIdx=Math.max(0,Math.min(LA_SECTIES.length-1,laSectieIdx+dir));
+  var firstQuestion = laSectieIdx === 0 ? 1 : (laSectieIdx === 1 ? 3 : 5);
+  setActiveLA(firstQuestion, true);
+}
+function toggleAntwoord(btn){
+  var antw=btn.parentElement.querySelector('.la-antwoord');
+  var open=antw.classList.toggle('vis');
+  btn.classList.toggle('open',open);
+}
+
+
+(function initSidePanelAndLA(){
+  document.body.classList.toggle('twocol', S.twocol);
+  var btn = document.getElementById('btnTwocol');
+  if (btn) btn.classList.toggle('active', S.twocol);
+  renderLaPanel(1);
+  renderVertaling();
+  initLAMarkers();
+  selectSidePanel('la');
+})();
+
+var inkCanvas=document.getElementById('inkCanvas');
+var inkCtx=inkCanvas.getContext('2d');
+var inkMode=null,isDrawing=false,lastPt=null,inkPointerId=null;
+var penColors=['#E6007E','#13427f','#0d7a3e','#FF3B1D','#f3f1ef','#111111'];
+var highlightColors=['rgba(230,0,126,.35)','rgba(255,234,61,.45)','rgba(19,66,127,.20)','rgba(13,122,62,.22)','rgba(255,59,29,.20)','rgba(255,255,255,.20)'];
+var currentPenColor=penColors[0], currentHighlightColor=highlightColors[0];
+
+function buildPalette(elId,colors,type){
+  var el=document.getElementById(elId); if(!el) return; el.innerHTML='';
+  colors.forEach(function(color,idx){
+    var b=document.createElement('button');
+    b.type='button'; b.className='swatch'+(idx===0?' active':'');
+    b.style.background=color; b.setAttribute('aria-label',type+' kleur '+(idx+1));
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      if(type==='pen') currentPenColor=color; else currentHighlightColor=color;
+      el.querySelectorAll('.swatch').forEach(function(s){s.classList.remove('active');});
+      b.classList.add('active');
+    });
+    el.appendChild(b);
+  });
+}
+buildPalette('penPalette',penColors,'pen');
+buildPalette('highlightPalette',highlightColors,'markeer');
+
+function closePalettes(){
+  var pp=document.getElementById('penPalette'),hp=document.getElementById('highlightPalette');
+  if(pp) pp.classList.remove('open'); if(hp) hp.classList.remove('open');
+}
+document.addEventListener('click',function(e){if(!e.target.closest('.lesson-toolbar-wrap')&&!e.target.closest('.tool-palette')) closePalettes();});
+
+function resizeInkCanvas(){
+  var tmp=document.createElement('canvas'); tmp.width=inkCanvas.width; tmp.height=inkCanvas.height;
+  tmp.getContext('2d').drawImage(inkCanvas,0,0);
+  inkCanvas.width=window.innerWidth; inkCanvas.height=window.innerHeight;
+  inkCtx.drawImage(tmp,0,0);
+}
+resizeInkCanvas();
+window.addEventListener('resize',resizeInkCanvas);
+
+function updateInkButtons(){
+  document.getElementById('inkPenBtn').classList.toggle('active',inkMode==='pen');
+  document.getElementById('inkHighBtn').classList.toggle('active',inkMode==='highlight');
+  document.getElementById('inkEraseBtn').classList.toggle('active',inkMode==='erase');
+  inkCanvas.classList.toggle('on',!!inkMode);
+  document.body.classList.toggle('ink-on',!!inkMode);
+  var pp=document.getElementById('penPalette'),hp=document.getElementById('highlightPalette');
+  if(inkMode==='pen'){if(pp)pp.classList.add('open');if(hp)hp.classList.remove('open');}
+  else if(inkMode==='highlight'){if(hp)hp.classList.add('open');if(pp)pp.classList.remove('open');}
+  else closePalettes();
+}
+function setInkMode(mode){inkMode=(inkMode===mode)?null:mode; updateInkButtons();}
+function clearInk(){inkCtx.clearRect(0,0,inkCanvas.width,inkCanvas.height);}
+function applyInkStyle(){
+  inkCtx.lineCap='round'; inkCtx.lineJoin='round';
+  if(inkMode==='erase'){inkCtx.globalCompositeOperation='destination-out';inkCtx.lineWidth=28;inkCtx.strokeStyle='rgba(0,0,0,1)';}
+  else if(inkMode==='highlight'){inkCtx.globalCompositeOperation='source-over';inkCtx.lineWidth=20;inkCtx.strokeStyle=currentHighlightColor;}
+  else{inkCtx.globalCompositeOperation='source-over';inkCtx.lineWidth=4;inkCtx.strokeStyle=currentPenColor;}
+}
+inkCanvas.addEventListener('pointerdown',function(e){
+  if(!inkMode) return; e.preventDefault(); isDrawing=true; inkPointerId=e.pointerId;
+  inkCanvas.setPointerCapture(e.pointerId); lastPt={x:e.clientX,y:e.clientY};
+  applyInkStyle(); inkCtx.beginPath(); inkCtx.moveTo(lastPt.x,lastPt.y); inkCtx.lineTo(lastPt.x+.01,lastPt.y+.01); inkCtx.stroke();
+});
+inkCanvas.addEventListener('pointermove',function(e){
+  if(!inkMode||!isDrawing) return; e.preventDefault();
+  var pt={x:e.clientX,y:e.clientY}; applyInkStyle();
+  inkCtx.beginPath(); inkCtx.moveTo(lastPt.x,lastPt.y); inkCtx.lineTo(pt.x,pt.y); inkCtx.stroke(); lastPt=pt;
+});
+function stopInk(e){
+  if(!isDrawing) return; isDrawing=false; lastPt=null;
+  if(e&&inkPointerId!==null){try{inkCanvas.releasePointerCapture(inkPointerId);}catch(err){}} inkPointerId=null;
+}
+inkCanvas.addEventListener('pointerup',stopInk);
+inkCanvas.addEventListener('pointercancel',stopInk);
+
+(function(){
+  var s=document.getElementById('textStartSentinel');
+  if(!s){document.body.classList.add('show-lesson-toolbar');return;}
+  function upd(){
+    var rect=s.getBoundingClientRect();
+    document.body.classList.toggle('show-lesson-toolbar', rect.top < window.innerHeight);
+  }
+  upd();
+  window.addEventListener('scroll',upd,{passive:true});
+  window.addEventListener('resize',upd);
+})();
+
+document.addEventListener('keydown',function(e){
+  if(document.getElementById('lectuurOverlay').classList.contains('open')) return;
+  var key=e.key,code=e.code;
+  if(key==='ArrowRight'||key==='PageDown'||code==='PageDown'){e.preventDefault();revealNext();}
+  else if(key==='ArrowLeft'||key==='PageUp'||code==='PageUp'){e.preventDefault();revealPrev();}
+  else if(key==='ArrowDown'){e.preventDefault();focusNextWord();}
+  else if(key==='ArrowUp'){e.preventDefault();focusPrevWord();}
+  else if(key==='Enter'||key===' '||code==='Space'){e.preventDefault();stepActiveWord();}
+  else if(key==='Backspace'||key==='Delete'){e.preventDefault();clearCurrentWgAnalysis();}
+  else if(key.toLowerCase()==='p'){e.preventDefault();setInkMode('pen');}
+  else if(key.toLowerCase()==='h'){e.preventDefault();setInkMode('highlight');}
+  else if(key.toLowerCase()==='e'){e.preventDefault();setInkMode('erase');}
+  else if(key==='Escape'){
+    e.preventDefault();
+    closeLectuurModal(); closeKaartModal();
+    inkMode=null; updateInkButtons();
+  }
+});
+
+(function(){
+  var bi=document.getElementById('btnInterlin');
+  if(bi) bi.classList.add('active');
+})();
+</script>
+
+<!-- LECTUURANALYSE MODAL -->
+<div class="poetry-modal-overlay" id="lectuurOverlay" onclick="closeLectuurModal()">
+  <div class="poetry-modal" onclick="event.stopPropagation()">
+    <div class="poetry-modal-header">
+      <span class="poetry-modal-title">Lectuuranalyse — Verus en Priscus</span>
+      <div class="poetry-modal-nav">
+        <button class="poetry-modal-nav-btn" id="laSectieVorige" onclick="navigateLaSectie(-1)" disabled>&#8592; Vorige</button>
+        <span id="laSectieNr" style="font-family:var(--tf,Arial);font-size:.72rem;color:var(--ink-light);min-width:3rem;text-align:center;">1 / 3</span>
+        <button class="poetry-modal-nav-btn" id="laSectieVolgende" onclick="navigateLaSectie(1)">Volgende &#8594;</button>
+      </div>
+      <button class="poetry-modal-close" onclick="closeLectuurModal()">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+      </button>
+    </div>
+    <div class="poetry-modal-body" id="lectuurModalBody"></div>
+  </div>
+</div>
+
+<!-- LES-TOOLBAR -->
+<!-- NIET VEREENVOUDIGEN: bestaande les-toolbar voor onthullen/analyse/annotatie behouden. -->
+<div class="lesson-toolbar-wrap" id="lessonToolbarWrap">
+  <div class="lesson-toolbar">
+
+    <button class="lesson-btn" type="button" onclick="revealPrev()" data-tip="Vorige woordgroep" aria-label="Vorige woordgroep">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><polyline points="13,4 7,10 13,16"/><rect x="2" y="2" width="16" height="16" rx="4" stroke-opacity=".18" fill="none"/></svg>
+    </button>
+    <button class="lesson-btn" type="button" onclick="revealNext()" data-tip="Volgende woordgroep" aria-label="Volgende woordgroep">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><polyline points="7,4 13,10 7,16"/><rect x="2" y="2" width="16" height="16" rx="4" stroke-opacity=".18" fill="none"/></svg>
+    </button>
+    <button class="lesson-btn" type="button" onclick="toggleReveal()" id="lessonRevealBtn" data-tip="Onthulmodus aan/uit" aria-label="Onthulmodus">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><path d="M2 10s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z"/><circle cx="10" cy="10" r="2.5"/><line x1="4" y1="4" x2="16" y2="16" stroke-opacity=".35"/></svg>
+    </button>
+
+    <div class="lesson-toolbar-divider"></div>
+
+    <button class="lesson-btn" type="button" onclick="focusPrevWord()" data-tip="Vorig woord" aria-label="Vorig woord">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><polyline points="12,6 8,10 12,14"/></svg>
+    </button>
+    <button class="lesson-btn" type="button" onclick="stepActiveWord()" data-tip="Analyseer woord (stap)" aria-label="Analyseer woord">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><path d="M5 15L9 5l2 5 3-3"/><circle cx="14" cy="6" r="2.2"/></svg>
+    </button>
+    <button class="lesson-btn" type="button" onclick="focusNextWord()" data-tip="Volgend woord" aria-label="Volgend woord">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><polyline points="8,6 12,10 8,14"/></svg>
+    </button>
+
+    <div class="lesson-toolbar-divider"></div>
+
+    <button class="lesson-btn danger" type="button" onclick="clearCurrentWgAnalysis()" data-tip="Wis huidige woordgroep" aria-label="Wis huidige woordgroep">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><path d="M5 14l7-9 4 3-7 9H5z"/><line x1="9" y1="14" x2="18" y2="14"/></svg>
+    </button>
+    <button class="lesson-btn danger" type="button" onclick="clearAllAnalysis()" data-tip="Wis alle analyse" aria-label="Wis alle analyse">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><polyline points="4,6 16,6"/><path d="M7 6V4h6v2"/><rect x="5" y="6" width="10" height="10" rx="1"/><line x1="8" y1="9" x2="8" y2="14"/><line x1="12" y1="9" x2="12" y2="14"/></svg>
+    </button>
+
+    <div class="lesson-toolbar-divider"></div>
+
+    <button class="lesson-btn" type="button" id="inkPenBtn" onclick="setInkMode('pen')" data-tip="Pen (p)" aria-label="Pen">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><path d="M4 16l3.5-.7L15 8l-3-3-7.5 7.5L4 16z"/><path d="M12 5l3 3"/><path d="M4 16l1.5-1.5"/></svg>
+    </button>
+    <button class="lesson-btn" type="button" id="inkHighBtn" onclick="setInkMode('highlight')" data-tip="Markeerstift (h)" aria-label="Markeerstift">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><rect x="3" y="8" width="14" height="5" rx="2"/><line x1="10" y1="13" x2="10" y2="17"/><line x1="8" y1="17" x2="12" y2="17"/></svg>
+    </button>
+    <button class="lesson-btn" type="button" id="inkEraseBtn" onclick="setInkMode('erase')" data-tip="Gum (e)" aria-label="Gum">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><rect x="2" y="11" width="16" height="6" rx="1.5"/><path d="M6 11L11 4l5 4-5 3H6z"/></svg>
+    </button>
+    <button class="lesson-btn" type="button" onclick="clearInk()" data-tip="Wis annotaties" aria-label="Wis annotaties">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><path d="M3 16h14"/><path d="M6 12l5-8 5 5-5 3H6z"/></svg>
+    </button>
+
+    <div class="lesson-toolbar-divider"></div>
+
+    <button class="lesson-btn" type="button" onclick="openLectuurModal()" data-tip="Lectuuranalyse" aria-label="Lectuuranalyse openen">
+      <svg viewBox="0 0 20 20" stroke-width="1.8"><path d="M4 4h7v12H4z"/><path d="M11 4h5v12h-5z"/><circle cx="14.5" cy="9.5" r="2"/><line x1="16" y1="11" x2="18" y2="13"/></svg>
+    </button>
+
+  </div>
+  <div class="tool-palette" id="penPalette"></div>
+  <div class="tool-palette" id="highlightPalette"></div>
+</div>
+
+</body>
+</html>
