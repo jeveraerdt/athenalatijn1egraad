@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grieks — athena campus Pottelberg</title>
+<title>Grieks — 2GR-LAT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --blauw: #13427f; --roze: #E6007E; --paars: #6d28d9;
+    --blauw: #13427f; --roze: #E6007E;
     --fv: 'Lufga', Arial, sans-serif; --fo: 'Aptos', Arial, sans-serif;
     --achtergrond: #f7f8fa; --kaart: #ffffff; --rand: #e2e6ed;
     --tekst: #1a1a1a; --tekst-zacht: #6b7280;
@@ -18,92 +18,205 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: var(--fv); background: var(--achtergrond); color: var(--tekst); min-height: 100vh; display: flex; flex-direction: column; }
 
-  .hero { width: 100%; position: relative; min-height: auto; background: transparent; flex-shrink: 0; }
-  .hero-inhoud { position: relative; z-index: 1; padding: 3.5rem 2rem 3rem; text-align: center; }
-  .hero h1 { font-size: 38px; font-weight: 600; color: var(--blauw); letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 5px; }
-  .hero h1 .accent { color: #f9a8d4; }
-  .hero .ondertitel { font-size: 13px; color: var(--blauw); font-family: var(--fo); letter-spacing: 0.3px; }
-  .school-logo { width: 44px; height: auto; margin-top: 10px; opacity: 0.9; display: block; margin-left: auto; margin-right: auto; }
+  /* ── MERKLINT athena (2 lagen) ─────────────────────────── */
+  /* Laag 1: blauwe balk met logo */
+  .site-header {
+    background: #13427f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .85rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    position: relative;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: #E6007E;
+  }
+  .site-header .logo   { height: 34px; width: auto; display: block; flex-shrink: 0; }
+  .site-header h1      { font-family: 'Lufga', Arial, sans-serif; font-weight: 700; font-size: 1.2rem; color: #fff; white-space: nowrap; }
+  .site-header .school { font-family: 'Lufga', Arial, sans-serif; font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .85; margin-left: auto; color: #fff; white-space: nowrap; }
+  /* Laag 2: lichte toolbar */
+  .site-toolbar {
+    background: #f7f8fa;
+    border-bottom: 1px solid #e2e6ed;
+    padding: .55rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-divider { width: 1px; height: 22px; background: #e2e6ed; margin: 0 .25rem; }
+  .back-btn, .pill-btn {
+    font-family: 'Lufga', Arial, sans-serif;
+    font-size: .82rem; font-weight: 500;
+    color: #1a1a1a; background: transparent;
+    border: 1px solid #e2e6ed; border-radius: 20px;
+    padding: .32rem .85rem; cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: .35rem;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .back-btn:hover, .pill-btn:hover {
+    background: rgba(19,66,127,.08);
+    border-color: #13427f;
+    color: #13427f;
+  }
 
-  .terug-wrap { padding: 1.25rem 2rem 0; max-width: 1100px; width: 100%; margin: 0 auto; }
-  .terug-link { font-size: 12px; color: var(--tekst-zacht); text-decoration: none; }
-  .terug-link:hover { color: var(--blauw); }
-
-  .nav-wrap { flex: 1; padding: 1.5rem 2rem 3rem; max-width: 1100px; width: 100%; margin: 0 auto; }
-  .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-  .nav-tegel { background: var(--kaart); border: 0.5px solid var(--rand); border-radius: var(--radius); padding: 1.5rem 1.25rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.15s, transform 0.15s; }
-  .nav-tegel:hover { border-color: var(--blauw); transform: translateY(-2px); }
-  .nav-tegel-icoon { width: 42px; height: 42px; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .nav-tegel-icoon svg { width: 22px; height: 22px; }
-  .icoon-paars { background: #ede7f6; }
-  .icoon-blauw { background: #e6f0fb; }
-  .icoon-groen { background: #e8f5e9; }
-  .icoon-roze  { background: #fce8f3; }
-  .icoon-amber { background: #fff8e1; }
-  .nav-tegel-naam { font-size: 15px; font-weight: 600; color: var(--blauw); }
-  .nav-tegel-omschrijving { font-family: var(--fo); font-size: 13px; color: var(--tekst-zacht); line-height: 1.5; }
-  .nav-tegel-pijl { margin-top: auto; font-size: 18px; color: var(--rand); transition: color 0.15s; }
-  .nav-tegel:hover .nav-tegel-pijl { color: var(--blauw); }
-
+  /* ── KAARTENLAY-OUT afgestemd op 2dejaarsindex ─────────────── */
+  .nav-wrap {
+    flex: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(6.5rem, 12vh, 10rem) 2rem 3.5rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 1040px;
+  }
+  .nav-tegel {
+    min-height: 255px;
+    background: var(--kaart);
+    border: 0.5px solid var(--rand);
+    border-radius: var(--radius);
+    padding: 2rem 1.35rem 1.65rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  .nav-tegel:hover {
+    border-color: var(--blauw);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px rgba(19,66,127,.06);
+  }
+  .nav-tegel-icoon {
+    width: 72px;
+    height: 72px;
+    border-radius: 0;
+    background: transparent !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: .15rem;
+  }
+  .nav-tegel-icoon svg {
+    width: 58px;
+    height: 58px;
+    stroke: var(--blauw);
+    stroke-width: 1.8;
+  }
+  .nav-tegel-naam {
+    font-family: 'Lufga', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--roze);
+  }
+  .nav-tegel-omschrijving {
+    font-family: var(--fo);
+    font-size: 13px;
+    color: var(--tekst-zacht);
+    line-height: 1.55;
+    max-width: 210px;
+  }
+  .nav-tegel-pijl {
+    margin-top: auto;
+    font-size: 20px;
+    color: var(--rand);
+    transition: color 0.15s, transform 0.15s;
+  }
+  .nav-tegel:hover .nav-tegel-pijl { color: var(--blauw); transform: translateX(2px); }
   .voet { text-align: center; padding: 1rem; font-family: var(--fo); font-size: 12px; color: #c0c8d4; }
+
+
+  @media (max-width: 980px) {
+    .nav-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 680px; }
+    .nav-wrap { padding-top: 5rem; }
+  }
+
+  @media (max-width: 640px) {
+    .site-header { align-items: flex-start; gap: .75rem; }
+    .site-header h1 { white-space: normal; line-height: 1.2; }
+    .site-header .school { display: none; }
+    .nav-wrap { padding: 3.5rem 1rem 2.5rem; }
+    .nav-grid { grid-template-columns: 1fr; max-width: 360px; }
+    .nav-tegel { min-height: 230px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="hero-inhoud">
-    <h1>Grieks <span class="accent">2GR-LAT</span></h1>
-    <p class="ondertitel">athena campus Pottelberg</p>
-    <img class="school-logo" src="data:image/png;base64,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" alt="athena" />
-  </div>
-</div>
+<header class="site-header">
+  <img class="logo"
+       src="/athenalatijn1egraad/images/nav/logo_wit.png"
+       alt="athena campus Pottelberg"
+       onerror="this.onerror=null;this.src='../../images/nav/logo_wit.png';">
+  <h1>2e jaar - Grieks</h1>
+  <div class="school">athena campus Pottelberg</div>
+</header>
 
-<div class="terug-wrap">
-  <a class="terug-link" href="index.html">&#8592; Terug naar home</a>
-</div>
+<nav class="site-toolbar" aria-label="Paginanavigatie">
+  <a class="back-btn" href="../index.html">← Terug naar 2de jaar</a>
+</nav>
 
 <div class="nav-wrap">
   <div class="nav-grid">
 
-    <a class="nav-tegel" href="grieks-grammatica.html">
+    <a class="nav-tegel" href="grammatica/grammatica.html">
       <div class="nav-tegel-icoon icoon-blauw">
         <svg viewBox="0 0 24 24" fill="none" stroke="#13427f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
       </div>
       <div class="nav-tegel-naam">Grammatica</div>
-      <div class="nav-tegel-omschrijving">Overzichten per onderwerp.</div>
+      <div class="nav-tegel-omschrijving">Hier vind je de theorie over vormen, naamvallen, werkwoorden enz.</div>
       <div class="nav-tegel-pijl">›</div>
     </a>
 
-    <a class="nav-tegel" href="grieks-cultuur.html">
+    <a class="nav-tegel" href="cultuur/cultuur.html">
       <div class="nav-tegel-icoon icoon-paars">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#13427f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       </div>
       <div class="nav-tegel-naam">Cultuur</div>
-      <div class="nav-tegel-omschrijving">Griekse beschaving en cultuurgeschiedenis.</div>
+      <div class="nav-tegel-omschrijving">Hier komen de cultuurpagina's uit onze cursus.</div>
       <div class="nav-tegel-pijl">›</div>
     </a>
 
-    <a class="nav-tegel" href="grieks-teksten.html">
+    <a class="nav-tegel" href="teksten/teksten.html">
       <div class="nav-tegel-icoon icoon-amber">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#13427f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
       </div>
       <div class="nav-tegel-naam">Teksten</div>
-      <div class="nav-tegel-omschrijving">Griekse teksten per auteur of reeks.</div>
+      <div class="nav-tegel-omschrijving">De Griekse teksten die we in de klas lezen, met vertaalhulp.</div>
       <div class="nav-tegel-pijl">›</div>
     </a>
 
-    <a class="nav-tegel" href="grieks-oefeningen.html">
+    <a class="nav-tegel" href="oefeningen/oefeningen-keuze.html">
       <div class="nav-tegel-icoon icoon-roze">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#E6007E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="#13427f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
       </div>
       <div class="nav-tegel-naam">Oefeningen</div>
-      <div class="nav-tegel-omschrijving">Interactieve oefeningen per onderwerp.</div>
+      <div class="nav-tegel-omschrijving">Interactieve oefeningen per grammaticaonderwerp. Voortgang wordt bijgehouden.</div>
       <div class="nav-tegel-pijl">›</div>
     </a>
 
   </div>
 </div>
 
-<footer class="voet">© athena campus Pottelberg</footer>
+<p class="voet">J. Everaerdt &mdash; athena campus Pottelberg</p>
 </body>
 </html>
