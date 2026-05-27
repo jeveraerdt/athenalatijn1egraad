@@ -7,89 +7,341 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="../../../theme.css">
 <style>
   :root {
-    --amber: #b45309;
-    --fv: 'Lufga', Arial, sans-serif; --fo: 'Aptos', Arial, sans-serif;
-    --achtergrond: #f7f8fa; --kaart: #ffffff; --rand: #e2e6ed;
-    --tekst: #1a1a1a; --tekst-zacht: #6b7280;
-    --radius: 12px;
+    --blauw: #13427f;
+    --roze: #E6007E;
+    --fv: 'Lufga', Arial, sans-serif;
+    --fo: 'Aptos', Arial, sans-serif;
+    --achtergrond: #f7f8fa;
+    --kaart: #ffffff;
+    --rand: #e2e6ed;
+    --tekst: #1a1a1a;
+    --tekst-zacht: #6b7280;
+    --kaart-titel: var(--blauw);
+    --radius: 18px; 
   }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { background: var(--achtergrond); color: var(--tekst); min-height: 100vh; display: flex; flex-direction: column; }
-
-  .content-wrap { flex: 1; padding: 2rem 2rem 3rem; max-width: 1100px; width: 100%; margin: 0 auto; }
-
-  /* THEMA SECTIE */
-  .thema-sectie { margin-bottom: 2.5rem; }
-  .thema-header {
-    display: flex; align-items: baseline; gap: .75rem;
-    margin-bottom: 1rem; padding-bottom: .6rem;
-    border-bottom: 1.5px solid var(--rand);
+  body {
+    font-family: var(--fv);
+    background: var(--achtergrond);
+    color: var(--tekst);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
-  .thema-titel { font-family: var(--fv); font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--blauw); }
-  .thema-sub { font-family: var(--fo); font-size: 12px; color: var(--tekst-zacht); font-style: italic; }
+
+  /* MERKLINT athena (2 lagen) */
+  .site-header {
+    background: #13427f;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .85rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    position: relative;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: #E6007E;
+  }
+  .site-header .logo {
+    height: 34px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+  }
+  .site-header h1 {
+    font-family: 'Lufga', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .site-header .school {
+    font-family: 'Lufga', Arial, sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .85;
+    margin-left: auto;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .site-toolbar {
+    background: #f7f8fa;
+    border-bottom: 1px solid #e2e6ed;
+    padding: .55rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-divider,
+  .topbar-divider {
+    width: 1px;
+    height: 22px;
+    background: #e2e6ed;
+    margin: 0 .25rem;
+  }
+  .back-btn,
+  .pill-btn,
+  .ctrl-btn {
+    font-family: 'Lufga', Arial, sans-serif;
+    font-size: .82rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    background: transparent;
+    border: 1px solid #e2e6ed;
+    border-radius: 20px;
+    padding: .32rem .85rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .pill-btn,
+  .ctrl-btn {
+    color: #13427f;
+    border-color: rgba(19,66,127,.22);
+  }
+  .back-btn:hover {
+    background: rgba(19,66,127,.08);
+    border-color: #13427f;
+    color: #13427f;
+  }
+  .pill-btn:hover,
+  .ctrl-btn:hover {
+    background: #13427f;
+    border-color: #13427f;
+    color: #fff;
+  }
+  .back-btn svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .content-wrap {
+    flex: 1;
+    padding: 2.75rem 2rem 3.25rem;
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* THEMA SECTIE — layout gelijk aan teksten */
+  .thema-sectie { margin-bottom: 2.65rem; }
+  .thema-header {
+    display: flex;
+    align-items: baseline;
+    gap: .75rem;
+    margin-bottom: 1.1rem;
+    padding-bottom: .75rem;
+    border-bottom: 1px solid var(--rand);
+  }
+  .thema-titel {
+    font-family: var(--fv);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--blauw);
+  }
+  .thema-sub {
+    font-family: var(--fo);
+    font-size: 11px;
+    color: var(--tekst-zacht);
+    font-style: italic;
+  }
 
   /* TEKST-GRID */
-  .tekst-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
-
-  /* TEKST-KAART */
-  .tekst-kaart {
-    background: var(--kaart); border: 0.5px solid var(--rand);
-    border-radius: var(--radius); padding: 1.25rem 1.1rem 1rem;
-    text-decoration: none; color: inherit;
-    display: flex; flex-direction: column; gap: 7px;
-    transition: border-color .15s, transform .15s, box-shadow .15s;
-    position: relative; overflow: hidden;
+  .tekst-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.15rem;
+    align-items: stretch;
   }
-  .tekst-kaart:hover { border-color: var(--amber); transform: translateY(-2px); box-shadow: 0 4px 18px rgba(180,83,9,.09); }
-  .tekst-kaart.coming-soon { opacity: .55; pointer-events: none; cursor: default; }
 
-  .kaart-meta { font-family: var(--fv); font-size: 10.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--magenta); margin-bottom: 1px; }
-  .kaart-titel { font-family: 'EB Garamond', Georgia, serif; font-size: 16px; font-weight: 600; color: var(--blauw); line-height: 1.3; }
-  .kaart-auteur { font-family: var(--fo); font-size: 11.5px; color: var(--tekst-zacht); font-style: italic; line-height: 1.4; }
-  .kaart-pijl { margin-top: auto; font-size: 18px; color: var(--rand); transition: color .15s; padding-top: 2px; }
-  .tekst-kaart:hover .kaart-pijl { color: var(--amber); }
+  /* TEKST-KAART — actieve kaarten helder, binnenkort-kaarten bewust valer */
+  .tekst-kaart {
+    min-height: 230px;
+    background: #ffffff;
+    border: 1px solid var(--rand);
+    border-radius: var(--radius);
+    padding: 1.55rem 1.45rem 1.3rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: .58rem;
+    transition: border-color .15s, transform .15s, box-shadow .15s, background .15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .tekst-kaart:hover {
+    border-color: rgba(19,66,127,.55);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 26px rgba(19,66,127,.08);
+  }
+
+  /* ACTIEVE KAARTEN: gewone huiskleuren */
+  .kaart-meta {
+    font-family: var(--fv);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .085em;
+    text-transform: uppercase;
+    color: var(--roze);
+    margin-bottom: .18rem;
+    padding-right: 7.5rem;
+  }
+  .kaart-titel {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--blauw);
+    line-height: 1.15;
+    max-width: 92%;
+  }
+  .kaart-auteur {
+    font-family: var(--fv);
+    font-size: 13px;
+    font-weight: 400;
+    color: #5f6b7a;
+    font-style: italic;
+    line-height: 1.55;
+    max-width: 94%;
+  }
+  .kaart-pijl {
+    margin-top: .45rem;
+    font-size: 24px;
+    line-height: 1;
+    color: rgba(19,66,127,.28);
+    transition: color .15s;
+  }
+  .tekst-kaart:hover .kaart-pijl {
+    color: var(--blauw);
+  }
+
+  /* BINNENKORT: alleen deze kaarten worden valer en niet klikbaar */
+  .tekst-kaart.coming-soon {
+    background: #f0f2f6;
+    border-color: #e4e8ef;
+    pointer-events: none;
+    cursor: default;
+    box-shadow: none;
+  }
+  .tekst-kaart.coming-soon .kaart-meta {
+    color: rgba(230,0,126,.34);
+  }
+  .tekst-kaart.coming-soon .kaart-titel {
+    color: #9fb0c8;
+  }
+  .tekst-kaart.coming-soon .kaart-auteur {
+    color: #aeb6c3;
+  }
+  .tekst-kaart.coming-soon .kaart-pijl {
+    color: #d2d9e3;
+  }
 
   .kaart-badge {
-    position: absolute; top: .7rem; right: .75rem;
-    font-family: var(--fv); font-size: 9.5px; font-weight: 600;
-    letter-spacing: .07em; text-transform: uppercase;
-    background: #f0f3f8; color: #9aa3b0;
-    padding: .2rem .5rem; border-radius: 20px;
+    position: absolute;
+    top: .95rem;
+    right: 1.05rem;
+    font-family: var(--fv);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    background: #e4e8ef;
+    color: #9aa5b5;
+    padding: .3rem .75rem;
+    border-radius: 999px;
   }
 
-  .kaart-img { display: flex; justify-content: flex-end; margin-top: 2px; margin-bottom: -2px; }
-  .kaart-img img { width: 70px; height: 70px; object-fit: contain; object-position: center; display: block; transition: transform .18s; }
-  .tekst-kaart:hover .kaart-img img { transform: scale(1.06); }
-  .tekst-kaart.coming-soon .kaart-img img { opacity: .5; }
+  .kaart-img {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+  }
+  .kaart-img img {
+    width: 78px;
+    height: 62px;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    opacity: .65;
+    transition: transform .18s, opacity .18s;
+  }
+  .tekst-kaart:hover .kaart-img img {
+    transform: scale(1.05);
+    opacity: .82;
+  }
+  .tekst-kaart.coming-soon .kaart-img img {
+    opacity: .45;
+  }
 
-  .voet { text-align: center; padding: 1rem; font-family: var(--fo); font-size: 12px; color: #c0c8d4; }
+  .voet {
+    text-align: center;
+    padding: 1rem;
+    font-family: var(--fo);
+    font-size: 11px;
+    color: #c0c8d4;
+  }
+
+  @media (max-width: 760px) {
+    .site-header { padding: .75rem 1rem; }
+    .site-header h1 { font-size: 1rem; }
+    .site-header .school { display: none; }
+    .site-toolbar { padding: .55rem 1rem; }
+    .content-wrap { padding: 2rem 1rem 3rem; }
+    .tekst-grid { grid-template-columns: 1fr; }
+    .tekst-kaart { min-height: 220px; }
+  }
 </style>
+
 </head>
 <body>
 
-<!-- SITE-HEADER — uit theme.css -->
 <header class="site-header">
-  <img class="logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCACeAM4DASIAAhEBAxEB/8QAHQABAQACAwEBAQAAAAAAAAAAAAEHCAUGCQIEA//EAD0QAAEDAwEFBgMFCAAHAAAAAAEAAgMEBQYRBxIhMWEIEyJBUXEUMoEjQnKCkRUWQ1JiY6GiJDM0RJOx4f/EABoBAQACAwEAAAAAAAAAAAAAAAAEBQEDBgL/xAAvEQACAgECAwYFBAMAAAAAAAAAAQIDBAURISIxEkFRcZGxEyMyofBDgcHRQmHh/9oADAMBAAIRAxEAPwDCCqiLvjjwiIgCqiIAiIgCqiIAiIgCqiIAiIgCqiIAiIgCqiIAiIgCqiIAiIgCKqIAiIgCKqID9lntdzvNeygtNvqq+rf8sNNE6R5A5nRoJ0X1erPdrJWGjvFsrLdUga91VQOjdp66OA4LcDshYbBYtnbcjnhH7RvbjJvEcWQNJDGjodC/rvD0WV8oxyxZPbXW7ILVS3GmOujJmalp9Wnm09QQVS3awq7nDs7pFpXprnWpb7Nnm0i2M2s9muvt7Zrpgc0lwphq51tncO/YP7buTx0Oh6uK14q6eekqZKaqglgnicWSRSsLXMcOYIPEFWdGTXfHeDIN1E6XtNH8kRFvNIRVRAEREARVRAEREARVRAERVARVREARF/ajpp6ysho6WJ01RPI2OKNo1L3OOgA6klAfxVWdabsu57LQsmkuuPwVDtCYHzyndGnIubGRr5cNR1XEXfs5bT6FpdT0FvuWnlS1rQT/AOTdUVZ2O3t20SHiXrj2WYgRdovuzzObHvG6YneKdjRqZPhXPjH52gt/yusEEHQjQ+ikRnGa3i9zTKMo8GtjYHZl2k6vH7Rb7FfccgqaCigZTxTULzHK2NgAGrXah50Hq1Z/wTazgeZbkVpvkMVY/wD7Or+xm19AHcHH8JK8/kVdfpVFvGPBk2nUba+D4o9Ol0DavsnxbaFSufX0/wAFdWt0huNO0CVunIOHJ7eh+hC1KwLbTn+IGOGmu7rjQs4fCXDWZgHo1xO832BA6LYXZ/2ksOvvd0uQxS49WO0G9Ie9p3Ho8DVv5gAPUqps0/JxZduvjt3r+ixhmUXrsz4eZrXtS2YZTs8rty70vfUEj92nr4AXQyegJ+67T7p66ajiukr0qljs+RWV0bxRXW2VcehHhmhlaf1BC1h209nOpt4mveAMkq6Uavltbnb0sY/tE8Xj+k+L03tVY4eqxnyXcH493/CFk6e4c1fFGuSL7ljfFI6KVjmSMJa5rhoWkcwR5FfCuCsCqiIAiIgCqiIAiIgCqiIAiIgC71sAijm2zYsyVgc0V7XAH1aCQfoQCujLndnd0bZM+sF3e8NjpLjBLIT/ACCQb3+NVrui5VyS8GbKmlOLfiejiIi4U6wLhcgxLF8gaRe8etdwJ+/UUrHvHs4jUfQrmkWYycXumYaTWzMO5H2cNm10DnUVNcLPIeINJUlzdfwyb3DoNFjLJeyvfIN+THcloa1vMRVkToHaem83eBP6La9FMr1HJr6S38+JGnhUT6x9DQDJ9kG0fHd51ditdLC3+NRtFQzT1Pd6kD3AXRpGPjkdHIxzHtJDmuGhBHMEL04XC5JieM5Gzdv1httxOmgdUU7XPb7O01H0KsKtbl+pH0IVmlL/AAl6mgOF5tlOG1nxOO3qqotSC+IO3opPxMOrT7karYbZ32oKGo7ujzi1uo5ODTXULS+P3fGfE38pd7Bdlyns0YDc9+S0S3Gxyn5RFL30QPVr9Xfo4LE+VdmPN7bvyWKut18iHysDvh5j+V/h/wB1vnfgZf18H6P16GqNWXjfTxXqZe2i7M8F2xWp2Q4vdKGO7EeG4Ujg+OUj7kzR59eDhw5gaLUrOMRyDC70+05Db30k41MbucczdfmY4cHD/wBeehXIyW3aFs2uza91He8eqWHdbUBjmMf03h4XjpqQskW/bla8rsYxva1jzLrSO+W40TQyeJ3Lf3eADurSOHDdPJbqYXYy5H24fdeXia7ZVXvmXZl9jBCLvWd4DFbaR+QYld4ckxkn/qoP+dS68m1EfzRnqQAeHLXRdFVjCyNi3iQZwcHswiqi9nkIiIAiqiAIiqAiqiIAiIgPQ/ZDfxk+zOwXov35Z6NjZjr/ABWeCT/Zrl2ta59iPJhUY/eMTnkJlo5hWU4J/hvAa4DoHNB/OtjFxWZT8G+UDqcaz4lUZBERRjeEREAREQBERAfMsccsbo5WNexw0c1w1BHULH+W7F9nGSb76rHKejqHa/b0H/DuB9dG+En3BWQkXuFs63vB7HmcIzW0luazX3sy3S11Lq/BMwfFKAQ2GtBY4g8wZY+BBHDQsAPmsK5nss2gYxJLLdsZqzACXOqKWMTQgeuseoaOh09l6BorGnVr4Pm2ZCs06qf08DzFRehGabL8Ey4SOvOO0jql/Oqgb3M2vqXt0J+uoWDc67LdRE2Spwy+icDi2juADXewkaNCfdo91bU6vRZwlysrrdNthxjxNaVVyGR2O745eJ7RfKCahroDpJDKOI9CCOBB8iCQfJccrRNNbogNNPZhERDAVURAEREARVRAd82CZX+521K0XSWTco5pPhKzjw7qTwkno07rvyrf5eYq317OuYDMtl1uqZpd+voW/BVmp1cXsAAcfxN3Xa+pPoqHWqPptXk/4LjS7utb8zIqIi58uAiIgCIiAIiIAiIgCIiAIi/JeLlQ2e1VV0uVTHTUdLE6WaV54NaBqT/881lLd7IdDWDtztoRfMYdG1orjTVAmdpxMe8zu/8APeLW9du2vZpUZ7nldkErXx07yIqOFx4xQN+Ue54uPVxXVqannqZu5poJJpN1ztyNhc7RoJJ0HkACT0C7TDqdNEYS6o5bKsVt0pRP5IqopJoCIqgIqoiAIiIAsz9knNhjW0P9iVs25b74G0/E+FlQD9k766lnu4eiwwvuKR8UrZYnuZIxwc1zToWkciD5Far6VdW4PvNlNjqmpruPTdF0jYhm0WebPKC8Okaa+Nvw9ewcN2doGp08g4aOHRy7uuJsg65OMuqOqhNTipLowiIvB6CIiAIiIAiIgCIuNyW+2jG7NPeL5XQ0NDANXyyH9ABzJPkBxKyk29kYbSW7P21lTT0dLLVVc8VPTwsL5JZXhrGNHMkngAtMu0hthkzivdYLBK+PHKZ+pdpoayQH5z5hg+636njoB+Pbvtoue0CofabX3tvxyN2rYCdJKkg8HSaeXmG8hzOp00xrjViu+SXiG0WO3zV1bMfBFE3U6eZJ5ADzJ4BdHp+nKlfFu6+xSZma7fl19Pc/DTwy1E8dPBE+WaRwYyNjS5z3E6AADiST5Lczs1bIThFA7IMgiY7IKyLdbFwIo4jzZr5vP3iOXIeZP99hGxC2YKyK9Xsw3HIi3UP01ipNRxEevN3q/wCg0465C2gZlYcHx+W836rEMTdRFE3QyTv04MY3zP8AgczoFGz9Qd7+DT09zfiYapXxbevsaf8Aatxq14ztYkZaYmQQXCjZXPhYAGxyOe9rgB5Alm9p/V6LEy7FtGyy4ZvmFdkdxAZJUvHdxNOrYo2jRrB7Ac/M6nzXXVe48JQqjGfVIqbpRlZJx6BVRFuNQREQBFVEAREQGWuy/tA/cvPWUNfNuWe8FtPUbx8MUmv2cv0J0J9HE+QW8C8xlul2WNpIy/FP3fuk4de7RG1pLj4qinHBsnUjg135T95UOsYm/wA6P7/2XGm5H6Uv2MzoiLny4CIiAIiIAi47Ir7Z8dtclzvlyprfRx/NLO8NGvoPMnoNSVrJtb7SlbXd9asBifRU51a65zN+2eP7bDwYOp1PHk0hScbEtyHtBcPHuNF2TXSt5MzXta2t4vs8pXR1kwrru5m9DboHDvD6F55Rt6nj6ArTTaZtDyTaBeDXXyr+wYT8NRxaiGAf0jzPq46k+2gXIYHsxzzaNWuraKjmNPM8umude9zYnEnid86mQ6890E+qz5jOzbZLsmjjuea3233C8R+NprCCGEcdY6cakkepDj5jRXVccbB4Lmn/AK/OHuVc3fl9eWH56mG9kmw3Ks4MNwqo3WayO0d8XOzxzN/tM5u/EdB1PJbc4HhGKbO7G+ns1LFSsDN6qrJ3Ayy6fekedOHM6cGjjoAsOZx2o7XTB9Nh1jlrZBwbVVx7uIdRGPE4e5asAZ5tHzLNpXfvBe55qcu3m0kZ7uBvp4G8CR6nU9ViePl5r+Zyx8Pz+TMbsbFXJzS8TZraj2jcYsDJaHFAy/3Iat75pIpYz6l3OT2bwP8AMFqrmuW3/Mr0+7ZDcJKyodqGA8GRN/lY0cGj2+upXBIrHGwqsZcq4+JCvyrL3zPh4BFVFLIwRFUBFVEQBERAFVEQBcxh2R3TE8ko7/Zp+5rKSTebr8rxycxw82kagjquHRYlFSWz6GU3F7o9D9ludWfaBi0N5tbwyQaMq6VzgX08nm13TzB8x9QO1rzmwLMsgwi+svGPVpp5gN2WNw3o5mfyvb5j/I5ggrYmw9qq1OpWi+4tWw1AHidRTNkY4+oD90j21K5nK0m2Et6lui9x9RrlHax7M2QRa43btWWZkZ/ZWJV9Q/y+JqWRD/UOWO8s7SO0G7tfDbDQ2OF3AGmi35dOr36/qAFpr0rJn1W3mbZ6hRHo9zb/ACPILHjlAa6+3Wjt1OOT6iUM3j6AHi49BqVgLaL2n7fTtlo8HthrZdNBX1rSyIdWx8HO/MW+xWsV4utzvNc6uu9xq7hVO+aapmdI8/VxJX4lbY+j1Q42PtP7FddqdkuEFsc9lGVXzL7yK/KbzWVji75iA4RNPMRx6taB0Gi5qxZZi2NETWjC6e617D4Ku+TGZgPq2nYGtH5nP09V0dFZuqLXZ7vDp7EFWST37zv+TbY9ot/j7ifI6iipQN1tPbwKZjW+ng0JHuSuhSPfJI6SR7nvcS5znHUk+ZJXyizCuFa2gtjzOyU3vJ7hERezyFVEQBERAFVEQBEVQEREQBEVQEREQBEVQEREQBEVQEREQBEVQEREQBEVQEREQBEVCA//2Q==" alt="athena logo">
-  <h1>Grieks</h1>
-  <span class="sub">2GR-LAT</span>
+  <img class="logo"
+       src="/athenalatijn1egraad/images/nav/logo_wit.png"
+       alt="athena campus Pottelberg"
+       onerror="this.onerror=null;this.src='../../../images/nav/logo_wit.png';">
+  <h1>Cultuur</h1>
+  <span class="school">athena campus Pottelberg</span>
 </header>
 
-<!-- SITE-TOOLBAR — uit theme.css, met Terug + Thema-pills -->
 <div class="site-toolbar">
   <div class="toolbar-left">
-    <button class="back-btn" onclick="history.back()">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 12L6 8l4-4"/></svg>
-      Terug
-    </button>
-    <div class="topbar-divider"></div>
-    <a class="ctrl-btn" href="#thema-1">Thema 1</a>
-    <a class="ctrl-btn" href="#thema-2">Thema 2</a>
-    <a class="ctrl-btn" href="#thema-3">Thema 3</a>
-    <a class="ctrl-btn" href="#thema-4">Thema 4</a>
-    <a class="ctrl-btn" href="#thema-5">Thema 5</a>
+    <a class="back-btn" href="../grieks.html">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12L6 8l4-4"/></svg>
+      Terug naar Grieks
+    </a>
+    <div class="toolbar-divider"></div>
+    <a class="pill-btn" href="#thema-1">Thema 1</a>
+    <a class="pill-btn" href="#thema-2">Thema 2</a>
+    <a class="pill-btn" href="#thema-3">Thema 3</a>
+    <a class="pill-btn" href="#thema-4">Thema 4</a>
+    <a class="pill-btn" href="#thema-5">Thema 5</a>
   </div>
 </div>
 
