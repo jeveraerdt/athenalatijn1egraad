@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Persoonlijke voornaamwoorden — 2GR-LAT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blauw: #13427f;
+    --roze: #E6007E;
+    --fv: 'Lufga', Arial, sans-serif;
+    --fo: 'Aptos', Arial, sans-serif;
+    --achtergrond: #f7f8fa;
+    --kaart: #ffffff;
+    --rand: #e2e6ed;
+    --tekst: #1a1a1a;
+    --tekst-zacht: #6b7280;
+    --groen-bg: #f0f7f0;
+    --groen-rand: #b7d9b7;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--fv);
+    background: var(--achtergrond);
+    color: var(--tekst);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero { width: 100%; flex-shrink: 0; }
+  .hero-inhoud { padding: 3.5rem 2rem 3rem; text-align: center; }
+  .hero h1 { font-size: 38px; font-weight: 600; color: var(--blauw); letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 5px; }
+  .hero .ondertitel { font-size: 13px; color: var(--blauw); font-family: var(--fo); letter-spacing: 0.3px; }
+  .school-logo { width: 44px; height: auto; margin-top: 10px; display: block; margin-left: auto; margin-right: auto; }
+
+  .terug-wrap { padding: 1.25rem 2rem 0; max-width: 900px; width: 100%; margin: 0 auto; }
+  .terug-link { font-size: 12px; color: var(--tekst-zacht); text-decoration: none; }
+  .terug-link:hover { color: var(--blauw); }
+
+  .inhoud { flex: 1; padding: 2rem 2rem 4rem; max-width: 900px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
+
+  .sectie-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blauw);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-family: var(--fo);
+    margin-bottom: 1rem;
+  }
+
+  .blok-titel {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--blauw);
+    margin-bottom: 0.75rem;
+  }
+
+  .kaart {
+    background: var(--kaart);
+    border: 0.5px solid var(--rand);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+  }
+
+  .onthoud {
+    background: var(--groen-bg);
+    border: 1px solid var(--groen-rand);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+  }
+  .onthoud .blok-titel { color: #2d6a2d; }
+
+  .regel-lijst { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-family: var(--fo); font-size: 14px; line-height: 1.6; }
+  .regel-lijst li { display: flex; gap: 10px; align-items: flex-start; }
+  .regel-lijst li::before { content: '→'; color: var(--blauw); flex-shrink: 0; font-weight: 600; margin-top: 1px; }
+
+  .hl { color: var(--roze); font-weight: 600; }
+  .hl-blauw { color: var(--blauw); font-weight: 600; }
+
+  /* TABEL — geen vertical-rl, gebruik gewone th/td groepering */
+  .vtabel-wrap { overflow-x: auto; margin-top: 0.75rem; }
+
+  .vtabel {
+    border-collapse: collapse;
+    width: 100%;
+    font-family: var(--fo);
+    font-size: 12.5px;
+  }
+  .vtabel th {
+    background: var(--blauw);
+    color: white;
+    padding: 8px 10px;
+    text-align: center;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .vtabel th.leeg { background: #0e3268; }
+  .vtabel th.groep { background: #0e3268; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  /* Sectierij (enk./mv.) als een dunne blauwe balk */
+  .vtabel tr.sectie-rij td {
+    background: #dce8f5;
+    color: var(--blauw);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    font-family: var(--fo);
+  }
+  .vtabel td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--rand);
+    border-right: 1px solid var(--rand);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .vtabel td:last-child { border-right: none; }
+  .vtabel td.rij-label {
+    background: #eef3fa;
+    color: var(--blauw);
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    border-right: 1px solid var(--rand);
+  }
+  .vtabel tr:last-child td { border-bottom: none; }
+  .vtabel .nl { font-size: 11px; color: var(--tekst-zacht); display: block; margin-top: 2px; }
+
+  .voet { text-align: center; padding: 1rem; font-family: var(--fo); font-size: 12px; color: #c0c8d4; }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inhoud">
+    <h1>Grammatica</h1>
+    <p class="ondertitel">athena campus Pottelberg</p>
+    <img class="school-logo" src="../images/nav/logo_wit.png" alt="athena" />
+  </div>
+</div>
+
+<div class="terug-wrap">
+  <a class="terug-link" href="grammatica.html">&#8592; Terug naar Grammatica</a>
+</div>
+
+<div class="inhoud">
+
+  <div>
+    <div class="sectie-label">Grammatica · Voornaamwoorden</div>
+    <div class="kaart">
+      <div class="blok-titel">I — De persoonlijke voornaamwoorden</div>
+      <ul class="regel-lijst">
+        <li>De verbuiging van de persoonlijke voornaamwoorden is <span class="hl">verschillend</span> van de verbuigingen van substantieven en adjectieven.</li>
+        <li>Het Latijn heeft een persoonlijk voornaamwoord voor de <span class="hl-blauw">1e</span> en de <span class="hl-blauw">2e</span> persoon: <em>ego</em> (ik) en <em>tu</em> (jij).</li>
+        <li>Er is <span class="hl">geen</span> apart persoonlijk voornaamwoord voor de <span class="hl-blauw">3e persoon</span>. Hiervoor 'leent' het Latijn de aanwijzende voornaamwoorden — in de eerste plaats <em>is, ea, id</em>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="kaart">
+    <div class="blok-titel">Verbuiging van de persoonlijke voornaamwoorden</div>
+    <div class="vtabel-wrap">
+      <table class="vtabel">
+        <thead>
+          <tr>
+            <th class="leeg"></th>
+            <th>1e persoon</th>
+            <th>2e persoon</th>
+            <th>3e p. m.</th>
+            <th>3e p. vr.</th>
+            <th>3e p. onz.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="sectie-rij">
+            <td colspan="6">enkelvoud</td>
+          </tr>
+          <tr>
+            <td class="rij-label">nominatief</td>
+            <td><strong>ego</strong><span class="nl">ik</span></td>
+            <td><strong>tu</strong><span class="nl">jij</span></td>
+            <td><strong>is</strong><span class="nl">hij</span></td>
+            <td><strong>ea</strong><span class="nl">zij</span></td>
+            <td><strong>id</strong><span class="nl">het</span></td>
+          </tr>
+          <tr>
+            <td class="rij-label">accusatief</td>
+            <td><strong>me</strong><span class="nl">mij / me</span></td>
+            <td><strong>te</strong><span class="nl">jou / je</span></td>
+            <td><strong>eum</strong><span class="nl">hem</span></td>
+            <td><strong>eam</strong><span class="nl">haar</span></td>
+            <td><strong>id</strong><span class="nl">het</span></td>
+          </tr>
+          <tr>
+            <td class="rij-label">genitief</td>
+            <td><strong>mei</strong><span class="nl">van mij</span></td>
+            <td><strong>tui</strong><span class="nl">van jou</span></td>
+            <td><strong>eius</strong><span class="nl">van hem</span></td>
+            <td><strong>eius</strong><span class="nl">van haar</span></td>
+            <td><strong>eius</strong><span class="nl">ervan</span></td>
+          </tr>
+          <tr>
+            <td class="rij-label">datief</td>
+            <td><strong>mihi</strong><span class="nl">aan/voor mij</span></td>
+            <td><strong>tibi</strong><span class="nl">aan/voor jou</span></td>
+            <td><strong>ei</strong><span class="nl">aan/voor hem</span></td>
+            <td><strong>ei</strong><span class="nl">aan/voor haar</span></td>
+            <td><strong>ei</strong><span class="nl">eraan/ervoor</span></td>
+          </tr>
+          <tr>
+            <td class="rij-label">ablatief</td>
+            <td><strong>me</strong><span class="nl">[vz. +] mij</span></td>
+            <td><strong>te</strong><span class="nl">[vz. +] jou</span></td>
+            <td><strong>eo</strong><span class="nl">[vz. +] hem</span></td>
+            <td><strong>ea</strong><span class="nl">[vz. +] haar</span></td>
+            <td><strong>eo</strong><span class="nl">er [+ vz.]</span></td>
+          </tr>
+          <tr class="sectie-rij">
+            <td colspan="6">meervoud</td>
+          </tr>
+          <tr>
+            <td class="rij-label">nominatief</td>
+            <td><strong>nos</strong><span class="nl">wij</span></td>
+            <td><strong>vos</strong><span class="nl">jullie</span></td>
+            <td><strong>ei / ii</strong><span class="nl">zij</span></td>
+            <td><strong>eae</strong><span class="nl">zij</span></td>
+            <td><strong>ea</strong><span class="nl">zij</span></td>
+          </tr>
+          <tr>
+            <td class="rij-label">accusatief</td>
+            <td><strong>nos</strong><span class="nl">ons</span></td>
+            <td><strong>vos</strong><span class="nl">jullie</span></td>
+            <td><strong>eos</strong><span class="nl">hen / ze</span></td>
+            <td><strong>eas</strong><span class="nl">hen / ze</span></td>
+            <td><strong>ea</strong><span class="nl">hen / ze</span></td>
+          </tr>
+          <tr>
+            <td class="rij-label">genitief</td>
+            <td><strong>nostrum / nostri</strong><span class="nl">van ons</span></td>
+            <td><strong>vestrum / vestri</strong><span class="nl">van jullie</span></td>
+            <td><strong>eorum</strong><span class="nl">van hen</span></td>
+            <td><strong>earum</strong><span class="nl">van hen</span></td>
+            <td><strong>eorum</strong><span class="nl">ervan</span></td>
+          </tr>
+          <tr>
+            <td class="rij-label">datief</td>
+            <td><strong>nobis</strong><span class="nl">aan/voor ons</span></td>
+            <td><strong>vobis</strong><span class="nl">aan/voor jullie</span></td>
+            <td><strong>eis / iis</strong><span class="nl">aan/voor hen</span></td>
+            <td><strong>eis / iis</strong><span class="nl">aan/voor hen</span></td>
+            <td><strong>eis / iis</strong><span class="nl">eraan/ervoor</span></td>
+          </tr>
+          <tr>
+            <td class="rij-label">ablatief</td>
+            <td><strong>nobis</strong><span class="nl">[vz. +] ons</span></td>
+            <td><strong>vobis</strong><span class="nl">[vz. +] jullie</span></td>
+            <td><strong>eis / iis</strong><span class="nl">[vz. +] hen</span></td>
+            <td><strong>eis / iis</strong><span class="nl">[vz. +] hen</span></td>
+            <td><strong>eis / iis</strong><span class="nl">er [+ vz.]</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="onthoud">
+    <div class="blok-titel">Samenvatting</div>
+    <ul class="regel-lijst">
+      <li>Latijn heeft <span class="hl">geen</span> apart persoonlijk voornaamwoord voor de 3e persoon — daarvoor worden aanwijzende voornaamwoorden gebruikt (<em>is, ea, id</em> meest gebruikelijk).</li>
+      <li>Voor de derde persoon leren we in Ludus IV alleen <em>is, ea, id</em>. De overige vormen (<em>eos, eas, eorum …</em>) horen ook bij de persoonlijke voornaamwoorden van de 3e persoon.</li>
+      <li><em>is, ea, id</em> kan ook als <span class="hl-blauw">aanwijzend voornaamwoord</span> gebruikt worden met de betekenis <em>deze / dit / die / dat</em>.</li>
+    </ul>
+  </div>
+
+</div>
+
+<p class="voet">J. Everaerdt &mdash; athena campus Pottelberg</p>
+</body>
+</html>

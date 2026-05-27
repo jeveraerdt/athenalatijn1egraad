@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aanwijzende voornaamwoorden — 2GR-LAT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blauw: #13427f;
+    --roze: #E6007E;
+    --fv: 'Lufga', Arial, sans-serif;
+    --fo: 'Aptos', Arial, sans-serif;
+    --achtergrond: #f7f8fa;
+    --kaart: #ffffff;
+    --rand: #e2e6ed;
+    --tekst: #1a1a1a;
+    --tekst-zacht: #6b7280;
+    --groen-bg: #f0f7f0;
+    --groen-rand: #b7d9b7;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--fv);
+    background: var(--achtergrond);
+    color: var(--tekst);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero { width: 100%; flex-shrink: 0; }
+  .hero-inhoud { padding: 3.5rem 2rem 3rem; text-align: center; }
+  .hero h1 { font-size: 38px; font-weight: 600; color: var(--blauw); letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 5px; }
+  .hero .ondertitel { font-size: 13px; color: var(--blauw); font-family: var(--fo); letter-spacing: 0.3px; }
+  .school-logo { width: 44px; height: auto; margin-top: 10px; display: block; margin-left: auto; margin-right: auto; }
+
+  .terug-wrap { padding: 1.25rem 2rem 0; max-width: 960px; width: 100%; margin: 0 auto; }
+  .terug-link { font-size: 12px; color: var(--tekst-zacht); text-decoration: none; }
+  .terug-link:hover { color: var(--blauw); }
+
+  .inhoud { flex: 1; padding: 2rem 2rem 4rem; max-width: 960px; width: 100%; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
+
+  .sectie-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--blauw);
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-family: var(--fo);
+    margin-bottom: 1rem;
+  }
+
+  .blok-titel {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--blauw);
+    margin-bottom: 0.75rem;
+  }
+
+  .kaart {
+    background: var(--kaart);
+    border: 0.5px solid var(--rand);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+  }
+
+  .onthoud {
+    background: var(--groen-bg);
+    border: 1px solid var(--groen-rand);
+    border-radius: var(--radius);
+    padding: 1.75rem;
+  }
+  .onthoud .blok-titel { color: #2d6a2d; }
+
+  .regel-lijst { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; font-family: var(--fo); font-size: 14px; line-height: 1.6; }
+  .regel-lijst li { display: flex; gap: 10px; align-items: flex-start; }
+  .regel-lijst li::before { content: '→'; color: var(--blauw); flex-shrink: 0; font-weight: 600; margin-top: 1px; }
+
+  .hl { color: var(--roze); font-weight: 600; }
+  .hl-blauw { color: var(--blauw); font-weight: 600; }
+
+  .sub-titel {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--tekst-zacht);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-family: var(--fo);
+    margin: 1.5rem 0 0.5rem;
+  }
+  .sub-titel:first-of-type { margin-top: 0; }
+
+  /* OVERZICHTSTABEL */
+  .aanwijz-tabel {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--fo);
+    font-size: 13px;
+    margin-top: 0.5rem;
+  }
+  .aanwijz-tabel th {
+    background: var(--blauw);
+    color: white;
+    padding: 7px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .aanwijz-tabel td {
+    padding: 7px 14px;
+    border-bottom: 1px solid var(--rand);
+  }
+  .aanwijz-tabel tr:last-child td { border-bottom: none; }
+  .aanwijz-tabel tr:nth-child(even) td { background: #f9fafb; }
+  .aanwijz-tabel td:first-child { font-style: italic; color: var(--blauw); font-weight: 600; white-space: nowrap; }
+  .aanwijz-tabel td:nth-child(3) { color: var(--tekst-zacht); font-size: 12px; }
+
+  /* VERBUIGINGSTABELLEN — sectierij-aanpak, geen vertical-rl */
+  .vtabel-wrap { overflow-x: auto; margin-top: 0.5rem; }
+  .vtabel {
+    border-collapse: collapse;
+    font-family: var(--fo);
+    font-size: 12.5px;
+    width: 100%;
+  }
+  .vtabel th {
+    background: var(--blauw);
+    color: white;
+    padding: 7px 10px;
+    text-align: center;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .vtabel th.leeg { background: #0e3268; }
+  .vtabel tr.sectie-rij td {
+    background: #dce8f5;
+    color: var(--blauw);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    font-family: var(--fo);
+  }
+  .vtabel td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--rand);
+    border-right: 1px solid var(--rand);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .vtabel td:last-child { border-right: none; }
+  .vtabel td.rij-label {
+    background: #eef3fa;
+    color: var(--blauw);
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    border-right: 1px solid var(--rand);
+  }
+  .vtabel tr:last-child td { border-bottom: none; }
+  .vtabel .nl { font-size: 11px; color: var(--tekst-zacht); display: block; margin-top: 1px; }
+  .vtabel .bijz { color: var(--roze); font-weight: 700; }
+
+  /* 3-kolomsgrid voor hic / ille / iste naast elkaar */
+  .drie-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .drie-grid h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blauw);
+    font-family: var(--fo);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  /* 2-kolomsgrid voor idem / ipse */
+  .twee-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 0.5rem;
+  }
+  .twee-grid h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blauw);
+    font-family: var(--fo);
+    margin-bottom: 0.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .voet { text-align: center; padding: 1rem; font-family: var(--fo); font-size: 12px; color: #c0c8d4; }
+
+  @media (max-width: 700px) {
+    .drie-grid { grid-template-columns: 1fr; }
+    .twee-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inhoud">
+    <h1>Grammatica</h1>
+    <p class="ondertitel">athena campus Pottelberg</p>
+    <img class="school-logo" src="../images/nav/logo_wit.png" alt="athena" />
+  </div>
+</div>
+
+<div class="terug-wrap">
+  <a class="terug-link" href="grammatica.html">&#8592; Terug naar Grammatica</a>
+</div>
+
+<div class="inhoud">
+
+  <!-- INTRO -->
+  <div>
+    <div class="sectie-label">Grammatica · Voornaamwoorden</div>
+    <div class="kaart">
+      <div class="blok-titel">II — De aanwijzende voornaamwoorden</div>
+      <p style="font-family:var(--fo);font-size:14px;line-height:1.7;margin-bottom:1rem;">
+        Wanneer we aan het spreken zijn, wijzen we vaak iemand of iets met de vinger aan: <em>deze</em> man, <em>dit</em> kind, <em>die</em> vrouw, <em>dat</em> huis …<br>
+        In een tekst kunnen we ook terugwijzen naar iemand die of iets dat reeds vermeld is, of vooruitwijzen naar wat nog moet komen. Hiervoor gebruiken we <strong>aanwijzende voornaamwoorden</strong>.
+      </p>
+      <table class="aanwijz-tabel">
+        <thead>
+          <tr><th>Latijn</th><th>Betekenis</th><th>Voorbeeld</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>is, ea, id</td>
+            <td>deze, dit; die, dat</td>
+            <td>ea puella = <em>dat meisje</em></td>
+          </tr>
+          <tr>
+            <td>hic, haec, hoc</td>
+            <td>deze, dit</td>
+            <td>haec puella = <em>dit meisje</em></td>
+          </tr>
+          <tr>
+            <td>iste, ista, istud</td>
+            <td>die, dat</td>
+            <td>ista puella = <em>dat meisje</em></td>
+          </tr>
+          <tr>
+            <td>ille, illa, illud</td>
+            <td>die, dat</td>
+            <td>illa puella = <em>dat meisje</em></td>
+          </tr>
+          <tr>
+            <td>idem, eadem, idem</td>
+            <td>dezelfde, hetzelfde</td>
+            <td>eadem puella = <em>hetzelfde meisje</em></td>
+          </tr>
+          <tr>
+            <td>ipse, ipsa, ipsum</td>
+            <td>zelf</td>
+            <td>puella ipsa = <em>het meisje zelf</em></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- GEBRUIK -->
+  <div class="kaart">
+    <div class="blok-titel">Gebruik</div>
+    <ul class="regel-lijst">
+      <li>Een aanwijzend voornaamwoord kan <span class="hl-blauw">bijvoeglijk</span> gebruikt worden: het staat dan bij een substantief en congrueert in geslacht, getal en naamval.<br>
+        <span style="font-family:var(--fo);font-size:13px;color:var(--tekst-zacht);">Bv. <em>hunc dolum parat</em> = hij bereidt <u>deze list</u></span></li>
+      <li>Een aanwijzend voornaamwoord kan <span class="hl-blauw">zelfstandig</span> gebruikt worden: het staat alleen en vervangt een substantief.<br>
+        <span style="font-family:var(--fo);font-size:13px;color:var(--tekst-zacht);">Bv. <em>huic duos flamines adiecit</em> = aan <u>deze (priester)</u> voegde hij twee priesters toe</span></li>
+      <li>Het kan verwijzen naar wat onmiddellijk <span class="hl">volgt</span>, of naar wat <span class="hl">zopas</span> gezegd is.</li>
+      <li>De aanwijzende voornaamwoorden hebben een <span class="hl">eigen</span> verbuigingstype — let op de gen. enk. op <strong>-ius</strong> en de dat. enk. op <strong>-i</strong>.</li>
+    </ul>
+  </div>
+
+  <!-- hic / ille / iste naast elkaar -->
+  <div class="kaart">
+    <div class="blok-titel">Verbuiging: hic — ille — iste</div>
+    <div class="drie-grid">
+
+      <!-- hic -->
+      <div>
+        <h4>hic, haec, hoc</h4>
+        <div class="vtabel-wrap">
+          <table class="vtabel">
+            <thead>
+              <tr><th class="leeg"></th><th>m.</th><th>vr.</th><th>onz.</th></tr>
+            </thead>
+            <tbody>
+              <tr class="sectie-rij"><td colspan="4">enkelvoud</td></tr>
+              <tr><td class="rij-label">nom.</td><td>hic</td><td>haec</td><td>hoc</td></tr>
+              <tr><td class="rij-label">acc.</td><td>hunc</td><td>hanc</td><td>hoc</td></tr>
+              <tr><td class="rij-label">gen.</td><td colspan="3">huius</td></tr>
+              <tr><td class="rij-label">dat.</td><td colspan="3">huic</td></tr>
+              <tr><td class="rij-label">abl.</td><td>hoc</td><td>hac</td><td>hoc</td></tr>
+              <tr class="sectie-rij"><td colspan="4">meervoud</td></tr>
+              <tr><td class="rij-label">nom.</td><td>hi</td><td>hae</td><td class="bijz">haec</td></tr>
+              <tr><td class="rij-label">acc.</td><td>hos</td><td>has</td><td class="bijz">haec</td></tr>
+              <tr><td class="rij-label">gen.</td><td>horum</td><td>harum</td><td>horum</td></tr>
+              <tr><td class="rij-label">dat.</td><td colspan="3">his</td></tr>
+              <tr><td class="rij-label">abl.</td><td colspan="3">his</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ille -->
+      <div>
+        <h4>ille, illa, illud</h4>
+        <div class="vtabel-wrap">
+          <table class="vtabel">
+            <thead>
+              <tr><th class="leeg"></th><th>m.</th><th>vr.</th><th>onz.</th></tr>
+            </thead>
+            <tbody>
+              <tr class="sectie-rij"><td colspan="4">enkelvoud</td></tr>
+              <tr><td class="rij-label">nom.</td><td>ille</td><td>illa</td><td>illud</td></tr>
+              <tr><td class="rij-label">acc.</td><td>illum</td><td>illam</td><td>illud</td></tr>
+              <tr><td class="rij-label">gen.</td><td colspan="3">illius</td></tr>
+              <tr><td class="rij-label">dat.</td><td colspan="3">illi</td></tr>
+              <tr><td class="rij-label">abl.</td><td>illo</td><td>illa</td><td>illo</td></tr>
+              <tr class="sectie-rij"><td colspan="4">meervoud</td></tr>
+              <tr><td class="rij-label">nom.</td><td>illi</td><td>illae</td><td>illa</td></tr>
+              <tr><td class="rij-label">acc.</td><td>illos</td><td>illas</td><td>illa</td></tr>
+              <tr><td class="rij-label">gen.</td><td>illorum</td><td>illarum</td><td>illorum</td></tr>
+              <tr><td class="rij-label">dat.</td><td colspan="3">illis</td></tr>
+              <tr><td class="rij-label">abl.</td><td colspan="3">illis</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- iste -->
+      <div>
+        <h4>iste, ista, istud</h4>
+        <div class="vtabel-wrap">
+          <table class="vtabel">
+            <thead>
+              <tr><th class="leeg"></th><th>m.</th><th>vr.</th><th>onz.</th></tr>
+            </thead>
+            <tbody>
+              <tr class="sectie-rij"><td colspan="4">enkelvoud</td></tr>
+              <tr><td class="rij-label">nom.</td><td>iste</td><td>ista</td><td>istud</td></tr>
+              <tr><td class="rij-label">acc.</td><td>istum</td><td>istam</td><td>istud</td></tr>
+              <tr><td class="rij-label">gen.</td><td colspan="3">istius</td></tr>
+              <tr><td class="rij-label">dat.</td><td colspan="3">isti</td></tr>
+              <tr><td class="rij-label">abl.</td><td>isto</td><td>ista</td><td>isto</td></tr>
+              <tr class="sectie-rij"><td colspan="4">meervoud</td></tr>
+              <tr><td class="rij-label">nom.</td><td>istos</td><td>istas</td><td>ista</td></tr>
+              <tr><td class="rij-label">acc.</td><td>istos</td><td>istas</td><td>ista</td></tr>
+              <tr><td class="rij-label">gen.</td><td>istorum</td><td>istarum</td><td>istorum</td></tr>
+              <tr><td class="rij-label">dat.</td><td colspan="3">istis</td></tr>
+              <tr><td class="rij-label">abl.</td><td colspan="3">istis</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- idem / ipse naast elkaar -->
+  <div class="kaart">
+    <div class="blok-titel">Verbuiging: idem — ipse</div>
+    <div class="twee-grid">
+
+      <!-- idem -->
+      <div>
+        <h4>idem, eadem, idem — dezelfde</h4>
+        <div class="vtabel-wrap">
+          <table class="vtabel">
+            <thead>
+              <tr><th class="leeg"></th><th>m.</th><th>vr.</th><th>onz.</th></tr>
+            </thead>
+            <tbody>
+              <tr class="sectie-rij"><td colspan="4">enkelvoud</td></tr>
+              <tr><td class="rij-label">nom.</td><td>idem</td><td>eadem</td><td>idem</td></tr>
+              <tr><td class="rij-label">acc.</td><td>eundem</td><td>eandem</td><td>idem</td></tr>
+              <tr><td class="rij-label">gen.</td><td colspan="3">eiusdem</td></tr>
+              <tr><td class="rij-label">dat.</td><td colspan="3">eidem</td></tr>
+              <tr><td class="rij-label">abl.</td><td>eodem</td><td>eadem</td><td>eodem</td></tr>
+              <tr class="sectie-rij"><td colspan="4">meervoud</td></tr>
+              <tr><td class="rij-label">nom.</td><td>iidem</td><td>eaedem</td><td>eadem</td></tr>
+              <tr><td class="rij-label">acc.</td><td>eosdem</td><td>easdem</td><td>eadem</td></tr>
+              <tr><td class="rij-label">gen.</td><td colspan="3">eorundem / earundem / eorundem</td></tr>
+              <tr><td class="rij-label">dat.</td><td colspan="3">eisdem</td></tr>
+              <tr><td class="rij-label">abl.</td><td colspan="3">eisdem</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-family:var(--fo);font-size:12px;color:var(--tekst-zacht);margin-top:0.6rem;">
+          <em>idem</em> = <em>is, ea, id</em> + <strong>-dem</strong>. Eindigt de vorm op <strong>-m</strong>, dan wordt dat <strong>-n</strong>: <em>eundem, eandem</em> enz.
+        </p>
+      </div>
+
+      <!-- ipse -->
+      <div>
+        <h4>ipse, ipsa, ipsum — zelf</h4>
+        <div class="vtabel-wrap">
+          <table class="vtabel">
+            <thead>
+              <tr><th class="leeg"></th><th>m.</th><th>vr.</th><th>onz.</th></tr>
+            </thead>
+            <tbody>
+              <tr class="sectie-rij"><td colspan="4">enkelvoud</td></tr>
+              <tr><td class="rij-label">nom.</td><td>ipse</td><td>ipsa</td><td>ipsum</td></tr>
+              <tr><td class="rij-label">acc.</td><td>ipsum</td><td>ipsam</td><td>ipsum</td></tr>
+              <tr><td class="rij-label">gen.</td><td colspan="3">ipsius</td></tr>
+              <tr><td class="rij-label">dat.</td><td colspan="3">ipsi</td></tr>
+              <tr><td class="rij-label">abl.</td><td>ipso</td><td>ipsa</td><td>ipso</td></tr>
+              <tr class="sectie-rij"><td colspan="4">meervoud</td></tr>
+              <tr><td class="rij-label">nom.</td><td>ipsi</td><td>ipsae</td><td>ipsa</td></tr>
+              <tr><td class="rij-label">acc.</td><td>ipsos</td><td>ipsas</td><td>ipsa</td></tr>
+              <tr><td class="rij-label">gen.</td><td>ipsorum</td><td>ipsarum</td><td>ipsorum</td></tr>
+              <tr><td class="rij-label">dat.</td><td colspan="3">ipsis</td></tr>
+              <tr><td class="rij-label">abl.</td><td colspan="3">ipsis</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ONTHOUDTIPS -->
+  <div class="kaart">
+    <div class="blok-titel">Onthoudtips</div>
+    <ul class="regel-lijst">
+      <li>In de nom. enk. onz. en acc. enk. onz. eindigen de voornaamwoorden vaak op <span class="hl">-d</span>.</li>
+      <li>De gen. enk. eindigt op <span class="hl">-ius</span> en de dat. enk. op <span class="hl">-i</span> — in alle geslachten.</li>
+      <li>Dat. en abl. mv. zijn steeds <span class="hl-blauw">aan elkaar gelijk</span>.</li>
+      <li>Het meervoud volgt de <span class="hl-blauw">o-verbuiging</span> (uitzondering: nom. en acc. mv. onz. van <em>hic</em> = <strong>haec</strong>).</li>
+      <li><em>is, ea, id</em> komt ook als <span class="hl-blauw">persoonlijk voornaamwoord</span> voor (<em>hij / zij / het</em>). Ook <em>hic, haec, hoc</em>, <em>iste, ista, istud</em> en <em>ille, illa, illud</em> worden soms zo gebruikt.</li>
+    </ul>
+  </div>
+
+  <!-- SAMENVATTING -->
+  <div class="onthoud">
+    <div class="blok-titel">Samenvatting</div>
+    <ul class="regel-lijst">
+      <li>Aanwijzende voornaamwoorden kunnen <span class="hl-blauw">bijvoeglijk</span> of <span class="hl-blauw">zelfstandig</span> gebruikt worden.</li>
+      <li>Gen. enk. = <span class="hl">-ius</span> &nbsp;|&nbsp; Dat. enk. = <span class="hl">-i</span> &nbsp;|&nbsp; Onz. enk. eindigt op <span class="hl">-d</span></li>
+      <li>Meervoud volgt grotendeels de <span class="hl-blauw">o-verbuiging</span>.</li>
+      <li><em>idem</em> = <em>is, ea, id</em> + <strong>-dem</strong> &nbsp;|&nbsp; -m vóór -dem → <strong>-n</strong></li>
+    </ul>
+  </div>
+
+</div>
+
+<p class="voet">J. Everaerdt &mdash; athena campus Pottelberg</p>
+</body>
+</html>
