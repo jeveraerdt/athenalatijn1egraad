@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sport en spel — Cultuur Thema 5 Les 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../theme.css">
+<style>
+:root{
+  --blauw:#13427f;
+  --roze:#E6007E;
+  --achtergrond:#f7f8fa;
+  --kaart:#ffffff;
+  --rand:#e2e6ed;
+  --tekst:#1a1a1a;
+  --tekst-zacht:#6b7280;
+  --blauw-licht:rgba(19,66,127,.08);
+  --roze-licht:rgba(230,0,126,.08);
+  --geel:#fff8dc;
+  --geel-rand:#ead67a;
+  --groen:#0f7a4a;
+  --groen-licht:#e8f5ee;
+  --radius:12px;
+  --fv:'Lufga',Arial,sans-serif;
+  --fo:'Aptos',Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fv);background:var(--achtergrond);color:var(--tekst);min-height:100vh;display:flex;flex-direction:column;line-height:1.62;}
+
+/* MERKLINT athena */
+.site-header{background:var(--blauw);color:#fff;display:flex;align-items:center;gap:1rem;padding:.85rem 1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.1);position:relative;}
+.site-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--roze);}
+.site-header .logo{height:34px;width:auto;display:block;flex-shrink:0;}
+.site-header h1{font-family:var(--fv);font-weight:700;font-size:1.2rem;color:#fff;white-space:nowrap;}
+.site-header .school{font-family:var(--fv);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.85;margin-left:auto;color:#fff;white-space:nowrap;}
+
+.site-toolbar{background:#f7f8fa;border-bottom:1px solid var(--rand);padding:.55rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:.5rem;position:sticky;top:0;z-index:100;flex-wrap:wrap;}
+.toolbar-left,.toolbar-right{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
+.toolbar-divider,.topbar-divider{width:1px;height:22px;background:var(--rand);margin:0 .25rem;}
+.topbar-label{font-family:var(--fo);font-size:.8rem;color:var(--tekst-zacht);}
+.back-btn,.ctrl-btn,.pill-btn{font-family:var(--fv);font-size:.82rem;font-weight:500;color:#1a1a1a;background:transparent;border:1px solid var(--rand);border-radius:20px;padding:.32rem .85rem;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.35rem;transition:background .15s,border-color .15s,color .15s;white-space:nowrap;}
+.ctrl-btn,.pill-btn{color:var(--blauw);border-color:rgba(19,66,127,.22);}
+.back-btn:hover{background:rgba(19,66,127,.08);border-color:var(--blauw);color:var(--blauw);}
+.ctrl-btn:hover,.pill-btn:hover,.ctrl-btn.tab-btn.active{background:var(--blauw);border-color:var(--blauw);color:#fff;}
+.back-btn svg{width:14px;height:14px;flex-shrink:0;}
+
+.didactiek-wrap{position:relative;}
+.didactiek-dropdown{display:none;position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid var(--rand);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.10);min-width:185px;z-index:200;overflow:hidden;}
+.didactiek-dropdown.open{display:block;}
+.dd-item{width:100%;background:none;border:0;padding:.62rem 1rem;font-family:var(--fv);font-size:.82rem;color:var(--tekst);cursor:pointer;display:flex;align-items:center;gap:.55rem;text-align:left;}
+.dd-item:hover{background:var(--blauw-licht);}
+.dd-check{width:14px;height:14px;border:1.5px solid var(--rand);border-radius:4px;background:#fff;display:inline-block;}
+.dd-item.active .dd-check{background:var(--blauw);border-color:var(--blauw);box-shadow:inset 0 0 0 3px #fff;}
+.dd-divider{height:1px;background:var(--rand);margin:2px 0;}
+
+.page-title-wrap{background:#fff;border-bottom:1px solid var(--rand);padding:1.1rem 1.5rem .95rem;}
+.page-title-inner{max-width:900px;margin:0 auto;}
+.page-meta{font-family:var(--fv);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--roze);margin-bottom:.3rem;}
+.page-title{font-family:var(--fv);font-size:1.75rem;font-weight:700;color:var(--blauw);line-height:1.15;margin-bottom:.3rem;}
+.page-sub{font-family:var(--fo);font-size:.9rem;color:var(--tekst-zacht);line-height:1.55;}
+
+.leerdoelen-banner{background:var(--blauw);color:#fff;padding:.65rem 1.5rem;}
+.leerdoelen-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;}
+.leerdoelen-label{font-family:var(--fv);font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.88;}
+.doel-pill{font-family:var(--fo);font-size:.76rem;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.30);border-radius:20px;padding:.2rem .65rem;white-space:nowrap;}
+
+.main{max-width:900px;margin:0 auto;padding:22px 20px 64px;flex:1;width:100%;}
+.mode-panel{display:none;}
+.mode-panel.active{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+.card{background:#fff;border:1px solid var(--rand);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;box-shadow:0 1px 4px rgba(19,66,127,.04);}
+.card-title{font-family:var(--fv);font-size:.8rem;font-weight:700;color:var(--blauw);text-transform:uppercase;letter-spacing:.075em;margin-bottom:13px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.card-title::after{content:'';height:1px;background:var(--rand);flex:1;margin-left:6px;min-width:30px;}
+p{font-family:var(--fo);font-size:.92rem;margin-bottom:10px;}
+p:last-child{margin-bottom:0;}
+ul,ol{font-family:var(--fo);font-size:.92rem;margin:8px 0 0 20px;}
+li+li{margin-top:5px;}
+strong{font-weight:700;}
+.greek{font-family:'EB Garamond',Georgia,serif;font-size:1.08em;}
+.small-note{font-family:var(--fo);font-size:.8rem;color:var(--tekst-zacht);line-height:1.5;}
+
+.s-chip,.l-chip{display:none;font-family:var(--fv);font-size:.66rem;font-weight:700;border-radius:999px;padding:2px 7px;white-space:nowrap;margin-left:.25rem;vertical-align:middle;}
+.s-chip{background:var(--geel);border:1px solid var(--geel-rand);color:#5b4b00;}
+.l-chip{background:var(--roze-licht);border:1px solid rgba(230,0,126,.24);color:var(--roze);}
+body.show-surma .s-chip,body.show-lpd .l-chip{display:inline-flex;}
+
+.prompt-blok{background:var(--blauw-licht);border:1px solid rgba(19,66,127,.18);border-radius:9px;padding:12px 14px;font-family:var(--fo);font-size:.86rem;color:#425466;line-height:1.55;margin-top:10px;}
+.prompt-blok strong{color:var(--blauw);}
+.mini-table{width:100%;border-collapse:collapse;margin-top:10px;font-family:var(--fo);font-size:.88rem;}
+.mini-table th,.mini-table td{border:1px solid var(--rand);padding:9px 11px;vertical-align:top;}
+.mini-table th{background:var(--blauw-licht);color:var(--blauw);font-family:var(--fv);font-size:.78rem;text-align:left;letter-spacing:.04em;text-transform:uppercase;}
+.two-col{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;align-items:start;}
+
+.media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:12px;}
+.media-launch{width:100%;background:#fff;border:1px solid var(--rand);border-radius:12px;padding:14px;text-align:left;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .15s;}
+.media-launch:hover{border-color:var(--blauw);box-shadow:0 8px 22px rgba(19,66,127,.08);transform:translateY(-2px);}
+.media-icon{width:38px;height:38px;border-radius:12px;background:var(--blauw-licht);color:var(--blauw);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.15rem;}
+.media-copy strong{font-family:var(--fv);font-size:.92rem;color:var(--blauw);display:block;margin-bottom:3px;}
+.media-copy span{font-family:var(--fo);font-size:.82rem;color:var(--tekst-zacht);line-height:1.45;display:block;}
+
+.vraag-blok{margin-bottom:4px;}
+.vraag-blok+.vraag-blok{margin-top:18px;padding-top:16px;border-top:1px solid var(--rand);}
+.vraag-label{font-family:var(--fv);font-size:.92rem;font-weight:700;color:var(--tekst);margin-bottom:8px;line-height:1.5;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+.vraag-nr{display:inline-flex;align-items:center;justify-content:center;background:var(--roze);color:#fff;border-radius:50%;width:22px;height:22px;font-size:.72rem;flex-shrink:0;line-height:1;}
+.workbook-line{font-family:var(--fo);font-size:.93rem;line-height:1.75;margin:5px 0;}
+.blank{font-family:var(--fv);font-size:.84rem;line-height:1;border:1px dashed rgba(19,66,127,.45);background:#fff;color:var(--blauw);border-radius:7px;padding:.25rem .55rem;margin:0 .12rem;min-width:86px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;vertical-align:baseline;transition:background .15s,border-color .15s,color .15s;}
+.blank.long{min-width:180px;}
+.blank.xlong{min-width:280px;}
+.blank:hover{background:var(--blauw-licht);border-color:var(--blauw);}
+.blank.revealed{background:var(--blauw);border-color:var(--blauw);color:#fff;border-style:solid;}
+.blank.block{display:inline-flex;min-height:32px;margin-top:5px;}
+.answer-tip{font-family:var(--fo);font-size:.78rem;color:var(--tekst-zacht);margin-top:8px;}
+.section-subtitle{font-family:var(--fv);font-size:1.02rem;font-weight:700;color:var(--blauw);margin:16px 0 8px;}
+.subtle-box{background:#f9fafc;border:1px solid var(--rand);border-radius:10px;padding:13px 15px;margin:10px 0;}
+.periodos-grid{display:grid;grid-template-columns:72px 1fr;gap:8px 12px;align-items:center;font-family:var(--fo);font-size:.9rem;margin-top:8px;}
+.periodos-year{font-family:var(--fv);font-weight:700;color:var(--roze);}
+
+.retrieval-blok{background:#f9fafc;border:1.5px dashed var(--rand);border-radius:9px;padding:14px;margin-bottom:10px;}
+.retrieval-vraag{font-family:var(--fv);font-size:.9rem;font-weight:700;margin-bottom:8px;color:var(--tekst);}
+.retrieval-uitleg{font-family:var(--fo);font-size:.8rem;color:var(--tekst-zacht);margin-bottom:10px;}
+textarea,input[type="text"]{width:100%;border:1.5px solid var(--rand);border-radius:7px;padding:9px 12px;font-family:var(--fo);font-size:.9rem;color:var(--tekst);background:#fff;resize:vertical;}
+textarea{min-height:78px;}
+textarea:focus,input[type="text"]:focus{outline:none;border-color:var(--blauw);box-shadow:0 0 0 3px rgba(19,66,127,.10);}
+.btn{font-family:var(--fv);font-size:.82rem;font-weight:700;border:0;border-radius:7px;padding:7px 13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:background .15s,color .15s,border-color .15s;}
+.btn-primary{background:var(--blauw);color:#fff;}
+.btn-primary:hover{background:#0f3769;}
+.btn-outline{background:#fff;color:var(--blauw);border:1.5px solid var(--blauw);}
+.btn-outline:hover{background:var(--blauw-licht);}
+.feedback-box{display:none;margin-top:9px;padding:11px 14px;border-radius:8px;font-family:var(--fo);font-size:.84rem;line-height:1.55;border-left:4px solid var(--blauw);background:var(--blauw-licht);color:#1b365d;}
+.feedback-box.active{display:block;animation:fadeIn .2s ease;}
+
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;}
+.compare-card{background:#fff;border:1px solid var(--rand);border-radius:10px;padding:14px;}
+.compare-card h4{font-family:var(--fv);font-size:.9rem;color:var(--blauw);margin-bottom:6px;}
+.compare-card p{font-size:.84rem;color:var(--tekst-zacht);}
+
+.theater{position:fixed;inset:0;z-index:500;display:none;background:rgba(15,23,42,.72);align-items:center;justify-content:center;padding:20px;}
+.theater.open{display:flex;}
+.theater-box{width:min(920px,96vw);max-height:90vh;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.35);display:flex;flex-direction:column;}
+.theater-head{background:var(--blauw);color:#fff;padding:.75rem 1rem;display:flex;align-items:center;gap:12px;justify-content:space-between;}
+.theater-head strong{font-family:var(--fv);font-size:.95rem;}
+.theater-close{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.32);color:#fff;border-radius:999px;padding:.25rem .7rem;cursor:pointer;font-family:var(--fv);}
+.theater-body{padding:0;background:#fff;overflow:auto;}
+.media-frame{width:100%;height:min(60vh,520px);border:0;display:block;}
+.theater-info{padding:18px 20px;font-family:var(--fo);font-size:.92rem;color:#425466;line-height:1.55;}
+.theater-info a{color:var(--blauw);font-weight:700;text-decoration:none;}
+.theater-info a:hover{text-decoration:underline;}
+
+.voet{text-align:center;padding:1rem;font-family:var(--fo);font-size:11px;color:#c0c8d4;}
+@media(max-width:760px){.site-header{padding:.75rem 1rem;}.site-header h1{font-size:1rem;}.site-header .school{display:none;}.site-toolbar{padding:.55rem 1rem;}.page-title-wrap{padding:1rem;}.main{padding:18px 12px 52px;}.two-col{grid-template-columns:1fr;}.blank.xlong{min-width:180px;}.periodos-grid{grid-template-columns:1fr;}.card{padding:18px 16px;}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <img class="logo" src="/athenalatijn1egraad/images/nav/logo_wit.png" alt="athena campus Pottelberg" onerror="this.onerror=null;this.src='../../../images/nav/logo_wit.png';">
+  <h1>Cultuur</h1>
+  <span class="school">athena campus Pottelberg</span>
+</header>
+
+<div class="site-toolbar">
+  <div class="toolbar-left">
+    <a class="back-btn" href="grieks-cultuur.html">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12L6 8l4-4"/></svg>
+      Terug naar cultuur
+    </a>
+    <div class="topbar-divider"></div>
+    <span class="topbar-label">Thema 5</span>
+    <div class="topbar-divider"></div>
+    <button class="ctrl-btn tab-btn active" onclick="toonModus('fragment',this)">Fragment</button>
+    <button class="ctrl-btn tab-btn" onclick="toonModus('bekijk',this)">Bekijk</button>
+    <button class="ctrl-btn tab-btn" onclick="toonModus('duidaan',this)">Duid aan</button>
+    <button class="ctrl-btn tab-btn" onclick="toonModus('check',this)">Check</button>
+  </div>
+  <div class="toolbar-right">
+    <div class="didactiek-wrap">
+      <button class="ctrl-btn" onclick="toggleDropdown()">Didactiek <span style="font-size:.6rem;opacity:.7;margin-left:.1rem;">▾</span></button>
+      <div class="didactiek-dropdown" id="didactiekDropdown">
+        <button class="dd-item" id="dd-surma" onclick="toggleLaag('surma')"><span class="dd-check"></span> Bouwstenen</button>
+        <div class="dd-divider"></div>
+        <button class="dd-item" id="dd-lpd" onclick="toggleLaag('lpd')"><span class="dd-check"></span> LPD</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-title-wrap">
+  <div class="page-title-inner">
+    <div class="page-meta">Grieks · Cultuur · Thema 5 · Les 1</div>
+    <h2 class="page-title">Sport en spel</h2>
+    <p class="page-sub">Je werkboek blijft de hoofdroute. Deze pagina behoudt de invulvragen uit de cursus, maar maakt de antwoorden klikbaar: tik op een lege balk om het antwoord zichtbaar te maken.</p>
+  </div>
+</div>
+
+<div class="leerdoelen-banner">
+  <div class="leerdoelen-inner">
+    <span class="leerdoelen-label">Na deze les kun je:</span>
+    <span class="doel-pill">Griekse sporten benoemen</span>
+    <span class="doel-pill">de periodos situeren</span>
+    <span class="doel-pill">antieke en moderne spelen vergelijken</span>
+    <span class="doel-pill">sport als eer en competitie uitleggen</span>
+  </div>
+</div>
+
+<main class="main">
+
+  <section class="mode-panel active" id="modus-fragment">
+    <div class="card">
+      <div class="card-title">Start</div>
+      <p>Open je cursus bij <strong>IV Sport en spel</strong>. Bekijk eerst de titelafbeelding. Let op lichaamshouding, beweging, wedstrijd, materiaal en ideaalbeeld.</p>
+      <div class="prompt-blok"><strong>Werkafspraak:</strong> vul de cursus eerst zelf in. Tik daarna op een lege balk om het antwoord te controleren. <span class="s-chip" title="Activeer voorkennis + duidelijke instructie">S1/S2</span></div>
+    </div>
+  </section>
+
+  <section class="mode-panel" id="modus-bekijk">
+    <div class="card">
+      <div class="card-title">Inleiding · oorsprong gymnastiek <span class="l-chip" title="BO1_03.02, BO1_03.07">LPD</span></div>
+      <p class="workbook-line">Het Griekse woord voor ‘sport’ is <span class="greek">γυμναστικὴ τέχνη</span>. Hiervan is ons woord <button class="blank" data-answer="gymnastiek" onclick="toggleAntwoord(this)">__________</button> afgeleid. Het Griekse woord is afgeleid van het adjectief <span class="greek">γυμνός</span> dat ‘naakt’ betekent.</p>
+      <div class="vraag-blok">
+        <div class="vraag-label"><span class="vraag-nr">1</span>Hoe dat komt?</div>
+        <p class="workbook-line"><button class="blank xlong block" data-answer="Omdat Griekse atleten naakt trainden en naakt deelnamen aan wedstrijden." onclick="toggleAntwoord(this)">_____________________________________________________________</button></p>
+      </div>
+      <p>Vóór de training of wedstrijd wasten de atleten zich met een spons, wreven zich in met olie en bestrooiden zich met fijn zand als bescherming tegen de zon en de warmte. Na de wedstrijd schraapten ze de olie en het zand van hun lichaam met een krab- of schraapijzer.</p>
+      <p class="workbook-line">Sport speelde een belangrijke rol in de Griekse wereld. De Grieken streefden naar harmonie tussen lichaam en geest: <em>mens sana in corpore sano</em> (<button class="blank long" data-answer="een gezonde geest in een gezond lichaam" onclick="toggleAntwoord(this)">__________________________</button>).</p>
+      <p>Voor de meeste mensen was sport een hobby, maar voor anderen betekende sport veel meer. Zij oefenden zich in één speciale sporttak met de bedoeling deel te nemen aan belangrijke wedstrijden. Dat paste perfect bij de Griekse liefde voor competitie: “Altijd de beste te zijn en de anderen te overtreffen”. Teamsporten werden bij de Grieken niet in competitie beoefend.</p>
+      <div class="media-grid">
+        <button class="media-launch" type="button" onclick="openTheater('gymnos')">
+          <span class="media-icon">🧴</span>
+          <span class="media-copy"><strong>Training en lichaam</strong><span>Bekijk hoe olie, zand en schraapijzer bij de voorbereiding van atleten hoorden.</span></span>
+        </button>
+        <button class="media-launch" type="button" onclick="openTheater('olympics')">
+          <span class="media-icon">🏟</span>
+          <span class="media-copy"><strong>Antieke Olympische Spelen</strong><span>Bekijk de religieuze context, de wedstrijden en de betekenis van eer.</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">I · Welke sporten? <span class="s-chip" title="Voorbeelden + actief verwerken">S3/S5</span></div>
+      <p class="workbook-line">• Het <button class="blank" data-answer="lopen" onclick="toggleAntwoord(this)">__________</button> onderverdeeld in:</p>
+      <ul>
+        <li><button class="blank" data-answer="stadionloop" onclick="toggleAntwoord(this)">__________</button> = in Olympia <button class="blank" data-answer="192" onclick="toggleAntwoord(this)">____</button> m <span class="small-note">(we onthouden: 200 m)</span></li>
+        <li><button class="blank" data-answer="diaulos" onclick="toggleAntwoord(this)">__________</button> (2x) = 400 m</li>
+        <li><button class="blank" data-answer="dolichos" onclick="toggleAntwoord(this)">__________</button> (ongeveer 20x) = 4.000 m</li>
+      </ul>
+      <p class="section-subtitle">Twee speciale nummers</p>
+      <ul>
+        <li><button class="blank" data-answer="wapenloop" onclick="toggleAntwoord(this)">__________</button> = <button class="blank long" data-answer="loopwedstrijd met wapenrusting" onclick="toggleAntwoord(this)">____________________</button></li>
+        <li><button class="blank" data-answer="fakkelloop" onclick="toggleAntwoord(this)">__________</button> = <button class="blank long" data-answer="estafetteloop met fakkel" onclick="toggleAntwoord(this)">____________________</button></li>
+      </ul>
+
+      <div class="subtle-box">
+        <p class="workbook-line">• Het <button class="blank" data-answer="verspringen" onclick="toggleAntwoord(this)">__________</button> met halters.</p>
+        <div class="vraag-label">Hoe en waarom werden die gebruikt?</div>
+        <p class="workbook-line"><button class="blank xlong block" data-answer="De atleet hield springgewichten in de handen en zwaaide ze mee om meer kracht, ritme en evenwicht te krijgen." onclick="toggleAntwoord(this)">_____________________________________________________________</button></p>
+        <div class="vraag-label">De Griekse atleten sprongen ongeveer 15 meter ver. Hoe kwam dat?</div>
+        <p class="workbook-line"><button class="blank xlong block" data-answer="Waarschijnlijk ging het niet om één moderne verspringpoging, maar om een meervoudige sprong of een reeks sprongen." onclick="toggleAntwoord(this)">_____________________________________________________________</button></p>
+      </div>
+
+      <p class="workbook-line">• Het <button class="blank" data-answer="discuswerpen" onclick="toggleAntwoord(this)">__________</button> met een schijf, gemaakt uit <button class="blank" data-answer="brons" onclick="toggleAntwoord(this)">__________</button> van gemiddeld <button class="blank" data-answer="2" onclick="toggleAntwoord(this)">__</button> kg.</p>
+      <p class="workbook-line">• Het <button class="blank" data-answer="speerwerpen" onclick="toggleAntwoord(this)">__________</button> met een lederen lus.</p>
+      <div class="vraag-label">Waarvoor diende die?</div>
+      <p class="workbook-line"><button class="blank xlong block" data-answer="De lus gaf meer grip en liet de speer ronddraaien, waardoor hij verder en gerichter kon vliegen." onclick="toggleAntwoord(this)">_____________________________________________________________</button></p>
+      <p class="workbook-line">• Het staand worstelen, waarbij men won als men de tegenstander <button class="blank xlong" data-answer="drie keer op de grond wierp" onclick="toggleAntwoord(this)">__________________________</button>.</p>
+      <p class="workbook-line">• Deze vijf sporten vormden samen de <button class="blank" data-answer="pentatlon" onclick="toggleAntwoord(this)">__________</button> of <button class="blank" data-answer="vijfkamp" onclick="toggleAntwoord(this)">__________</button> (&lt; <span class="greek">πέντε</span>: vijf en <span class="greek">τὸ ἆθλον</span>: wedstrijd).</p>
+      <p class="section-subtitle">Andere gevechtssporten</p>
+      <p class="workbook-line">• Het <button class="blank" data-answer="boksen" onclick="toggleAntwoord(this)">__________</button> waarbij de vuisten omwonden werden met <button class="blank long" data-answer="leren riemen" onclick="toggleAntwoord(this)">____________________</button>.</p>
+      <p class="workbook-line">• Het worstel-vuistgevecht of <button class="blank" data-answer="pankration" onclick="toggleAntwoord(this)">__________</button>: hierbij waren alle middelen toegelaten om de tegenstander knock-out te slaan, behalve <button class="blank xlong" data-answer="bijten en in de ogen steken of krabben" onclick="toggleAntwoord(this)">__________________________</button>.</p>
+      <p class="workbook-line">• Het paardenrennen was voorbehouden voor de rijken.</p>
+      <div class="media-grid">
+        <button class="media-launch" type="button" onclick="openTheater('british')">
+          <span class="media-icon">🏺</span>
+          <span class="media-copy"><strong>Sport op Grieks aardewerk</strong><span>Herken lopen, discus, speer, worstelen en boksen op antieke beelden.</span></span>
+        </button>
+        <button class="media-launch" type="button" onclick="openTheater('halters')">
+          <span class="media-icon">↗</span>
+          <span class="media-copy"><strong>Halters en werpmateriaal</strong><span>Bekijk hoe materiaal de techniek van verspringen, speerwerpen en discuswerpen ondersteunde.</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">II · De Panhelleense Spelen <span class="l-chip" title="BO1_03.07, BO1_03.08">LPD</span></div>
+      <p>Panhelleens betekent letterlijk: van of voor alle Grieken (&lt; <span class="greek">πᾶν</span>: ieder, elk en <span class="greek">ἡ Ἑλληνική</span>: Griek). Aan deze grote feesten mochten enkel Griekse burgers deelnemen. Oorspronkelijk waren het godsdienstige feesten ter ere van een god. Later groeiden ze uit tot grote sportfeesten en/of zang- en danswedstrijden.</p>
+      <p>De winnaars kregen géén geld: het was een kwestie van eer en roem. De prijzen waren meestal symbolisch, vaak een krans. De beste atleten kregen in hun geboortestad wel bijzondere beloningen, zoals geen belastingen meer betalen, een ereplaats in het theater of levenslang gratis maaltijden.</p>
+      <p class="workbook-line">Er waren vier panhelleense spelen = de spelen van de <button class="blank" data-answer="periodos" onclick="toggleAntwoord(this)">__________</button>:</p>
+      <div class="periodos-grid">
+        <div class="periodos-year">jaar 1</div><div><button class="blank" data-answer="Isthmische" onclick="toggleAntwoord(this)">__________</button> Spelen (april-mei) · <button class="blank" data-answer="Olympische" onclick="toggleAntwoord(this)">__________</button> Spelen (eind juli-begin augustus)</div>
+        <div class="periodos-year">jaar 2</div><div><button class="blank" data-answer="Nemeïsche" onclick="toggleAntwoord(this)">__________</button> Spelen (september)</div>
+        <div class="periodos-year">jaar 3</div><div><button class="blank" data-answer="Isthmische" onclick="toggleAntwoord(this)">__________</button> Spelen (april-mei) · <button class="blank" data-answer="Pythische" onclick="toggleAntwoord(this)">__________</button> Spelen (augustus-september)</div>
+        <div class="periodos-year">jaar 4</div><div><button class="blank" data-answer="Nemeïsche" onclick="toggleAntwoord(this)">__________</button> Spelen (september)</div>
+      </div>
+      <div class="media-grid">
+        <button class="media-launch" type="button" onclick="openTheater('kaart')">
+          <span class="media-icon">🗺</span>
+          <span class="media-copy"><strong>De vier heiligdommen</strong><span>Situeer Olympia, Delphi, Nemea en de Isthmos van Korinthe.</span></span>
+        </button>
+        <button class="media-launch" type="button" onclick="openTheater('periodos')">
+          <span class="media-icon">🔁</span>
+          <span class="media-copy"><strong>De periodos</strong><span>Bekijk hoe de vier spelen over vier jaren verdeeld waren.</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">II.1 · De Pythische Spelen</div>
+      <p class="workbook-line">Zij werden gehouden ter ere van de god <button class="blank" data-answer="Apollo" onclick="toggleAntwoord(this)">__________</button>. Zij vonden om de <button class="blank" data-answer="4" onclick="toggleAntwoord(this)">__</button> jaar plaats in de stad <button class="blank" data-answer="Delphi" onclick="toggleAntwoord(this)">__________</button>, waar deze god de draak Python verslagen had.</p>
+      <p class="workbook-line">De <button class="blank long" data-answer="muziekwedstrijden" onclick="toggleAntwoord(this)">____________________</button> waren in deze spelen belangrijker dan de sportwedstrijden.</p>
+      <p class="section-subtitle">Programma</p>
+      <ul>
+        <li>dag 1: religieuze plechtigheden</li>
+        <li>dag 2: een groot banket</li>
+        <li>dag 3: de <button class="blank long" data-answer="muziekwedstrijden" onclick="toggleAntwoord(this)">____________________</button></li>
+        <li>dag 4: de <button class="blank long" data-answer="sportwedstrijden" onclick="toggleAntwoord(this)">____________________</button></li>
+        <li>dag 5: het <button class="blank long" data-answer="paardenrennen" onclick="toggleAntwoord(this)">____________________</button></li>
+      </ul>
+      <p class="workbook-line">De winnaars kregen als prijs oorspronkelijk een <button class="blank long" data-answer="laurierkrans" onclick="toggleAntwoord(this)">____________________</button> en later appels.</p>
+      <div class="media-grid">
+        <button class="media-launch" type="button" onclick="openTheater('delphi')">
+          <span class="media-icon">🏛</span>
+          <span class="media-copy"><strong>Delphi en Apollo</strong><span>Bekijk waarom de Pythische Spelen met Apollo en muziek verbonden zijn.</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">II.2 · De Isthmische Spelen</div>
+      <p class="workbook-line">Zij werden gehouden ter ere van de god <button class="blank" data-answer="Poseidon" onclick="toggleAntwoord(this)">__________</button>. Zij vonden om de <button class="blank" data-answer="2" onclick="toggleAntwoord(this)">__</button> jaar plaats in het heiligdom op de <button class="blank" data-answer="Isthmos" onclick="toggleAntwoord(this)">__________</button> nabij de stad <button class="blank" data-answer="Korinthe" onclick="toggleAntwoord(this)">__________</button> op de Peloponnesos.</p>
+      <p class="workbook-line">Het programma bestond uit <button class="blank long" data-answer="sportwedstrijden" onclick="toggleAntwoord(this)">____________________</button>, <button class="blank long" data-answer="paardenrennen" onclick="toggleAntwoord(this)">____________________</button> en <button class="blank long" data-answer="muziekwedstrijden" onclick="toggleAntwoord(this)">____________________</button>.</p>
+      <p class="workbook-line">De winnaars kregen oorspronkelijk een <button class="blank long" data-answer="pijnboomkrans" onclick="toggleAntwoord(this)">____________________</button>.</p>
+      <div class="media-grid">
+        <button class="media-launch" type="button" onclick="openTheater('isthmos')">
+          <span class="media-icon">🌊</span>
+          <span class="media-copy"><strong>Isthmos en Poseidon</strong><span>Bekijk de ligging tussen twee zeeën en de band met Poseidon.</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">II.3 · De Nemeïsche Spelen</div>
+      <p class="workbook-line">Zij werden gehouden ter ere van de god <button class="blank" data-answer="Zeus" onclick="toggleAntwoord(this)">__________</button>. Zij vonden om de <button class="blank" data-answer="2" onclick="toggleAntwoord(this)">__</button> jaar plaats in de stad <button class="blank" data-answer="Nemea" onclick="toggleAntwoord(this)">__________</button> (niet ver van Mykene op de Peloponnesos).</p>
+      <p class="workbook-line">Het programma bestond uit <button class="blank long" data-answer="sportwedstrijden" onclick="toggleAntwoord(this)">____________________</button> en <button class="blank long" data-answer="paardenrennen" onclick="toggleAntwoord(this)">____________________</button>. Later werden ook <button class="blank long" data-answer="muziekwedstrijden" onclick="toggleAntwoord(this)">____________________</button> toegevoegd.</p>
+      <p class="workbook-line">De winnaars kregen oorspronkelijk een <button class="blank long" data-answer="selderijkrans" onclick="toggleAntwoord(this)">____________________</button>.</p>
+      <div class="media-grid">
+        <button class="media-launch" type="button" onclick="openTheater('nemea')">
+          <span class="media-icon">🌿</span>
+          <span class="media-copy"><strong>Nemea en Zeus</strong><span>Bekijk de plaats van Nemea binnen de vier Panhelleense Spelen.</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">II.4 · De Olympische Spelen</div>
+      <p class="workbook-line">Zij waren de belangrijkste spelen en werden gehouden ter ere van <button class="blank" data-answer="Zeus" onclick="toggleAntwoord(this)">__________</button>. Zij vonden om de <button class="blank" data-answer="4" onclick="toggleAntwoord(this)">__</button> jaar plaats in het heiligdom <button class="blank" data-answer="Olympia" onclick="toggleAntwoord(this)">__________</button> op de Peloponnesos.</p>
+      <p>De spelen groeiden uit een godsdienstig feest dat slechts één dag duurde. Eerst werden loopwedstrijden toegevoegd. Later werd het wedstrijdelement uitgebreid en kwamen er andere disciplines bij. In de 5de eeuw v.C. duurden de spelen vijf dagen.</p>
+      <p class="section-subtitle">Programma</p>
+      <ul>
+        <li>dag 1: de officiële openingsplechtigheid met offers aan de goden en het afleggen van de Olympische <button class="blank" data-answer="eed" onclick="toggleAntwoord(this)">____</button></li>
+        <li>dag 2: het <button class="blank" data-answer="paardenrennen" onclick="toggleAntwoord(this)">__________</button> en de <button class="blank" data-answer="vijfkamp" onclick="toggleAntwoord(this)">__________</button></li>
+        <li>dag 3: feest ter ere van de legendarische stichter van de spelen, de held <button class="blank" data-answer="Pelops" onclick="toggleAntwoord(this)">__________</button>, en een offer aan <button class="blank" data-answer="Zeus" onclick="toggleAntwoord(this)">__________</button></li>
+        <li>dag 4: het <button class="blank" data-answer="lopen" onclick="toggleAntwoord(this)">__________</button> en de <button class="blank long" data-answer="gevechtssporten" onclick="toggleAntwoord(this)">____________________</button></li>
+        <li>dag 5: de slotplechtigheid met de bekendmaking van de overwinnaars, de uitreiking van de prijzen (prijs = een <button class="blank" data-answer="krans" onclick="toggleAntwoord(this)">__________</button>) en offers aan Zeus</li>
+      </ul>
+      <p>In 394 n.C. verbood de christelijke Romeinse keizer Theodosius de Olympische Spelen om godsdienstige redenen.</p>
+      <p class="workbook-line">Zo kwam een einde aan meer dan duizend jaar traditie: de eerste spelen vonden plaats in het jaar <button class="blank" data-answer="776 v.C." onclick="toggleAntwoord(this)">__________</button> en vanaf dan werden ze alle vier jaar georganiseerd. Als er oorlog was, werd die onderbroken = de <button class="blank" data-answer="godsvrede" onclick="toggleAntwoord(this)">__________</button>. Men rekende ook in <button class="blank" data-answer="olympiaden" onclick="toggleAntwoord(this)">__________</button> (= de periode van vier jaar tussen twee Olympische Spelen).</p>
+      <div class="media-grid">
+        <button class="media-launch" type="button" onclick="openTheater('olympia')">
+          <span class="media-icon">🏛</span>
+          <span class="media-copy"><strong>Olympia en Zeus</strong><span>Bekijk het heiligdom, de wedstrijdplaatsen en de religieuze kern van de spelen.</span></span>
+        </button>
+        <button class="media-launch" type="button" onclick="openTheater('programma')">
+          <span class="media-icon">📅</span>
+          <span class="media-copy"><strong>Vijfdaags programma</strong><span>Orden de plechtigheden, wedstrijden, offers en prijsuitreiking.</span></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">De moderne Olympische Spelen <span class="s-chip" title="Vergelijken + retrieval">S5/S10</span></div>
+      <p class="workbook-line">In het jaar <button class="blank" data-answer="1896" onclick="toggleAntwoord(this)">____</button> werden de eerste moderne Olympische Spelen gehouden dankzij de inzet van de Franse baron Pierre <button class="blank" data-answer="de Coubertin" onclick="toggleAntwoord(this)">__________</button>.</p>
+      <p>De Coubertin wilde met moderne spelen de geest van de antieke spelen doen herleven. Hij had twee belangrijke doelstellingen: het promoten van een gezonde lichamelijke ontwikkeling en het bevorderen van vriendschap tussen alle volkeren, los van ras, politieke of godsdienstige overtuiging.</p>
+      <p class="workbook-line">Van hem is ook de beroemde uitspraak: “Ce qui est important dans les Jeux Olympiques, ce n’est pas de gagner mais de participer” (<button class="blank xlong" data-answer="Het belangrijkste is niet winnen, maar deelnemen." onclick="toggleAntwoord(this)">__________________________</button>), alhoewel de oude Grieken daar helemaal anders over dachten.</p>
+      <p class="workbook-line">De eerste moderne Olympische Spelen werden in Griekenland gehouden, meer bepaald in de stad <button class="blank" data-answer="Athene" onclick="toggleAntwoord(this)">__________</button>.</p>
+      <p class="workbook-line">Spijtig genoeg hield één deel van de traditie geen stand: de moderne spelen werden driemaal overgeslagen (in 1916, 1940 en 1944). In onze tijd moest de sport dus wijken voor de <button class="blank" data-answer="oorlog" onclick="toggleAntwoord(this)">__________</button> en niet andersom zoals bij de Grieken.</p>
+      <p class="workbook-line">Eenmaal vonden de spelen in België plaats, meer bepaald in het jaar <button class="blank" data-answer="1920" onclick="toggleAntwoord(this)">____</button> (= de <button class="blank" data-answer="7de" onclick="toggleAntwoord(this)">___</button> olympiade) in <button class="blank" data-answer="Antwerpen" onclick="toggleAntwoord(this)">__________</button>. Als vernieuwingen werden de <button class="blank long" data-answer="Olympische vlag" onclick="toggleAntwoord(this)">____________________</button> en de <button class="blank long" data-answer="Olympische eed" onclick="toggleAntwoord(this)">____________________</button> ingevoerd.</p>
+      <p class="workbook-line">De Olympische vlam wordt aangestoken in <button class="blank" data-answer="Olympia" onclick="toggleAntwoord(this)">__________</button> en vandaar naar de stad van de Olympische Spelen vervoerd. Deze ceremonie vond het eerst plaats voor de spelen van <button class="blank" data-answer="Berlijn" onclick="toggleAntwoord(this)">__________</button> in het jaar <button class="blank" data-answer="1936" onclick="toggleAntwoord(this)">____</button>.</p>
+      <p class="workbook-line">De laatste spelen vonden plaats in het jaar <button class="blank" data-answer="2024" onclick="toggleAntwoord(this)">____</button> in <button class="blank" data-answer="Parijs" onclick="toggleAntwoord(this)">__________</button>. De volgende spelen vinden plaats in het jaar <button class="blank" data-answer="2028" onclick="toggleAntwoord(this)">____</button> in <button class="blank" data-answer="Los Angeles" onclick="toggleAntwoord(this)">__________</button>.</p>
+      <p class="answer-tip">Tik op een antwoord om het weer te verbergen. Gebruik <strong>Check</strong> voor korte herhaling zonder meteen alle antwoorden te tonen.</p>
+      <div class="media-grid">
+        <button class="media-launch" type="button" onclick="openTheater('modern')">
+          <span class="media-icon">🔥</span>
+          <span class="media-copy"><strong>Moderne Olympische symbolen</strong><span>Bekijk vlag, eed, vlam en de herneming van het antieke ideaal.</span></span>
+        </button>
+        <button class="media-launch" type="button" onclick="openTheater('antwerpen')">
+          <span class="media-icon">🇧🇪</span>
+          <span class="media-copy"><strong>Antwerpen 1920</strong><span>Bekijk waarom de Belgische spelen belangrijk waren voor vlag en eed.</span></span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="mode-panel" id="modus-duidaan">
+    <div class="card">
+      <div class="card-title">Duid aan · materiaal en sport</div>
+      <p>Koppel in je cursus elk voorwerp aan de juiste sport. Controleer daarna met de knoppen hieronder.</p>
+      <table class="mini-table">
+        <tr><th>Voorwerp</th><th>Sport</th><th>Waarom belangrijk?</th></tr>
+        <tr><td>halters</td><td><button class="blank" data-answer="verspringen" onclick="toggleAntwoord(this)">__________</button></td><td><button class="blank long" data-answer="kracht, ritme en evenwicht" onclick="toggleAntwoord(this)">____________________</button></td></tr>
+        <tr><td>bronzen schijf</td><td><button class="blank" data-answer="discuswerpen" onclick="toggleAntwoord(this)">__________</button></td><td><button class="blank long" data-answer="werpdiscipline in de pentatlon" onclick="toggleAntwoord(this)">____________________</button></td></tr>
+        <tr><td>lederen lus</td><td><button class="blank" data-answer="speerwerpen" onclick="toggleAntwoord(this)">__________</button></td><td><button class="blank long" data-answer="grip, draaiing, afstand en richting" onclick="toggleAntwoord(this)">____________________</button></td></tr>
+        <tr><td>krans</td><td><button class="blank" data-answer="overwinning" onclick="toggleAntwoord(this)">__________</button></td><td><button class="blank long" data-answer="eer en roem, geen geldprijs" onclick="toggleAntwoord(this)">____________________</button></td></tr>
+      </table>
+      <div class="prompt-blok"><strong>Waarom zo?</strong> Leerlingen moeten niet alleen antwoorden herkennen, maar ze koppelen aan materiaal, functie en waarde. <span class="s-chip" title="Actief verwerken + begrip controleren">S5/S6</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Duid aan · antiek tegenover modern</div>
+      <div class="compare-grid">
+        <div class="compare-card"><h4>Antiek</h4><p>Religieus feest ter ere van een god, alleen Griekse burgers, individuele eer en symbolische prijs.</p></div>
+        <div class="compare-card"><h4>Modern</h4><p>Internationale sportbeweging, deelname van landen wereldwijd, ideaal van vriendschap en vrede.</p></div>
+        <div class="compare-card"><h4>Continuïteit</h4><p>Vierjaarlijkse cyclus, Olympia als symbool, roem voor winnaars en grote publieke aandacht.</p></div>
+        <div class="compare-card"><h4>Verschil</h4><p>De oude Grieken dachten veel harder in termen van winnen, eer en persoonlijke roem.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mode-panel" id="modus-check">
+    <div class="card">
+      <div class="card-title">Check · zonder cursus <span class="s-chip" title="Retrieval practice">S10</span></div>
+      <div class="retrieval-blok">
+        <div class="retrieval-vraag">1. Waarom is ‘gymnastiek’ verwant met het Griekse woord voor ‘naakt’?</div>
+        <div class="retrieval-uitleg">Schrijf eerst zelf. Toon daarna het antwoord.</div>
+        <textarea placeholder="Mijn antwoord..."></textarea>
+        <button class="btn btn-outline" onclick="toonFeedback('fb1')">Toon antwoord</button>
+        <div class="feedback-box" id="fb1">Omdat Griekse atleten naakt trainden en deelnamen. Het woord γυμναστική is verwant met γυμνός, ‘naakt’.</div>
+      </div>
+      <div class="retrieval-blok">
+        <div class="retrieval-vraag">2. Welke vijf sporten vormden de pentatlon?</div>
+        <textarea placeholder="Mijn antwoord..."></textarea>
+        <button class="btn btn-outline" onclick="toonFeedback('fb2')">Toon antwoord</button>
+        <div class="feedback-box" id="fb2">Lopen, verspringen, discuswerpen, speerwerpen en worstelen.</div>
+      </div>
+      <div class="retrieval-blok">
+        <div class="retrieval-vraag">3. Wat betekent Panhelleens?</div>
+        <textarea placeholder="Mijn antwoord..."></textarea>
+        <button class="btn btn-outline" onclick="toonFeedback('fb3')">Toon antwoord</button>
+        <div class="feedback-box" id="fb3">Van of voor alle Grieken. De grote spelen trokken Grieken uit verschillende delen van de Griekse wereld aan.</div>
+      </div>
+      <div class="retrieval-blok">
+        <div class="retrieval-vraag">4. Welke vier Panhelleense Spelen behoren tot de periodos?</div>
+        <textarea placeholder="Mijn antwoord..."></textarea>
+        <button class="btn btn-outline" onclick="toonFeedback('fb4')">Toon antwoord</button>
+        <div class="feedback-box" id="fb4">De Olympische, Pythische, Isthmische en Nemeïsche Spelen.</div>
+      </div>
+      <div class="retrieval-blok">
+        <div class="retrieval-vraag">5. Noem één overeenkomst en één verschil tussen antieke en moderne Olympische Spelen.</div>
+        <textarea placeholder="Mijn antwoord..."></textarea>
+        <button class="btn btn-outline" onclick="toonFeedback('fb5')">Toon antwoord</button>
+        <div class="feedback-box" id="fb5">Overeenkomst: vierjaarlijkse cyclus, Olympia als symbool, grote roem. Verschil: antiek was religieus en sterk gericht op overwinning/eer; modern benadrukt internationale deelname en vriendschap.</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="theater" id="theater" role="dialog" aria-modal="true" aria-labelledby="theaterTitle" onclick="theaterBackdrop(event)">
+  <div class="theater-box">
+    <div class="theater-head"><strong id="theaterTitle">Media</strong><button class="theater-close" onclick="closeTheater()">Sluit</button></div>
+    <div class="theater-body" id="theaterBody"></div>
+  </div>
+</div>
+
+<p class="voet">J. Everaerdt &mdash; athena Campus Pottelberg</p>
+
+<script>
+function toonModus(id, btn){
+  document.querySelectorAll('.mode-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('modus-'+id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleAntwoord(btn){
+  const shown=btn.classList.toggle('revealed');
+  if(shown){
+    btn.dataset.blank=btn.textContent;
+    btn.textContent=btn.dataset.answer;
+  }else{
+    btn.textContent=btn.dataset.blank || '__________';
+  }
+}
+function toonFeedback(id){document.getElementById(id).classList.toggle('active');}
+function toggleDropdown(){document.getElementById('didactiekDropdown').classList.toggle('open');}
+function toggleLaag(laag){
+  const cls='show-'+laag;
+  document.body.classList.toggle(cls);
+  document.getElementById('dd-'+laag).classList.toggle('active');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.didactiek-wrap')) document.getElementById('didactiekDropdown')?.classList.remove('open');
+});
+
+const theaterContent={
+  gymnos:{
+    title:'Training en lichaam',
+    html:'<div class="theater-info"><p>Antieke atleten trainden en streden naakt. Voor de inspanning gebruikten ze olie en zand; na afloop werd het mengsel met een strigilis of schraapijzer verwijderd.</p><p><a href="https://www.britishmuseum.org/collection/term/x51102" target="_blank" rel="noopener">Bekijk objecten rond atleten en verzorging in de British Museum-collectie</a></p></div>'
+  },
+  olympics:{
+    title:'Antieke Olympische Spelen',
+    html:'<div class="theater-info"><p>De Olympische Spelen ontstonden als religieus feest in Olympia. De wedstrijden hoorden bij een bredere cultus rond Zeus en draaiden om eer, roem en overwinning.</p><p><a href="https://www.olympics.com/ioc/ancient-olympic-games" target="_blank" rel="noopener">Open de IOC-pagina over de Ancient Olympic Games</a></p></div>'
+  },
+  british:{
+    title:'Sport op Grieks aardewerk',
+    html:'<div class="theater-info"><p>Op Grieks aardewerk zijn sporthoudingen en sportmateriaal goed herkenbaar: lopers, worstelaars, boksers, speerwerpers en discuswerpers.</p><p><a href="https://www.britishmuseum.org/sites/default/files/2019-09/british_museum_olympic_games.pdf" target="_blank" rel="noopener">Open de British Museum-bundel over de Ancient Olympic Games</a></p><p><a href="https://www.britishmuseum.org/collection/object/G_1863-0430-2" target="_blank" rel="noopener">Bekijk een British Museum-object met atleten</a></p></div>'
+  },
+  halters:{
+    title:'Halters, discus en speer',
+    html:'<div class="theater-info"><p>Bij het verspringen hielpen halters om kracht en ritme te sturen. Bij het speerwerpen zorgde de lederen lus voor meer grip, draaiing en richting. Discuswerpen, speerwerpen en verspringen hoorden samen met lopen en worstelen bij de pentatlon.</p><p><a href="https://www.metmuseum.org/art/collection/search/256949" target="_blank" rel="noopener">Bekijk een Griekse vaas met atleten in de Met-collectie</a></p></div>'
+  },
+  kaart:{
+    title:'De vier heiligdommen',
+    html:'<div class="theater-info"><p>De vier Panhelleense Spelen horen bij vier plaatsen: Olympia, Delphi, Nemea en de Isthmos van Korinthe. Elke plaats is verbonden met een god en met een eigen prijs.</p><p><a href="https://maps.google.com/?q=Olympia+Delphi+Nemea+Isthmus+of+Corinth" target="_blank" rel="noopener">Open kaart met de vier plaatsen</a></p></div>'
+  },
+  periodos:{
+    title:'De periodos',
+    html:'<div class="theater-info"><p>De periodos was de vierjarige cyclus van de grote Panhelleense Spelen. Atleten die in alle vier de spelen wonnen, kregen uitzonderlijke roem.</p><table class="mini-table"><tr><th>Jaar</th><th>Spelen</th></tr><tr><td>1</td><td>Isthmische en Olympische Spelen</td></tr><tr><td>2</td><td>Nemeïsche Spelen</td></tr><tr><td>3</td><td>Isthmische en Pythische Spelen</td></tr><tr><td>4</td><td>Nemeïsche Spelen</td></tr></table></div>'
+  },
+  delphi:{
+    title:'Delphi en Apollo',
+    html:'<div class="theater-info"><p>De Pythische Spelen vonden plaats in Delphi ter ere van Apollo. De naam verwijst naar Python, de draak die door Apollo werd overwonnen. Muziekwedstrijden waren hier bijzonder belangrijk.</p><p><a href="https://whc.unesco.org/en/list/393/" target="_blank" rel="noopener">Bekijk Delphi bij UNESCO</a></p></div>'
+  },
+  isthmos:{
+    title:'Isthmos en Poseidon',
+    html:'<div class="theater-info"><p>De Isthmische Spelen vonden plaats bij Korinthe, op de landengte tussen twee zeeën. De band met Poseidon past bij die ligging.</p><p><a href="https://maps.google.com/?q=Isthmus+of+Corinth" target="_blank" rel="noopener">Open de Isthmos van Korinthe op kaart</a></p></div>'
+  },
+  nemea:{
+    title:'Nemea en Zeus',
+    html:'<div class="theater-info"><p>De Nemeïsche Spelen werden gehouden ter ere van Zeus. Nemea lag op de Peloponnesos, niet ver van Mykene. De prijs was oorspronkelijk een selderijkrans.</p><p><a href="https://maps.google.com/?q=Ancient+Nemea+Greece" target="_blank" rel="noopener">Open Nemea op kaart</a></p></div>'
+  },
+  olympia:{
+    title:'Olympia en Zeus',
+    html:'<div class="theater-info"><p>Olympia was geen gewone stad, maar een heiligdom. De Olympische Spelen waren verbonden met offers, processies, de eed, wedstrijden en de prijsuitreiking ter ere van Zeus.</p><p><a href="https://whc.unesco.org/en/list/517/" target="_blank" rel="noopener">Bekijk Olympia bij UNESCO</a></p></div>'
+  },
+  programma:{
+    title:'Vijfdaags programma',
+    html:'<div class="theater-info"><table class="mini-table"><tr><th>Dag</th><th>Kern</th></tr><tr><td>1</td><td>opening, offers en Olympische eed</td></tr><tr><td>2</td><td>paardenrennen en vijfkamp</td></tr><tr><td>3</td><td>feest voor Pelops en offer aan Zeus</td></tr><tr><td>4</td><td>lopen en gevechtssporten</td></tr><tr><td>5</td><td>overwinnaars, kransen en offers</td></tr></table></div>'
+  },
+  modern:{
+    title:'Moderne Olympische symbolen',
+    html:'<div class="theater-info"><p>De moderne Olympische Spelen nemen antieke elementen opnieuw op: Olympia als symbool, de vierjaarlijkse cyclus, de vlam, de eed en de nadruk op internationale ontmoeting.</p><p><a href="https://olympics.com/ioc/olympic-symbols" target="_blank" rel="noopener">Bekijk de Olympische symbolen bij het IOC</a></p></div>'
+  },
+  antwerpen:{
+    title:'Antwerpen 1920',
+    html:'<div class="theater-info"><p>De Olympische Spelen van Antwerpen 1920 waren belangrijk voor de moderne olympische traditie. De Olympische vlag en de Olympische eed kregen er een centrale plaats.</p><p><a href="https://olympics.com/en/olympic-games/antwerp-1920" target="_blank" rel="noopener">Open Antwerpen 1920 bij Olympics.com</a></p></div>'
+  }
+};
+function openTheater(key){
+  const item=theaterContent[key];
+  document.getElementById('theaterTitle').textContent=item.title;
+  document.getElementById('theaterBody').innerHTML=item.html;
+  document.getElementById('theater').classList.add('open');
+}
+function closeTheater(){
+  document.getElementById('theater').classList.remove('open');
+  document.getElementById('theaterBody').innerHTML='';
+}
+function theaterBackdrop(e){if(e.target.id==='theater') closeTheater();}
+document.addEventListener('keydown',e=>{if(e.key==='Escape') closeTheater();});
+</script>
+</body>
+</html>
