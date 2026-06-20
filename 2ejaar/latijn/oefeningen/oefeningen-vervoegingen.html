@@ -6,98 +6,528 @@
 <title>Vervoegingen — oefeningen | Latijn 2GR-LAT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --blauw: #13427f; --roze: #E6007E;
-    --fv: 'Lufga', Arial, sans-serif; --fo: 'Aptos', Arial, sans-serif;
-    --achtergrond: #f7f8fa; --kaart: #ffffff; --rand: #e2e6ed;
-    --tekst: #1a1a1a; --tekst-zacht: #6b7280;
-    --groen: #2a7a2a; --groen-bg: #f0faf0;
-    --radius: 12px; --radius-sm: 8px;
+    --blauw:       #13427f;
+    --blauw-licht: rgba(19,66,127,.08);
+    --roze:        #E6007E;
+    --kaart:       #ffffff;
+    --achtergrond: #f7f8fa;
+    --rand:        #e2e6ed;
+    --tekst:       #1a1a1a;
+    --tekst-zacht: #6b7280;
+    --groen:       #2a7a2a;
+    --groen-bg:    #f0faf0;
+    --amber:       #b45309;
+    --amber-bg:    #fffbeb;
+    --radius:      16px;
+    --radius-sm:   12px;
+    --fv:          'Lufga', Arial, sans-serif;
+    --fo:          'Aptos', Arial, sans-serif;
   }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: var(--fv); background: var(--achtergrond); color: var(--tekst); min-height: 100vh; padding: 2rem; }
-  .container { max-width: 860px; margin: 0 auto; }
 
-  /* HEADER */
-  .header { padding-bottom: 1.25rem; border-bottom: 2px solid var(--blauw); margin-bottom: 1.75rem; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .header h1 { font-size: 28px; font-weight: 600; color: var(--blauw); }
-  .header-datum { font-size: 13px; color: var(--tekst-zacht); font-family: var(--fo); margin-top: 4px; }
+  body {
+    font-family: var(--fv);
+    background: var(--achtergrond);
+    color: var(--tekst);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-  /* NAAM INVOER */
-  .naam-kaart { background: var(--kaart); border: 0.5px solid var(--rand); border-radius: var(--radius); padding: 1rem 1.25rem; display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
-  .naam-label { font-family: var(--fo); font-size: 14px; color: var(--tekst-zacht); white-space: nowrap; }
-  .naam-veld { font-family: var(--fo); font-size: 14px; color: var(--tekst); flex: 1; min-width: 200px; border: 0.5px solid var(--rand); border-radius: var(--radius-sm); padding: 8px 12px; background: #f9fafb; outline: none; transition: border-color 0.15s; }
-  .naam-veld:focus { border-color: var(--blauw); background: #fff; }
+  /* ── MERKLINT athena: laag 1 ── */
+  .site-header {
+    background: var(--blauw);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: .85rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    position: relative;
+  }
+  .site-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--roze);
+  }
+  .site-header .logo {
+    height: 34px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+  }
+  .site-header h1 {
+    font-family: var(--fv);
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 0;
+    letter-spacing: .02em;
+    white-space: nowrap;
+    color: #fff;
+  }
+  .site-header .school-naam {
+    font-family: var(--fv);
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    opacity: .85;
+    margin-left: auto;
+    white-space: nowrap;
+    padding-left: .5rem;
+    color: #fff;
+  }
 
-  /* STATISTIEKEN */
-  .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-  .stat-kaart { background: var(--kaart); border: 0.5px solid var(--rand); border-radius: var(--radius); padding: 1.25rem; text-align: center; }
-  .stat-getal { font-size: 32px; font-weight: 600; color: var(--blauw); line-height: 1.1; }
-  .stat-label { font-family: var(--fo); font-size: 13px; color: var(--tekst-zacht); margin-top: 4px; }
+  /* ── MERKLINT athena: laag 2 ── */
+  .site-toolbar {
+    background: var(--achtergrond);
+    border-bottom: 1px solid var(--rand);
+    padding: .55rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+  }
+  .toolbar-divider {
+    width: 1px;
+    height: 22px;
+    background: var(--rand);
+    margin: 0 .25rem;
+  }
+  .back-btn, .pill-btn {
+    font-family: var(--fv);
+    font-size: .82rem;
+    font-weight: 500;
+    color: var(--blauw);
+    background: transparent;
+    border: 0.5px solid var(--rand);
+    border-radius: 20px;
+    padding: .32rem .85rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .back-btn:hover, .pill-btn:hover {
+    background: var(--blauw);
+    border-color: var(--blauw);
+    color: #fff;
+  }
+  .pill-btn.actief {
+    background: var(--blauw);
+    border-color: var(--blauw);
+    color: #fff;
+    cursor: default;
+  }
+  .back-btn svg { width: 14px; height: 14px; }
 
-  /* LEGENDA */
-  .legenda { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; font-family: var(--fo); font-size: 13px; color: var(--tekst-zacht); align-items: center; }
-  .legenda-item { display: flex; align-items: center; gap: 6px; }
-  .krans-img { width: 18px; height: 18px; }
-  .krans-img.grijs { opacity: 0.2; filter: grayscale(1); }
+  /* ── PAGINA ── */
+  .container {
+    flex: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.35rem 2rem 3.5rem;
+  }
 
-  /* SECTIE */
-  .sectie { margin-bottom: 1.75rem; }
-  .sectie-kop { display: flex; align-items: baseline; gap: 10px; margin-bottom: 0.75rem; border-bottom: 1.5px solid var(--rand); padding-bottom: 0.5rem; }
-  .sectie-naam { font-size: 13px; font-weight: 600; color: var(--blauw); text-transform: uppercase; letter-spacing: 0.8px; }
-  .sectie-score { font-size: 12px; color: var(--tekst-zacht); font-family: var(--fo); }
+  .pagina-kop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .pagina-kop h2 {
+    color: var(--roze);
+    font-size: clamp(1.75rem, 3.1vw, 2.15rem);
+    font-weight: 600;
+    letter-spacing: -.025em;
+    line-height: 1.12;
+  }
+  .pagina-kop p {
+    margin-top: .45rem;
+    max-width: 650px;
+    font-family: var(--fo);
+    font-size: .9rem;
+    line-height: 1.55;
+    color: var(--tekst-zacht);
+  }
+  .header-datum {
+    flex-shrink: 0;
+    font-family: var(--fo);
+    font-size: .78rem;
+    color: var(--tekst-zacht);
+    padding-bottom: .15rem;
+    text-align: right;
+  }
 
-  /* OEFENING RIJ */
-  .oef-rij { background: var(--kaart); border: 0.5px solid var(--rand); border-radius: var(--radius); padding: 0.9rem 1.1rem; display: flex; align-items: center; gap: 1rem; margin-bottom: 8px; text-decoration: none; color: inherit; transition: border-color 0.15s, transform 0.1s; cursor: pointer; }
-  .oef-rij:hover { border-color: var(--blauw); transform: translateX(2px); }
-  .oef-rij.binnenkort { opacity: 0.55; pointer-events: none; cursor: default; }
-  .oef-rij.binnenkort:hover { transform: none; border-color: var(--rand); }
+  /* ── NAAM ── */
+  .naam-kaart {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 1rem;
+    background: var(--kaart);
+    border: 0.5px solid var(--rand);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .naam-label {
+    font-family: var(--fv);
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--blauw);
+    white-space: nowrap;
+  }
+  .naam-veld {
+    min-width: 0;
+    width: 100%;
+    font-family: var(--fv);
+    font-size: .88rem;
+    color: var(--tekst);
+    border: 0.5px solid var(--rand);
+    border-radius: var(--radius-sm);
+    padding: .7rem .85rem;
+    background: #f9fafb;
+    outline: none;
+    transition: border-color .15s, background .15s, box-shadow .15s;
+  }
+  .naam-veld:focus {
+    background: #fff;
+    border-color: var(--blauw);
+    box-shadow: 0 0 0 3px var(--blauw-licht);
+  }
 
-  /* SCORE CIRKEL */
-  .score-cirkel { width: 38px; height: 38px; border-radius: 50%; border: 2px dashed #d1d5db; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; font-family: var(--fo); color: var(--tekst-zacht); background: white; }
-  .score-cirkel.goed { border: 2px solid var(--groen); background: var(--groen-bg); color: var(--groen); }
-  .score-cirkel.gedeeltelijk { border: 2px solid #b45309; background: #fffbeb; color: #b45309; }
+  /* ── STATISTIEKEN ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+  .stat-kaart {
+    background: var(--kaart);
+    border: 0.5px solid var(--rand);
+    border-radius: var(--radius);
+    min-height: 122px;
+    padding: 1.2rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  .stat-getal {
+    font-size: clamp(1.8rem, 3vw, 2.15rem);
+    font-weight: 600;
+    color: var(--blauw);
+    line-height: 1.1;
+    letter-spacing: -.03em;
+  }
+  .stat-label {
+    margin-top: .42rem;
+    font-family: var(--fo);
+    font-size: .78rem;
+    color: var(--tekst-zacht);
+  }
 
-  .oef-info { flex: 1; min-width: 0; }
-  .oef-naam { font-size: 15px; font-weight: 600; color: var(--blauw); }
-  .oef-naam .binnenkort-label { font-weight: 400; color: var(--tekst-zacht); font-size: 14px; }
-  .oef-detail { font-family: var(--fo); font-size: 12.5px; color: var(--tekst-zacht); margin-top: 2px; }
+  /* ── LEGENDA ── */
+  .legenda {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    background: var(--kaart);
+    border: 0.5px solid var(--rand);
+    border-radius: var(--radius-sm);
+    padding: .75rem 1rem;
+    margin-bottom: 2rem;
+    font-family: var(--fo);
+    font-size: .78rem;
+    color: var(--tekst-zacht);
+  }
+  .legenda-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .krans-img {
+    width: 18px;
+    height: 18px;
+    display: block;
+  }
+  .krans-img.grijs {
+    opacity: .18;
+    filter: grayscale(1);
+  }
 
-  .oef-rechts { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-  .kransen { display: flex; gap: 2px; }
+  /* ── OEFENINGEN ── */
+  #oefeningen-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  .sectie {
+    background: transparent;
+    min-width: 0;
+  }
+  .sectie:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: calc((100% - 1.25rem) / 2);
+  }
+  .sectie-kop {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: .7rem;
+    padding: 0 .1rem .55rem;
+    border-bottom: 1.5px solid var(--rand);
+  }
+  .sectie-naam {
+    font-size: .76rem;
+    font-weight: 700;
+    color: var(--blauw);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .sectie-score {
+    font-family: var(--fo);
+    font-size: .75rem;
+    color: var(--tekst-zacht);
+    white-space: nowrap;
+  }
+  .oef-rij {
+    background: var(--kaart);
+    border: 0.5px solid var(--rand);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.05rem;
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    margin-bottom: .6rem;
+    text-decoration: none;
+    color: inherit;
+    min-height: 82px;
+    transition: border-color .15s, transform .15s, box-shadow .15s;
+    cursor: pointer;
+  }
+  .oef-rij:hover {
+    border-color: var(--blauw);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(19,66,127,.055);
+  }
+  .oef-rij.binnenkort {
+    opacity: .58;
+    pointer-events: none;
+    cursor: default;
+  }
+  .oef-rij.binnenkort:hover {
+    transform: none;
+    border-color: var(--rand);
+    box-shadow: none;
+  }
 
-  /* KNOPPEN */
-  .knop-rij { display: flex; gap: 10px; margin-top: 1.5rem; flex-wrap: wrap; align-items: center; }
-  .knop { font-family: var(--fv); font-size: 13px; font-weight: 500; padding: 10px 22px; border-radius: var(--radius-sm); cursor: pointer; border: 0.5px solid var(--rand); background: transparent; color: var(--tekst); transition: background 0.12s; }
-  .knop:hover { background: #f3f4f6; }
-  .knop-hoofd { background: var(--blauw); color: #fff; border-color: var(--blauw); }
+  .score-cirkel {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px dashed #d1d5db;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--fo);
+    font-size: .73rem;
+    font-weight: 600;
+    color: var(--tekst-zacht);
+    background: #fff;
+  }
+  .score-cirkel.goed {
+    border-style: solid;
+    border-color: var(--groen);
+    background: var(--groen-bg);
+    color: var(--groen);
+  }
+  .score-cirkel.gedeeltelijk {
+    border-style: solid;
+    border-color: var(--amber);
+    background: var(--amber-bg);
+    color: var(--amber);
+  }
+
+  .oef-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .oef-naam {
+    font-size: .94rem;
+    font-weight: 600;
+    color: var(--blauw);
+    line-height: 1.25;
+  }
+  .oef-naam .binnenkort-label {
+    font-family: var(--fo);
+    font-weight: 400;
+    color: var(--tekst-zacht);
+    font-size: .78rem;
+  }
+  .oef-detail {
+    margin-top: .22rem;
+    font-family: var(--fo);
+    font-size: .76rem;
+    color: var(--tekst-zacht);
+  }
+  .oef-rechts {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    flex-shrink: 0;
+  }
+  .kransen {
+    display: flex;
+    gap: 2px;
+  }
+  .oef-pijl {
+    color: #c6ceda;
+    font-size: 1.35rem;
+    line-height: 1;
+    transition: color .15s, transform .15s;
+  }
+  .oef-rij:hover .oef-pijl {
+    color: var(--blauw);
+    transform: translateX(2px);
+  }
+
+  /* ── KNOPPEN ── */
+  .knop-rij {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    flex-wrap: wrap;
+    margin-top: 1.8rem;
+    padding-top: 1.35rem;
+    border-top: 1px solid var(--rand);
+  }
+  .knop {
+    font-family: var(--fv);
+    font-size: .82rem;
+    font-weight: 500;
+    padding: .58rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 0.5px solid var(--rand);
+    background: transparent;
+    color: var(--blauw);
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  .knop:hover {
+    background: var(--blauw);
+    border-color: var(--blauw);
+    color: #fff;
+  }
+  .knop-hoofd {
+    background: var(--blauw);
+    color: #fff;
+    border-color: var(--blauw);
+  }
   .knop-hoofd:hover { background: #0f3568; }
-  .knop-hoofd:disabled { opacity: 0.5; cursor: not-allowed; }
-  .status-tekst { font-family: var(--fo); font-size: 12px; color: var(--tekst-zacht); }
+  .knop-hoofd:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+  }
+  .knop-hoofd:disabled:hover {
+    background: var(--blauw);
+    border-color: var(--blauw);
+    color: #fff;
+  }
+  .status-tekst {
+    min-height: 18px;
+    font-family: var(--fo);
+    font-size: .76rem;
+    color: var(--tekst-zacht);
+  }
   .status-tekst.ok { color: var(--groen); }
+
+  .voet {
+    text-align: center;
+    padding: 1rem;
+    font-family: var(--fv);
+    font-size: 11px;
+    color: #b8bfc9;
+  }
+
+  @media (max-width: 780px) {
+    .container { padding: 1.75rem 1rem 2.5rem; }
+    .pagina-kop { align-items: flex-start; flex-direction: column; gap: .45rem; }
+    .header-datum { text-align: left; padding-bottom: 0; }
+    #oefeningen-container { grid-template-columns: 1fr; }
+    .sectie:last-child:nth-child(odd) { grid-column: auto; max-width: none; }
+  }
+
+  @media (max-width: 680px) {
+    .site-header { padding: .75rem 1rem; }
+    .site-header h1 { font-size: 1.05rem; }
+    .site-header .school-naam { display: none; }
+    .site-toolbar { padding: .55rem 1rem; }
+    .naam-kaart { grid-template-columns: 1fr; gap: .55rem; }
+    .stats-grid { grid-template-columns: 1fr; gap: .65rem; }
+    .stat-kaart { min-height: 94px; }
+    .legenda { gap: .75rem; }
+    .oef-rij { padding: .9rem; }
+    .kransen { display: none; }
+  }
 </style>
 </head>
 <body>
-<div class="container">
 
-  <div class="header">
+<!-- MERKLINT laag 1 -->
+<header class="site-header">
+  <img class="logo" src="/athenalatijn1egraad/images/nav/logo_wit.png" alt="athena" onerror="this.onerror=null;this.src='../../../images/nav/logo_wit.png';">
+  <h1>Vervoegingen</h1>
+  <span class="school-naam">athena Campus Pottelberg</span>
+</header>
+
+<!-- MERKLINT laag 2: toolbar -->
+<nav class="site-toolbar">
+  <a class="back-btn" href="grammatica-keuze.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+    Terug naar Grammatica
+  </a>
+  <div class="toolbar-divider"></div>
+  <a class="pill-btn" href="oefeningen-verbuigingen.html">Verbuigingen</a>
+  <span class="pill-btn actief" aria-current="page">Vervoegingen</span>
+  <a class="pill-btn" href="oefeningen-andere.html">Andere</a>
+</nav>
+
+<main class="container">
+  <section class="pagina-kop" aria-labelledby="pagina-titel">
     <div>
-      <a style="font-size:12px;color:var(--tekst-zacht);text-decoration:none;" href="grammatica-keuze.html">&#8592; Terug naar Grammatica</a>
-      <h1>Oefeningen</h1>
+      <h2 id="pagina-titel">Oefen op jouw tempo</h2>
+      <p>Kies een oefening, werk rustig en volg hier hoe je vooruitgaat. Je resultaten blijven bewaard op dit toestel.</p>
     </div>
     <div class="header-datum" id="datum"></div>
-  </div>
+  </section>
 
   <!-- NAAM -->
   <div class="naam-kaart">
-    <span class="naam-label">Jouw naam:</span>
+    <label class="naam-label" for="naam-veld">Jouw naam</label>
     <input class="naam-veld" type="text" id="naam-veld" placeholder="Voornaam Achternaam" autocomplete="name" />
   </div>
 
   <!-- STATISTIEKEN -->
-  <div class="stats-grid">
+  <section class="stats-grid" aria-label="Jouw voortgang">
     <div class="stat-kaart">
       <div class="stat-getal" id="stat-gemaakt">0/<span id="stat-totaal">0</span></div>
       <div class="stat-label">oefeningen gemaakt</div>
@@ -110,13 +540,13 @@
       <div class="stat-getal" id="stat-gem">&#8212;</div>
       <div class="stat-label">gemiddelde score</div>
     </div>
-  </div>
+  </section>
 
   <!-- LEGENDA -->
-  <div class="legenda" id="legenda-wrap"></div>
+  <div class="legenda" id="legenda-wrap" aria-label="Niveaus"></div>
 
   <!-- SECTIES MET OEFENINGEN -->
-  <div id="oefeningen-container"></div>
+  <section id="oefeningen-container" aria-label="Oefeningen per werkwoordstijd"></section>
 
   <!-- KNOPPEN -->
   <div class="knop-rij">
@@ -124,8 +554,9 @@
     <button class="knop" onclick="wisVoortgang()">Voortgang wissen</button>
     <span class="status-tekst" id="status-tekst">Vul eerst je naam in voor je instuurt.</span>
   </div>
+</main>
 
-</div>
+<p class="voet">J. Everaerdt &mdash; athena Campus Pottelberg</p>
 
 <script>
 const KRANS_SRC = 'data:image/png;base64,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';
@@ -251,7 +682,7 @@ function render() {
           </div>
           <div class="oef-rechts">
             <div class="kransen">${kransenHTML(oef.niveau)}</div>
-            <span style="color:#d1d5db;font-size:16px;">›</span>
+            <span class="oef-pijl" aria-hidden="true">›</span>
           </div>
         </${tag}>`;
     });
