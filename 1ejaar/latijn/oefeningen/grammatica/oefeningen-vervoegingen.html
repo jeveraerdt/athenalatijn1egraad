@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vervoegingen — 1ste jaar Latijn — athena</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --blauw:#13427f; --roze:#E6007E; --kaart:#fff; --achtergrond:#f7f8fa; --rand:#e2e6ed; --tekst:#1a1a1a; --tekst-zacht:#6b7280; --radius:16px; --fv:'Lufga',Arial,sans-serif; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:var(--fv); background:var(--achtergrond); color:var(--tekst); min-height:100vh; display:flex; flex-direction:column; }
+  .site-header { background:var(--blauw); color:#fff; display:flex; align-items:center; gap:14px; padding:.85rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,.1); position:relative; }
+  .site-header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:var(--roze); }
+  .logo { height:34px; width:auto; display:block; flex-shrink:0; }
+  .site-header h1 { font-size:1.2rem; font-weight:700; letter-spacing:.02em; white-space:nowrap; }
+  .school-naam { margin-left:auto; font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; opacity:.85; white-space:nowrap; }
+  .site-toolbar { background:var(--achtergrond); border-bottom:1px solid var(--rand); padding:.55rem 1.5rem; display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+  .toolbar-divider { width:1px; height:22px; background:var(--rand); margin:0 .25rem; }
+  .back-btn, .pill-btn { font-family:var(--fv); font-size:.82rem; font-weight:500; color:var(--blauw); background:transparent; border:.5px solid var(--rand); border-radius:20px; padding:.32rem .85rem; text-decoration:none; display:inline-flex; align-items:center; gap:.35rem; transition:background .15s,border-color .15s,color .15s; }
+  .back-btn:hover,.pill-btn:hover { background:var(--blauw); border-color:var(--blauw); color:#fff; }
+  .content { flex:1; width:100%; max-width:720px; margin:0 auto; padding:clamp(4rem,10vh,7rem) 2rem 3.5rem; display:flex; align-items:center; }
+  .kaart { background:var(--kaart); border:.5px solid var(--rand); border-radius:var(--radius); padding:2.4rem; width:100%; text-align:center; box-shadow:0 10px 24px rgba(19,66,127,.04); }
+  .icoon { width:74px; height:74px; margin:0 auto 1rem; color:var(--blauw); }
+  .icoon svg { width:100%; height:100%; stroke:currentColor; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  h2 { color:var(--roze); font-size:1.6rem; line-height:1.2; margin-bottom:.75rem; }
+  p { color:var(--tekst-zacht); font-size:.96rem; line-height:1.6; max-width:470px; margin:0 auto; }
+  .terug { margin-top:1.6rem; display:inline-flex; text-decoration:none; color:var(--blauw); font-size:.88rem; font-weight:600; border:.5px solid var(--rand); border-radius:20px; padding:.45rem 1rem; transition:background .15s,border-color .15s,color .15s; }
+  .terug:hover { background:var(--blauw); border-color:var(--blauw); color:#fff; }
+  .voet { text-align:center; padding:1rem; font-size:11px; color:#b8bfc9; }
+  @media (max-width:680px) { .site-header { padding:.75rem 1rem; } .school-naam { display:none; } .site-toolbar { padding:.55rem 1rem; } .content { padding:3rem 1rem 2.5rem; } .kaart { padding:2rem 1.4rem; } }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <img class="logo" src="/athenalatijn1egraad/images/nav/logo_wit.png" alt="athena" onerror="this.onerror=null;this.src='../../../../images/nav/logo_wit.png';">
+  <h1>Vervoegingen</h1>
+  <span class="school-naam">athena Campus Pottelberg</span>
+</header>
+<nav class="site-toolbar" aria-label="Navigatie oefeningen">
+  <a class="back-btn" href="../grammatica-keuze.html">← Terug naar Grammatica</a>
+  <div class="toolbar-divider" aria-hidden="true"></div>
+  <a class="pill-btn" href="../oefeningen-keuze.html">Oefeningen</a>
+  <a class="pill-btn" href="../woordenschat/woordjestrainer.html">Woordenschat</a>
+</nav>
+<main class="content">
+  <section class="kaart" aria-labelledby="titel">
+    <div class="icoon" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+    </div>
+    <h2 id="titel">Vervoegingen</h2>
+    <p>Hier komen de oefeningen op vervoegingen. De kaart is al gekoppeld, zodat de navigatie niet naar een foutpagina leidt.</p>
+    <a class="terug" href="../grammatica-keuze.html">Terug naar Grammatica</a>
+  </section>
+</main>
+<p class="voet">J. Everaerdt &mdash; athena Campus Pottelberg</p>
+</body>
+</html>
