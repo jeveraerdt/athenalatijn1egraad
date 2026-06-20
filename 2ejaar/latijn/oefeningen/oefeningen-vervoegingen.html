@@ -9,500 +9,293 @@
 <link href="https://fonts.googleapis.com/css2?family=Lufga:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --blauw:       #13427f;
+    --blauw: #13427f;
     --blauw-licht: rgba(19,66,127,.08);
-    --roze:        #E6007E;
-    --kaart:       #ffffff;
+    --roze: #E6007E;
+    --kaart: #ffffff;
     --achtergrond: #f7f8fa;
-    --rand:        #e2e6ed;
-    --tekst:       #1a1a1a;
+    --rand: #e2e6ed;
+    --tekst: #1a1a1a;
     --tekst-zacht: #6b7280;
-    --groen:       #2a7a2a;
-    --groen-bg:    #f0faf0;
-    --amber:       #b45309;
-    --amber-bg:    #fffbeb;
-    --radius:      16px;
-    --radius-sm:   12px;
-    --fv:          'Lufga', Arial, sans-serif;
-    --fo:          'Aptos', Arial, sans-serif;
+    --groen: #2a7a2a;
+    --groen-bg: #f0faf0;
+    --amber: #b45309;
+    --amber-bg: #fffbeb;
+    --rood: #b42318;
+    --rood-bg: #fff5f4;
+    --radius: 16px;
+    --radius-sm: 12px;
+    --fv: 'Lufga', Arial, sans-serif;
+    --fo: 'Aptos', Arial, sans-serif;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  [hidden] { display: none !important; }
+  body { font-family: var(--fv); background: var(--achtergrond); color: var(--tekst); min-height: 100vh; display: flex; flex-direction: column; }
 
-  body {
-    font-family: var(--fv);
-    background: var(--achtergrond);
-    color: var(--tekst);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* ── MERKLINT athena: laag 1 ── */
-  .site-header {
-    background: var(--blauw);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: .85rem 1.5rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,.1);
-    position: relative;
-  }
-  .site-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--roze);
-  }
-  .site-header .logo {
-    height: 34px;
-    width: auto;
-    display: block;
-    flex-shrink: 0;
-  }
-  .site-header h1 {
-    font-family: var(--fv);
-    font-weight: 700;
-    font-size: 1.2rem;
-    margin: 0;
-    letter-spacing: .02em;
-    white-space: nowrap;
-    color: #fff;
-  }
-  .site-header .school-naam {
-    font-family: var(--fv);
-    font-size: .65rem;
-    font-weight: 700;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    opacity: .85;
-    margin-left: auto;
-    white-space: nowrap;
-    padding-left: .5rem;
-    color: #fff;
-  }
-
-  /* ── MERKLINT athena: laag 2 ── */
-  .site-toolbar {
-    background: var(--achtergrond);
-    border-bottom: 1px solid var(--rand);
-    padding: .55rem 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    flex-wrap: wrap;
-  }
-  .toolbar-divider {
-    width: 1px;
-    height: 22px;
-    background: var(--rand);
-    margin: 0 .25rem;
-  }
-  .back-btn, .pill-btn {
-    font-family: var(--fv);
-    font-size: .82rem;
-    font-weight: 500;
-    color: var(--blauw);
-    background: transparent;
-    border: 0.5px solid var(--rand);
-    border-radius: 20px;
-    padding: .32rem .85rem;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: .35rem;
-    transition: background .15s, border-color .15s, color .15s;
-  }
-  .back-btn:hover, .pill-btn:hover {
-    background: var(--blauw);
-    border-color: var(--blauw);
-    color: #fff;
-  }
-  .pill-btn.actief {
-    background: var(--blauw);
-    border-color: var(--blauw);
-    color: #fff;
-    cursor: default;
-  }
+  /* ── MERKLINT athena ── */
+  .site-header { background: var(--blauw); color: #fff; display: flex; align-items: center; gap: 14px; padding: .85rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,.1); position: relative; }
+  .site-header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--roze); }
+  .site-header .logo { height: 34px; width: auto; display: block; flex-shrink: 0; }
+  .site-header h1 { font-family: var(--fv); font-weight: 700; font-size: 1.2rem; letter-spacing: .02em; white-space: nowrap; color: #fff; }
+  .site-header .school-naam { font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .85; margin-left: auto; white-space: nowrap; padding-left: .5rem; color: #fff; }
+  .site-toolbar { background: var(--achtergrond); border-bottom: 1px solid var(--rand); padding: .55rem 1.5rem; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+  .toolbar-divider { width: 1px; height: 22px; background: var(--rand); margin: 0 .25rem; }
+  .back-btn, .pill-btn { font-family: var(--fv); font-size: .82rem; font-weight: 500; color: var(--blauw); background: transparent; border: .5px solid var(--rand); border-radius: 20px; padding: .32rem .85rem; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: .35rem; transition: background .15s, border-color .15s, color .15s; }
+  .back-btn:hover, .pill-btn:hover { background: var(--blauw); border-color: var(--blauw); color: #fff; }
+  .pill-btn.actief { background: var(--blauw); border-color: var(--blauw); color: #fff; cursor: default; }
   .back-btn svg { width: 14px; height: 14px; }
 
-  /* ── PAGINA ── */
-  .container {
-    flex: 1;
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2.35rem 2rem 3.5rem;
-  }
+  .container { flex: 1; width: 100%; max-width: 1100px; margin: 0 auto; padding: 2.35rem 2rem 3.5rem; }
+  .pagina-kop { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .pagina-kop h2 { color: var(--roze); font-size: clamp(1.75rem, 3.1vw, 2.15rem); font-weight: 600; letter-spacing: -.025em; line-height: 1.12; }
+  .pagina-kop p { margin-top: .45rem; max-width: 680px; font-family: var(--fo); font-size: .9rem; line-height: 1.55; color: var(--tekst-zacht); }
+  .header-datum { flex-shrink: 0; font-family: var(--fo); font-size: .78rem; color: var(--tekst-zacht); padding-bottom: .15rem; text-align: right; }
 
-  .pagina-kop {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  .pagina-kop h2 {
-    color: var(--roze);
-    font-size: clamp(1.75rem, 3.1vw, 2.15rem);
-    font-weight: 600;
-    letter-spacing: -.025em;
-    line-height: 1.12;
-  }
-  .pagina-kop p {
-    margin-top: .45rem;
-    max-width: 650px;
-    font-family: var(--fo);
-    font-size: .9rem;
-    line-height: 1.55;
-    color: var(--tekst-zacht);
-  }
-  .header-datum {
-    flex-shrink: 0;
-    font-family: var(--fo);
-    font-size: .78rem;
-    color: var(--tekst-zacht);
-    padding-bottom: .15rem;
-    text-align: right;
-  }
+  .naam-kaart { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1rem; background: var(--kaart); border: .5px solid var(--rand); border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.25rem; }
+  .naam-label { font-size: .9rem; font-weight: 600; color: var(--blauw); white-space: nowrap; }
+  .naam-veld { min-width: 0; width: 100%; font-family: var(--fv); font-size: .88rem; color: var(--tekst); border: .5px solid var(--rand); border-radius: var(--radius-sm); padding: .7rem .85rem; background: #f9fafb; outline: none; transition: border-color .15s, background .15s, box-shadow .15s; }
+  .naam-veld:focus { background: #fff; border-color: var(--blauw); box-shadow: 0 0 0 3px var(--blauw-licht); }
 
-  /* ── NAAM ── */
-  .naam-kaart {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: center;
-    gap: 1rem;
-    background: var(--kaart);
-    border: 0.5px solid var(--rand);
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-    margin-bottom: 1.25rem;
-  }
-  .naam-label {
-    font-family: var(--fv);
-    font-size: .9rem;
-    font-weight: 600;
-    color: var(--blauw);
-    white-space: nowrap;
-  }
-  .naam-veld {
-    min-width: 0;
-    width: 100%;
-    font-family: var(--fv);
-    font-size: .88rem;
-    color: var(--tekst);
-    border: 0.5px solid var(--rand);
-    border-radius: var(--radius-sm);
-    padding: .7rem .85rem;
-    background: #f9fafb;
-    outline: none;
-    transition: border-color .15s, background .15s, box-shadow .15s;
-  }
-  .naam-veld:focus {
-    background: #fff;
-    border-color: var(--blauw);
-    box-shadow: 0 0 0 3px var(--blauw-licht);
-  }
+  .stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-bottom: 1.4rem; }
+  .stat-kaart { background: var(--kaart); border: .5px solid var(--rand); border-radius: var(--radius); min-height: 122px; padding: 1.2rem 1.25rem; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+  .stat-getal { font-size: clamp(1.8rem, 3vw, 2.15rem); font-weight: 600; color: var(--blauw); line-height: 1.1; letter-spacing: -.03em; }
+  .stat-label { margin-top: .42rem; font-family: var(--fo); font-size: .78rem; color: var(--tekst-zacht); }
 
-  /* ── STATISTIEKEN ── */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
-    margin-bottom: 1.4rem;
-  }
-  .stat-kaart {
-    background: var(--kaart);
-    border: 0.5px solid var(--rand);
-    border-radius: var(--radius);
-    min-height: 122px;
-    padding: 1.2rem 1.25rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-  }
-  .stat-getal {
-    font-size: clamp(1.8rem, 3vw, 2.15rem);
-    font-weight: 600;
-    color: var(--blauw);
-    line-height: 1.1;
-    letter-spacing: -.03em;
-  }
-  .stat-label {
-    margin-top: .42rem;
-    font-family: var(--fo);
-    font-size: .78rem;
-    color: var(--tekst-zacht);
-  }
+  .legenda { min-height: 48px; display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; background: var(--kaart); border: .5px solid var(--rand); border-radius: var(--radius-sm); padding: .75rem 1rem; margin-bottom: 1.65rem; font-family: var(--fo); font-size: .78rem; color: var(--tekst-zacht); }
+  .legenda-item { display: inline-flex; align-items: center; gap: 5px; }
+  .krans-img { width: 18px; height: 18px; display: block; }
+  .krans-img.grijs { opacity: .18; filter: grayscale(1); }
 
-  /* ── LEGENDA ── */
-  .legenda {
-    min-height: 48px;
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-    flex-wrap: wrap;
-    background: var(--kaart);
-    border: 0.5px solid var(--rand);
-    border-radius: var(--radius-sm);
-    padding: .75rem 1rem;
-    margin-bottom: 2rem;
-    font-family: var(--fo);
-    font-size: .78rem;
-    color: var(--tekst-zacht);
-  }
-  .legenda-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .krans-img {
-    width: 18px;
-    height: 18px;
-    display: block;
-  }
-  .krans-img.grijs {
-    opacity: .18;
-    filter: grayscale(1);
-  }
+  /* ── TIJD- EN NIVEAUKAARTEN ── */
+  .tijd-sectie { background: var(--kaart); border: .5px solid var(--rand); border-radius: var(--radius); padding: 1.35rem; margin-bottom: 1.45rem; }
+  .tijd-kop { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--rand); }
+  .tijd-titel { display: flex; align-items: center; gap: .65rem; color: var(--blauw); font-size: 1.15rem; font-weight: 700; }
+  .tijd-punt { width: .72rem; height: .72rem; border-radius: 50%; background: var(--roze); display: inline-block; }
+  .tijd-uitleg { margin-top: .28rem; max-width: 700px; font-family: var(--fo); font-size: .8rem; line-height: 1.5; color: var(--tekst-zacht); }
+  .tijd-meta { flex-shrink: 0; background: var(--blauw-licht); color: var(--blauw); font-family: var(--fo); font-size: .74rem; font-weight: 600; padding: .35rem .55rem; border-radius: 999px; white-space: nowrap; }
+  .niveaus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; padding-top: 1rem; }
+  .niveau-kaart { border: .5px solid var(--rand); border-radius: var(--radius-sm); padding: 1rem; min-width: 0; background: #fff; }
+  .niveau-kaart.vergrendeld { background: #fafbfc; opacity: .74; }
+  .niveau-kop { display: flex; align-items: flex-start; justify-content: space-between; gap: .6rem; margin-bottom: .28rem; }
+  .niveau-naam { font-size: .93rem; font-weight: 700; color: var(--blauw); }
+  .niveau-status { font-family: var(--fo); font-size: .68rem; font-weight: 600; line-height: 1; padding: .32rem .48rem; border-radius: 999px; background: var(--blauw-licht); color: var(--blauw); white-space: nowrap; }
+  .niveau-status.goed { background: var(--groen-bg); color: var(--groen); }
+  .niveau-status.locked { background: #f0f2f5; color: var(--tekst-zacht); }
+  .niveau-uitleg { font-family: var(--fo); font-size: .75rem; line-height: 1.45; color: var(--tekst-zacht); min-height: 44px; }
+  .niveau-voortgang { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin: .9rem 0 .6rem; font-family: var(--fo); font-size: .72rem; color: var(--tekst-zacht); }
+  .mini-balk { flex: 1; height: 6px; border-radius: 99px; background: #edf0f4; overflow: hidden; }
+  .mini-balk > span { height: 100%; display: block; background: var(--blauw); border-radius: inherit; transition: width .2s; }
+  .oef-lijst { display: grid; gap: .5rem; }
+  .oef-rij { appearance: none; width: 100%; background: var(--kaart); border: .5px solid var(--rand); border-radius: 10px; padding: .76rem .78rem; display: flex; align-items: center; gap: .65rem; color: inherit; text-align: left; text-decoration: none; min-height: 64px; transition: border-color .15s, transform .15s, box-shadow .15s; cursor: pointer; }
+  button.oef-rij { font: inherit; }
+  .oef-rij:hover:not(:disabled) { border-color: var(--blauw); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(19,66,127,.055); }
+  .oef-rij:disabled { cursor: not-allowed; color: inherit; }
+  .oef-rij.locked { border-style: dashed; background: #fbfcfd; }
+  .score-cirkel { width: 36px; height: 36px; border-radius: 50%; border: 2px dashed #d1d5db; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: var(--fo); font-size: .68rem; font-weight: 600; color: var(--tekst-zacht); background: #fff; }
+  .score-cirkel.goed { border-style: solid; border-color: var(--groen); background: var(--groen-bg); color: var(--groen); }
+  .score-cirkel.gedeeltelijk { border-style: solid; border-color: var(--amber); background: var(--amber-bg); color: var(--amber); }
+  .oef-info { flex: 1; min-width: 0; }
+  .oef-naam { font-size: .79rem; line-height: 1.25; font-weight: 600; color: var(--blauw); }
+  .oef-detail { margin-top: .13rem; font-family: var(--fo); font-size: .68rem; color: var(--tekst-zacht); }
+  .oef-pijl { color: #c6ceda; font-size: 1.2rem; line-height: 1; transition: color .15s, transform .15s; }
+  .oef-rij:hover:not(:disabled) .oef-pijl { color: var(--blauw); transform: translateX(2px); }
+  .slotje { font-size: 1rem; color: var(--tekst-zacht); }
 
-  /* ── OEFENINGEN ── */
-  #oefeningen-container {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem;
-  }
-  .sectie {
-    background: transparent;
-    min-width: 0;
-  }
-  .sectie:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-    max-width: calc((100% - 1.25rem) / 2);
-  }
-  .sectie-kop {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-bottom: .7rem;
-    padding: 0 .1rem .55rem;
-    border-bottom: 1.5px solid var(--rand);
-  }
-  .sectie-naam {
-    font-size: .76rem;
-    font-weight: 700;
-    color: var(--blauw);
-    text-transform: uppercase;
-    letter-spacing: .08em;
-  }
-  .sectie-score {
-    font-family: var(--fo);
-    font-size: .75rem;
-    color: var(--tekst-zacht);
-    white-space: nowrap;
-  }
-  .oef-rij {
-    background: var(--kaart);
-    border: 0.5px solid var(--rand);
-    border-radius: var(--radius-sm);
-    padding: 1rem 1.05rem;
-    display: flex;
-    align-items: center;
-    gap: .85rem;
-    margin-bottom: .6rem;
-    text-decoration: none;
-    color: inherit;
-    min-height: 82px;
-    transition: border-color .15s, transform .15s, box-shadow .15s;
-    cursor: pointer;
-  }
-  .oef-rij:hover {
-    border-color: var(--blauw);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(19,66,127,.055);
-  }
-  .oef-rij.binnenkort {
-    opacity: .58;
-    pointer-events: none;
-    cursor: default;
-  }
-  .oef-rij.binnenkort:hover {
-    transform: none;
-    border-color: var(--rand);
-    box-shadow: none;
-  }
+  .toekomst-sectie { margin-top: 1.8rem; }
+  .toekomst-kop { display: flex; align-items: baseline; gap: .75rem; padding-bottom: .65rem; border-bottom: 1.5px solid var(--rand); }
+  .toekomst-kop h3 { color: var(--blauw); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+  .toekomst-kop p { font-family: var(--fo); font-size: .74rem; color: var(--tekst-zacht); }
+  .toekomst-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: .75rem; margin-top: .75rem; }
+  .toekomst-kaart { background: #fbfcfd; border: .5px dashed var(--rand); border-radius: var(--radius-sm); padding: .95rem; }
+  .toekomst-kaart h4 { color: var(--tekst-zacht); font-size: .82rem; font-weight: 600; }
+  .toekomst-kaart p { margin-top: .2rem; font-family: var(--fo); font-size: .7rem; color: var(--tekst-zacht); line-height: 1.45; }
+  .legacy-rij { margin-top: .75rem; }
 
-  .score-cirkel {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 2px dashed #d1d5db;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--fo);
-    font-size: .73rem;
-    font-weight: 600;
-    color: var(--tekst-zacht);
-    background: #fff;
-  }
-  .score-cirkel.goed {
-    border-style: solid;
-    border-color: var(--groen);
-    background: var(--groen-bg);
-    color: var(--groen);
-  }
-  .score-cirkel.gedeeltelijk {
-    border-style: solid;
-    border-color: var(--amber);
-    background: var(--amber-bg);
-    color: var(--amber);
-  }
-
-  .oef-info {
-    flex: 1;
-    min-width: 0;
-  }
-  .oef-naam {
-    font-size: .94rem;
-    font-weight: 600;
-    color: var(--blauw);
-    line-height: 1.25;
-  }
-  .oef-naam .binnenkort-label {
-    font-family: var(--fo);
-    font-weight: 400;
-    color: var(--tekst-zacht);
-    font-size: .78rem;
-  }
-  .oef-detail {
-    margin-top: .22rem;
-    font-family: var(--fo);
-    font-size: .76rem;
-    color: var(--tekst-zacht);
-  }
-  .oef-rechts {
-    display: flex;
-    align-items: center;
-    gap: .6rem;
-    flex-shrink: 0;
-  }
-  .kransen {
-    display: flex;
-    gap: 2px;
-  }
-  .oef-pijl {
-    color: #c6ceda;
-    font-size: 1.35rem;
-    line-height: 1;
-    transition: color .15s, transform .15s;
-  }
-  .oef-rij:hover .oef-pijl {
-    color: var(--blauw);
-    transform: translateX(2px);
-  }
-
-  /* ── KNOPPEN ── */
-  .knop-rij {
-    display: flex;
-    align-items: center;
-    gap: .65rem;
-    flex-wrap: wrap;
-    margin-top: 1.8rem;
-    padding-top: 1.35rem;
-    border-top: 1px solid var(--rand);
-  }
-  .knop {
-    font-family: var(--fv);
-    font-size: .82rem;
-    font-weight: 500;
-    padding: .58rem 1rem;
-    border-radius: 20px;
-    cursor: pointer;
-    border: 0.5px solid var(--rand);
-    background: transparent;
-    color: var(--blauw);
-    transition: background .15s, border-color .15s, color .15s;
-  }
-  .knop:hover {
-    background: var(--blauw);
-    border-color: var(--blauw);
-    color: #fff;
-  }
-  .knop-hoofd {
-    background: var(--blauw);
-    color: #fff;
-    border-color: var(--blauw);
-  }
+  .knop-rij { display: flex; align-items: center; gap: .65rem; flex-wrap: wrap; margin-top: 1.8rem; padding-top: 1.35rem; border-top: 1px solid var(--rand); }
+  .knop { font-family: var(--fv); font-size: .82rem; font-weight: 500; padding: .58rem 1rem; border-radius: 20px; cursor: pointer; border: .5px solid var(--rand); background: transparent; color: var(--blauw); transition: background .15s, border-color .15s, color .15s; }
+  .knop:hover { background: var(--blauw); border-color: var(--blauw); color: #fff; }
+  .knop-hoofd { background: var(--blauw); color: #fff; border-color: var(--blauw); }
   .knop-hoofd:hover { background: #0f3568; }
-  .knop-hoofd:disabled {
-    opacity: .45;
-    cursor: not-allowed;
-  }
-  .knop-hoofd:disabled:hover {
-    background: var(--blauw);
-    border-color: var(--blauw);
-    color: #fff;
-  }
-  .status-tekst {
-    min-height: 18px;
-    font-family: var(--fo);
-    font-size: .76rem;
-    color: var(--tekst-zacht);
-  }
+  .knop-hoofd:disabled { opacity: .45; cursor: not-allowed; }
+  .knop-hoofd:disabled:hover { background: var(--blauw); border-color: var(--blauw); color: #fff; }
+  .status-tekst { min-height: 18px; font-family: var(--fo); font-size: .76rem; color: var(--tekst-zacht); }
   .status-tekst.ok { color: var(--groen); }
+  .voet { text-align: center; padding: 1rem; font-family: var(--fv); font-size: 11px; color: #b8bfc9; }
 
-  .voet {
-    text-align: center;
-    padding: 1rem;
-    font-family: var(--fv);
-    font-size: 11px;
-    color: #b8bfc9;
+  /* ── OEFENSCHERM ── */
+  .oefening-container { max-width: 820px; margin: 0 auto; }
+  .oefening-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+  .oefening-terug { border: 0; background: transparent; color: var(--blauw); font: 500 .82rem var(--fv); padding: .3rem 0; cursor: pointer; display: inline-flex; align-items: center; gap: .32rem; }
+  .oefening-terug:hover { color: var(--roze); }
+  .oefening-label { font-family: var(--fo); font-size: .75rem; color: var(--tekst-zacht); text-align: right; }
+  .oefening-kop { background: var(--kaart); border: .5px solid var(--rand); border-radius: var(--radius); padding: 1.35rem; }
+  .oefening-kop h2 { color: var(--roze); font-size: clamp(1.45rem,3vw,1.9rem); line-height: 1.12; letter-spacing: -.025em; }
+  .oefening-kop p { margin-top: .42rem; font-family: var(--fo); font-size: .82rem; color: var(--tekst-zacht); line-height: 1.5; }
+  .progress-wrap { display: flex; align-items: center; gap: .75rem; margin-top: 1.1rem; }
+  .progress-track { flex: 1; height: 8px; border-radius: 99px; overflow: hidden; background: #edf0f4; }
+  .progress-track span { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--blauw); transition: width .2s; }
+  .progress-text { min-width: 80px; text-align: right; font-family: var(--fo); font-size: .75rem; color: var(--tekst-zacht); }
+  .vraag-kaart { margin-top: 1rem; background: var(--kaart); border: .5px solid var(--rand); border-radius: var(--radius); padding: clamp(1.25rem,3vw,2rem); }
+  .vraag-type { display: inline-flex; align-items: center; gap: .35rem; color: var(--blauw); background: var(--blauw-licht); border-radius: 999px; padding: .28rem .52rem; font-family: var(--fo); font-size: .69rem; font-weight: 600; }
+  .vraag-teller { margin-top: .95rem; font-family: var(--fo); font-size: .75rem; color: var(--tekst-zacht); }
+  .vraag-titel { margin-top: .38rem; font-size: clamp(1.15rem,2.5vw,1.38rem); font-weight: 600; line-height: 1.38; color: var(--tekst); }
+  .vraag-titel strong { color: var(--blauw); }
+  .vraag-context { margin-top: .65rem; font-family: var(--fo); font-size: .86rem; line-height: 1.55; color: var(--tekst-zacht); }
+  .antwoord-vak { margin-top: 1.25rem; }
+  .keuze-lijst { display: grid; gap: .58rem; }
+  .keuze-knop { width: 100%; text-align: left; display: flex; align-items: center; gap: .65rem; padding: .82rem .95rem; background: #fff; border: .5px solid var(--rand); border-radius: 10px; color: var(--tekst); font: 500 .89rem var(--fv); cursor: pointer; transition: background .15s, border-color .15s, transform .1s; }
+  .keuze-knop:hover:not(:disabled) { border-color: var(--blauw); transform: translateX(2px); }
+  .keuze-knop.geselecteerd { border: 2px solid var(--blauw); background: var(--blauw-licht); padding: calc(.82rem - 1.5px) calc(.95rem - 1.5px); }
+  .keuze-letter { width: 1.55rem; height: 1.55rem; display: inline-flex; justify-content: center; align-items: center; flex: 0 0 auto; border-radius: 50%; background: #eff2f7; color: var(--blauw); font-family: var(--fo); font-size: .72rem; font-weight: 700; }
+  .keuze-knop.geselecteerd .keuze-letter { background: var(--blauw); color: #fff; }
+  .keuze-knop:disabled { cursor: default; }
+  .antwoord-invoer { width: 100%; min-height: 50px; padding: .8rem .9rem; font: 500 1.05rem var(--fv); color: var(--tekst); border: .5px solid var(--rand); border-radius: 10px; outline: none; background: #fff; transition: border-color .15s, box-shadow .15s; }
+  .antwoord-invoer:focus { border-color: var(--blauw); box-shadow: 0 0 0 3px var(--blauw-licht); }
+  .antwoord-invoer:disabled { background: #f9fafb; }
+  .antwoord-hulp { margin-top: .45rem; font-family: var(--fo); font-size: .73rem; color: var(--tekst-zacht); }
+  .feedback { margin-top: 1rem; border-radius: 10px; padding: .9rem 1rem; font-family: var(--fo); font-size: .83rem; line-height: 1.55; }
+  .feedback.goed { background: var(--groen-bg); border: 1px solid rgba(42,122,42,.15); color: #165c16; }
+  .feedback.fout { background: var(--rood-bg); border: 1px solid rgba(180,35,24,.16); color: #832018; }
+  .feedback strong { font-family: var(--fv); }
+  .actie-rij { display: flex; justify-content: flex-end; gap: .65rem; margin-top: 1.25rem; }
+  .check-knop, .volgende-knop { border: 0; border-radius: 999px; font: 600 .84rem var(--fv); padding: .68rem 1.1rem; cursor: pointer; transition: background .15s, transform .1s; }
+  .check-knop { background: var(--blauw); color: #fff; }
+  .check-knop:hover:not(:disabled) { background: #0f3568; transform: translateY(-1px); }
+  .check-knop:disabled { opacity: .42; cursor: not-allowed; }
+  .volgende-knop { background: var(--roze); color: #fff; }
+  .volgende-knop:hover { background: #bf0069; transform: translateY(-1px); }
+  .resultaat-kaart { margin-top: 1rem; background: var(--kaart); border: .5px solid var(--rand); border-radius: var(--radius); padding: clamp(1.25rem,3vw,2rem); text-align: center; }
+  .resultaat-rond { width: 104px; height: 104px; border: 5px solid var(--blauw); border-radius: 50%; margin: 0 auto; display: flex; flex-direction: column; justify-content: center; align-items: center; color: var(--blauw); }
+  .resultaat-rond strong { font-size: 1.8rem; line-height: 1; }
+  .resultaat-rond span { margin-top: .15rem; font-family: var(--fo); font-size: .72rem; }
+  .resultaat-kaart h3 { margin-top: 1rem; font-size: 1.25rem; color: var(--blauw); }
+  .resultaat-kaart p { max-width: 540px; margin: .55rem auto 0; font-family: var(--fo); font-size: .85rem; color: var(--tekst-zacht); line-height: 1.55; }
+  .resultaat-acties { display: flex; justify-content: center; gap: .65rem; flex-wrap: wrap; margin-top: 1.25rem; }
+
+  @media (max-width: 900px) {
+    .niveaus-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .toekomst-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
   }
-
-  @media (max-width: 780px) {
-    .container { padding: 1.75rem 1rem 2.5rem; }
-    .pagina-kop { align-items: flex-start; flex-direction: column; gap: .45rem; }
-    .header-datum { text-align: left; padding-bottom: 0; }
-    #oefeningen-container { grid-template-columns: 1fr; }
-    .sectie:last-child:nth-child(odd) { grid-column: auto; max-width: none; }
-  }
-
   @media (max-width: 680px) {
     .site-header { padding: .75rem 1rem; }
     .site-header h1 { font-size: 1.05rem; }
     .site-header .school-naam { display: none; }
     .site-toolbar { padding: .55rem 1rem; }
+    .container { padding: 1.75rem 1rem 2.5rem; }
+    .pagina-kop { align-items: flex-start; flex-direction: column; gap: .45rem; }
+    .header-datum { text-align: left; padding-bottom: 0; }
     .naam-kaart { grid-template-columns: 1fr; gap: .55rem; }
-    .stats-grid { grid-template-columns: 1fr; gap: .65rem; }
+    .stats-grid, .niveaus-grid { grid-template-columns: 1fr; gap: .65rem; }
     .stat-kaart { min-height: 94px; }
-    .legenda { gap: .75rem; }
-    .oef-rij { padding: .9rem; }
-    .kransen { display: none; }
+    .tijd-kop { flex-direction: column; gap: .55rem; }
+    .tijd-meta { white-space: normal; }
+    .toekomst-grid { grid-template-columns: 1fr; }
+    .oefening-top { align-items: flex-start; flex-direction: column; gap: .25rem; }
+    .oefening-label { text-align: left; }
+    .actie-rij { justify-content: stretch; }
+    .check-knop, .volgende-knop { flex: 1; }
   }
+
+  /* ── STAP 4: feedback en foutanalyse ── */
+  .denk-hulp { margin: 1rem 0 1.1rem; border: 1px dashed #cdd8e9; border-radius: 10px; background: #f8fbff; color: var(--tekst-zacht); font-family: var(--fo); font-size: .79rem; line-height: 1.5; }
+  .denk-hulp summary { padding: .68rem .82rem; cursor: pointer; color: var(--blauw); font-family: var(--fv); font-weight: 600; }
+  .denk-hulp ol { margin: 0; padding: 0 .9rem .8rem 2.05rem; }
+  .denk-hulp li + li { margin-top: .28rem; }
+  .feedback-kop { display: flex; align-items: flex-start; gap: .55rem; }
+  .feedback-icoon { width: 1.55rem; height: 1.55rem; flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(19,66,127,.12); color: var(--blauw); font-family: var(--fv); font-weight: 700; }
+  .feedback.fout .feedback-icoon { background: rgba(180,35,24,.12); color: var(--rood); }
+  .feedback-uitleg { margin-top: .62rem; }
+  .antwoord-vergelijking { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; margin-top: .8rem; }
+  .antwoord-vergelijking span { display: flex; flex-direction: column; gap: .15rem; padding: .55rem .65rem; border-radius: 8px; background: rgba(255,255,255,.62); border: 1px solid rgba(180,35,24,.12); }
+  .antwoord-vergelijking small { font-size: .67rem; color: inherit; opacity: .78; }
+  .antwoord-vergelijking strong { font-family: var(--fv); font-size: .87rem; overflow-wrap: anywhere; }
+  .feedback-stappen { margin: .8rem 0 0 1.1rem; padding-left: .75rem; }
+  .feedback-stappen li + li { margin-top: .25rem; }
+  .feedback-tip { margin-top: .8rem; padding-top: .65rem; border-top: 1px solid rgba(180,35,24,.14); }
+  .foutoverzicht { margin-top: 1.25rem; padding: 1rem 1.1rem; text-align: left; border: 1px solid rgba(180,35,24,.16); border-radius: 10px; background: var(--rood-bg); font-family: var(--fo); font-size: .82rem; line-height: 1.5; color: #832018; }
+  .foutoverzicht-goed { border-color: rgba(42,122,42,.16); background: var(--groen-bg); color: #165c16; }
+  .foutoverzicht h4 { margin-bottom: .35rem; font-family: var(--fv); font-size: .92rem; color: inherit; }
+  .foutoverzicht ul { margin: .55rem 0 0 1.1rem; padding-left: .7rem; }
+  .foutoverzicht li + li { margin-top: .32rem; }
+  .foutoverzicht p { margin-top: .68rem; color: inherit; }
+  @media (max-width: 520px) { .antwoord-vergelijking { grid-template-columns: 1fr; } }
+
+
+
+  /* ── STAP 5: leerlingendashboard ── */
+  .dashboard { margin: 0 0 1.55rem; background: var(--kaart); border: .5px solid var(--rand); border-radius: var(--radius); overflow: hidden; }
+  .dashboard-kop { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.35rem 1rem; border-bottom: 1px solid var(--rand); }
+  .dashboard-eyebrow { display: block; margin-bottom: .35rem; color: var(--blauw); font-family: var(--fo); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .dashboard-titel { color: var(--roze); font-size: 1.15rem; font-weight: 700; line-height: 1.2; }
+  .dashboard-inleiding { max-width: 690px; margin-top: .35rem; font-family: var(--fo); font-size: .8rem; line-height: 1.5; color: var(--tekst-zacht); }
+  .dashboard-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(240px, .95fr); gap: 1rem; padding: 1rem 1.35rem 1.35rem; }
+  .dashboard-kaart { min-width: 0; border: .5px solid var(--rand); border-radius: var(--radius-sm); background: #fff; padding: 1rem; }
+  .dashboard-kaart.dashboard-route { grid-row: span 2; }
+  .dashboard-kaart-kop { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; margin-bottom: .78rem; }
+  .dashboard-kaart h3 { color: var(--blauw); font-size: .88rem; font-weight: 700; line-height: 1.25; }
+  .dashboard-kaart-kop p, .dashboard-zachte-tekst { margin-top: .22rem; font-family: var(--fo); font-size: .72rem; line-height: 1.45; color: var(--tekst-zacht); }
+  .dashboard-badge { flex-shrink: 0; background: var(--blauw-licht); color: var(--blauw); border-radius: 999px; padding: .3rem .5rem; font-family: var(--fo); font-size: .67rem; font-weight: 700; white-space: nowrap; }
+  .route-lijst { display: grid; gap: .55rem; }
+  .route-rij { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .75rem; padding: .7rem .75rem; border: .5px solid var(--rand); border-radius: 10px; background: #fff; }
+  .route-rij.actief { border-color: rgba(19,66,127,.38); background: rgba(19,66,127,.025); }
+  .route-rij.voltooid { border-color: rgba(42,122,42,.35); background: var(--groen-bg); }
+  .route-naam { display: flex; align-items: center; gap: .55rem; min-width: 0; color: var(--blauw); font-size: .78rem; font-weight: 700; }
+  .route-punt { width: .55rem; height: .55rem; flex: 0 0 auto; border-radius: 50%; background: var(--roze); }
+  .route-rij.voltooid .route-punt { background: var(--groen); }
+  .route-detail { margin-top: .17rem; font-family: var(--fo); font-size: .69rem; line-height: 1.35; color: var(--tekst-zacht); }
+  .route-detail strong { color: var(--blauw); font-weight: 700; }
+  .route-status { display: inline-flex; align-items: center; justify-content: center; min-width: 68px; border-radius: 999px; background: var(--blauw-licht); color: var(--blauw); font-family: var(--fo); font-size: .67rem; font-weight: 700; padding: .31rem .48rem; white-space: nowrap; }
+  .route-rij.voltooid .route-status { background: #dff3df; color: var(--groen); }
+  .dashboard-actie { width: 100%; margin-top: .8rem; }
+  .dashboard-actie.knop { text-align: center; justify-content: center; }
+  .dashboard-aandacht { display: grid; gap: .48rem; padding: 0; margin: 0; list-style: none; }
+  .dashboard-aandacht li { border-left: 3px solid var(--roze); padding: .18rem 0 .18rem .58rem; font-family: var(--fo); font-size: .72rem; line-height: 1.45; color: var(--tekst-zacht); }
+  .dashboard-aandacht strong { color: var(--blauw); }
+  .dashboard-laatst { display: grid; gap: .42rem; }
+  .dashboard-laatst-titel { color: var(--blauw); font-size: .78rem; font-weight: 700; line-height: 1.35; }
+  .dashboard-laatst-meta { font-family: var(--fo); font-size: .72rem; color: var(--tekst-zacht); }
+  .dashboard-mini-score { display: inline-flex; align-items: center; justify-content: center; width: fit-content; border-radius: 999px; padding: .3rem .52rem; background: var(--amber-bg); color: var(--amber); font-family: var(--fo); font-size: .68rem; font-weight: 700; }
+  .dashboard-mini-score.goed { background: var(--groen-bg); color: var(--groen); }
+  .dashboard-leeg { padding: .72rem .78rem; border-radius: 10px; background: #fafbfc; border: .5px dashed var(--rand); font-family: var(--fo); font-size: .72rem; line-height: 1.45; color: var(--tekst-zacht); }
+  .dashboard-sterk { color: var(--groen); }
+  @media (max-width: 840px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .dashboard-kaart.dashboard-route { grid-row: auto; }
+  }
+  @media (max-width: 560px) {
+    .dashboard-kop { padding: 1rem; }
+    .dashboard-grid { padding: .8rem 1rem 1rem; gap: .75rem; }
+    .route-rij { grid-template-columns: 1fr; gap: .45rem; }
+    .route-status { justify-self: start; }
+  }
+
+
+  /* ── STAP 6: automatische voortgangssynchronisatie ── */
+  .sync-kaart { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1rem; margin: -0.1rem 0 1.25rem; padding: 1rem 1.15rem; background: #fff; border: .5px solid var(--rand); border-radius: var(--radius); }
+  .sync-eyebrow { display: block; margin-bottom: .22rem; color: var(--blauw); font-family: var(--fo); font-size: .67rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .sync-titel { color: var(--blauw); font-size: .92rem; font-weight: 700; line-height: 1.25; }
+  .sync-uitleg { max-width: 670px; margin-top: .24rem; color: var(--tekst-zacht); font-family: var(--fo); font-size: .76rem; line-height: 1.45; }
+  .sync-rechts { display: flex; align-items: center; justify-content: flex-end; gap: .65rem; flex-wrap: wrap; }
+  .sync-status { display: inline-flex; align-items: center; justify-content: center; min-height: 30px; border-radius: 999px; padding: .33rem .58rem; background: #f8fafc; border: .5px solid var(--rand); color: var(--tekst-zacht); font-family: var(--fo); font-size: .7rem; line-height: 1.2; text-align: center; }
+  .sync-status.ok { background: var(--groen-bg); border-color: rgba(42,122,42,.22); color: var(--groen); }
+  .sync-status.wacht { background: var(--amber-bg); border-color: rgba(180,83,9,.18); color: var(--amber); }
+  .sync-status.fout { background: var(--rood-bg); border-color: rgba(180,35,24,.18); color: var(--rood); }
+  .sync-knop { font: 600 .76rem var(--fv); color: var(--blauw); background: transparent; border: .5px solid var(--rand); border-radius: 999px; padding: .48rem .72rem; cursor: pointer; transition: background .15s, border-color .15s, color .15s; }
+  .sync-knop:hover:not(:disabled) { background: var(--blauw); border-color: var(--blauw); color: #fff; }
+  .sync-knop:disabled { opacity: .52; cursor: default; }
+  @media (max-width: 680px) { .sync-kaart { grid-template-columns: 1fr; align-items: start; } .sync-rechts { justify-content: flex-start; } }
+
 </style>
 </head>
 <body>
-
-<!-- MERKLINT laag 1 -->
 <header class="site-header">
   <img class="logo" src="/athenalatijn1egraad/images/nav/logo_wit.png" alt="athena" onerror="this.onerror=null;this.src='../../../images/nav/logo_wit.png';">
   <h1>Vervoegingen</h1>
   <span class="school-naam">athena Campus Pottelberg</span>
 </header>
-
-<!-- MERKLINT laag 2: toolbar -->
 <nav class="site-toolbar">
   <a class="back-btn" href="grammatica-keuze.html">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <polyline points="15 18 9 12 15 6"/>
-    </svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
     Terug naar Grammatica
   </a>
   <div class="toolbar-divider"></div>
@@ -512,48 +305,81 @@
 </nav>
 
 <main class="container">
-  <section class="pagina-kop" aria-labelledby="pagina-titel">
-    <div>
-      <h2 id="pagina-titel">Oefen op jouw tempo</h2>
-      <p>Kies een oefening, werk rustig en volg hier hoe je vooruitgaat. Je resultaten blijven bewaard op dit toestel.</p>
+  <section id="overzicht-scherm">
+    <section class="pagina-kop" aria-labelledby="pagina-titel">
+      <div>
+        <h2 id="pagina-titel">Oefen op jouw tempo</h2>
+        <p>Werk eerst de vier oefeningen van een niveau af. Haal je samen minstens 80%, dan opent het volgende niveau.</p>
+      </div>
+      <div class="header-datum" id="datum"></div>
+    </section>
+
+    <div class="naam-kaart">
+      <label class="naam-label" for="naam-veld">Jouw naam</label>
+      <input class="naam-veld" type="text" id="naam-veld" placeholder="Voornaam Achternaam" autocomplete="name">
     </div>
-    <div class="header-datum" id="datum"></div>
+
+    <section id="sync-kaart" class="sync-kaart" aria-label="Automatische voortgangssynchronisatie">
+      <div>
+        <span class="sync-eyebrow">Voortgang delen</span>
+        <div class="sync-titel">Automatische synchronisatie met je leerkracht</div>
+        <p class="sync-uitleg" id="sync-uitleg">Je resultaten blijven op dit toestel bewaard. Zodra de leerkracht synchronisatie heeft geactiveerd, wordt je voortgang na elke afgewerkte oefening ook veilig doorgestuurd.</p>
+      </div>
+      <div class="sync-rechts">
+        <span class="sync-status" id="sync-status">Nog niet geactiveerd</span>
+        <button class="sync-knop" id="sync-nu" type="button" onclick="stap6SyncNu()" disabled>Nu synchroniseren</button>
+      </div>
+    </section>
+
+    <section class="stats-grid" aria-label="Jouw voortgang">
+      <div class="stat-kaart"><div class="stat-getal" id="stat-gemaakt">0/60</div><div class="stat-label">oefeningen gemaakt</div></div>
+      <div class="stat-kaart"><div class="stat-getal" id="stat-pct">0%</div><div class="stat-label">van de oefenroute afgewerkt</div></div>
+      <div class="stat-kaart"><div class="stat-getal" id="stat-gem">—</div><div class="stat-label">gemiddelde beste score</div></div>
+    </section>
+
+    <!-- STAP 5: leerlingendashboard. De inhoud wordt uit dezelfde localStorage-voortgang opgebouwd. -->
+    <section id="leerling-dashboard" class="dashboard" aria-labelledby="dashboard-titel">
+      <div class="dashboard-kop">
+        <div>
+          <span class="dashboard-eyebrow">Jouw dashboard</span>
+          <h2 id="dashboard-titel" class="dashboard-titel">Waar sta je nu?</h2>
+          <p class="dashboard-inleiding">Hier zie je je voortgang per werkwoordstijd, wat je best hierna oefent en waar je extra aandacht aan kunt geven.</p>
+        </div>
+      </div>
+      <div id="dashboard-inhoud" class="dashboard-grid" aria-live="polite"></div>
+    </section>
+
+    <div class="legenda" aria-label="Niveaus">
+      <span class="legenda-item"><img class="krans-img" id="krans-1" alt=""> niveau 1: herkennen</span>
+      <span class="legenda-item"><img class="krans-img" id="krans-2" alt=""><img class="krans-img" id="krans-3" alt=""> niveau 2: vormen bouwen</span>
+      <span class="legenda-item"><img class="krans-img" id="krans-4" alt=""><img class="krans-img" id="krans-5" alt=""><img class="krans-img" id="krans-6" alt=""> niveau 3: toepassen en controleren</span>
+    </div>
+
+    <section id="praesens-container" aria-label="Oefeningen indicatief praesens actief"></section>
+
+    <section id="extra-tijden-container" aria-label="Oefeningen imperfectum, futurum simplex, perfectum en plusquamperfectum"></section>
+
+    <section class="toekomst-sectie" aria-label="Bestaande gemengde oefening">
+      <div class="toekomst-kop"><h3>Extra oefenen</h3><p>De bestaande gemengde oefening blijft beschikbaar.</p></div>
+      <div class="legacy-rij"><a class="oef-rij" href="oefeningen-grammatica.html"><div class="score-cirkel" id="legacy-score"></div><div class="oef-info"><div class="oef-naam">Gemengde oefening vervoegingen</div><div class="oef-detail">Bestaande oefening openen</div></div><span class="oef-pijl" aria-hidden="true">›</span></a></div>
+    </section>
+
+    <div class="knop-rij">
+      <button class="knop knop-hoofd" id="knop-insturen" type="button" onclick="insturen()">Resultaten insturen naar leerkracht</button>
+      <button class="knop" type="button" onclick="wisVoortgang()">Voortgang wissen</button>
+      <span class="status-tekst" id="status-tekst">Vul eerst je naam in voor je instuurt.</span>
+    </div>
   </section>
 
-  <!-- NAAM -->
-  <div class="naam-kaart">
-    <label class="naam-label" for="naam-veld">Jouw naam</label>
-    <input class="naam-veld" type="text" id="naam-veld" placeholder="Voornaam Achternaam" autocomplete="name" />
-  </div>
-
-  <!-- STATISTIEKEN -->
-  <section class="stats-grid" aria-label="Jouw voortgang">
-    <div class="stat-kaart">
-      <div class="stat-getal" id="stat-gemaakt">0/<span id="stat-totaal">0</span></div>
-      <div class="stat-label">oefeningen gemaakt</div>
-    </div>
-    <div class="stat-kaart">
-      <div class="stat-getal" id="stat-pct">0%</div>
-      <div class="stat-label">voltooid</div>
-    </div>
-    <div class="stat-kaart">
-      <div class="stat-getal" id="stat-gem">&#8212;</div>
-      <div class="stat-label">gemiddelde score</div>
+  <section id="oefening-scherm" hidden aria-live="polite">
+    <div class="oefening-container">
+      <div class="oefening-top">
+        <button class="oefening-terug" type="button" onclick="sluitOefening()">← Terug naar overzicht</button>
+        <div class="oefening-label" id="oefening-label"></div>
+      </div>
+      <div id="oefening-inhoud"></div>
     </div>
   </section>
-
-  <!-- LEGENDA -->
-  <div class="legenda" id="legenda-wrap" aria-label="Niveaus"></div>
-
-  <!-- SECTIES MET OEFENINGEN -->
-  <section id="oefeningen-container" aria-label="Oefeningen per werkwoordstijd"></section>
-
-  <!-- KNOPPEN -->
-  <div class="knop-rij">
-    <button class="knop knop-hoofd" id="knop-insturen" onclick="insturen()">Resultaten insturen naar leerkracht</button>
-    <button class="knop" onclick="wisVoortgang()">Voortgang wissen</button>
-    <span class="status-tekst" id="status-tekst">Vul eerst je naam in voor je instuurt.</span>
-  </div>
 </main>
 
 <p class="voet">J. Everaerdt &mdash; athena Campus Pottelberg</p>
@@ -561,200 +387,1646 @@
 <script>
 const KRANS_SRC = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAAE6UlEQVR4nN1UXWwUVRT+zp2d2f+W3W5LC20FGlRKFEGCRCRbxKAUQuRnSgJJjSI8IJHUH8JPYXaiBaOSJvpgUjAEBSRdC8QHi8QHG0SFCEECYgICFqSy7Xbb7e7O7uzMXB92F1oFEl808Xuaueee891zzncO8N+CExSF3dcuy8I/DwoQACIA94mO23bOKXdyv8fcDfKmUizb0eGs37o2998u5B+AiuBrAWFR6DiWbFtOt21/x3BGAoAxczeWBINrPWja6Rw7yI4uG2RLTBsrIgCIXKDCxZ7qAK9NpJ+cO0AHuRxazsIN5ujg+nH3JpDbGQD0OqVd33sDu9CTCr40SNPsQ73QfeJRAoA6WABxriiM9m2OxkThq8aYiYkD+mpr8eaZfb7AGf+CzWOHl6tAQBRuMMHbhYe07NSnY6mlpGVXHfbbe/cHxJXY23zWUhQGVbUAACpgcdCNCZ6Vb40WjscZqh9I8uYFCfL1i+ITBABBsJEZAMDpCcxtWjw4ZNq4YHv8vEPb7mauh33ztlTlgheaGeIEwHst2XjZYR25NbrobLVB86dEY4BDcA0PWvjmXJYFNn16tlsSjhwaEyC/pjvWXc+0erJ6sxUwExygfJuAYEhgAM+IwqQVcefO+p5E3VW3E4d9UnyG0PsFB4CukJkjyOs8kKipsRa3fJkpEQ+eLhEvzs7YK/olm97nwNL4gXdiJMsMAEfe2QQn3YeN52no1GMxs7RfFNl5L1t3KlW6xb6gWQWIQ24XWEEVg6UucXbCnD8mon9OSY0d9dl3Hiinxsr+7k4OhSEcNocJLlerverAuSJav32863Urmz4jQGpaFGcbRCDX6MgFYlBVbgGUfWTcNZaO39x4M10lcC6Vxn5tdZved3s9VQ1QAAQV20hJEyrlJqc7I3QGElo87RJ3N0bNqXWRKOIu6dtC7RkATrLM6M3GZFeZJ9RRPgplaXOULvoPrekzqnUbc5KqWigbLggOBvAbL46zZg1qrmei2kcwjEZdlNBa4fgBPrN9KxSGLtXMOYXDJlcUxjpCuw77M8/fKHL9Mk2jGbbUADcksjue2zCTwqp+Z40Q98xr8mNPZE5UZBenZZjNZrBJ+/3W29crpDloU1MqQhwAZ/khE0hVLfvC5paajGsNpVOXTpR4+adljj3FSSPgE0cd54s21QIEBBUBABhzHSgfwt6zRTb1wyp/0mD8t4lxrdzby7tK698oB4gDnPJphwEAul3oKs+i/pNL8caaVJb/4ZI67RbvfzWi28qybCvAwbtUEytaZi2L82efGtBSpt/5Y4Rlo9uuxh5dmXS+bAm4tbgyHs1tWeIjSmR1qMdOeNLL95S7eiYl00wysC8i2RZ2UxpVmjEZIC4AHEltopcT/8ljN1jM6KwxxOrfRbJa/cbBpJ8a2trasgi3WwWF3oGiMFJVi7+yvQRRmlIcS1iajb1g2d1L7dn0lRJdn0+OpNZneFeZknuHbuoXXHq6JSGxCEqLB/DxhnN3VJabmZEEACDLAstr3spf8NQ3N2mS4z2Y5hBxM8Yl13hmZI5VpqKrr3z9QTcACABM8MK082F6vhs4IRgSUPYzL07VFBkkvs9JPEmW9p2NsSS32IOGTVooZFMnh9yXPwNqBdTCuL0M/03cI4O/QFEYvgFDHSyoAOTJOb+wbOXk+H/Gn8GRGcTqC9c8AAAAAElFTkSuQmCC';
 const OPSLAG_SLEUTEL = 'latijn-2grLAT';
-const FORMULIER_ID   = '1FAIpQLScCEJFq3G9kw1DsRpeq90hTpsSuVbCs7FMFh1bzOIXKBIKvIQ';
-const ENTRY_NAAM     = 'entry.825151788';
-const ENTRY_RESULTS  = 'entry.1977566684';
+const FORMULIER_ID = '1FAIpQLScCEJFq3G9kw1DsRpeq90hTpsSuVbCs7FMFh1bzOIXKBIKvIQ';
+const ENTRY_NAAM = 'entry.825151788';
+const ENTRY_RESULTS = 'entry.1977566684';
 
-// ─── OEFENINGEN DEFINITIE ────────────────────────────────────────────────────
-// Elke oefening heeft een id (= localStorage-sleutel), naam, aantalVragen en niveau (1/2/3)
-const SECTIES = [
-  {
-    naam: 'Praesens',
-    oefeningen: [
-      { id: 'praesens-herkenning', naam: 'Praesens — herkenning', aantalVragen: 10, niveau: 1, url: '#', binnenkort: true },
-      { id: 'praesens-vertaling', naam: 'Praesens — vertaling', aantalVragen: 8, niveau: 2, url: '#', binnenkort: true },
-    ]
-  },
-  {
-    naam: 'Imperfectum',
-    oefeningen: [
-      { id: 'imperfectum-herkenning', naam: 'Imperfectum — herkenning', aantalVragen: 10, niveau: 1, url: '#', binnenkort: true },
-      { id: 'imperfectum-vertaling', naam: 'Imperfectum — vertaling', aantalVragen: 8, niveau: 2, url: '#', binnenkort: true },
-    ]
-  },
-  {
-    naam: 'Futurum simplex',
-    oefeningen: [
-      { id: 'futurum-herkenning', naam: 'Futurum simplex — herkenning', aantalVragen: 10, niveau: 1, url: '#', binnenkort: true },
-      { id: 'futurum-vertaling', naam: 'Futurum simplex — vertaling', aantalVragen: 8, niveau: 2, url: '#', binnenkort: true },
-    ]
-  },
-  {
-    naam: 'Perfectum',
-    oefeningen: [
-      { id: 'perfectum-herkenning', naam: 'Perfectum — herkenning', aantalVragen: 10, niveau: 1, url: '#', binnenkort: true },
-      { id: 'perfectum-vertaling', naam: 'Perfectum — vertaling', aantalVragen: 8, niveau: 2, url: '#', binnenkort: true },
-    ]
-  },
-  {
-    naam: 'Gemengd',
-    oefeningen: [
-      { id: 'grammatica-gemengd-1', naam: 'Gemengde oefening vervoegingen', aantalVragen: 5, niveau: 2, url: 'oefeningen-grammatica.html', binnenkort: false },
-    ]
+/*
+  Stap 2 — indicatief praesens actief
+  De woordenschat hieronder komt uitsluitend uit basiswoorden die in Ludus 6A, 6B,
+  7A, 7B, 8A of 8B voorkomen. Deponentia blijven bewust buiten deze actieve reeks.
+*/
+const WOORDEN_PRAESENS = [{"infinitief":"abire","eerste":"abeo","betekenis":"weggaan","type":"onregelmatig","teksten":["6a/7","7a/6","7b/2"]},{"infinitief":"accendere","eerste":"accendo","betekenis":"aansteken","type":"consonant","teksten":["7b/2"]},{"infinitief":"accipere","eerste":"accipio","betekenis":"ontvangen","type":"korte-i","teksten":["6b/4","8a/3","8b/8"]},{"infinitief":"adesse","eerste":"adsum","betekenis":"aanwezig zijn","type":"onregelmatig","teksten":["7a/3"]},{"infinitief":"adire","eerste":"adeo","betekenis":"gaan naar","type":"onregelmatig","teksten":["7b/2"]},{"infinitief":"agere","eerste":"ago","betekenis":"doen","type":"consonant","teksten":["6b/4","6a/7"]},{"infinitief":"alere","eerste":"alo","betekenis":"voeden","type":"consonant","teksten":["7a/3","8a/3"]},{"infinitief":"amittere","eerste":"amitto","betekenis":"verliezen","type":"consonant","teksten":["6a/1"]},{"infinitief":"animadvertere","eerste":"animadverto","betekenis":"opletten","type":"consonant","teksten":["8b/5"]},{"infinitief":"appellare","eerste":"appello","betekenis":"noemen","type":"a","teksten":["7a/1","8b/1"]},{"infinitief":"audere","eerste":"audeo","betekenis":"durven","type":"e","teksten":["7b/2"]},{"infinitief":"audire","eerste":"audio","betekenis":"horen","type":"lange-i","teksten":["7b/4","8a/2","6a/7"]},{"infinitief":"cadere","eerste":"cado","betekenis":"vallen","type":"consonant","teksten":["6b/4"]},{"infinitief":"caedere","eerste":"caedo","betekenis":"doden","type":"consonant","teksten":["7b/4","8b/9"]},{"infinitief":"capere","eerste":"capio","betekenis":"nemen","type":"korte-i","teksten":["7b/4","8a/3","8b/9"]},{"infinitief":"cedere","eerste":"cedo","betekenis":"gaan","type":"consonant","teksten":["6b/2"]},{"infinitief":"claudere","eerste":"claudo","betekenis":"sluiten","type":"consonant","teksten":["8b/9","6a/7"]},{"infinitief":"cogere","eerste":"cogo","betekenis":"dwingen","type":"consonant","teksten":["6b/4","7b/4"]},{"infinitief":"colere","eerste":"colo","betekenis":"vereren","type":"consonant","teksten":["7b/6","8b/3"]},{"infinitief":"committere","eerste":"committo","betekenis":"samenbrengen","type":"consonant","teksten":["8b/10"]},{"infinitief":"concupiscere","eerste":"concupisco","betekenis":"verlangen","type":"consonant","teksten":["8a/6"]},{"infinitief":"conficere","eerste":"conficio","betekenis":"maken","type":"korte-i","teksten":["8a/3"]},{"infinitief":"consistere","eerste":"consisto","betekenis":"stilstaan","type":"consonant","teksten":["7b/2","6a/7"]},{"infinitief":"conspicere","eerste":"conspicio","betekenis":"zien","type":"korte-i","teksten":["6a/2"]},{"infinitief":"constituere","eerste":"constituo","betekenis":"beslissen","type":"consonant","teksten":["6a/4","8a/5"]},{"infinitief":"consulere","eerste":"consulo","betekenis":"zorg dragen voor","type":"consonant","teksten":["6b/2","7a/8"]},{"infinitief":"contingere","eerste":"contingo","betekenis":"aanraken","type":"consonant","teksten":["8b/6"]},{"infinitief":"convenire","eerste":"convenio","betekenis":"samenkomen","type":"lange-i","teksten":["6b/8"]},{"infinitief":"corripere","eerste":"corripio","betekenis":"vastgrijpen","type":"korte-i","teksten":["6b/5"]},{"infinitief":"curare","eerste":"curo","betekenis":"zorgen","type":"a","teksten":["7b/6"]},{"infinitief":"currere","eerste":"curro","betekenis":"rennen","type":"consonant","teksten":["6b/2"]},{"infinitief":"dare","eerste":"do","betekenis":"geven","type":"a","teksten":["6b/9","7a/3","7b/2","8a/3","8a/5","8b/10"]},{"infinitief":"deducere","eerste":"deduco","betekenis":"wegleiden","type":"consonant","teksten":["7b/2"]},{"infinitief":"deferre","eerste":"defero","betekenis":"brengen","type":"onregelmatig","teksten":["8b/9"]},{"infinitief":"demonstrare","eerste":"demonstro","betekenis":"uitleggen","type":"a","teksten":["8a/3"]},{"infinitief":"dicere","eerste":"dico","betekenis":"zeggen","type":"consonant","teksten":["6b/4","7a/1","7a/3","7a/6","7a/8","7b/6","8a/3","8b/3","8b/9"]},{"infinitief":"dimittere","eerste":"dimitto","betekenis":"wegsturen","type":"consonant","teksten":["7b/2"]},{"infinitief":"dividere","eerste":"divido","betekenis":"verdelen","type":"consonant","teksten":["6b/2","7a/1","8a/5","8b/3"]},{"infinitief":"ducere","eerste":"duco","betekenis":"leiden","type":"consonant","teksten":["8a/2"]},{"infinitief":"eligere","eerste":"eligo","betekenis":"kiezen","type":"consonant","teksten":["8b/9"]},{"infinitief":"eripere","eerste":"eripio","betekenis":"afpakken","type":"korte-i","teksten":["6b/3"]},{"infinitief":"esse","eerste":"sum","betekenis":"zijn","type":"onregelmatig","teksten":["6a/1","6a/7"]},{"infinitief":"excedere","eerste":"excedo","betekenis":"verlaten","type":"consonant","teksten":["7b/2"]},{"infinitief":"existimare","eerste":"existimo","betekenis":"menen","type":"a","teksten":["7a/5"]},{"infinitief":"facere","eerste":"facio","betekenis":"doen","type":"korte-i","teksten":["7a/6","7b/2","8a/2","8a/3","8a/6","8b/5","8b/9"]},{"infinitief":"fallere","eerste":"fallo","betekenis":"bedriegen","type":"consonant","teksten":["7a/5"]},{"infinitief":"ferre","eerste":"fero","betekenis":"dragen","type":"onregelmatig","teksten":["6b/2","7b/4","8a/3","8b/9"]},{"infinitief":"flectere","eerste":"flecto","betekenis":"buigen","type":"consonant","teksten":["8a/3"]},{"infinitief":"frangere","eerste":"frango","betekenis":"breken","type":"consonant","teksten":["6b/4"]},{"infinitief":"fugere","eerste":"fugio","betekenis":"vluchten","type":"korte-i","teksten":["6b/2","7a/7","8b/8"]},{"infinitief":"gaudere","eerste":"gaudeo","betekenis":"blij zijn","type":"e","teksten":["7a/5"]},{"infinitief":"gerere","eerste":"gero","betekenis":"dragen","type":"consonant","teksten":["7b/2"]},{"infinitief":"habere","eerste":"habeo","betekenis":"hebben","type":"e","teksten":["7a/3","8a/3","8a/5","8b/5"]},{"infinitief":"haerere","eerste":"haereo","betekenis":"blijven hangen","type":"e","teksten":["6b/2"]},{"infinitief":"impedire","eerste":"impedio","betekenis":"verhinderen","type":"lange-i","teksten":["6b/2"]},{"infinitief":"impellere","eerste":"impello","betekenis":"duwen","type":"consonant","teksten":["6a/7"]},{"infinitief":"imperare","eerste":"impero","betekenis":"bevelen","type":"a","teksten":["8a/2"]},{"infinitief":"implere","eerste":"impleo","betekenis":"vullen","type":"e","teksten":["7a/7"]},{"infinitief":"imponere","eerste":"impono","betekenis":"plaatsen","type":"consonant","teksten":["6a/4","6b/2","7a/5"]},{"infinitief":"incendere","eerste":"incendo","betekenis":"aansteken","type":"consonant","teksten":["8a/2"]},{"infinitief":"incipere","eerste":"incipio","betekenis":"beginnen","type":"korte-i","teksten":["7a/1"]},{"infinitief":"inferre","eerste":"infero","betekenis":"brengen","type":"onregelmatig","teksten":["6b/9"]},{"infinitief":"instituere","eerste":"instituo","betekenis":"organiseren","type":"consonant","teksten":["8a/5"]},{"infinitief":"ire","eerste":"eo","betekenis":"gaan","type":"onregelmatig","teksten":["6a/4","7b/4"]},{"infinitief":"iubere","eerste":"iubeo","betekenis":"bevelen","type":"e","teksten":["6b/4","7a/3","7b/2","7b/4","8b/10"]},{"infinitief":"iuvare","eerste":"iuvo","betekenis":"helpen","type":"a","teksten":["7a/1","7b/2"]},{"infinitief":"laborare","eerste":"laboro","betekenis":"werken","type":"a","teksten":["7a/1","8b/6"]},{"infinitief":"legere","eerste":"lego","betekenis":"lezen","type":"consonant","teksten":["6b/2"]},{"infinitief":"mandare","eerste":"mando","betekenis":"opdragen","type":"a","teksten":["7a/3"]},{"infinitief":"manere","eerste":"maneo","betekenis":"blijven","type":"e","teksten":["6b/2"]},{"infinitief":"memorare","eerste":"memoro","betekenis":"vermelden","type":"a","teksten":["7b/6"]},{"infinitief":"metuere","eerste":"metuo","betekenis":"vrezen","type":"consonant","teksten":["6a/4"]},{"infinitief":"mittere","eerste":"mitto","betekenis":"sturen","type":"consonant","teksten":["8a/6"]},{"infinitief":"monere","eerste":"moneo","betekenis":"waarschuwen","type":"e","teksten":["7a/3"]},{"infinitief":"movere","eerste":"moveo","betekenis":"bewegen","type":"e","teksten":["6a/4","7b/4"]},{"infinitief":"munire","eerste":"munio","betekenis":"beschermen","type":"lange-i","teksten":["8b/6"]},{"infinitief":"negare","eerste":"nego","betekenis":"weigeren","type":"a","teksten":["6b/3","7a/3"]},{"infinitief":"occidere","eerste":"occido","betekenis":"doden","type":"consonant","teksten":["7b/2","8a/3","8b/9"]},{"infinitief":"occupare","eerste":"occupo","betekenis":"bezetten","type":"a","teksten":["6b/1"]},{"infinitief":"opprimere","eerste":"opprimo","betekenis":"neerdrukken","type":"consonant","teksten":["7b/12"]},{"infinitief":"parare","eerste":"paro","betekenis":"voorbereiden","type":"a","teksten":["8b/9"]},{"infinitief":"parere","eerste":"pareo","betekenis":"gehoorzamen","type":"e","teksten":["6b/4","7a/2","7a/3"]},{"infinitief":"pascere","eerste":"pasco","betekenis":"weiden","type":"consonant","teksten":["8b/5"]},{"infinitief":"pellere","eerste":"pello","betekenis":"verdrijven","type":"consonant","teksten":["8b/9"]},{"infinitief":"pendere","eerste":"pendeo","betekenis":"hangen","type":"e","teksten":["7a/5"]},{"infinitief":"perire","eerste":"pereo","betekenis":"vergaan","type":"onregelmatig","teksten":["6b/9"]},{"infinitief":"pervenire","eerste":"pervenio","betekenis":"aankomen","type":"lange-i","teksten":["8a/2"]},{"infinitief":"petere","eerste":"peto","betekenis":"zoeken","type":"consonant","teksten":["7b/2"]},{"infinitief":"ponere","eerste":"pono","betekenis":"plaatsen","type":"consonant","teksten":["7a/7"]},{"infinitief":"portare","eerste":"porto","betekenis":"dragen","type":"a","teksten":["6b/2","7b/4"]},{"infinitief":"poscere","eerste":"posco","betekenis":"eisen","type":"consonant","teksten":["6a/2"]},{"infinitief":"posse","eerste":"possum","betekenis":"kunnen","type":"onregelmatig","teksten":["6a/2","6b/2","6b/4"]},{"infinitief":"premere","eerste":"premo","betekenis":"duwen","type":"consonant","teksten":["6a/7","6b/2"]},{"infinitief":"procedere","eerste":"procedo","betekenis":"voortgaan","type":"consonant","teksten":["6a/7"]},{"infinitief":"prohibere","eerste":"prohibeo","betekenis":"verbieden","type":"e","teksten":["8b/6"]},{"infinitief":"properare","eerste":"propero","betekenis":"zich haasten","type":"a","teksten":["6b/2","7a/7"]},{"infinitief":"pugnare","eerste":"pugno","betekenis":"vechten","type":"a","teksten":["7b/4"]},{"infinitief":"putare","eerste":"puto","betekenis":"denken","type":"a","teksten":["6b/4","7a/1","7a/7","8a/6"]},{"infinitief":"quaerere","eerste":"quaero","betekenis":"zoeken","type":"consonant","teksten":["6b/4","7a/8","8a/3"]},{"infinitief":"rapere","eerste":"rapio","betekenis":"grijpen","type":"korte-i","teksten":["8b/9"]},{"infinitief":"reddere","eerste":"reddo","betekenis":"teruggeven","type":"consonant","teksten":["8a/3"]},{"infinitief":"redire","eerste":"redeo","betekenis":"terugkeren","type":"onregelmatig","teksten":["6a/1"]},{"infinitief":"referre","eerste":"refero","betekenis":"terugbrengen","type":"onregelmatig","teksten":["6b/9"]},{"infinitief":"relinquere","eerste":"relinquo","betekenis":"achterlaten","type":"consonant","teksten":["6a/1","6a/7","7a/6","7a/7","8a/5"]},{"infinitief":"respondere","eerste":"respondeo","betekenis":"antwoorden","type":"e","teksten":["6b/4"]},{"infinitief":"rogare","eerste":"rogo","betekenis":"vragen","type":"a","teksten":["8b/10"]},{"infinitief":"ruere","eerste":"ruo","betekenis":"stormen","type":"consonant","teksten":["6a/1","6b/2"]},{"infinitief":"scribere","eerste":"scribo","betekenis":"schrijven","type":"consonant","teksten":["6b/2"]},{"infinitief":"sedere","eerste":"sedeo","betekenis":"zitten","type":"e","teksten":["7b/2"]},{"infinitief":"servare","eerste":"servo","betekenis":"bewaken","type":"a","teksten":["7a/6","8b/1"]},{"infinitief":"simulare","eerste":"simulo","betekenis":"doen alsof","type":"a","teksten":["7a/3"]},{"infinitief":"solere","eerste":"soleo","betekenis":"gewoon zijn","type":"e","teksten":["8a/3"]},{"infinitief":"solvere","eerste":"solvo","betekenis":"bevrijden","type":"consonant","teksten":["7a/5","7b/4","8b/6"]},{"infinitief":"stare","eerste":"sto","betekenis":"staan","type":"a","teksten":["6a/1","6b/3","6b/4","7b/4"]},{"infinitief":"tenere","eerste":"teneo","betekenis":"vasthouden","type":"e","teksten":["8b/8"]},{"infinitief":"tentare","eerste":"tento","betekenis":"proberen","type":"a","teksten":["6b/4"]},{"infinitief":"tollere","eerste":"tollo","betekenis":"optillen","type":"consonant","teksten":["7a/7","6a/2","6a/7"]},{"infinitief":"torquere","eerste":"torqueo","betekenis":"draaien","type":"e","teksten":["6b/2"]},{"infinitief":"trahere","eerste":"traho","betekenis":"trekken","type":"consonant","teksten":["7b/2"]},{"infinitief":"transire","eerste":"transeo","betekenis":"oversteken","type":"onregelmatig","teksten":["6b/3","7b/2"]},{"infinitief":"velle","eerste":"volo","betekenis":"willen","type":"onregelmatig","teksten":["6a/1"]},{"infinitief":"venire","eerste":"venio","betekenis":"komen","type":"lange-i","teksten":["6b/4","7b/2","8a/3"]},{"infinitief":"videre","eerste":"video","betekenis":"zien","type":"e","teksten":["8a/2","6a/7"]},{"infinitief":"vivere","eerste":"vivo","betekenis":"leven","type":"consonant","teksten":["8a/3"]},{"infinitief":"vocare","eerste":"voco","betekenis":"roepen","type":"a","teksten":["6b/2","7a/1"]}];
+const PERSONEN = [
+  { kort: '1e persoon enkelvoud', wie: 'ik' },
+  { kort: '2e persoon enkelvoud', wie: 'jij' },
+  { kort: '3e persoon enkelvoud', wie: 'hij / zij / het' },
+  { kort: '1e persoon meervoud', wie: 'wij' },
+  { kort: '2e persoon meervoud', wie: 'jullie' },
+  { kort: '3e persoon meervoud', wie: 'zij' }
+];
+const TYPE_NAMEN = {
+  'a': 'a-vervoeging', 'e': 'e-vervoeging', 'consonant': 'consonantvervoeging',
+  'korte-i': 'korte i-vervoeging', 'lange-i': 'lange i-vervoeging', 'onregelmatig': 'onregelmatig werkwoord'
+};
+
+function maakVormen(werkwoord) {
+  if (werkwoord.onregelmatig) return werkwoord.onregelmatig;
+  const eerste = werkwoord.eerste;
+  const stam = eerste.slice(0, -1);
+  if (werkwoord.type === 'a') return [eerste, stam + 'as', stam + 'at', stam + 'amus', stam + 'atis', stam + 'ant'];
+  if (werkwoord.type === 'e') return [eerste, stam + 's', stam + 't', stam + 'mus', stam + 'tis', stam + 'nt'];
+  if (werkwoord.type === 'korte-i' || werkwoord.type === 'lange-i') return [eerste, stam + 's', stam + 't', stam + 'mus', stam + 'tis', stam + 'unt'];
+  return [eerste, stam + 'is', stam + 'it', stam + 'imus', stam + 'itis', stam + 'unt'];
+}
+
+const VERB_BY_INF = {};
+WOORDEN_PRAESENS.forEach(v => {
+  if (v.type === 'onregelmatig') {
+    const onregelmatig = {
+      esse: ['sum','es','est','sumus','estis','sunt'],
+      posse: ['possum','potes','potest','possumus','potestis','possunt'],
+      velle: ['volo','vis','vult','volumus','vultis','volunt'],
+      ire: ['eo','is','it','imus','itis','eunt'],
+      abire: ['abeo','abis','abit','abimus','abitis','abeunt'],
+      adire: ['adeo','adis','adit','adimus','aditis','adeunt'],
+      redire: ['redeo','redis','redit','redimus','reditis','redeunt'],
+      transire: ['transeo','transis','transit','transimus','transitis','transeunt'],
+      perire: ['pereo','peris','perit','perimus','peritis','pereunt'],
+      adesse: ['adsum','ades','adest','adsumus','adestis','adsunt'],
+      ferre: ['fero','fers','fert','ferimus','fertis','ferunt'],
+      deferre: ['defero','defers','defert','deferimus','deferitis','deferunt'],
+      inferre: ['infero','infers','infert','inferimus','infertis','inferunt'],
+      referre: ['refero','refers','refert','referimus','refertis','referunt']
+    };
+    v.onregelmatig = onregelmatig[v.infinitief];
   }
+  v.vormen = maakVormen(v);
+  VERB_BY_INF[v.infinitief] = v;
+});
+
+const Q = (verb, persoon, extra = {}) => ({ verb, persoon, ...extra });
+
+/* Exact 12 oefeningen × 10 opgaven = 120 opgaven. */
+const PRAESENS_OEFENINGEN = [
+  { id: 'praesens-n1-1', niveau: 1, nr: 1, titel: 'Wie doet het?', soort: 'persoon', uitleg: 'Herken persoon en getal aan het einde van de vorm.', items: [
+    Q('capere',5), Q('habere',4), Q('esse',3), Q('dicere',1), Q('audire',2), Q('venire',0), Q('dare',5), Q('manere',4), Q('ferre',3), Q('posse',1)
+  ]},
+  { id: 'praesens-n1-2', niveau: 1, nr: 2, titel: 'Wat betekent het?', soort: 'betekenis', uitleg: 'Koppel een Latijnse vorm aan het juiste werkwoord in het Nederlands.', items: [
+    Q('mittere',5), Q('laborare',2), Q('fugere',1), Q('velle',3), Q('scribere',4), Q('ire',5), Q('accipere',0), Q('monere',2), Q('currere',3), Q('tenere',4)
+  ]},
+  { id: 'praesens-n1-3', niveau: 1, nr: 3, titel: 'Van welk werkwoord?', soort: 'infinitief', uitleg: 'Zoek bij de vorm de juiste infinitief.', items: [
+    Q('capere',5), Q('agere',3), Q('audire',5), Q('vocare',4), Q('esse',2), Q('posse',4), Q('ferre',5), Q('redire',3), Q('iubere',1), Q('manere',5)
+  ]},
+  { id: 'praesens-n1-4', niveau: 1, nr: 4, titel: 'Kies de juiste vorm', soort: 'kiesvorm', uitleg: 'Kies de vorm die precies bij persoon en getal past.', items: [
+    Q('parare',3), Q('audire',5), Q('dicere',4), Q('capere',2), Q('esse',5), Q('ferre',1), Q('venire',4), Q('habere',0), Q('transire',5), Q('iubere',3)
+  ]},
+
+  { id: 'praesens-n2-1', niveau: 2, nr: 1, titel: 'Bouw de vorm', soort: 'schrijfvorm', uitleg: 'Schrijf zelf de juiste praesensvorm.', items: [
+    Q('capere',5), Q('laborare',4), Q('manere',2), Q('dicere',3), Q('audire',5), Q('esse',1), Q('posse',4), Q('ferre',2), Q('venire',5), Q('dare',3)
+  ]},
+  { id: 'praesens-n2-2', niveau: 2, nr: 2, titel: 'Verander de persoon', soort: 'verander', uitleg: 'Behoud het werkwoord, maar maak er een andere persoon van.', items: [
+    Q('mittere',4,{bron:3}), Q('fugere',5,{bron:1}), Q('habere',0,{bron:4}), Q('capere',1,{bron:4}), Q('esse',2,{bron:3}), Q('ponere',3,{bron:5}), Q('audire',4,{bron:3}), Q('velle',0,{bron:5}), Q('venire',2,{bron:4}), Q('ducere',1,{bron:5})
+  ]},
+  { id: 'praesens-n2-3', niveau: 2, nr: 3, titel: 'De juiste vorm in de zin', soort: 'zin-kies', uitleg: 'Kijk goed naar wie het doet in de zin.', items: [
+    Q('scribere',5,{zin:'Discipuli epistulas ____.', vertaling:'De leerlingen schrijven brieven.'}),
+    Q('venire',5,{zin:'Puellae ad scholam ____.', vertaling:'De meisjes komen naar school.'}),
+    Q('monere',2,{zin:'Magister pueros ____.', vertaling:'De leraar waarschuwt de jongens.'}),
+    Q('portare',3,{zin:'Nos aquam ____.', vertaling:'Wij dragen water.'}),
+    Q('videre',1,{zin:'Tu amicum ____.', vertaling:'Jij ziet een vriend.'}),
+    Q('legere',4,{zin:'Vos librum ____.', vertaling:'Jullie lezen een boek.'}),
+    Q('munire',5,{zin:'Romani urbem ____.', vertaling:'De Romeinen beschermen de stad.'}),
+    Q('respondere',0,{zin:'Ego patri ____.', vertaling:'Ik antwoord mijn vader.'}),
+    Q('portare',5,{zin:'Servi pecuniam ____.', vertaling:'De slaven dragen geld.'}),
+    Q('stare',5,{zin:'Amici in foro ____.', vertaling:'De vrienden staan op het forum.'})
+  ]},
+  { id: 'praesens-n2-4', niveau: 2, nr: 4, titel: 'Schrijf wat je leest', soort: 'schrijf-nederlands', uitleg: 'Lees eerst wie het doet. Bouw dan de Latijnse vorm.', items: [
+    Q('manere',3), Q('iubere',4), Q('currere',5), Q('ferre',3), Q('habere',1), Q('venire',0), Q('capere',4), Q('posse',2), Q('vocare',5), Q('audire',3)
+  ]},
+
+  { id: 'praesens-n3-1', niveau: 3, nr: 1, titel: 'Alles tegelijk', soort: 'volledige-analyse', uitleg: 'Kies de volledige analyse: werkwoord, tijd, persoon, getal en betekenis.', items: [
+    Q('fugere',4), Q('posse',1), Q('videre',3), Q('dare',5), Q('capere',5), Q('redire',3), Q('ire',5), Q('solvere',5), Q('munire',5), Q('esse',2)
+  ]},
+  { id: 'praesens-n3-2', niveau: 3, nr: 2, titel: 'Foutenspeurder', soort: 'fout-herstellen', uitleg: 'Een leerling schreef een fout woord. Verbeter het.', items: [
+    Q('parare',5,{fout:'parunt'}), Q('monere',5,{fout:'moneunt'}), Q('dicere',5,{fout:'dicent'}), Q('capere',5,{fout:'capunt'}), Q('audire',5,{fout:'audunt'}), Q('habere',5,{fout:'habunt'}), Q('esse',5,{fout:'sumunt'}), Q('posse',5,{fout:'possent'}), Q('venire',5,{fout:'venunt'}), Q('ferre',5,{fout:'ferent'})
+  ]},
+  { id: 'praesens-n3-3', niveau: 3, nr: 3, titel: 'Vul de zin zelf aan', soort: 'zin-schrijven', uitleg: 'Gebruik de juiste vorm in een korte Latijnse zin.', items: [
+    Q('currere',5,{zin:'Pueri in campo ____.', vertaling:'De jongens rennen op het veld.'}),
+    Q('monere',2,{zin:'Magistra discipulos ____.', vertaling:'De lerares waarschuwt de leerlingen.'}),
+    Q('ire',3,{zin:'Nos Romam ____.', vertaling:'Wij gaan naar Rome.'}),
+    Q('portare',4,{zin:'Vos aquam ____.', vertaling:'Jullie dragen water.'}),
+    Q('iuvare',5,{zin:'Amici me ____.', vertaling:'De vrienden helpen mij.'}),
+    Q('scribere',0,{zin:'Ego responsum ____.', vertaling:'Ik schrijf een antwoord.'}),
+    Q('videre',2,{zin:'Puer puellam ____.', vertaling:'De jongen ziet het meisje.'}),
+    Q('putare',5,{zin:'Discipuli de gloria ____.', vertaling:'De leerlingen denken aan roem.'}),
+    Q('capere',1,{zin:'Tu librum ____.', vertaling:'Jij neemt een boek.'}),
+    Q('munire',5,{zin:'Milites urbem ____.', vertaling:'De soldaten beschermen de stad.'})
+  ]},
+  { id: 'praesens-n3-4', niveau: 3, nr: 4, titel: 'De vorm die klopt', soort: 'valkuil-kies', uitleg: 'Kies de vorm die in deze zin echt kan staan.', items: [
+    Q('posse',5,{zin:'Discipuli textum legere ____.', vertaling:'De leerlingen kunnen de tekst lezen.'}),
+    Q('ire',5,{zin:'Pueri ad templum ____.', vertaling:'De jongens gaan naar de tempel.'}),
+    Q('ferre',5,{zin:'Servi dona ____.', vertaling:'De slaven dragen geschenken.'}),
+    Q('accipere',5,{zin:'Amici epistulas ____.', vertaling:'De vrienden ontvangen brieven.'}),
+    Q('munire',5,{zin:'Romani vias ____.', vertaling:'De Romeinen beschermen wegen.'}),
+    Q('dicere',5,{zin:'Pueri veritatem ____.', vertaling:'De jongens zeggen de waarheid.'}),
+    Q('habere',5,{zin:'Discipuli libros ____.', vertaling:'De leerlingen hebben boeken.'}),
+    Q('manere',5,{zin:'Amici in foro ____.', vertaling:'De vrienden blijven op het forum.'}),
+    Q('velle',5,{zin:'Puellae ludere ____.', vertaling:'De meisjes willen spelen.'}),
+    Q('capere',3,{zin:'Nos consilium ____.', vertaling:'Wij nemen een besluit.'})
+  ]}
 ];
 
-// ─── HULPFUNCTIES ─────────────────────────────────────────────────────────────
+let huidigeOefening = null;
+let huidigeIndex = 0;
+let huidigAntwoord = null;
+let huidigGecontroleerd = false;
+let tijdelijkeScore = 0;
+
 function laadVoortgang() {
   try { return JSON.parse(localStorage.getItem(OPSLAG_SLEUTEL) || '{}'); }
-  catch(e) { return {}; }
+  catch (e) { return {}; }
 }
-
-function kransenHTML(niveau) {
-  let html = '';
-  for (let i = 1; i <= 3; i++) {
-    html += `<img class="krans-img${i > niveau ? ' grijs' : ''}" src="${KRANS_SRC}" alt="" />`;
-  }
-  return html;
+function slaVoortgangOp(data) { localStorage.setItem(OPSLAG_SLEUTEL, JSON.stringify(data)); }
+function recordVoor(data, id) { return (data.vervoegingenV2 && data.vervoegingenV2[id]) || data[id] || null; }
+function bewaarResultaat(id, score, max) {
+  const data = laadVoortgang();
+  data.vervoegingenV2 = data.vervoegingenV2 || {};
+  const oud = recordVoor(data, id);
+  const best = Math.max(score, oud && Number.isFinite(oud.score) ? oud.score : 0);
+  const record = {
+    score: best, max,
+    lastScore: score,
+    attempts: (oud && oud.attempts ? oud.attempts : 0) + 1,
+    updatedAt: new Date().toISOString()
+  };
+  data.vervoegingenV2[id] = record;
+  /* Spiegel de kernscore op de oude plek: bestaande opslag en insturen blijven werken. */
+  data[id] = { score: record.score, max: record.max };
+  slaVoortgangOp(data);
+  return { oud, record };
 }
-
-function scoreLabel(oef, data) {
-  if (!data[oef.id]) return '';
-  const { score, max } = data[oef.id];
-  const pct = Math.round((score / max) * 100);
-  return `${score}/${max}`;
+function normaliseer(tekst) {
+  return String(tekst || '').trim().toLowerCase().replace(/[āă]/g,'a').replace(/[ēĕ]/g,'e').replace(/[īĭ]/g,'i').replace(/[ōŏ]/g,'o').replace(/[ūŭ]/g,'u').replace(/[\s.,;:!?]/g,'');
 }
-
-function scoreKlasse(oef, data) {
-  if (!data[oef.id]) return '';
-  const { score, max } = data[oef.id];
-  const pct = (score / max) * 100;
+function htmlVeilig(tekst) { const e = document.createElement('div'); e.textContent = tekst; return e.innerHTML; }
+function persoonTekst(p) { return `${PERSONEN[p].kort} (${PERSONEN[p].wie})`; }
+function volgendNiveauOpen(data, niveau) {
+  if (niveau === 1) return true;
+  const vorige = PRAESENS_OEFENINGEN.filter(o => o.niveau === niveau - 1);
+  if (vorige.some(o => !recordVoor(data, o.id))) return false;
+  const punten = vorige.reduce((som, o) => som + recordVoor(data, o.id).score, 0);
+  const maximum = vorige.reduce((som, o) => som + recordVoor(data, o.id).max, 0);
+  return maximum > 0 && (punten / maximum) >= .80;
+}
+function niveauStand(data, niveau) {
+  const lijst = PRAESENS_OEFENINGEN.filter(o => o.niveau === niveau);
+  const gemaakt = lijst.filter(o => recordVoor(data, o.id)).length;
+  const score = lijst.reduce((som, o) => som + (recordVoor(data, o.id)?.score || 0), 0);
+  const maximum = lijst.reduce((som, o) => som + (recordVoor(data, o.id)?.max || 10), 0);
+  return { gemaakt, totaal: lijst.length, score, maximum, percentage: maximum ? Math.round(score / maximum * 100) : 0 };
+}
+function scoreKlasse(record) {
+  if (!record) return '';
+  const pct = record.score / record.max * 100;
   return pct >= 80 ? 'goed' : pct >= 50 ? 'gedeeltelijk' : '';
 }
+function endingInfo(v, p) {
+  const losse = {
+    esse: ['sum','es','est','sumus','estis','sunt'],
+    posse: ['possum','potes','potest','possumus','potestis','possunt'],
+    velle: ['volo','vis','vult','volumus','vultis','volunt'],
+    ire: ['eo','is','it','imus','itis','eunt'],
+    abire: ['abeo','abis','abit','abimus','abitis','abeunt'],
+    adire: ['adeo','adis','adit','adimus','aditis','adeunt'],
+    redire: ['redeo','redis','redit','redimus','reditis','redeunt'],
+    transire: ['transeo','transis','transit','transimus','transitis','transeunt'],
+    perire: ['pereo','peris','perit','perimus','peritis','pereunt'],
+    adesse: ['adsum','ades','adest','adsumus','adestis','adsunt'],
+    ferre: ['fero','fers','fert','ferimus','fertis','ferunt'],
+    deferre: ['defero','defers','defert','deferimus','defertis','deferunt'],
+    inferre: ['infero','infers','infert','inferimus','infertis','inferunt'],
+    referre: ['refero','refers','refert','referimus','refertis','referunt']
+  };
+  if (losse[v.infinitief]) return `Dit is een onregelmatig werkwoord. Kijk naar de hele vorm: <strong>${v.vormen[p]}</strong> betekent ${persoonTekst(p)}.`;
+  const endings = v.type === 'a' ? ['-o','-as','-at','-amus','-atis','-ant']
+    : v.type === 'e' ? ['-o','-es','-et','-emus','-etis','-ent']
+    : v.type === 'korte-i' || v.type === 'lange-i' ? ['-o','-is','-it','-imus','-itis','-iunt']
+    : ['-o','-is','-it','-imus','-itis','-unt'];
+  const extra = (v.type === 'korte-i' || v.type === 'lange-i') && p === 5
+    ? ' Bij deze werkwoorden staat er vóór <strong>-unt</strong> nog een <strong>i</strong>.' : '';
+  return `Het einde <strong>${endings[p]}</strong> wijst hier op ${persoonTekst(p)}.${extra}`;
+}
+function volgordeMetCorrect(correct, kandidaten) {
+  const uniek = [...new Set([correct, ...kandidaten])];
+  const index = uniek.indexOf(correct);
+  const patroon = [2,0,3,1];
+  const doel = patroon[index % patroon.length] % uniek.length;
+  uniek.splice(index, 1);
+  uniek.splice(doel, 0, correct);
+  return uniek.slice(0,4);
+}
+function anderePersonen(p) { return [0,1,2,3,4,5].filter(x => x !== p); }
+function getVerb(inf) { return VERB_BY_INF[inf]; }
 
-// ─── RENDER ───────────────────────────────────────────────────────────────────
-function render() {
-  // Datum
-  const nu = new Date();
-  document.getElementById('datum').textContent = nu.toLocaleDateString('nl-BE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+function bouwVraag(oef, descriptor, volgnummer) {
+  const v = getVerb(descriptor.verb);
+  const p = descriptor.persoon;
+  const vorm = v.vormen[p];
+  const typeNaam = TYPE_NAMEN[v.type];
+  const basis = { verb: v, persoon: p, vorm, type: oef.soort, titel: oef.titel, nummer: volgnummer, totaal: oef.items.length };
+  const uitleg = endingInfo(v, p);
 
-  // Legenda
-  document.getElementById('legenda-wrap').innerHTML = `
-    <div class="legenda-item"><img class="krans-img" src="${KRANS_SRC}" alt="" /> basis</div>
-    <div class="legenda-item"><img class="krans-img" src="${KRANS_SRC}" alt="" /><img class="krans-img" src="${KRANS_SRC}" alt="" /> gemiddeld</div>
-    <div class="legenda-item"><img class="krans-img" src="${KRANS_SRC}" alt="" /><img class="krans-img" src="${KRANS_SRC}" alt="" /><img class="krans-img" src="${KRANS_SRC}" alt="" /> uitdagend</div>`;
+  if (oef.soort === 'persoon') {
+    const opties = volgordeMetCorrect(persoonTekst(p), anderePersonen(p).map(x => persoonTekst(x)));
+    return { ...basis, antwoord: persoonTekst(p), opties, antwoordTekst: persoonTekst(p), vraag: `Welke persoon en welk getal is <strong>${vorm}</strong>?`, uitleg };
+  }
+  if (oef.soort === 'betekenis') {
+    const pool = ['capere','audire','habere','scribere','venire','currere','monere','tenere','mittere','velle','ire','fugere','laborare','accipere','portare','videre'];
+    const pos = pool.indexOf(v.infinitief);
+    const afleiders = [1,4,7].map(d => getVerb(pool[(Math.max(pos,0)+d)%pool.length]).betekenis);
+    const opties = volgordeMetCorrect(v.betekenis, afleiders);
+    return { ...basis, antwoord: v.betekenis, opties, antwoordTekst: v.betekenis, vraag: `Welk Nederlands werkwoord hoort bij <strong>${vorm}</strong>?`, context: `Denk eerst aan de stam. ${v.infinitief} betekent …`, uitleg: `${v.infinitief} betekent <strong>${v.betekenis}</strong>. ${uitleg}` };
+  }
+  if (oef.soort === 'infinitief') {
+    const pool = ['capere','agere','audire','vocare','esse','posse','ferre','redire','iubere','manere','dicere','venire','habere','scribere'];
+    const pos = pool.indexOf(v.infinitief);
+    const afleiders = [1,5,9].map(d => pool[(Math.max(pos,0)+d)%pool.length]);
+    const opties = volgordeMetCorrect(v.infinitief, afleiders);
+    return { ...basis, antwoord: v.infinitief, opties, antwoordTekst: v.infinitief, vraag: `Van welk werkwoord is <strong>${vorm}</strong> een vorm?`, uitleg: `De vorm hoort bij <strong>${v.infinitief}</strong> (${v.betekenis}). ${uitleg}` };
+  }
+  if (oef.soort === 'kiesvorm') {
+    const afleiders = anderePersonen(p).slice(0,3).map(x => v.vormen[x]);
+    const opties = volgordeMetCorrect(vorm, afleiders);
+    return { ...basis, antwoord: vorm, opties, antwoordTekst: vorm, vraag: `Kies de <strong>${persoonTekst(p)}</strong> praesens van <strong>${v.infinitief}</strong>.`, context: `${v.infinitief} = ${v.betekenis}`, uitleg };
+  }
+  if (oef.soort === 'schrijfvorm') {
+    return { ...basis, antwoord: vorm, antwoordTekst: vorm, invoer: true, vraag: `Schrijf de <strong>${persoonTekst(p)}</strong> praesens van <strong>${v.infinitief}</strong>.`, context: `${v.infinitief} = ${v.betekenis}`, uitleg };
+  }
+  if (oef.soort === 'verander') {
+    const bron = v.vormen[descriptor.bron];
+    return { ...basis, antwoord: vorm, antwoordTekst: vorm, invoer: true, vraag: `Vertrek van <strong>${bron}</strong>. Maak hiervan de <strong>${persoonTekst(p)}</strong>.`, context: `Het werkwoord blijft <strong>${v.infinitief}</strong> (${v.betekenis}).`, uitleg: `De stam blijft bij hetzelfde werkwoord. ${uitleg}` };
+  }
+  if (oef.soort === 'zin-kies' || oef.soort === 'valkuil-kies') {
+    const afleiders = anderePersonen(p).slice(0,3).map(x => v.vormen[x]);
+    const opties = volgordeMetCorrect(vorm, afleiders);
+    return { ...basis, antwoord: vorm, opties, antwoordTekst: vorm, vraag: `Welke vorm past in de zin?`, context: `<em>${descriptor.zin.replace('____', '<strong>____</strong>')}</em><br>${descriptor.vertaling}`, uitleg: `Het onderwerp vertelt wie het doet. ${uitleg}` };
+  }
+  if (oef.soort === 'schrijf-nederlands') {
+    return { ...basis, antwoord: vorm, antwoordTekst: vorm, invoer: true, vraag: `Schrijf de vorm voor <strong>${PERSONEN[p].wie} ${v.betekenis}</strong>.`, context: `Werkwoord: <strong>${v.infinitief}</strong>`, uitleg };
+  }
+  if (oef.soort === 'volledige-analyse') {
+    const correct = `${v.infinitief} — praesens — ${PERSONEN[p].kort} — ${PERSONEN[p].wie} ${v.betekenis}`;
+    const anderP = (p + 2) % 6;
+    const alterVerb = getVerb(['capere','dicere','audire','manere','venire','habere','ferre','esse'][volgnummer % 8]);
+    const opties = volgordeMetCorrect(correct, [
+      `${v.infinitief} — praesens — ${PERSONEN[anderP].kort} — ${PERSONEN[anderP].wie} ${v.betekenis}`,
+      `${alterVerb.infinitief} — praesens — ${PERSONEN[p].kort} — ${PERSONEN[p].wie} ${alterVerb.betekenis}`,
+      `${v.infinitief} — perfectum — ${PERSONEN[p].kort} — ${PERSONEN[p].wie} ${v.betekenis}`
+    ]);
+    return { ...basis, antwoord: correct, opties, antwoordTekst: correct, vraag: `Welke volledige analyse past bij <strong>${vorm}</strong>?`, uitleg: `<strong>${vorm}</strong> hoort bij <strong>${v.infinitief}</strong> (${v.betekenis}). Het is praesens en ${persoonTekst(p)}. ${endingInfo(v,p)}` };
+  }
+  if (oef.soort === 'fout-herstellen') {
+    return { ...basis, antwoord: vorm, antwoordTekst: vorm, invoer: true, vraag: `Een leerling schrijft <strong>${descriptor.fout}</strong> voor “${PERSONEN[p].wie} ${v.betekenis}”. Verbeter de vorm.`, context: `Werkwoord: <strong>${v.infinitief}</strong>`, uitleg: `De juiste vorm is <strong>${vorm}</strong>. ${endingInfo(v,p)}` };
+  }
+  if (oef.soort === 'zin-schrijven') {
+    return { ...basis, antwoord: vorm, antwoordTekst: vorm, invoer: true, vraag: `Vul de juiste vorm in.`, context: `<em>${descriptor.zin.replace('____', '<strong>____</strong>')}</em><br>${descriptor.vertaling}<br>Werkwoord: <strong>${v.infinitief}</strong>`, uitleg: `Kijk naar het onderwerp en kies de juiste uitgang. ${endingInfo(v,p)}` };
+  }
+  return basis;
+}
 
+function renderOverzicht() {
   const data = laadVoortgang();
-  const alleOefeningen = SECTIES.flatMap(s => s.oefeningen);
-  const totaal = alleOefeningen.length;
-  const gemaakt = alleOefeningen.filter(o => data[o.id]).length;
-  const scores = alleOefeningen.filter(o => data[o.id]).map(o => (data[o.id].score / data[o.id].max) * 100);
-  const gemiddeld = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+  const gemaakt = PRAESENS_OEFENINGEN.filter(o => recordVoor(data, o.id)).length;
+  const alleScores = PRAESENS_OEFENINGEN.map(o => recordVoor(data, o.id)).filter(Boolean);
+  const gem = alleScores.length ? Math.round(alleScores.reduce((s,r) => s + r.score / r.max * 100, 0) / alleScores.length) : null;
+  document.getElementById('stat-gemaakt').textContent = `${gemaakt}/12`;
+  document.getElementById('stat-pct').textContent = `${Math.round(gemaakt / 12 * 100)}%`;
+  document.getElementById('stat-gem').textContent = gem === null ? '—' : `${gem}%`;
+  document.getElementById('legacy-score').textContent = recordVoor(data, 'grammatica-gemengd-1') ? `${recordVoor(data, 'grammatica-gemengd-1').score}/${recordVoor(data, 'grammatica-gemengd-1').max}` : '';
+  const legacy = recordVoor(data, 'grammatica-gemengd-1');
+  document.getElementById('legacy-score').className = `score-cirkel ${scoreKlasse(legacy)}`;
 
-  document.getElementById('stat-gemaakt').innerHTML = `${gemaakt}/<span id="stat-totaal">${totaal}</span>`;
-  document.getElementById('stat-pct').textContent = totaal ? Math.round((gemaakt / totaal) * 100) + '%' : '0%';
-  document.getElementById('stat-gem').textContent = gemiddeld !== null ? gemiddeld + '%' : '—';
-
-  // Oefeningen container
-  const container = document.getElementById('oefeningen-container');
-  let html = '';
-  SECTIES.forEach(sectie => {
-    const gemaaktInSectie = sectie.oefeningen.filter(o => data[o.id]).length;
-    html += `
-      <div class="sectie">
-        <div class="sectie-kop">
-          <span class="sectie-naam">${sectie.naam}</span>
-          <span class="sectie-score">${gemaaktInSectie}/${sectie.oefeningen.length}</span>
-        </div>`;
-    sectie.oefeningen.forEach(oef => {
-      const gedaan = !!data[oef.id];
-      const label = gedaan ? scoreLabel(oef, data) : '';
-      const klasse = gedaan ? scoreKlasse(oef, data) : '';
-      const rij = oef.binnenkort ? 'oef-rij binnenkort' : 'oef-rij';
-      const href = oef.binnenkort ? '' : `href="${oef.url}"`;
-      const tag = oef.binnenkort ? 'div' : 'a';
-      html += `
-        <${tag} class="${rij}" ${href}>
-          <div class="score-cirkel ${klasse}">${label}</div>
-          <div class="oef-info">
-            <div class="oef-naam">${oef.naam}${oef.binnenkort ? ' <span class="binnenkort-label">(binnenkort)</span>' : ''}</div>
-            <div class="oef-detail">${oef.aantalVragen} vragen</div>
-          </div>
-          <div class="oef-rechts">
-            <div class="kransen">${kransenHTML(oef.niveau)}</div>
-            <span class="oef-pijl" aria-hidden="true">›</span>
-          </div>
-        </${tag}>`;
+  const niveaux = [
+    { nummer:1, naam:'Niveau 1', label:'herkennen', uitleg:'Je ontdekt wie iets doet, wat een vorm betekent en bij welk werkwoord hij hoort.' },
+    { nummer:2, naam:'Niveau 2', label:'vormen bouwen', uitleg:'Je schrijft vormen zelf en verandert ze van persoon.' },
+    { nummer:3, naam:'Niveau 3', label:'toepassen', uitleg:'Je ontleedt vormen, verbetert fouten en gebruikt ze in zinnen.' }
+  ];
+  let markup = `<section class="tijd-sectie"><div class="tijd-kop"><div><div class="tijd-titel"><span class="tijd-punt"></span>Indicatief praesens actief</div><p class="tijd-uitleg">120 opgaven met basiswerkwoorden uit Ludus 6A–8B. Elk niveau telt vier oefeningen van tien vragen. Je beste resultaat telt.</p></div><span class="tijd-meta">3 niveaus · 12 oefeningen · 120 vragen</span></div><div class="niveaus-grid">`;
+  niveaux.forEach(n => {
+    const open = volgendNiveauOpen(data, n.nummer);
+    const stand = niveauStand(data, n.nummer);
+    const status = !open ? '<span class="niveau-status locked">🔒 nog gesloten</span>' : stand.gemaakt === 4 && stand.percentage >= 80 ? '<span class="niveau-status goed">✓ behaald</span>' : `<span class="niveau-status">${stand.score}/40</span>`;
+    const balk = Math.min(100, stand.score / 40 * 100);
+    markup += `<section class="niveau-kaart ${open ? '' : 'vergrendeld'}"><div class="niveau-kop"><div><div class="niveau-naam">${n.naam}</div><div class="niveau-uitleg">${n.uitleg}</div></div>${status}</div><div class="niveau-voortgang"><span>${stand.gemaakt}/4 oefeningen · ${stand.score}/40</span><div class="mini-balk"><span style="width:${balk}%"></span></div></div><div class="oef-lijst">`;
+    PRAESENS_OEFENINGEN.filter(o => o.niveau === n.nummer).forEach(o => {
+      const record = recordVoor(data, o.id);
+      const locked = !open;
+      const icoon = locked ? '<span class="slotje" aria-hidden="true">🔒</span>' : `<div class="score-cirkel ${scoreKlasse(record)}">${record ? `${record.score}/${record.max}` : ''}</div>`;
+      markup += `<button type="button" class="oef-rij ${locked ? 'locked' : ''}" ${locked ? 'disabled' : ''} onclick="openOefening('${o.id}')">${icoon}<span class="oef-info"><span class="oef-naam">${o.nr}. ${o.titel}</span><span class="oef-detail">10 vragen${record ? ` · beste resultaat: ${record.score}/10` : ''}</span></span><span class="oef-pijl" aria-hidden="true">›</span></button>`;
     });
-    html += `</div>`;
+    markup += `</div></section>`;
   });
-  container.innerHTML = html;
-
-  // Naam laden
-  const opgeslagenNaam = localStorage.getItem('latijn-naam') || '';
-  if (opgeslagenNaam) document.getElementById('naam-veld').value = opgeslagenNaam;
+  markup += `</div></section>`;
+  document.getElementById('praesens-container').innerHTML = markup;
   updateKnopStatus();
 }
 
+function renderDatumEnKransen() {
+  document.getElementById('datum').textContent = new Date().toLocaleDateString('nl-BE', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  for (let i=1; i<=6; i++) document.getElementById(`krans-${i}`).src = KRANS_SRC;
+}
 function updateKnopStatus() {
   const naam = document.getElementById('naam-veld').value.trim();
   const knop = document.getElementById('knop-insturen');
   const status = document.getElementById('status-tekst');
-  if (!naam) {
-    knop.disabled = true;
-    status.textContent = 'Vul eerst je naam in voor je instuurt.';
-    status.className = 'status-tekst';
-  } else {
-    knop.disabled = false;
-    status.textContent = '';
-  }
+  if (!naam) { knop.disabled = true; status.textContent = 'Vul eerst je naam in voor je instuurt.'; status.className = 'status-tekst'; }
+  else { knop.disabled = false; if (!status.classList.contains('ok')) status.textContent = ''; }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('naam-veld').addEventListener('input', () => {
-    localStorage.setItem('latijn-naam', document.getElementById('naam-veld').value.trim());
-    updateKnopStatus();
+function openOefening(id) {
+  const oef = PRAESENS_OEFENINGEN.find(o => o.id === id);
+  if (!oef || !volgendNiveauOpen(laadVoortgang(), oef.niveau)) return;
+  huidigeOefening = oef;
+  huidigeIndex = 0;
+  tijdelijkeScore = 0;
+  huidigAntwoord = null;
+  huidigGecontroleerd = false;
+  document.getElementById('overzicht-scherm').hidden = true;
+  document.getElementById('oefening-scherm').hidden = false;
+  document.getElementById('oefening-label').textContent = `Praesens · niveau ${oef.niveau} · oefening ${oef.nr}`;
+  renderVraag();
+  window.scrollTo({top:0, behavior:'instant'});
+}
+function sluitOefening() {
+  document.getElementById('oefening-scherm').hidden = true;
+  document.getElementById('overzicht-scherm').hidden = false;
+  huidigeOefening = null;
+  renderOverzicht();
+  window.scrollTo({top:0, behavior:'instant'});
+}
+function renderVraag() {
+  const vraag = bouwVraag(huidigeOefening, huidigeOefening.items[huidigeIndex], huidigeIndex);
+  huidigAntwoord = null;
+  huidigGecontroleerd = false;
+  const voortgang = Math.round(huidigeIndex / vraag.totaal * 100);
+  let antwoordHtml = '';
+  if (vraag.invoer) {
+    antwoordHtml = `<input id="antwoord-invoer" class="antwoord-invoer" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Typ je antwoord hier"><p class="antwoord-hulp">Schrijf alleen de Latijnse werkwoordsvorm.</p>`;
+  } else {
+    antwoordHtml = `<div class="keuze-lijst">${vraag.opties.map((optie, i) => `<button type="button" class="keuze-knop" data-antwoord="${htmlVeilig(optie)}" onclick="kiesAntwoord(this)"><span class="keuze-letter">${String.fromCharCode(65+i)}</span><span>${optie}</span></button>`).join('')}</div>`;
+  }
+  document.getElementById('oefening-inhoud').innerHTML = `
+    <section class="oefening-kop"><h2>${huidigeOefening.titel}</h2><p>${huidigeOefening.uitleg}</p><div class="progress-wrap"><div class="progress-track"><span style="width:${voortgang}%"></span></div><span class="progress-text">${huidigeIndex} van ${vraag.totaal} afgewerkt</span></div></section>
+    <section class="vraag-kaart"><span class="vraag-type">Niveau ${huidigeOefening.niveau} · ${vraag.titel}</span><div class="vraag-teller">Vraag ${huidigeIndex + 1} van ${vraag.totaal}</div><h3 class="vraag-titel">${vraag.vraag}</h3>${vraag.context ? `<div class="vraag-context">${vraag.context}</div>` : ''}<div class="antwoord-vak">${antwoordHtml}</div><div id="feedback"></div><div class="actie-rij"><button type="button" class="check-knop" id="check-knop" onclick="controleerVraag()" disabled>Controleer</button><button type="button" class="volgende-knop" id="volgende-knop" onclick="volgendeVraag()" hidden>${huidigeIndex + 1 === vraag.totaal ? 'Bekijk resultaat' : 'Volgende vraag'}</button></div></section>`;
+  if (vraag.invoer) {
+    const input = document.getElementById('antwoord-invoer');
+    input.addEventListener('input', () => { document.getElementById('check-knop').disabled = !input.value.trim(); });
+    input.addEventListener('keydown', e => { if (e.key === 'Enter' && !document.getElementById('check-knop').disabled) controleerVraag(); });
+    input.focus();
+  }
+}
+function kiesAntwoord(knop) {
+  if (huidigGecontroleerd) return;
+  document.querySelectorAll('.keuze-knop').forEach(k => k.classList.remove('geselecteerd'));
+  knop.classList.add('geselecteerd');
+  huidigAntwoord = knop.dataset.antwoord;
+  document.getElementById('check-knop').disabled = false;
+}
+function controleerVraag() {
+  if (huidigGecontroleerd) return;
+  const vraag = bouwVraag(huidigeOefening, huidigeOefening.items[huidigeIndex], huidigeIndex);
+  const invoer = document.getElementById('antwoord-invoer');
+  const antwoord = vraag.invoer ? (invoer ? invoer.value : '') : huidigAntwoord;
+  if (!String(antwoord || '').trim()) return;
+  const juist = normaliseer(antwoord) === normaliseer(vraag.antwoord);
+  huidigGecontroleerd = true;
+  if (juist) tijdelijkeScore += 1;
+  if (invoer) invoer.disabled = true;
+  document.querySelectorAll('.keuze-knop').forEach(k => {
+    k.disabled = true;
+    if (normaliseer(k.dataset.antwoord) === normaliseer(vraag.antwoord)) k.classList.add('geselecteerd');
   });
-});
+  const feedback = document.getElementById('feedback');
+  feedback.className = `feedback ${juist ? 'goed' : 'fout'}`;
+  feedback.innerHTML = juist
+    ? `<strong>Juist.</strong> ${vraag.uitleg}`
+    : `<strong>Nog niet.</strong> Het juiste antwoord is <strong>${vraag.antwoordTekst}</strong>.<br>${vraag.uitleg}`;
+  document.getElementById('check-knop').hidden = true;
+  document.getElementById('volgende-knop').hidden = false;
+}
+function volgendeVraag() {
+  if (!huidigGecontroleerd) return;
+  huidigeIndex += 1;
+  if (huidigeIndex >= huidigeOefening.items.length) eindigOefening();
+  else renderVraag();
+}
+function eindigOefening() {
+  const voor = laadVoortgang();
+  const opendeVolgendeVoor = huidigeOefening.niveau < 3 ? volgendNiveauOpen(voor, huidigeOefening.niveau + 1) : false;
+  const opgeslagen = bewaarResultaat(huidigeOefening.id, tijdelijkeScore, huidigeOefening.items.length);
+  const na = laadVoortgang();
+  const opendeVolgendeNa = huidigeOefening.niveau < 3 ? volgendNiveauOpen(na, huidigeOefening.niveau + 1) : false;
+  const pct = Math.round(tijdelijkeScore / huidigeOefening.items.length * 100);
+  const bestNieuw = opgeslagen.record.score === tijdelijkeScore;
+  let boodschap = pct >= 80 ? 'Dat is sterk werk: je behaalt minstens 80% in deze oefening.' : 'Herhalen mag altijd. Je beste score blijft bewaard, ook wanneer je deze oefening later opnieuw maakt.';
+  if (!bestNieuw) boodschap += ' Je eerdere, betere score blijft staan.';
+  if (!opendeVolgendeVoor && opendeVolgendeNa) boodschap += ` Je hebt nu niveau ${huidigeOefening.niveau + 1} ontgrendeld!`;
+  if (huidigeOefening.niveau < 3 && !opendeVolgendeNa) {
+    const stand = niveauStand(na, huidigeOefening.niveau);
+    if (stand.gemaakt === 4) boodschap += ` Over dit niveau sta je nu op ${stand.score}/40. Je hebt 32/40 nodig om verder te gaan.`;
+  }
+  document.getElementById('oefening-inhoud').innerHTML = `<section class="resultaat-kaart"><div class="resultaat-rond"><strong>${tijdelijkeScore}/10</strong><span>${pct}%</span></div><h3>${pct >= 80 ? 'Mooi gedaan!' : 'Goed geprobeerd.'}</h3><p>${boodschap}</p><div class="resultaat-acties"><button type="button" class="knop knop-hoofd" onclick="openOefening('${huidigeOefening.id}')">Oefening opnieuw maken</button><button type="button" class="knop" onclick="sluitOefening()">Terug naar overzicht</button></div></section>`;
+}
 
-// ─── INSTUREN ────────────────────────────────────────────────────────────────
 function insturen() {
   const naam = document.getElementById('naam-veld').value.trim();
   if (!naam) return;
-
   const data = laadVoortgang();
-  const alleOefeningen = SECTIES.flatMap(s => s.oefeningen);
-  const resultatenTekst = alleOefeningen
-    .filter(o => data[o.id])
-    .map(o => `${o.naam}: ${data[o.id].score}/${data[o.id].max}`)
-    .join(' | ');
-
-  const url = `https://docs.google.com/forms/d/e/${FORMULIER_ID}/formResponse?${ENTRY_NAAM}=${encodeURIComponent(naam)}&${ENTRY_RESULTS}=${encodeURIComponent(resultatenTekst || 'Geen oefeningen voltooid')}&submit=Submit`;
-
-  // Stuur via verborgen iframe (geen popup)
-  const iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  iframe.src = url;
-  document.body.appendChild(iframe);
-  setTimeout(() => document.body.removeChild(iframe), 3000);
-
-  const status = document.getElementById('status-tekst');
-  status.textContent = '✓ Resultaten ingestuurd!';
-  status.className = 'status-tekst ok';
-  setTimeout(() => { status.textContent = ''; status.className = 'status-tekst'; }, 4000);
+  const resultaten = PRAESENS_OEFENINGEN.map(o => ({ o, r: recordVoor(data, o.id) })).filter(x => x.r)
+    .map(({o,r}) => `Praesens N${o.niveau}.${o.nr}: ${r.score}/${r.max}`).join(' | ');
+  const legacy = recordVoor(data, 'grammatica-gemengd-1');
+  const extra = legacy ? `${resultaten ? ' | ' : ''}Gemengde oefening: ${legacy.score}/${legacy.max}` : '';
+  const url = `https://docs.google.com/forms/d/e/${FORMULIER_ID}/formResponse?${ENTRY_NAAM}=${encodeURIComponent(naam)}&${ENTRY_RESULTS}=${encodeURIComponent((resultaten || 'Geen praesensoefeningen voltooid') + extra)}&submit=Submit`;
+  const iframe = document.createElement('iframe'); iframe.style.display='none'; iframe.src=url; document.body.appendChild(iframe); setTimeout(()=>iframe.remove(),3000);
+  const status = document.getElementById('status-tekst'); status.textContent='✓ Resultaten ingestuurd!'; status.className='status-tekst ok'; setTimeout(()=>{ status.textContent=''; status.className='status-tekst'; updateKnopStatus(); },4000);
 }
-
-// ─── WISSEN ───────────────────────────────────────────────────────────────────
 function wisVoortgang() {
   if (!confirm('Wil je echt alle opgeslagen voortgang wissen?')) return;
   localStorage.removeItem(OPSLAG_SLEUTEL);
-  render();
-  const status = document.getElementById('status-tekst');
-  status.textContent = 'Voortgang gewist.';
-  status.className = 'status-tekst';
+  renderOverzicht();
+  const status = document.getElementById('status-tekst'); status.textContent='Voortgang gewist.'; status.className='status-tekst';
 }
 
-render();
+document.addEventListener('DOMContentLoaded', () => {
+  renderDatumEnKransen();
+  const opgeslagenNaam = localStorage.getItem('latijn-naam') || '';
+  document.getElementById('naam-veld').value = opgeslagenNaam;
+  document.getElementById('naam-veld').addEventListener('input', () => { localStorage.setItem('latijn-naam', document.getElementById('naam-veld').value.trim()); updateKnopStatus(); });
+  renderOverzicht();
+});
 </script>
+
+<script>
+/* ─────────────────────────────────────────────────────────────────────────────
+   Stap 3 — vier extra werkwoordstijden
+   De bestaande praesensmotor blijft onaangeroerd. Deze uitbreiding gebruikt
+   dezelfde basiswerkwoorden, dezelfde localStorage-sleutel en dezelfde Form.
+   ───────────────────────────────────────────────────────────────────────── */
+const STAP3_PERFECTUMSTAMMEN = {"abire":"abi","accendere":"accend","accipere":"accep","adesse":"adfu","adire":"adi","agere":"eg","alere":"alu","amittere":"amis","animadvertere":"animadvert","appellare":"appellav","audire":"audiv","cadere":"cecid","caedere":"cecid","capere":"cep","cedere":"cess","claudere":"claus","cogere":"coeg","colere":"colu","committere":"commis","concupiscere":"concupiv","conficere":"confec","consistere":"constit","conspicere":"conspex","constituere":"constitu","consulere":"consulu","contingere":"contig","convenire":"conven","corripere":"corripu","curare":"curav","currere":"cucurr","dare":"ded","deducere":"dedux","deferre":"detul","demonstrare":"demonstrav","dicere":"dix","dimittere":"dimis","dividere":"divis","ducere":"dux","eligere":"eleg","eripere":"eripu","esse":"fu","excedere":"excess","existimare":"existimav","facere":"fec","fallere":"fefell","ferre":"tul","flectere":"flex","frangere":"freg","fugere":"fug","gerere":"gess","habere":"habu","haerere":"haes","impedire":"impedi(v)","impellere":"impul","imperare":"imperav","implere":"implev","imponere":"imposu","incendere":"incend","incipere":"incep","inferre":"intul","instituere":"institu","ire":"i","iubere":"iuss","iuvare":"iuv","laborare":"laborav","legere":"leg","mandare":"mandav","manere":"mans","memorare":"memorav","metuere":"metu","mittere":"mis","monere":"monu","movere":"mov","munire":"muniv","negare":"negav","occidere":"occid","occupare":"occupav","opprimere":"oppress","parare":"parav","parere":"paru","pascere":"pav","pellere":"pepul","pendere":"pepend","perire":"peri","pervenire":"perven","petere":"peti(v)","ponere":"posu","portare":"portav","poscere":"poposc","posse":"potu","premere":"press","procedere":"process","prohibere":"prohibu","properare":"properav","pugnare":"pugnav","putare":"putav","quaerere":"quaesiv","rapere":"rapu","reddere":"reddid","redire":"redi","referre":"rettul","relinquere":"reliqu","respondere":"respond","rogare":"rogav","ruere":"ru","scribere":"scrips","sedere":"sed","servare":"servav","simulare":"simulav","solvere":"solv","stare":"stet","tenere":"tenu","tentare":"tentav","tollere":"sustul","torquere":"tors","trahere":"trax","transire":"transi","velle":"volu","venire":"ven","videre":"vid","vivere":"vix","vocare":"vocav"};
+const STAP3_TIJDSVOLGORDE = ['imperfectum','futurum','perfectum','plusquamperfectum'];
+const STAP3_TIJDSINFO = {
+  imperfectum: {
+    titel: 'Indicatief imperfectum actief', kort: 'imperfectum',
+    uitleg: 'Het imperfectum vertelt wat vroeger bezig was, lang duurde of vaak gebeurde.',
+    meta: '3 niveaus · 12 oefeningen · 120 vragen',
+    kern: 'iets gebeurde vroeger een tijd lang of telkens opnieuw'
+  },
+  futurum: {
+    titel: 'Indicatief futurum simplex actief', kort: 'futurum simplex',
+    uitleg: 'Het futurum simplex vertelt wat later zal gebeuren.',
+    meta: '3 niveaus · 12 oefeningen · 120 vragen',
+    kern: 'iets zal later gebeuren'
+  },
+  perfectum: {
+    titel: 'Indicatief perfectum actief', kort: 'perfectum',
+    uitleg: 'Het perfectum vertelt een afgerond feit in het verleden: iets gebeurde of is gebeurd.',
+    meta: '3 niveaus · 12 oefeningen · 120 vragen',
+    kern: 'iets gebeurde als een afgerond feit'
+  },
+  plusquamperfectum: {
+    titel: 'Indicatief plusquamperfectum actief', kort: 'plusquamperfectum',
+    uitleg: 'Het plusquamperfectum vertelt wat al gebeurd was vóór een ander moment in het verleden.',
+    meta: '3 niveaus · 12 oefeningen · 120 vragen',
+    kern: 'iets was al eerder gebeurd'
+  }
+};
+const STAP3_NIVEAUS = [
+  { nummer:1, naam:'Niveau 1', label:'herkennen', uitleg:'Je herkent de tijd, persoon, betekenis en juiste vorm.' },
+  { nummer:2, naam:'Niveau 2', label:'vormen bouwen', uitleg:'Je bouwt vormen zelf en gebruikt stam en tijdssignaal bewust.' },
+  { nummer:3, naam:'Niveau 3', label:'toepassen', uitleg:'Je ontleedt, verbetert en gebruikt vormen in korte zinnen.' }
+];
+const STAP3_KERNWERKWOORDEN = [
+  'laborare','monere','mittere','capere','audire','dare','dicere','manere','venire','habere',
+  'scribere','fugere','ferre','ire','esse','posse','velle','accipere','ponere','currere',
+  'portare','tenere','videre','vocare','iubere','legere','munire','redire','transire','relinquere',
+  'ruere','agere','facere','gerere','petere','solvere','movere','pugnare','iuvare','servare',
+  'incendere','claudere','occupare','amittere','conficere','pervenire','properare','respondere'
+];
+const STAP3_PERSONEN = [
+  { latijn:'Ego', nl:'ik' }, { latijn:'Tu', nl:'jij' }, { latijn:'Puer', nl:'hij' },
+  { latijn:'Nos', nl:'wij' }, { latijn:'Vos', nl:'jullie' }, { latijn:'Discipuli', nl:'zij' }
+];
+
+function stap3IsEoWerkwoord(v) {
+  return ['ire','abire','adire','redire','transire','perire'].includes(v.infinitief);
+}
+function stap3IsEsseWerkwoord(v) { return ['esse','adesse'].includes(v.infinitief); }
+function stap3IsFerreWerkwoord(v) { return ['ferre','deferre','inferre','referre'].includes(v.infinitief); }
+function stap3RegelmatigeStam(v) { return v.eerste.slice(0,-1); }
+function stap3PerfectumStam(v) { return STAP3_PERFECTUMSTAMMEN[v.infinitief] || null; }
+function stap3Vormen(v, tijd) {
+  if (tijd === 'praesens') return v.vormen;
+  const p = ['1e enk.','2e enk.','3e enk.','1e mv.','2e mv.','3e mv.'];
+  if (stap3IsEsseWerkwoord(v)) {
+    const voor = v.infinitief === 'adesse' ? 'ad' : '';
+    if (tijd === 'imperfectum') return ['eram','eras','erat','eramus','eratis','erant'].map(x => voor + x);
+    if (tijd === 'futurum') return ['ero','eris','erit','erimus','eritis','erunt'].map(x => voor + x);
+  }
+  if (v.infinitief === 'posse') {
+    if (tijd === 'imperfectum') return ['poteram','poteras','poterat','poteramus','poteratis','poterant'];
+    if (tijd === 'futurum') return ['potero','poteris','poterit','poterimus','poteritis','poterunt'];
+  }
+  if (v.infinitief === 'velle') {
+    if (tijd === 'imperfectum') return ['volebam','volebas','volebat','volebamus','volebatis','volebant'];
+    if (tijd === 'futurum') return ['volam','voles','volet','volemus','voletis','volent'];
+  }
+  if (stap3IsEoWerkwoord(v)) {
+    const voor = v.infinitief.slice(0,-3);
+    if (tijd === 'imperfectum') return ['ibam','ibas','ibat','ibamus','ibatis','ibant'].map(x => voor + x);
+    if (tijd === 'futurum') return ['ibo','ibis','ibit','ibimus','ibitis','ibunt'].map(x => voor + x);
+  }
+  if (stap3IsFerreWerkwoord(v)) {
+    const voor = v.infinitief.slice(0,-5);
+    if (tijd === 'imperfectum') return ['ferebam','ferebas','ferebat','ferebamus','ferebatis','ferebant'].map(x => voor + x);
+    if (tijd === 'futurum') return ['feram','feres','feret','feremus','feretis','ferent'].map(x => voor + x);
+  }
+  const stam = stap3RegelmatigeStam(v);
+  if (tijd === 'imperfectum') {
+    if (v.type === 'a') return ['bam','bas','bat','bamus','batis','bant'].map(x => stam + x);
+    return ['ebam','ebas','ebat','ebamus','ebatis','ebant'].map(x => stam + x);
+  }
+  if (tijd === 'futurum') {
+    if (v.type === 'a' || v.type === 'e') return ['bo','bis','bit','bimus','bitis','bunt'].map(x => stam + x);
+    return ['am','es','et','emus','etis','ent'].map(x => stam + x);
+  }
+  const perf = stap3PerfectumStam(v);
+  if (!perf) return null;
+  if (tijd === 'perfectum') {
+    if (v.infinitief === 'ire') return ['ii','isti','iit','iimus','istis','ierunt'];
+    return ['i','isti','it','imus','istis','erunt'].map(x => perf + x);
+  }
+  if (tijd === 'plusquamperfectum') return ['eram','eras','erat','eramus','eratis','erant'].map(x => perf + x);
+  return null;
+}
+function stap3WerkwoordenVoor(tijd) {
+  const pool = STAP3_KERNWERKWOORDEN.map(inf => VERB_BY_INF[inf]).filter(Boolean);
+  const bruikbaar = pool.filter(v => stap3Vormen(v, tijd));
+  return bruikbaar.length >= 20 ? bruikbaar : WOORDEN_PRAESENS.filter(v => stap3Vormen(v, tijd));
+}
+function stap3Marker(v, tijd) {
+  if (tijd === 'imperfectum') {
+    if (stap3IsEsseWerkwoord(v) || v.infinitief === 'posse') return '-era-';
+    if (v.type === 'a') return '-ba-';
+    return '-eba-';
+  }
+  if (tijd === 'futurum') {
+    if (v.type === 'a' || v.type === 'e') return '-b-';
+    if (stap3IsEoWerkwoord(v)) return '-b-';
+    if (stap3IsFerreWerkwoord(v) || stap3IsEsseWerkwoord(v) || v.infinitief === 'posse' || v.infinitief === 'velle') return 'onregelmatige toekomstvorm';
+    return '-a- / -e-';
+  }
+  if (tijd === 'perfectum') return 'perfectumstam + uitgang';
+  return 'perfectumstam + -era- + uitgang';
+}
+function stap3Uitleg(v, tijd, p) {
+  const vorm = stap3Vormen(v, tijd)[p];
+  const persoon = persoonTekst(p);
+  if (tijd === 'imperfectum') {
+    return `<strong>${vorm}</strong> heeft de imperfectumbouwsteen <strong>${stap3Marker(v,tijd)}</strong>. Daardoor weet je: dit gebeurde vroeger een tijd lang of vaker. Kijk daarna naar het einde: het gaat om ${persoon}.`;
+  }
+  if (tijd === 'futurum') {
+    const extra = (v.type === 'a' || v.type === 'e' || stap3IsEoWerkwoord(v)) ? 'Bij deze groep zie je de toekomst aan de <strong>b</strong>.' : 'Bij deze groep zie je de toekomst aan <strong>a/e</strong> vóór de uitgang.';
+    return `<strong>${vorm}</strong> gaat over later. ${extra} De vorm hoort bij ${persoon}.`;
+  }
+  if (tijd === 'perfectum') {
+    return `<strong>${vorm}</strong> vertrekt van de perfectumstam <strong>${stap3PerfectumStam(v)}-</strong>. Het vertelt een afgerond feit in het verleden. De uitgang hoort bij ${persoon}.`;
+  }
+  return `<strong>${vorm}</strong> vertrekt van de perfectumstam <strong>${stap3PerfectumStam(v)}-</strong> en bevat <strong>-era-</strong>. Dat betekent: iets was al vroeger gebeurd. De uitgang hoort bij ${persoon}.`;
+}
+function stap3KiesVolgorde(correct, kandidaten) {
+  const lijst = [...new Set([correct, ...kandidaten.filter(Boolean)])];
+  const index = lijst.indexOf(correct);
+  if (index > -1) lijst.splice(index, 1);
+  const som = [...String(correct)].reduce((t, c) => t + c.charCodeAt(0), 0);
+  lijst.splice(som % (lijst.length + 1), 0, correct);
+  return lijst.slice(0,4);
+}
+function stap3AnderePersonen(p) { return [0,1,2,3,4,5].filter(x => x !== p); }
+function stap3ZinContext(v, p, tijd) {
+  return `<em>${STAP3_PERSONEN[p].latijn} ____.</em><br><span>${STAP3_TIJDSINFO[tijd].kern}. Werkwoord: <strong>${v.infinitief}</strong> = ${v.betekenis}.</span>`;
+}
+function stap3MaakItems(tijd, oefIndex) {
+  const pool = stap3WerkwoordenVoor(tijd);
+  const items = [];
+  for (let j=0; j<10; j++) {
+    const pos = (oefIndex * 11 + j * 7 + STAP3_TIJDSVOLGORDE.indexOf(tijd) * 5) % pool.length;
+    const v = pool[pos];
+    const persoon = (j * 5 + oefIndex + STAP3_TIJDSVOLGORDE.indexOf(tijd)) % 6;
+    const bron = (persoon + 2 + (j % 3)) % 6;
+    items.push({ verb:v.infinitief, persoon, bron });
+  }
+  return items;
+}
+function stap3MaakOefeningen(tijd) {
+  const sjablonen = [
+    [1,'Welk tijdsignaal?', 'tijd-herkenning','Herken de werkwoordstijd aan de bouwsteen in de vorm.'],
+    [1,'Wie doet het?', 'persoon','Lees het einde van de vorm en bepaal persoon en getal.'],
+    [1,'Wat betekent het?', 'betekenis','Koppel de vorm aan het juiste Nederlandse werkwoord.'],
+    [1,'Kies de juiste vorm', 'kiesvorm','Kies precies de vorm die bij persoon, getal en tijd past.'],
+    [2,'Bouw de vorm', 'schrijfvorm','Schrijf zelf de gevraagde werkwoordsvorm.'],
+    [2,'Verander de persoon', 'verander','De tijd blijft dezelfde. Verander alleen wie het doet.'],
+    [2,'De juiste vorm in de zin', 'zin-kies','Gebruik onderwerp en tijd om de juiste vorm te kiezen.'],
+    [2,'Stam of tijdssignaal?', 'bouwsteen','Kijk welke bouwsteen je nodig hebt om deze tijd te maken.'],
+    [3,'Alles tegelijk', 'volledige-analyse','Kies de volledige analyse: werkwoord, tijd, persoon en betekenis.'],
+    [3,'Foutenspeurder', 'fout-herstellen','Een leerling koos de verkeerde persoon. Verbeter de vorm.'],
+    [3,'Vul de zin zelf aan', 'zin-schrijven','Gebruik tijd en onderwerp om zelf de juiste vorm te schrijven.'],
+    [3,'Tijd onder controle', 'tijd-valkuil','Kies de vorm die echt bij deze tijd past.']
+  ];
+  return sjablonen.map((s, index) => ({
+    id: `${tijd}-n${s[0]}-${(index % 4) + 1}`,
+    tijd, niveau:s[0], nr:(index % 4) + 1, titel:s[1], soort:s[2], uitleg:s[3],
+    items:stap3MaakItems(tijd,index)
+  }));
+}
+const STAP3_OEFENINGEN = STAP3_TIJDSVOLGORDE.flatMap(stap3MaakOefeningen);
+const STAP3_ALLE_OEFENINGEN = [...PRAESENS_OEFENINGEN, ...STAP3_OEFENINGEN];
+
+function stap3Record(data, id) { return recordVoor(data, id); }
+function stap3NiveauOpen(data, tijd, niveau) {
+  if (niveau === 1) return true;
+  const vorig = STAP3_OEFENINGEN.filter(o => o.tijd === tijd && o.niveau === niveau - 1);
+  if (vorig.some(o => !stap3Record(data, o.id))) return false;
+  const score = vorig.reduce((som,o) => som + stap3Record(data,o.id).score, 0);
+  const max = vorig.reduce((som,o) => som + stap3Record(data,o.id).max, 0);
+  return max > 0 && score / max >= .80;
+}
+function stap3NiveauStand(data, tijd, niveau) {
+  const lijst = STAP3_OEFENINGEN.filter(o => o.tijd === tijd && o.niveau === niveau);
+  const gemaakt = lijst.filter(o => stap3Record(data,o.id)).length;
+  const score = lijst.reduce((som,o) => som + (stap3Record(data,o.id)?.score || 0), 0);
+  const max = lijst.reduce((som,o) => som + (stap3Record(data,o.id)?.max || 10), 0);
+  return { gemaakt, score, max, percentage:max ? Math.round(score/max*100) : 0 };
+}
+function stap3TijdKaart(tijd, data) {
+  const info = STAP3_TIJDSINFO[tijd];
+  let html = `<section class="tijd-sectie"><div class="tijd-kop"><div><div class="tijd-titel"><span class="tijd-punt"></span>${info.titel}</div><p class="tijd-uitleg">${info.uitleg} Elk niveau bevat vier oefeningen van tien vragen. Je beste resultaat telt.</p></div><span class="tijd-meta">${info.meta}</span></div><div class="niveaus-grid">`;
+  STAP3_NIVEAUS.forEach(n => {
+    const open = stap3NiveauOpen(data,tijd,n.nummer);
+    const stand = stap3NiveauStand(data,tijd,n.nummer);
+    const status = !open ? '<span class="niveau-status locked">🔒 nog gesloten</span>' : (stand.gemaakt === 4 && stand.percentage >= 80 ? '<span class="niveau-status goed">✓ behaald</span>' : `<span class="niveau-status">${stand.score}/40</span>`);
+    const balk = Math.min(100, stand.score / 40 * 100);
+    html += `<section class="niveau-kaart ${open ? '' : 'vergrendeld'}"><div class="niveau-kop"><div><div class="niveau-naam">${n.naam}</div><div class="niveau-uitleg">${n.uitleg}</div></div>${status}</div><div class="niveau-voortgang"><span>${stand.gemaakt}/4 oefeningen · ${stand.score}/40</span><div class="mini-balk"><span style="width:${balk}%"></span></div></div><div class="oef-lijst">`;
+    STAP3_OEFENINGEN.filter(o => o.tijd === tijd && o.niveau === n.nummer).forEach(o => {
+      const record = stap3Record(data,o.id);
+      const locked = !open;
+      const icoon = locked ? '<span class="slotje" aria-hidden="true">🔒</span>' : `<div class="score-cirkel ${scoreKlasse(record)}">${record ? `${record.score}/${record.max}` : ''}</div>`;
+      html += `<button type="button" class="oef-rij ${locked ? 'locked' : ''}" ${locked ? 'disabled' : ''} onclick="openOefeningTijd('${o.id}')">${icoon}<span class="oef-info"><span class="oef-naam">${o.nr}. ${o.titel}</span><span class="oef-detail">10 vragen${record ? ` · beste resultaat: ${record.score}/10` : ''}</span></span><span class="oef-pijl" aria-hidden="true">›</span></button>`;
+    });
+    html += `</div></section>`;
+  });
+  return html + `</div></section>`;
+}
+function stap3UpdateStats(data) {
+  const gemaakt = STAP3_ALLE_OEFENINGEN.filter(o => stap3Record(data,o.id)).length;
+  const scores = STAP3_ALLE_OEFENINGEN.map(o => stap3Record(data,o.id)).filter(Boolean);
+  const gem = scores.length ? Math.round(scores.reduce((som,r) => som + (r.score/r.max*100), 0) / scores.length) : null;
+  document.getElementById('stat-gemaakt').textContent = `${gemaakt}/60`;
+  document.getElementById('stat-pct').textContent = `${Math.round(gemaakt/60*100)}%`;
+  document.getElementById('stat-gem').textContent = gem === null ? '—' : `${gem}%`;
+}
+function stap3RenderExtra() {
+  const doel = document.getElementById('extra-tijden-container');
+  if (!doel) return;
+  const data = laadVoortgang();
+  stap3UpdateStats(data);
+  doel.innerHTML = STAP3_TIJDSVOLGORDE.map(tijd => stap3TijdKaart(tijd,data)).join('');
+}
+
+let stap3HuidigeOefening = null;
+let stap3Index = 0;
+let stap3Antwoord = null;
+let stap3Gecontroleerd = false;
+let stap3Score = 0;
+function stap3Vraag(oef, descriptor, volgnummer) {
+  const v = VERB_BY_INF[descriptor.verb];
+  const p = descriptor.persoon;
+  const vormen = stap3Vormen(v,oef.tijd);
+  const vorm = vormen[p];
+  const info = STAP3_TIJDSINFO[oef.tijd];
+  const basis = { v,p,vorm,antwoordTekst:vorm,titel:oef.titel,totaal:oef.items.length };
+  const uitleg = stap3Uitleg(v,oef.tijd,p);
+  if (oef.soort === 'tijd-herkenning') {
+    const opties = stap3KiesVolgorde(info.kort, STAP3_TIJDSVOLGORDE.filter(x => x !== oef.tijd).map(x => STAP3_TIJDSINFO[x].kort));
+    return { ...basis, antwoord:info.kort, opties, vraag:`Welke tijd is <strong>${vorm}</strong>?`, uitleg };
+  }
+  if (oef.soort === 'persoon') {
+    const opties = stap3KiesVolgorde(persoonTekst(p), stap3AnderePersonen(p).map(x => persoonTekst(x)));
+    return { ...basis, antwoord:persoonTekst(p), opties, vraag:`Welke persoon en welk getal is <strong>${vorm}</strong>?`, uitleg };
+  }
+  if (oef.soort === 'betekenis') {
+    const pool = stap3WerkwoordenVoor(oef.tijd);
+    const pos = pool.findIndex(x => x.infinitief === v.infinitief);
+    const afleiders = [3,7,11].map(d => pool[(pos + d) % pool.length].betekenis);
+    const opties = stap3KiesVolgorde(v.betekenis,afleiders);
+    return { ...basis, antwoord:v.betekenis, opties, vraag:`Welk Nederlands werkwoord hoort bij <strong>${vorm}</strong>?`, context:`${v.infinitief} betekent …`, uitleg:`${v.infinitief} betekent <strong>${v.betekenis}</strong>. ${uitleg}` };
+  }
+  if (oef.soort === 'kiesvorm' || oef.soort === 'tijd-valkuil') {
+    const afleiders = stap3AnderePersonen(p).slice(0,3).map(x => vormen[x]);
+    const opties = stap3KiesVolgorde(vorm,afleiders);
+    const vraag = oef.soort === 'tijd-valkuil' ? `Welke vorm hoort bij de <strong>${info.kort}</strong> en bij <strong>${persoonTekst(p)}</strong>?` : `Kies de <strong>${persoonTekst(p)}</strong> ${info.kort} van <strong>${v.infinitief}</strong>.`;
+    return { ...basis, antwoord:vorm, opties, vraag, context:`${v.infinitief} = ${v.betekenis}`, uitleg };
+  }
+  if (oef.soort === 'schrijfvorm') {
+    return { ...basis, antwoord:vorm, invoer:true, vraag:`Schrijf de <strong>${persoonTekst(p)}</strong> ${info.kort} van <strong>${v.infinitief}</strong>.`, context:`${v.infinitief} = ${v.betekenis}`, uitleg };
+  }
+  if (oef.soort === 'verander') {
+    const bronVorm = vormen[descriptor.bron];
+    return { ...basis, antwoord:vorm, invoer:true, vraag:`Vertrek van <strong>${bronVorm}</strong>. Maak hiervan de <strong>${persoonTekst(p)}</strong>.`, context:`De tijd blijft <strong>${info.kort}</strong>. Werkwoord: ${v.infinitief} = ${v.betekenis}.`, uitleg };
+  }
+  if (oef.soort === 'zin-kies') {
+    const opties = stap3KiesVolgorde(vorm,stap3AnderePersonen(p).slice(0,3).map(x=>vormen[x]));
+    return { ...basis, antwoord:vorm, opties, vraag:'Welke vorm past in de zin?', context:stap3ZinContext(v,p,oef.tijd), uitleg };
+  }
+  if (oef.soort === 'bouwsteen') {
+    if (oef.tijd === 'perfectum' || oef.tijd === 'plusquamperfectum') {
+      const perf = `${stap3PerfectumStam(v)}- (perfectumstam)`;
+      const praes = `${stap3RegelmatigeStam(v)}- (praesensstam)`;
+      const opties = stap3KiesVolgorde(perf,[praes,`${v.infinitief} (infinitief)`,`de stam maakt niet uit`]);
+      return { ...basis, antwoord:perf, opties, vraag:`Van welke stam vertrek je voor <strong>${vorm}</strong>?`, uitleg:`Voor ${info.kort} vertrek je altijd van de <strong>perfectumstam</strong>. Bij ${v.infinitief} is dat <strong>${stap3PerfectumStam(v)}-</strong>.` };
+    }
+    const marker = stap3Marker(v,oef.tijd);
+    const opties = stap3KiesVolgorde(marker,['-era-','perfectumstam + uitgang','geen tijdssignaal nodig']);
+    return { ...basis, antwoord:marker, opties, vraag:`Welke bouwsteen helpt je om <strong>${vorm}</strong> te herkennen?`, uitleg };
+  }
+  if (oef.soort === 'volledige-analyse') {
+    const correct = `${v.infinitief} — ${info.kort} — ${PERSONEN[p].kort} — betekenis: ${v.betekenis}`;
+    const anderP = (p+2)%6;
+    const pool = stap3WerkwoordenVoor(oef.tijd);
+    const ander = pool[(volgnummer+5)%pool.length];
+    const opties = stap3KiesVolgorde(correct,[
+      `${v.infinitief} — ${info.kort} — ${PERSONEN[anderP].kort} — betekenis: ${v.betekenis}`,
+      `${ander.infinitief} — ${info.kort} — ${PERSONEN[p].kort} — betekenis: ${ander.betekenis}`,
+      `${v.infinitief} — ${STAP3_TIJDSINFO[STAP3_TIJDSVOLGORDE[(STAP3_TIJDSVOLGORDE.indexOf(oef.tijd)+1)%4]].kort} — ${PERSONEN[p].kort} — betekenis: ${v.betekenis}`
+    ]);
+    return { ...basis, antwoord:correct, opties, vraag:`Welke volledige analyse past bij <strong>${vorm}</strong>?`, uitleg };
+  }
+  if (oef.soort === 'fout-herstellen') {
+    const foutP = (p+3)%6;
+    const fout = vormen[foutP];
+    return { ...basis, antwoord:vorm, invoer:true, vraag:`Een leerling schrijft <strong>${fout}</strong> voor de <strong>${persoonTekst(p)}</strong> ${info.kort} van <strong>${v.infinitief}</strong>. Verbeter de vorm.`, context:`${v.infinitief} = ${v.betekenis}`, uitleg:`De tijd is wel ${info.kort}, maar de persoon klopt niet. ${uitleg}` };
+  }
+  if (oef.soort === 'zin-schrijven') {
+    return { ...basis, antwoord:vorm, invoer:true, vraag:'Vul zelf de juiste vorm in.', context:stap3ZinContext(v,p,oef.tijd), uitleg };
+  }
+  return basis;
+}
+function openOefeningTijd(id) {
+  const oef = STAP3_OEFENINGEN.find(x => x.id === id);
+  if (!oef || !stap3NiveauOpen(laadVoortgang(),oef.tijd,oef.niveau)) return;
+  stap3HuidigeOefening = oef; stap3Index = 0; stap3Score = 0; stap3Antwoord = null; stap3Gecontroleerd = false;
+  document.getElementById('overzicht-scherm').hidden = true;
+  document.getElementById('oefening-scherm').hidden = false;
+  document.getElementById('oefening-label').textContent = `${STAP3_TIJDSINFO[oef.tijd].kort} · niveau ${oef.niveau} · oefening ${oef.nr}`;
+  const terug = document.querySelector('.oefening-terug');
+  terug.onclick = sluitOefeningTijd;
+  stap3RenderVraag();
+  window.scrollTo({top:0,behavior:'auto'});
+}
+function sluitOefeningTijd() {
+  document.getElementById('oefening-scherm').hidden = true;
+  document.getElementById('overzicht-scherm').hidden = false;
+  stap3HuidigeOefening = null;
+  renderOverzicht();
+  window.scrollTo({top:0,behavior:'auto'});
+}
+function stap3RenderVraag() {
+  const vraag = stap3Vraag(stap3HuidigeOefening,stap3HuidigeOefening.items[stap3Index],stap3Index);
+  stap3Antwoord = null; stap3Gecontroleerd = false;
+  const voortgang = Math.round(stap3Index/vraag.totaal*100);
+  const antwoordHtml = vraag.invoer
+    ? `<input id="antwoord-invoer-tijd" class="antwoord-invoer" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Typ je antwoord hier"><p class="antwoord-hulp">Schrijf alleen de Latijnse werkwoordsvorm.</p>`
+    : `<div class="keuze-lijst">${vraag.opties.map((optie,i)=>`<button type="button" class="keuze-knop tijd-keuze" data-antwoord="${htmlVeilig(optie)}" onclick="stap3KiesAntwoord(this)"><span class="keuze-letter">${String.fromCharCode(65+i)}</span><span>${optie}</span></button>`).join('')}</div>`;
+  document.getElementById('oefening-inhoud').innerHTML = `
+    <section class="oefening-kop"><h2>${stap3HuidigeOefening.titel}</h2><p>${stap3HuidigeOefening.uitleg}</p><div class="progress-wrap"><div class="progress-track"><span style="width:${voortgang}%"></span></div><span class="progress-text">${stap3Index} van ${vraag.totaal} afgewerkt</span></div></section>
+    <section class="vraag-kaart"><span class="vraag-type">Niveau ${stap3HuidigeOefening.niveau} · ${STAP3_TIJDSINFO[stap3HuidigeOefening.tijd].kort}</span><div class="vraag-teller">Vraag ${stap3Index+1} van ${vraag.totaal}</div><h3 class="vraag-titel">${vraag.vraag}</h3>${vraag.context ? `<div class="vraag-context">${vraag.context}</div>` : ''}<div class="antwoord-vak">${antwoordHtml}</div><div id="feedback-tijd"></div><div class="actie-rij"><button type="button" class="check-knop" id="check-knop-tijd" onclick="stap3ControleerVraag()" disabled>Controleer</button><button type="button" class="volgende-knop" id="volgende-knop-tijd" onclick="stap3VolgendeVraag()" hidden>${stap3Index+1 === vraag.totaal ? 'Bekijk resultaat' : 'Volgende vraag'}</button></div></section>`;
+  if (vraag.invoer) {
+    const input = document.getElementById('antwoord-invoer-tijd');
+    input.addEventListener('input',()=>document.getElementById('check-knop-tijd').disabled=!input.value.trim());
+    input.addEventListener('keydown',e=>{ if(e.key==='Enter' && !document.getElementById('check-knop-tijd').disabled) stap3ControleerVraag(); });
+    input.focus();
+  }
+}
+function stap3KiesAntwoord(knop) {
+  if (stap3Gecontroleerd) return;
+  document.querySelectorAll('.tijd-keuze').forEach(k=>k.classList.remove('geselecteerd'));
+  knop.classList.add('geselecteerd');
+  stap3Antwoord = knop.dataset.antwoord;
+  document.getElementById('check-knop-tijd').disabled = false;
+}
+function stap3ControleerVraag() {
+  if (stap3Gecontroleerd) return;
+  const vraag = stap3Vraag(stap3HuidigeOefening,stap3HuidigeOefening.items[stap3Index],stap3Index);
+  const input = document.getElementById('antwoord-invoer-tijd');
+  const antwoord = vraag.invoer ? (input ? input.value : '') : stap3Antwoord;
+  if (!String(antwoord||'').trim()) return;
+  const juist = normaliseer(antwoord) === normaliseer(vraag.antwoord);
+  stap3Gecontroleerd = true;
+  if (juist) stap3Score += 1;
+  if (input) input.disabled = true;
+  document.querySelectorAll('.tijd-keuze').forEach(k=>{ k.disabled=true; if(normaliseer(k.dataset.antwoord)===normaliseer(vraag.antwoord)) k.classList.add('geselecteerd'); });
+  const feedback = document.getElementById('feedback-tijd');
+  feedback.className = `feedback ${juist ? 'goed' : 'fout'}`;
+  feedback.innerHTML = juist ? `<strong>Juist.</strong> ${vraag.uitleg}` : `<strong>Nog niet.</strong> Het juiste antwoord is <strong>${vraag.antwoordTekst}</strong>.<br>${vraag.uitleg}`;
+  document.getElementById('check-knop-tijd').hidden=true;
+  document.getElementById('volgende-knop-tijd').hidden=false;
+}
+function stap3VolgendeVraag() {
+  if (!stap3Gecontroleerd) return;
+  stap3Index += 1;
+  if (stap3Index >= stap3HuidigeOefening.items.length) stap3EindigOefening(); else stap3RenderVraag();
+}
+function stap3EindigOefening() {
+  const voor = laadVoortgang();
+  const openVoor = stap3HuidigeOefening.niveau < 3 ? stap3NiveauOpen(voor,stap3HuidigeOefening.tijd,stap3HuidigeOefening.niveau+1) : false;
+  const opgeslagen = bewaarResultaat(stap3HuidigeOefening.id,stap3Score,stap3HuidigeOefening.items.length);
+  const na = laadVoortgang();
+  const openNa = stap3HuidigeOefening.niveau < 3 ? stap3NiveauOpen(na,stap3HuidigeOefening.tijd,stap3HuidigeOefening.niveau+1) : false;
+  const pct = Math.round(stap3Score / stap3HuidigeOefening.items.length * 100);
+  let boodschap = pct >= 80 ? 'Dat is sterk werk: je behaalt minstens 80% in deze oefening.' : 'Herhalen mag. Je beste score blijft bewaard.';
+  if (opgeslagen.record.score !== stap3Score) boodschap += ' Je eerdere, betere score blijft staan.';
+  if (!openVoor && openNa) boodschap += ` Je hebt nu niveau ${stap3HuidigeOefening.niveau+1} ontgrendeld!`;
+  if (stap3HuidigeOefening.niveau < 3 && !openNa) {
+    const stand = stap3NiveauStand(na,stap3HuidigeOefening.tijd,stap3HuidigeOefening.niveau);
+    if (stand.gemaakt === 4) boodschap += ` Over dit niveau sta je nu op ${stand.score}/40. Je hebt 32/40 nodig om verder te gaan.`;
+  }
+  document.getElementById('oefening-inhoud').innerHTML = `<section class="resultaat-kaart"><div class="resultaat-rond"><strong>${stap3Score}/10</strong><span>${pct}%</span></div><h3>${pct>=80?'Mooi gedaan!':'Goed geprobeerd.'}</h3><p>${boodschap}</p><div class="resultaat-acties"><button type="button" class="knop knop-hoofd" onclick="openOefeningTijd('${stap3HuidigeOefening.id}')">Oefening opnieuw maken</button><button type="button" class="knop" onclick="sluitOefeningTijd()">Terug naar overzicht</button></div></section>`;
+}
+
+function stap3Insturen() {
+  const naam = document.getElementById('naam-veld').value.trim();
+  if (!naam) return;
+  const data = laadVoortgang();
+  const resultaten = STAP3_ALLE_OEFENINGEN.map(o => ({o,r:stap3Record(data,o.id)})).filter(x=>x.r)
+    .map(({o,r}) => `${o.tijd || 'praesens'} N${o.niveau}.${o.nr}: ${r.score}/${r.max}`).join(' | ');
+  const legacy = stap3Record(data,'grammatica-gemengd-1');
+  const extra = legacy ? `${resultaten ? ' | ' : ''}Gemengde oefening: ${legacy.score}/${legacy.max}` : '';
+  const url = `https://docs.google.com/forms/d/e/${FORMULIER_ID}/formResponse?${ENTRY_NAAM}=${encodeURIComponent(naam)}&${ENTRY_RESULTS}=${encodeURIComponent((resultaten || 'Geen oefeningen voltooid')+extra)}&submit=Submit`;
+  const iframe=document.createElement('iframe'); iframe.style.display='none'; iframe.src=url; document.body.appendChild(iframe); setTimeout(()=>iframe.remove(),3000);
+  const status=document.getElementById('status-tekst'); status.textContent='✓ Resultaten ingestuurd!'; status.className='status-tekst ok'; setTimeout(()=>{status.textContent='';status.className='status-tekst';updateKnopStatus();},4000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  /* Wrap existing page functions only after Step 2 has initialized itself. */
+  const oudRenderOverzicht = renderOverzicht;
+  renderOverzicht = function() { oudRenderOverzicht(); stap3RenderExtra(); };
+  const oudOpenOefening = openOefening;
+  openOefening = function(id) {
+    oudOpenOefening(id);
+    if (!document.getElementById('oefening-scherm').hidden) document.querySelector('.oefening-terug').onclick = sluitOefening;
+  };
+  const oudSluitOefening = sluitOefening;
+  sluitOefening = function() { oudSluitOefening(); };
+  insturen = stap3Insturen;
+  renderOverzicht();
+  console.info(`Stap 3 geladen: ${STAP3_OEFENINGEN.length} extra oefeningen / ${STAP3_OEFENINGEN.reduce((s,o)=>s+o.items.length,0)} extra vragen. Totaal: ${STAP3_ALLE_OEFENINGEN.length} oefeningen / ${STAP3_ALLE_OEFENINGEN.reduce((s,o)=>s+o.items.length,0)} vragen.`);
+});
+</script>
+
+<script>
+/* ── Stap 4: gerichte feedback en foutanalyse ───────────────────────────── */
+const STAP4_CATEGORIEN = {
+  tijd:        { naam: 'de werkwoordstijd', tip: 'Zoek eerst het tijdssignaal.' },
+  tijdsignaal: { naam: 'het tijdssignaal', tip: 'Let op de bouwsteen die de tijd verraadt.' },
+  persoon:     { naam: 'persoon en uitgang', tip: 'Kijk helemaal achteraan naar de uitgang.' },
+  stam:        { naam: 'de juiste stam', tip: 'Kies eerst de juiste stam, pas daarna de uitgang.' },
+  werkwoord:   { naam: 'het werkwoord', tip: 'Zoek eerst bij welk infinitief de vorm hoort.' },
+  betekenis:   { naam: 'de betekenis', tip: 'Herhaal kort het Latijnse woord en zijn betekenis.' },
+  analyse:     { naam: 'de volledige analyse', tip: 'Werk altijd in dezelfde volgorde: werkwoord → tijd → persoon → betekenis.' },
+  spelling:    { naam: 'de vorm precies schrijven', tip: 'Vergelijk de stam en het laatste stukje letter voor letter.' }
+};
+
+let stap4PraesensFouten = [];
+let stap4TijdFouten = [];
+
+function stap4TijdNaam(tijd) {
+  const namen = {
+    praesens: 'praesens', imperfectum: 'imperfectum', futurum: 'futurum simplex',
+    perfectum: 'perfectum', plusquamperfectum: 'plusquamperfectum'
+  };
+  return namen[tijd] || tijd || 'de juiste tijd';
+}
+
+function stap4TijdUitleg(tijd, v) {
+  if (tijd === 'praesens') return 'In het praesens vertel je wat nu gebeurt. Er staat geen apart verleden- of toekomstsignaal in de vorm.';
+  if (tijd === 'imperfectum') {
+    const marker = (typeof stap3Marker === 'function' && v) ? stap3Marker(v, tijd) : '-ba- of -eba-';
+    return `Zoek naar <strong>${marker}</strong>: dat wijst op iets dat vroeger bezig was of vaak gebeurde.`;
+  }
+  if (tijd === 'futurum') {
+    const marker = (typeof stap3Marker === 'function' && v) ? stap3Marker(v, tijd) : 'een toekomstsignaal';
+    return `Deze tijd gaat over later. Let op <strong>${marker}</strong> en kijk daarna pas naar de uitgang.`;
+  }
+  if (tijd === 'perfectum') return 'Voor het perfectum vertrek je van de perfectumstam. Het vertelt een afgerond feit in het verleden.';
+  if (tijd === 'plusquamperfectum') return 'Voor het plusquamperfectum vertrek je van de perfectumstam en zoek je <strong>-era-</strong>: iets was al eerder gebeurd.';
+  return 'Zoek eerst de bouwsteen die de tijd verraadt.';
+}
+
+function stap4VormenVoor(v, tijd) {
+  if (!v) return [];
+  if (tijd === 'praesens') return v.vormen || [];
+  try { return typeof stap3Vormen === 'function' ? (stap3Vormen(v, tijd) || []) : []; }
+  catch (e) { return []; }
+}
+
+function stap4AntwoordTekst(vraag, soort) {
+  const eerstAntwoord = ['tijd-herkenning','persoon','betekenis','infinitief','bouwsteen','volledige-analyse'].includes(soort);
+  return eerstAntwoord ? (vraag.antwoord || vraag.antwoordTekst || vraag.vorm) : (vraag.antwoordTekst || vraag.antwoord || vraag.vorm);
+}
+
+function stap4CategorieVoorFout({ vraag, antwoord, tijd, soort }) {
+  const v = vraag.v || vraag.verb;
+  const p = Number.isInteger(vraag.p) ? vraag.p : vraag.persoon;
+  const norm = normaliseer(antwoord);
+
+  if (soort === 'tijd-herkenning') return 'tijd';
+  if (soort === 'persoon') return 'persoon';
+  if (soort === 'betekenis') return 'betekenis';
+  if (soort === 'infinitief') return 'werkwoord';
+  if (soort === 'bouwsteen') return String(vraag.antwoord || '').includes('stam') ? 'stam' : 'tijdsignaal';
+
+  if (soort === 'volledige-analyse') {
+    const tekst = String(antwoord || '').toLowerCase();
+    const tijdlabel = stap4TijdNaam(tijd).toLowerCase();
+    const persoonLabel = p !== undefined && PERSONEN[p] ? PERSONEN[p].kort.toLowerCase() : '';
+    if (tijdlabel && !tekst.includes(tijdlabel)) return 'tijd';
+    if (persoonLabel && !tekst.includes(persoonLabel)) return 'persoon';
+    if (v && !tekst.includes(v.infinitief.toLowerCase())) return 'werkwoord';
+    return 'analyse';
+  }
+
+  const vormen = stap4VormenVoor(v, tijd);
+  const zelfdeTijd = vormen.findIndex(x => normaliseer(x) === norm);
+  if (zelfdeTijd !== -1 && zelfdeTijd !== p) return 'persoon';
+
+  const tijden = ['praesens','imperfectum','futurum','perfectum','plusquamperfectum'];
+  for (const andereTijd of tijden) {
+    if (andereTijd === tijd) continue;
+    const index = stap4VormenVoor(v, andereTijd).findIndex(x => normaliseer(x) === norm);
+    if (index !== -1) return 'tijd';
+  }
+
+  if (v && typeof VERB_BY_INF !== 'undefined') {
+    const anderWerkwoord = Object.values(VERB_BY_INF).some(ander => {
+      if (!ander || ander.infinitief === v.infinitief) return false;
+      return ['praesens','imperfectum','futurum','perfectum','plusquamperfectum']
+        .some(t => stap4VormenVoor(ander, t).some(vorm => normaliseer(vorm) === norm));
+    });
+    if (anderWerkwoord) return 'werkwoord';
+  }
+
+  return 'spelling';
+}
+
+function stap4FoutUitleg({ vraag, antwoord, tijd, soort, categorie }) {
+  const v = vraag.v || vraag.verb;
+  const p = Number.isInteger(vraag.p) ? vraag.p : vraag.persoon;
+  const correct = stap4AntwoordTekst(vraag, soort);
+  const naam = STAP4_CATEGORIEN[categorie].naam;
+  const juisteVorm = vraag.vorm || correct;
+  const persoon = p !== undefined && PERSONEN[p] ? persoonTekst(p) : '';
+  let uitleg = '';
+  let stappen = [];
+
+  if (categorie === 'tijd' || categorie === 'tijdsignaal') {
+    uitleg = stap4TijdUitleg(tijd, v);
+    stappen = [
+      `Zoek eerst de tijd: <strong>${stap4TijdNaam(tijd)}</strong>.`,
+      stap4TijdUitleg(tijd, v),
+      persoon ? `Controleer pas daarna wie het doet: <strong>${persoon}</strong>.` : 'Controleer pas daarna de uitgang.'
+    ];
+  } else if (categorie === 'persoon') {
+    uitleg = `De tijd kan er goed uitzien, maar het laatste stukje van de vorm moet passen bij <strong>${persoon}</strong>.`;
+    stappen = [
+      `Houd de tijd <strong>${stap4TijdNaam(tijd)}</strong> vast.`,
+      `Vraag: wie doet het? Hier is dat <strong>${persoon}</strong>.`,
+      `Kijk dus naar de hele juiste vorm: <strong>${juisteVorm}</strong>.`
+    ];
+  } else if (categorie === 'stam') {
+    const stam = (tijd === 'perfectum' || tijd === 'plusquamperfectum') && typeof stap3PerfectumStam === 'function'
+      ? stap3PerfectumStam(v) : (v && v.eerste ? `${v.eerste} zonder -o` : 'de praesensstam');
+    uitleg = `Voor deze tijd moet je eerst met de juiste stam beginnen. Bij <strong>${v ? v.infinitief : 'dit werkwoord'}</strong> is dat hier <strong>${stam}-</strong>.`;
+    stappen = ['Kies eerst de juiste stam.', `Gebruik daarna de bouwsteen van het <strong>${stap4TijdNaam(tijd)}</strong>.`, `Zet ten slotte de juiste uitgang voor <strong>${persoon || 'de gevraagde persoon'}</strong> erachter.`];
+  } else if (categorie === 'werkwoord') {
+    uitleg = `De vorm hoort bij <strong>${v ? v.infinitief : 'het gevraagde werkwoord'}</strong>${v ? `: “${v.betekenis}”.` : '.'}`;
+    stappen = ['Zoek eerst de stam of de infinitief.', `Denk aan de betekenis: <strong>${v ? v.betekenis : 'het juiste werkwoord'}</strong>.`, 'Kies daarna tijd en uitgang.'];
+  } else if (categorie === 'betekenis') {
+    uitleg = `<strong>${v ? v.infinitief : 'Dit werkwoord'}</strong> betekent <strong>${v ? v.betekenis : correct}</strong>.`;
+    stappen = ['Herken eerst het werkwoord.', `Koppel het aan de betekenis <strong>${v ? v.betekenis : correct}</strong>.`, 'Kijk daarna nog even naar wie het doet.'];
+  } else if (categorie === 'analyse') {
+    uitleg = 'Een volledige analyse lukt het best wanneer je altijd dezelfde volgorde gebruikt.';
+    stappen = ['Welk werkwoord is het?', `Welke tijd is het? Hier: <strong>${stap4TijdNaam(tijd)}</strong>.`, `Wie doet het? Hier: <strong>${persoon}</strong>.`, v ? `Wat betekent het? <strong>${v.betekenis}</strong>.` : 'Controleer ten slotte de betekenis.'];
+  } else {
+    uitleg = 'Je was waarschijnlijk dicht in de buurt. Vergelijk de juiste vorm letter voor letter met wat je zelf schreef.';
+    stappen = ['Controleer de stam.', `Controleer de tijd: <strong>${stap4TijdNaam(tijd)}</strong>.`, `Controleer het laatste stukje voor <strong>${persoon || 'de persoon'}</strong>.`];
+  }
+
+  return { naam, correct, uitleg, stappen };
+}
+
+function stap4FeedbackHtml({ juist, vraag, antwoord, tijd, soort, categorie }) {
+  const correct = stap4AntwoordTekst(vraag, soort);
+  const safeAntwoord = htmlVeilig(antwoord || '—');
+  const v = vraag.v || vraag.verb;
+  const p = Number.isInteger(vraag.p) ? vraag.p : vraag.persoon;
+
+  if (juist) {
+    const kern = (soort === 'tijd-herkenning')
+      ? `Je herkende de <strong>${stap4TijdNaam(tijd)}</strong> juist.`
+      : (p !== undefined && PERSONEN[p] ? `Je vond ook de juiste persoon: <strong>${persoonTekst(p)}</strong>.` : 'Je redeneerde juist.') ;
+    return `<div class="feedback-kop"><span class="feedback-icoon" aria-hidden="true">✓</span><div><strong>Juist.</strong> ${kern}</div></div><p class="feedback-uitleg">${vraag.uitleg || ''}</p>`;
+  }
+
+  const info = stap4FoutUitleg({ vraag, antwoord, tijd, soort, categorie });
+  const stappen = info.stappen.map(stap => `<li>${stap}</li>`).join('');
+  return `<div class="feedback-kop"><span class="feedback-icoon" aria-hidden="true">!</span><div><strong>Bijna.</strong> Hier liep je vast bij <strong>${info.naam}</strong>.</div></div>
+    <div class="antwoord-vergelijking"><span><small>Jouw antwoord</small><strong>${safeAntwoord}</strong></span><span><small>Juiste antwoord</small><strong>${info.correct}</strong></span></div>
+    <p class="feedback-uitleg">${info.uitleg}</p><ol class="feedback-stappen">${stappen}</ol><p class="feedback-tip"><strong>Onthoud:</strong> ${STAP4_CATEGORIEN[categorie].tip}</p>`;
+}
+
+function stap4RegistreerFout({ tijd, categorie, oefening, vraagtype }) {
+  const data = laadVoortgang();
+  data.vervoegingenV2 = data.vervoegingenV2 || {};
+  const analyse = data.vervoegingenV2.foutanalyse || { versie: 1, totaal: 0, types: {}, tijden: {}, laatste: [] };
+  analyse.totaal += 1;
+  analyse.types[categorie] = (analyse.types[categorie] || 0) + 1;
+  analyse.tijden[tijd] = analyse.tijden[tijd] || { totaal: 0, types: {} };
+  analyse.tijden[tijd].totaal += 1;
+  analyse.tijden[tijd].types[categorie] = (analyse.tijden[tijd].types[categorie] || 0) + 1;
+  analyse.laatste.unshift({ tijd, categorie, oefening, vraagtype, at: new Date().toISOString() });
+  analyse.laatste = analyse.laatste.slice(0, 30);
+  data.vervoegingenV2.foutanalyse = analyse;
+  slaVoortgangOp(data);
+}
+
+function stap4HulpHtml(tijd, soort) {
+  let stappen;
+  if (soort === 'tijd-herkenning') {
+    stappen = ['Kijk naar een tijdssignaal, zoals <strong>-ba-</strong> of <strong>-era-</strong>.', 'Bepaal pas daarna wie het doet aan het einde.'];
+  } else if (soort === 'persoon') {
+    stappen = ['Houd de tijd even vast.', 'Kijk helemaal achteraan: daar zie je meestal wie het doet.'];
+  } else if (soort === 'betekenis' || soort === 'infinitief') {
+    stappen = ['Zoek de stam of denk aan de infinitief.', 'Koppel die aan het Nederlandse woord dat je kent.'];
+  } else if (soort === 'bouwsteen') {
+    stappen = ['Vraag eerst: welke tijd is dit?', 'Kies dan de passende stam of tijdsbouwsteen.'];
+  } else {
+    stappen = [`Bepaal eerst de tijd: <strong>${stap4TijdNaam(tijd)}</strong>.`, 'Kies daarna de juiste stam.', 'Controleer helemaal achteraan wie het doet.'];
+  }
+  return `<details class="denk-hulp"><summary>Hulp nodig? Werk in stapjes.</summary><ol>${stappen.map(x=>`<li>${x}</li>`).join('')}</ol></details>`;
+}
+
+function stap4VoegHulpToe({ tijd, soort, vraag, selector }) {
+  const kaart = document.querySelector(selector || '.vraag-kaart');
+  if (!kaart || kaart.querySelector && kaart.querySelector('.denk-hulp')) return;
+  const vak = kaart.querySelector ? kaart.querySelector('.antwoord-vak') : null;
+  if (vak && typeof vak.insertAdjacentHTML === 'function') vak.insertAdjacentHTML('beforebegin', stap4HulpHtml(tijd, soort));
+}
+
+function stap4ResultaatHtml(fouten) {
+  if (!fouten.length) {
+    return `<section class="foutoverzicht foutoverzicht-goed"><h4>Je foutanalyse</h4><p>Geen fouten in deze oefening. Je werkte tijd, stam en uitgang zorgvuldig af.</p></section>`;
+  }
+  const counts = fouten.reduce((acc, f) => { acc[f.categorie] = (acc[f.categorie] || 0) + 1; return acc; }, {});
+  const belangrijkste = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,2);
+  return `<section class="foutoverzicht"><h4>Jouw aandachtspunt${belangrijkste.length > 1 ? 'en' : ''} in deze oefening</h4><ul>${belangrijkste.map(([cat,aantal]) => `<li><strong>${STAP4_CATEGORIEN[cat].naam}</strong> (${aantal}×): ${STAP4_CATEGORIEN[cat].tip}</li>`).join('')}</ul><p><strong>Vaste volgorde:</strong> tijd → stam → uitgang.</p></section>`;
+}
+
+function stap4VoegResultaatToe(fouten) {
+  const kaart = document.querySelector('.resultaat-kaart');
+  if (!kaart || (kaart.querySelector && kaart.querySelector('.foutoverzicht'))) return;
+  const acties = kaart.querySelector ? kaart.querySelector('.resultaat-acties') : null;
+  if (acties && typeof acties.insertAdjacentHTML === 'function') acties.insertAdjacentHTML('beforebegin', stap4ResultaatHtml(fouten));
+}
+
+function stap4VerbeterFeedback(id, payload) {
+  const feedback = document.getElementById(id);
+  if (!feedback) return;
+  feedback.className = `feedback ${payload.juist ? 'goed' : 'fout'}`;
+  feedback.setAttribute && feedback.setAttribute('role', payload.juist ? 'status' : 'alert');
+  feedback.innerHTML = stap4FeedbackHtml(payload);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const origineelOpenPraesens = window.openOefening;
+  window.openOefening = function(id) {
+    stap4PraesensFouten = [];
+    return origineelOpenPraesens(id);
+  };
+
+  const origineelOpenTijd = window.openOefeningTijd;
+  window.openOefeningTijd = function(id) {
+    stap4TijdFouten = [];
+    return origineelOpenTijd(id);
+  };
+
+  const origineelRenderPraesens = window.renderVraag;
+  window.renderVraag = function() {
+    const resultaat = origineelRenderPraesens();
+    if (typeof huidigeOefening !== 'undefined' && huidigeOefening) {
+      const vraag = bouwVraag(huidigeOefening, huidigeOefening.items[huidigeIndex], huidigeIndex);
+      stap4VoegHulpToe({ tijd:'praesens', soort:huidigeOefening.soort, vraag, selector:'.vraag-kaart' });
+    }
+    return resultaat;
+  };
+
+  const origineelRenderTijd = window.stap3RenderVraag;
+  window.stap3RenderVraag = function() {
+    const resultaat = origineelRenderTijd();
+    if (typeof stap3HuidigeOefening !== 'undefined' && stap3HuidigeOefening) {
+      const vraag = stap3Vraag(stap3HuidigeOefening, stap3HuidigeOefening.items[stap3Index], stap3Index);
+      stap4VoegHulpToe({ tijd:stap3HuidigeOefening.tijd, soort:stap3HuidigeOefening.soort, vraag, selector:'.vraag-kaart' });
+    }
+    return resultaat;
+  };
+
+  const origineelControleerPraesens = window.controleerVraag;
+  window.controleerVraag = function() {
+    if (huidigGecontroleerd) return;
+    const vraag = bouwVraag(huidigeOefening, huidigeOefening.items[huidigeIndex], huidigeIndex);
+    const invoer = document.getElementById('antwoord-invoer');
+    const antwoord = vraag.invoer ? (invoer ? invoer.value : '') : huidigAntwoord;
+    if (!String(antwoord || '').trim()) return;
+    const juist = normaliseer(antwoord) === normaliseer(vraag.antwoord);
+    const categorie = juist ? null : stap4CategorieVoorFout({ vraag, antwoord, tijd:'praesens', soort:huidigeOefening.soort });
+    origineelControleerPraesens();
+    if (!juist) {
+      const fout = { categorie, tijd:'praesens', oefening:huidigeOefening.id, vraagtype:huidigeOefening.soort };
+      stap4PraesensFouten.push(fout);
+      stap4RegistreerFout(fout);
+    }
+    stap4VerbeterFeedback('feedback', { juist, vraag, antwoord, tijd:'praesens', soort:huidigeOefening.soort, categorie });
+  };
+
+  const origineelControleerTijd = window.stap3ControleerVraag;
+  window.stap3ControleerVraag = function() {
+    if (stap3Gecontroleerd) return;
+    const vraag = stap3Vraag(stap3HuidigeOefening, stap3HuidigeOefening.items[stap3Index], stap3Index);
+    const invoer = document.getElementById('antwoord-invoer-tijd');
+    const antwoord = vraag.invoer ? (invoer ? invoer.value : '') : stap3Antwoord;
+    if (!String(antwoord || '').trim()) return;
+    const juist = normaliseer(antwoord) === normaliseer(vraag.antwoord);
+    const categorie = juist ? null : stap4CategorieVoorFout({ vraag, antwoord, tijd:stap3HuidigeOefening.tijd, soort:stap3HuidigeOefening.soort });
+    origineelControleerTijd();
+    if (!juist) {
+      const fout = { categorie, tijd:stap3HuidigeOefening.tijd, oefening:stap3HuidigeOefening.id, vraagtype:stap3HuidigeOefening.soort };
+      stap4TijdFouten.push(fout);
+      stap4RegistreerFout(fout);
+    }
+    stap4VerbeterFeedback('feedback-tijd', { juist, vraag, antwoord, tijd:stap3HuidigeOefening.tijd, soort:stap3HuidigeOefening.soort, categorie });
+  };
+
+  const origineelEindPraesens = window.eindigOefening;
+  window.eindigOefening = function() {
+    const resultaat = origineelEindPraesens();
+    stap4VoegResultaatToe(stap4PraesensFouten);
+    return resultaat;
+  };
+
+  const origineelEindTijd = window.stap3EindigOefening;
+  window.stap3EindigOefening = function() {
+    const resultaat = origineelEindTijd();
+    stap4VoegResultaatToe(stap4TijdFouten);
+    return resultaat;
+  };
+});
+
+</script>
+
+
+<script>
+/* ─────────────────────────────────────────────────────────────────────────────
+   STAP 5 — leerlingendashboard
+   Leest uitsluitend de bestaande voortgang uit localStorage. Geen bestaande
+   oefening, score, foutanalyse of instuursysteem wordt aangepast.
+   ───────────────────────────────────────────────────────────────────────── */
+(function () {
+  const STAP5_TIJDEN = [
+    { key: 'praesens', label: 'Praesens', volledigeNaam: 'Indicatief praesens actief' },
+    { key: 'imperfectum', label: 'Imperfectum', volledigeNaam: 'Indicatief imperfectum actief' },
+    { key: 'futurum', label: 'Futurum', volledigeNaam: 'Indicatief futurum simplex actief' },
+    { key: 'perfectum', label: 'Perfectum', volledigeNaam: 'Indicatief perfectum actief' },
+    { key: 'plusquamperfectum', label: 'Plusquamperfectum', volledigeNaam: 'Indicatief plusquamperfectum actief' }
+  ];
+
+  function stap5OefeningenVoor(tijd) {
+    if (tijd === 'praesens') return typeof PRAESENS_OEFENINGEN === 'undefined' ? [] : PRAESENS_OEFENINGEN;
+    return typeof STAP3_OEFENINGEN === 'undefined' ? [] : STAP3_OEFENINGEN.filter(o => o.tijd === tijd);
+  }
+
+  function stap5Record(data, id) {
+    return typeof recordVoor === 'function' ? recordVoor(data, id) : null;
+  }
+
+  function stap5StandVoorNiveau(data, tijd, niveau) {
+    const lijst = stap5OefeningenVoor(tijd).filter(o => o.niveau === niveau);
+    const records = lijst.map(o => stap5Record(data, o.id));
+    const gemaakt = records.filter(Boolean).length;
+    const score = records.reduce((som, r) => som + (r ? Number(r.score || 0) : 0), 0);
+    const max = lijst.reduce((som, o) => som + Number((stap5Record(data, o.id) || {}).max || 10), 0);
+    return { lijst, records, gemaakt, score, max, percentage: max ? Math.round(score / max * 100) : 0 };
+  }
+
+  function stap5NiveauOpen(data, tijd, niveau) {
+    if (niveau === 1) return true;
+    const vorige = stap5StandVoorNiveau(data, tijd, niveau - 1);
+    return vorige.gemaakt === vorige.lijst.length && vorige.max > 0 && vorige.score / vorige.max >= .80;
+  }
+
+  function stap5TijdStatus(data, tijd) {
+    const oefeningen = stap5OefeningenVoor(tijd);
+    const standen = [1, 2, 3].map(n => ({ niveau: n, ...stap5StandVoorNiveau(data, tijd, n), open: stap5NiveauOpen(data, tijd, n) }));
+    const gemaakt = standen.reduce((som, s) => som + s.gemaakt, 0);
+    const score = standen.reduce((som, s) => som + s.score, 0);
+    const max = standen.reduce((som, s) => som + s.max, 0);
+    const volledig = gemaakt === oefeningen.length && score / max >= .80;
+    const hoogsteOpen = standen.filter(s => s.open).at(-1) || standen[0];
+    const volgende = hoogsteOpen.lijst.find(o => !stap5Record(data, o.id)) || hoogsteOpen.lijst.find(o => (stap5Record(data, o.id) || {}).score < 8) || null;
+    return { oefeningen, standen, gemaakt, score, max, volledig, hoogsteOpen, volgende, percentage: max ? Math.round(score / max * 100) : 0 };
+  }
+
+  function stap5AlleRecords(data) {
+    const result = [];
+    STAP5_TIJDEN.forEach(t => {
+      stap5OefeningenVoor(t.key).forEach(o => {
+        const r = stap5Record(data, o.id);
+        if (r) result.push({ tijd: t, oef: o, record: r });
+      });
+    });
+    return result;
+  }
+
+  function stap5Datum(iso) {
+    if (!iso) return 'nog geen oefening gemaakt';
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return 'onbekend moment';
+    const vandaag = new Date();
+    const isVandaag = d.toDateString() === vandaag.toDateString();
+    const gisteren = new Date(vandaag); gisteren.setDate(vandaag.getDate() - 1);
+    const isGisteren = d.toDateString() === gisteren.toDateString();
+    if (isVandaag) return `vandaag om ${d.toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' })}`;
+    if (isGisteren) return `gisteren om ${d.toLocaleTimeString('nl-BE', { hour: '2-digit', minute: '2-digit' })}`;
+    return d.toLocaleDateString('nl-BE', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  function stap5Categorien(data) {
+    const analyse = data && data.vervoegingenV2 && data.vervoegingenV2.foutanalyse;
+    if (!analyse || !analyse.types) return [];
+    const namen = (typeof STAP4_CATEGORIEN !== 'undefined') ? STAP4_CATEGORIEN : {};
+    return Object.entries(analyse.types)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([key, aantal]) => ({ key, aantal, naam: (namen[key] && namen[key].naam) || key, tip: (namen[key] && namen[key].tip) || 'Werk rustig in de vaste volgorde: tijd → stam → uitgang.' }));
+  }
+
+  function stap5VeiligeTekst(tekst) {
+    return typeof htmlVeilig === 'function' ? htmlVeilig(String(tekst || '')) : String(tekst || '');
+  }
+
+  function stap5RouteHtml(data) {
+    const items = STAP5_TIJDEN.map(t => {
+      const status = stap5TijdStatus(data, t.key);
+      const niveau = status.volledig ? 'voltooid' : status.hoogsteOpen.niveau;
+      const klasses = [status.volledig ? 'voltooid' : '', !status.volledig && status.gemaakt > 0 ? 'actief' : ''].filter(Boolean).join(' ');
+      const detail = status.volledig
+        ? `Alle niveaus afgewerkt · <strong>${status.score}/120</strong>`
+        : `Niveau ${niveau} is open · <strong>${status.gemaakt}/12 oefeningen</strong>`;
+      const badge = status.volledig ? '✓ klaar' : `N${niveau} open`;
+      return `<div class="route-rij ${klasses}"><div><div class="route-naam"><span class="route-punt" aria-hidden="true"></span>${t.label}</div><div class="route-detail">${detail}</div></div><span class="route-status">${badge}</span></div>`;
+    }).join('');
+    return `<section class="dashboard-kaart dashboard-route"><div class="dashboard-kaart-kop"><div><h3>Jouw route</h3><p>Elke tijd heeft drie niveaus. Je gaat verder zodra je op een niveau samen 32/40 haalt.</p></div><span class="dashboard-badge">5 tijden</span></div><div class="route-lijst">${items}</div></section>`;
+  }
+
+  function stap5VolgendeHtml(data) {
+    const kandidaten = STAP5_TIJDEN.map(t => ({ tijd: t, status: stap5TijdStatus(data, t.key) }));
+    let keuze = kandidaten.find(x => x.status.volgende);
+    if (!keuze) keuze = kandidaten.find(x => !x.status.volledig && x.status.oefeningen.length);
+    if (!keuze) {
+      return `<section class="dashboard-kaart"><div class="dashboard-kaart-kop"><div><h3>Volgende stap</h3><p>Je hebt de volledige oefenroute afgewerkt.</p></div></div><div class="dashboard-leeg"><strong class="dashboard-sterk">Sterk werk.</strong> Herhaal gerust een oefening om je beste score te verbeteren of houd de vormen fris.</div></section>`;
+    }
+    const o = keuze.status.volgende;
+    const tekst = o
+      ? `${keuze.tijd.label} · niveau ${o.niveau} · ${o.nr}. ${o.titel}`
+      : `${keuze.tijd.label} · niveau ${keuze.status.hoogsteOpen.niveau}`;
+    const detail = o
+      ? 'Kies de volgende oefening die nog openstaat of die je kunt verbeteren.'
+      : 'Kies een oefening uit dit niveau en breng je totaalscore naar minstens 32/40.';
+    const action = o
+      ? `<button type="button" class="knop knop-hoofd dashboard-actie" onclick="stap5OpenOefening('${keuze.tijd.key}', '${o.id}')">Ga verder met deze oefening</button>`
+      : `<button type="button" class="knop knop-hoofd dashboard-actie" onclick="stap5ScrollNaarTijd('${keuze.tijd.key}')">Bekijk ${keuze.tijd.label}</button>`;
+    return `<section class="dashboard-kaart"><div class="dashboard-kaart-kop"><div><h3>Volgende stap</h3><p>${detail}</p></div><span class="dashboard-badge">klaar om te oefenen</span></div><div class="dashboard-laatst"><div class="dashboard-laatst-titel">${stap5VeiligeTekst(tekst)}</div></div>${action}</section>`;
+  }
+
+  function stap5AandachtHtml(data) {
+    const cats = stap5Categorien(data);
+    if (!cats.length) {
+      return `<section class="dashboard-kaart"><div class="dashboard-kaart-kop"><div><h3>Jouw aandachtspunt</h3><p>Na een fout krijg je hier een heldere tip.</p></div></div><div class="dashboard-leeg">Maak een eerste oefening. Daarna toont dit vak welke stap bij jou het vaakst moeilijk is.</div></section>`;
+    }
+    const lijst = cats.map(c => `<li><strong>${stap5VeiligeTekst(c.naam)}</strong> (${c.aantal}×): ${stap5VeiligeTekst(c.tip)}</li>`).join('');
+    return `<section class="dashboard-kaart"><div class="dashboard-kaart-kop"><div><h3>Jouw aandachtspunt${cats.length > 1 ? 'en' : ''}</h3><p>Gebaseerd op de fouten die je tot nu toe maakte.</p></div></div><ul class="dashboard-aandacht">${lijst}</ul></section>`;
+  }
+
+  function stap5LaatstHtml(data) {
+    const laatste = stap5AlleRecords(data).sort((a, b) => new Date(b.record.updatedAt || 0) - new Date(a.record.updatedAt || 0))[0];
+    if (!laatste) {
+      return `<section class="dashboard-kaart"><div class="dashboard-kaart-kop"><div><h3>Laatste activiteit</h3><p>Je recente oefening verschijnt hier.</p></div></div><div class="dashboard-leeg">Nog geen opgeslagen resultaat. Zodra je een oefening afwerkt, bewaart de site je beste score automatisch.</div></section>`;
+    }
+    const r = laatste.record;
+    const pct = r.max ? Math.round((r.score / r.max) * 100) : 0;
+    const scoreKlas = pct >= 80 ? 'goed' : '';
+    return `<section class="dashboard-kaart"><div class="dashboard-kaart-kop"><div><h3>Laatste activiteit</h3><p>${stap5Datum(r.updatedAt)}</p></div></div><div class="dashboard-laatst"><div class="dashboard-laatst-titel">${laatste.tijd.label} · niveau ${laatste.oef.niveau} · ${laatste.oef.nr}. ${stap5VeiligeTekst(laatste.oef.titel)}</div><span class="dashboard-mini-score ${scoreKlas}">beste score: ${r.score}/${r.max} · ${pct}%</span></div></section>`;
+  }
+
+  function stap5RenderDashboard() {
+    const target = document.getElementById('dashboard-inhoud');
+    if (!target) return;
+    const data = typeof laadVoortgang === 'function' ? laadVoortgang() : {};
+    target.innerHTML = `${stap5RouteHtml(data)}${stap5VolgendeHtml(data)}${stap5AandachtHtml(data)}${stap5LaatstHtml(data)}`;
+  }
+
+  window.stap5OpenOefening = function (tijd, id) {
+    if (!id) return;
+    if (tijd === 'praesens' && typeof openOefening === 'function') openOefening(id);
+    else if (typeof openOefeningTijd === 'function') openOefeningTijd(id);
+  };
+
+  window.stap5ScrollNaarTijd = function (tijd) {
+    const labels = { praesens: 'praesens-container', imperfectum: 'extra-tijden-container', futurum: 'extra-tijden-container', perfectum: 'extra-tijden-container', plusquamperfectum: 'extra-tijden-container' };
+    const element = document.getElementById(labels[tijd] || 'praesens-container');
+    if (element && typeof element.scrollIntoView === 'function') element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const vorigeRender = window.renderOverzicht;
+    window.renderOverzicht = function () {
+      const result = vorigeRender && vorigeRender.apply(this, arguments);
+      stap5RenderDashboard();
+      return result;
+    };
+    stap5RenderDashboard();
+  });
+})();
+</script>
+
+
+<!-- Optionele configuratie: staat naast dit html-bestand en bevat alleen de webapp-URL. -->
+<script src="voortgang-config.js"></script>
+<script>
+/* ─────────────────────────────────────────────────────────────────────────────
+   STAP 6 — automatische synchronisatie met Google Sheets
+   - Bestaande localStorage, scores, foutanalyse en Google Form blijven intact.
+   - Zonder endpoint werkt de pagina volledig lokaal zoals voordien.
+   - Met endpoint krijgt de leerkracht na elke afgewerkte oefening een compacte
+     momentopname: naam, beste scores, route, laatste activiteit en fouttypes.
+   ───────────────────────────────────────────────────────────────────────── */
+(function () {
+  const STAP6_CONFIG = Object.assign({
+    endpoint: '',
+    classId: '2GR-LAT',
+    school: 'athena campus Pottelberg',
+    enabled: true
+  }, (window.LATIJN_VOORTGANG_SYNC || {}));
+  const STAP6_SYNC_KEY = 'latijn-vervoegingen-sync-v1';
+  let stap6Timer = null;
+
+  function stap6Endpoint() {
+    const url = String(STAP6_CONFIG.endpoint || '').trim();
+    return /^https:\/\/script\.google\.com\/macros\/s\/.+\/exec(?:\?.*)?$/i.test(url) ? url : '';
+  }
+
+  function stap6Status(tekst, soort) {
+    const status = document.getElementById('sync-status');
+    if (!status) return;
+    status.textContent = tekst;
+    status.className = `sync-status${soort ? ` ${soort}` : ''}`;
+  }
+
+  function stap6Uitleg(tekst) {
+    const target = document.getElementById('sync-uitleg');
+    if (target) target.textContent = tekst;
+  }
+
+  function stap6Naam() {
+    const veld = document.getElementById('naam-veld');
+    return String((veld && veld.value) || localStorage.getItem('latijn-naam') || '').trim().replace(/\s+/g, ' ');
+  }
+
+  function stap6Oefeningen() {
+    if (typeof STAP3_ALLE_OEFENINGEN !== 'undefined' && Array.isArray(STAP3_ALLE_OEFENINGEN)) return STAP3_ALLE_OEFENINGEN;
+    if (typeof PRAESENS_OEFENINGEN !== 'undefined' && Array.isArray(PRAESENS_OEFENINGEN)) return PRAESENS_OEFENINGEN;
+    return [];
+  }
+
+  function stap6Tijden() {
+    return [
+      { key: 'praesens', label: 'Praesens' },
+      { key: 'imperfectum', label: 'Imperfectum' },
+      { key: 'futurum', label: 'Futurum' },
+      { key: 'perfectum', label: 'Perfectum' },
+      { key: 'plusquamperfectum', label: 'Plusquamperfectum' }
+    ];
+  }
+
+  function stap6Record(data, id) {
+    return typeof recordVoor === 'function' ? recordVoor(data, id) : null;
+  }
+
+  function stap6NiveauStatus(data, tijd, niveau, lijst) {
+    const level = lijst.filter(o => (o.tijd || 'praesens') === tijd && Number(o.niveau) === Number(niveau));
+    const records = level.map(o => stap6Record(data, o.id));
+    const completed = records.filter(Boolean).length;
+    const score = records.reduce((som, r) => som + Number((r && r.score) || 0), 0);
+    const max = records.reduce((som, r) => som + Number((r && r.max) || 10), 0);
+    return { completed, total: level.length, score, max, percentage: max ? Math.round(score / max * 100) : 0 };
+  }
+
+  function stap6TijdStatus(data, tijd, lijst) {
+    const levels = [1, 2, 3].map(n => stap6NiveauStatus(data, tijd, n, lijst));
+    const total = levels.reduce((som, level) => som + level.total, 0);
+    const completed = levels.reduce((som, level) => som + level.completed, 0);
+    const score = levels.reduce((som, level) => som + level.score, 0);
+    const max = levels.reduce((som, level) => som + level.max, 0);
+    const open2 = levels[0].total > 0 && levels[0].completed === levels[0].total && levels[0].max > 0 && levels[0].score / levels[0].max >= .80;
+    const open3 = open2 && levels[1].total > 0 && levels[1].completed === levels[1].total && levels[1].max > 0 && levels[1].score / levels[1].max >= .80;
+    const highestOpen = open3 ? 3 : open2 ? 2 : 1;
+    const complete = total > 0 && completed === total && max > 0 && score / max >= .80;
+    return { completed, total, score, max, percentage: max ? Math.round(score / max * 100) : 0, highestOpen, complete };
+  }
+
+  function stap6VeiligeHash(tekst) {
+    let h = 2166136261;
+    for (let i = 0; i < tekst.length; i += 1) { h ^= tekst.charCodeAt(i); h += (h << 1) + (h << 4) + (h << 7) + (h << 8) + (h << 24); }
+    return (h >>> 0).toString(36);
+  }
+
+  function stap6Momentopname() {
+    const data = typeof laadVoortgang === 'function' ? laadVoortgang() : {};
+    const oefeningen = stap6Oefeningen();
+    const records = oefeningen.map(o => {
+      const r = stap6Record(data, o.id);
+      if (!r) return null;
+      return {
+        id: o.id,
+        tijd: o.tijd || 'praesens',
+        niveau: Number(o.niveau),
+        nr: Number(o.nr),
+        titel: o.titel,
+        score: Number(r.score || 0),
+        max: Number(r.max || 10),
+        lastScore: Number(r.lastScore || r.score || 0),
+        attempts: Number(r.attempts || 1),
+        updatedAt: r.updatedAt || ''
+      };
+    }).filter(Boolean);
+
+    const times = {};
+    stap6Tijden().forEach(t => { times[t.key] = stap6TijdStatus(data, t.key, oefeningen); });
+    const completed = records.length;
+    const bestPoints = records.reduce((som, r) => som + r.score, 0);
+    const maxPoints = records.reduce((som, r) => som + r.max, 0);
+    const latest = records.slice().sort((a, b) => new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0))[0] || null;
+    const analyse = data && data.vervoegingenV2 && data.vervoegingenV2.foutanalyse;
+    const errorTypes = analyse && analyse.types ? analyse.types : {};
+    const generatedAt = new Date().toISOString();
+    const lastExercise = latest ? `${latest.tijd} · niveau ${latest.niveau} · ${latest.nr}. ${latest.titel}` : '';
+
+    return {
+      generatedAt,
+      completed,
+      total: oefeningen.length || 60,
+      bestPoints,
+      maxPoints,
+      averageBest: maxPoints ? Math.round(bestPoints / maxPoints * 100) : 0,
+      lastActivity: latest && latest.updatedAt ? latest.updatedAt : '',
+      lastExercise,
+      records,
+      times,
+      errorTypes
+    };
+  }
+
+  function stap6Payload() {
+    const snapshot = stap6Momentopname();
+    const student = stap6Naam();
+    const raw = JSON.stringify({ student, classId: STAP6_CONFIG.classId, snapshot: {
+      completed: snapshot.completed, bestPoints: snapshot.bestPoints, maxPoints: snapshot.maxPoints,
+      lastActivity: snapshot.lastActivity, lastExercise: snapshot.lastExercise,
+      records: snapshot.records.map(r => [r.id, r.score, r.max, r.updatedAt]), errorTypes: snapshot.errorTypes
+    }});
+    return {
+      type: 'latijn-vervoegingen-progress',
+      version: 1,
+      school: STAP6_CONFIG.school,
+      classId: STAP6_CONFIG.classId,
+      student,
+      sentAt: new Date().toISOString(),
+      syncKey: `${STAP6_CONFIG.classId}-${stap6VeiligeHash(raw)}`,
+      snapshot
+    };
+  }
+
+  function stap6SyncMeta() {
+    try { return JSON.parse(localStorage.getItem(STAP6_SYNC_KEY) || '{}'); }
+    catch (e) { return {}; }
+  }
+
+  function stap6BewaarMeta(meta) {
+    localStorage.setItem(STAP6_SYNC_KEY, JSON.stringify(meta));
+  }
+
+  function stap6MaakVerzendpoging(payload) {
+    const endpoint = stap6Endpoint();
+    if (!endpoint) return false;
+    const body = JSON.stringify(payload);
+    let queued = false;
+    try {
+      if (navigator.sendBeacon) queued = navigator.sendBeacon(endpoint, new Blob([body], { type: 'text/plain;charset=UTF-8' }));
+    } catch (e) { queued = false; }
+    if (!queued) {
+      try {
+        fetch(endpoint, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body, keepalive: true })
+          .catch(() => {});
+        queued = true;
+      } catch (e) { queued = false; }
+    }
+    return queued;
+  }
+
+  function stap6Synchroniseer(force) {
+    const endpoint = stap6Endpoint();
+    const button = document.getElementById('sync-nu');
+    if (!STAP6_CONFIG.enabled || !endpoint) {
+      if (button) button.disabled = true;
+      stap6Status('Nog niet geactiveerd');
+      stap6Uitleg('Je resultaten blijven op dit toestel bewaard. Zodra de leerkracht synchronisatie activeert, wordt je voortgang na elke afgewerkte oefening ook veilig doorgestuurd.');
+      return false;
+    }
+
+    const student = stap6Naam();
+    if (!student) {
+      if (button) button.disabled = true;
+      stap6Status('Vul eerst je naam in', 'wacht');
+      stap6Uitleg('Je leerkracht kan je voortgang alleen herkennen wanneer je eerst je naam invult. Daarna wordt elke afgewerkte oefening automatisch gesynchroniseerd.');
+      return false;
+    }
+
+    const payload = stap6Payload();
+    const meta = stap6SyncMeta();
+    const vorigePoging = new Date(meta.lastAttemptAt || 0).getTime() || 0;
+    const nogVers = Date.now() - vorigePoging < 60000;
+    if (!force && meta.lastSyncKey === payload.syncKey && nogVers) {
+      if (button) button.disabled = false;
+      stap6Status('Voortgang is bijgewerkt', 'ok');
+      return true;
+    }
+
+    if (button) button.disabled = true;
+    stap6Status('Versturen …', 'wacht');
+    const queued = stap6MaakVerzendpoging(payload);
+    const updated = Object.assign({}, meta, {
+      lastSyncKey: payload.syncKey,
+      lastAttemptAt: new Date().toISOString(),
+      lastStudent: student,
+      lastQueued: queued
+    });
+    stap6BewaarMeta(updated);
+
+    window.setTimeout(() => {
+      if (button) button.disabled = false;
+      if (queued) {
+        stap6Status('Klaar om te synchroniseren', 'ok');
+        stap6Uitleg('Je voortgang is na deze oefening naar het leerkrachtdashboard verstuurd. Bij een slechte verbinding probeert de site dezelfde momentopname later opnieuw.');
+      } else {
+        stap6Status('Nog niet verstuurd', 'fout');
+        stap6Uitleg('Je voortgang staat veilig op dit toestel. Controleer je internetverbinding en druk daarna op “Nu synchroniseren”.');
+      }
+    }, 450);
+    return queued;
+  }
+
+  function stap6PlanSynchronisatie() {
+    if (stap6Timer) window.clearTimeout(stap6Timer);
+    stap6Timer = window.setTimeout(() => stap6Synchroniseer(false), 650);
+  }
+
+  window.stap6SyncNu = function () { stap6Synchroniseer(true); };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const endpoint = stap6Endpoint();
+    const button = document.getElementById('sync-nu');
+    const veld = document.getElementById('naam-veld');
+    if (button) button.disabled = !endpoint || !stap6Naam();
+
+    if (endpoint) {
+      stap6Status(stap6Naam() ? 'Klaar om te synchroniseren' : 'Vul eerst je naam in', stap6Naam() ? 'ok' : 'wacht');
+      stap6Uitleg('Na elke afgewerkte oefening wordt je voortgang automatisch naar het privé-dashboard van je leerkracht gestuurd. Je antwoorden zelf worden niet doorgestuurd.');
+      window.setTimeout(() => stap6Synchroniseer(false), 700);
+    } else {
+      stap6Status('Nog niet geactiveerd');
+    }
+
+    if (veld) veld.addEventListener('input', () => {
+      if (button) button.disabled = !endpoint || !stap6Naam();
+      if (endpoint && stap6Naam()) stap6PlanSynchronisatie();
+    });
+
+    const origineelBewaarResultaat = window.bewaarResultaat;
+    window.bewaarResultaat = function () {
+      const result = origineelBewaarResultaat && origineelBewaarResultaat.apply(this, arguments);
+      stap6PlanSynchronisatie();
+      return result;
+    };
+  });
+})();
+</script>
+
 </body>
 </html>
