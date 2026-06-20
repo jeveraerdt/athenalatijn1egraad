@@ -301,7 +301,7 @@
   <div class="toolbar-divider"></div>
   <a class="pill-btn" href="oefeningen-verbuigingen.html">Verbuigingen</a>
   <span class="pill-btn actief" aria-current="page">Vervoegingen</span>
-  <a class="pill-btn" href="oefeningen-andere.html">Andere</a>
+  <a class="pill-btn" href="oefeningen-grammatica.html">Andere</a>
 </nav>
 
 <main class="container">
@@ -1960,9 +1960,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const payload = stap6Payload();
     const meta = stap6SyncMeta();
-    const vorigePoging = new Date(meta.lastAttemptAt || 0).getTime() || 0;
-    const nogVers = Date.now() - vorigePoging < 60000;
-    if (!force && meta.lastSyncKey === payload.syncKey && nogVers) {
+    if (!force && meta.lastSyncKey === payload.syncKey) {
       if (button) button.disabled = false;
       stap6Status('Voortgang is bijgewerkt', 'ok');
       return true;
